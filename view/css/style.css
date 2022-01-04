@@ -1,0 +1,232 @@
+* {
+    font-family: Helvetica;
+}
+
+
+
+/* ------------------ Sección de ingreso a la aplicación -------------------- */
+
+:root {
+    --verde: #6EEB83;
+    --verdeTransparente: rgba(110, 235, 131, 0.9);
+    --blancoTranspraente: rgba(255,255,255,0.9);
+    --negroTransparente: rgb(13, 19, 23,0.5);
+    --negro: #0D1317;
+}
+
+.bg-verde-tpt {
+    background-color: var(--verdeTransparente) !important;
+}
+
+.bg-blanco-tpt {
+    background-color: var(--blancoTranspraente) !important;
+}
+
+.btn-verde {
+    background-color: var(--verde);
+    color: white;
+}
+
+.text-negro {
+    color: var(--negro) !important;
+}
+
+.text-verde {
+    color: var(--verde);
+}
+
+.bg-negro-tpt {
+    background-color: var(--negroTransparente);
+}
+
+
+
+.btn.btn-mediano {
+    width: 50% !important;
+}
+
+.logo-img {
+    width: 17rem;
+
+}
+
+.logo-img.pequeño img{
+    width: 8rem !important;
+}
+
+.label-mov {
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+}
+
+.logo-img img{
+ 
+    border-radius: 45%;
+}
+
+.cont-ingresar {
+    border-radius: 10px;
+    overflow:hidden;
+    box-shadow: 2px 0px 4px white;
+}
+
+.titulos {
+    font-size: 2.3rem;
+}
+
+.form-control {
+    border-color: var(--verde) !important;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem var(--verde);
+}
+
+
+#seccion-login {
+    background: url('../img/bg-supermercado.jpg') no-repeat center center/cover;
+    position: relative;
+    height: 100vh;
+}
+
+#seccion-login::before {
+    content: "";
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.d-none-mov {
+    display: none !important;
+}
+
+.logo-img-mov {
+    display: none;
+    
+}
+
+.d-none-mov {
+    display: block !important;
+    
+}
+
+/* ------------- Administrador -------------------- */
+
+small {
+    font-size: 0.78rem !important;
+}
+
+#menu {
+
+    height: 100vh;
+    z-index: 3;
+   
+}
+
+.link {
+    transition: all 0.3s ease !important;
+}
+
+.link:hover {
+    color: #e1e1e1 !important;
+}
+
+
+.dropdown-menu {
+    position: relative;
+    z-index: 10 !important;
+}
+
+.nav-link {
+    color: #f1f1f1;
+}
+
+
+.btn-img {
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.cont-img img{
+    transition: all 0.5s ease;
+    background-color: rgba(13, 19, 23,0.1);
+}
+
+.cont-descripcion {
+    transition: all 0.5s ease;
+}
+
+.cont-img {
+    transition: all 0.3s ease;
+}
+
+.cont-registro {
+    min-width: 100% !important;
+    padding: 0 1rem !important;
+    max-height: 100vh !important;
+    overflow: auto !important;
+}
+
+
+
+
+
+#btn-img-registro:hover .cont-img img,
+#btn-img-carta:hover .cont-img img {
+    transform:scale(1.2);
+}
+
+#btn-img-registro:hover .cont-descripcion,
+#btn-img-carta:hover .cont-descripcion{
+    transform:translateY(-100%);
+}
+ 
+#form-registro-empleado {
+    max-width: 100% !important;
+    
+}
+
+#cont-campos {
+    scroll-behavior: smooth !important;
+    
+}
+
+
+/*-------------- Resposive ---------------*/
+
+/* ---------- Login ---------------- */
+
+
+@media (min-width: 576px){
+    #modificar-datos-personales .modal-dialog,
+    #modificar-datos-laborales .modal-dialog,
+    #modificar-datos-familiares .modal-dialog {
+        max-width: 1000px !important;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .d-none-mov {
+        display: none !important;
+    }
+
+    .logo-img-mov {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .logo-img-mov img{
+        border-radius: 45%;
+    }
+
+    
+
+}
+
