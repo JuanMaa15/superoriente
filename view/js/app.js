@@ -1,5 +1,7 @@
 "use strict"
 var sumaAnchoContRegistro = 0;
+var contF = 0;
+var contH = 0;
 var acciones = {
     listo : function() {
 
@@ -12,8 +14,9 @@ var acciones = {
         $("#btn-registrar-estado-civil").click(acciones.enviarFormEstadoCivil);
         $("#btn-atras").click(acciones.volverForm);
         $("#agregar-familiar").click(acciones.agregarFamiliar);
-
-
+        $("#remover-familiar").click(acciones.removerFamiliar);
+        $("#agregar-hijo").click(acciones.agregarhijo);
+        $("#remover-hijo").click(acciones.removerhijo);
         
         
         // --------------- Se muestran las tablas con los datos ----------------
@@ -60,9 +63,121 @@ var acciones = {
 
     },
 
+    removerhijo : function() {
+        $("#hijo" + contH).remove();
+        
+        contH--
+
+        if (contH === 0) {
+            $(".cont-remover-hijo").removeClass("d-block").addClass("d-none");
+        }
+    },
+
+    agregarhijo : function() {
+
+        contH++;
+
+        var cont_hijo = `
+        <div id="hijo` + contH +  `" class="border-bottom my-1 pb-1"  >
+            <div class="row">
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="nombre_hijo` + contH +  `" placeholder="Nombre">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="apellido_hijo` + contH +  `" placeholder="Apellido">
+                    <small class="text-danger"></small>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col my-3">
+                    <input class="form-control" type="number" id="edad_hijo` + contH +  `" placeholder="Edad">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="date" id="fecha_nacimiento_hijo` + contH +  `" placeholder="Escolaridad">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                
+            </div>
+        </div>
+    `;
+        
+        $("#cont-hijos").append(cont_hijo);
+
+        if (contH > 0) {
+           // $("#opc-familiar").append("<div class='col-4'><button type='button' class='btn btn-verde' id='remover-familiar'>Remover familiar</button></div>");
+            $(".cont-remover-hijo").removeClass("d-none").addClass("d-block");
+        }
+
+        console.log(contH);
+    },
+
+    removerFamiliar : function () {
+        $("#familiar" + contF).remove();
+        
+        contF--
+
+        if (contF === 0) {
+            $(".cont-remover-familiar").removeClass("d-block").addClass("d-none");
+        }
+    },
+
     agregarFamiliar : function() {
 
-        alert("Presionado");
+        contF++;
+
+        var cont_familiar = `
+            <div id="familiar` + contF + `" class="border-bottom my-1 pb-1"  >
+            <div class="row">
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="id_familiar` + contF + `" placeholder="Nro de documento">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="nombre-familiar` + contF + `" placeholder="Nombre">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="apellido-familiar` + contF + `" placeholder="Apellido">
+                    <small class="text-danger"></small>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col my-3">
+                    <input class="form-control" type="number" id="edad-familiar` + contF + `" placeholder="Edad">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="escolaridad-familiar` + contF + `" placeholder="Escolaridad">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="parentesco-familiar` + contF + `" placeholder="Parentesco">
+                    <small class="text-danger"></small>
+                    
+                </div>
+            </div>
+        </div>
+        `;
+
+        $("#cont-familiares").append(cont_familiar);
+
+        if (contF > 0) {
+           // $("#opc-familiar").append("<div class='col-4'><button type='button' class='btn btn-verde' id='remover-familiar'>Remover familiar</button></div>");
+            $(".cont-remover-familiar").removeClass("d-none").addClass("d-block");
+        }
+
+        console.log(contF);
 
     },
 
@@ -236,7 +351,11 @@ var acciones = {
 
             // ------------------- Datos Familiares ----------------
 
-            var id_familiar = $("#id_familiar").val();
+            var id_familiar = [];
+            for (let i = 0; i < array.length; index++) {
+                const element = array[index];
+                
+            }
             var nombre_familiar = $("#nombre-familiar").val();
             var apellido_familiar = $("#apellido-familiar").val();
             var edad_familiar = $("#edad-familiar").val();

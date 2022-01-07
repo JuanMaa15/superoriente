@@ -384,119 +384,30 @@
 
                                             <div id="datos-familiares" class="cont-registro">
                                                 <h3>Datos familiares <span class="fs-4">(Personas con las que vive)</span></h3>
-                                                <div class="familiar1 border-bottom my-1 pb-1"  >
-                                                    <div class="row">
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="id_familiar" placeholder="Nro de documento">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="nombre-familiar" placeholder="Nombre">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="apellido-familiar" placeholder="Apellido">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="number" id="edad-familiar" placeholder="Edad">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="escolaridad-familiar" placeholder="Escolaridad">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="parentesco-familiar" placeholder="Parentesco">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                    </div>
+                                                <div id="cont-familiares">
+                                
                                                 </div>
-                                                <div class="row mt-3">
-                                                    <div class="col">
+                                                
+                                                <div class="row mt-3 justify-content-center" id="opc-familiar">
+                                                    <div class="col-4">
                                                         <button type="button" class="btn btn-verde" id="agregar-familiar">Agregar familiar</button>
                                                     </div>
+                                                    <div class="col-4 d-none cont-remover-familiar">
+                                                        <button type="button" class="btn btn-verde" id="remover-familiar">Remover familiar</button>
+                                                    </div>
                                                 </div>
-                                               <!--  <div class="familiar2 border-bottom my-2 pb-2"  >
-                                                    <div class="row">
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="id_familiar" placeholder="Nro de documento">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="nombre-familiar" placeholder="Nombre">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="apellido-familiar" placeholder="Apellido">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="number" id="edad-familiar" placeholder="Edad">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="escolaridad-familiar" placeholder="Escolaridad">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="parentesco-familiar" placeholder="Parentesco">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div> -->
 
                                                 <h3 class="mt-5">Hijos</h3>
-                                                <div class="familiar1 border-bottom my-1 pb-1"  >
-                                                    <div class="row">
-                                                        <!-- <div class="col my-3">
-                                                            <input class="form-control" type="text" id="id_hijo" placeholder="Nro de documento">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div> -->
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="nombre_hijo" placeholder="Nombre">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="text" id="apellido_hijo" placeholder="Apellido">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
+                                                <div id="cont-hijos">
+                                                    
+                                                </div>
+                                                
+                                                <div class="row mt-3 justify-content-center" id="opc-hijo">
+                                                    <div class="col-4">
+                                                        <button type="button" class="btn btn-verde" id="agregar-hijo">Agregar hijo(a)</button>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="number" id="edad_hijo" placeholder="Edad">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <div class="col my-3">
-                                                            <input class="form-control" type="date" id="fecha_nacimiento_hijo" placeholder="Escolaridad">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div>
-                                                        <!-- <div class="col my-3">
-                                                            <input class="form-control" type="text" id="id_empleado" placeholder="">
-                                                            <small class="text-danger"></small>
-                                                            
-                                                        </div> -->
+                                                    <div class="col-4 d-none cont-remover-hijo">
+                                                        <button type="button" class="btn btn-verde" id="remover-hijo">Remover hijo(a)</button>
                                                     </div>
                                                 </div>
                                             </div>
