@@ -60,19 +60,24 @@ $perfil = $_POST['perfil'];
 
 // ----------------- Datos familiares
 
-$id_familiar = $_POST['id_familiar'];
-$nombre_familiar = $_POST['nombre_familiar'];
-$apellido_familiar = $_POST['apellido_familiar'];
-$edad_familiar = $_POST['edad_familiar'];
-$escolaridad_familiar = $_POST['escolaridad_familiar'];
-$parentesco_familiar = $_POST['parentesco_familiar'];
+if (isset($_POST['id_familiar'])) {
+    $id_familiar = $_POST['id_familiar'];
+    $nombre_familiar = $_POST['nombre_familiar'];
+    $apellido_familiar = $_POST['apellido_familiar'];
+    $edad_familiar = $_POST['edad_familiar'];
+    $escolaridad_familiar = $_POST['escolaridad_familiar'];
+    $parentesco_familiar = $_POST['parentesco_familiar'];
+}
+
 
 // -------------- Datos hijos
+if (isset($_POST['nombre_hijo'])) {
+    $nombre_hijo = $_POST['nombre_hijo'];
+    $apellido_hijo  =$_POST['apellido_hijo'];
+    $edad_hijo = $_POST['edad_hijo'];
+    $fecha_nacimiento_hijo = $_POST['fecha_nacimiento_hijo'];
+}
 
-$nombre_hijo = $_POST['nombre_hijo'];
-$apellido_hijo  =$_POST['apellido_hijo'];
-$edad_hijo = $_POST['edad_hijo'];
-$fecha_nacimiento_hijo = $_POST['fecha_nacimiento_hijo'];
 
 // -------------------------- validar datos (condicional if)
 
@@ -143,34 +148,48 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
     // Datos de los familiares
     
     $familiardto = new FamiliarDTO();
-    
-    if (!empty($id_familiar) && !empty($nombre_familiar)) {
-        $familiardto->setId_familiar($id_familiar);
-        $familiardto->setNombre($nombre_familiar);
-        $familiardto->setApellido($apellido_familiar);
-        $familiardto->setEdad($edad_familiar);
-        $familiardto->setEscolaridad($escolaridad_familiar);
-        $familiardto->setParentesco($parentesco_familiar);
-        $familiardto->setUsuario($id_usuario);
 
-        $familiardao = new FamiliarDAO();
-        $familiardao->registrarFamiliar($familiardto);
+    if (isset($id_familiar)) {
+        for ($i=0; $i < count($id_familiar); $i++) { 
+            if (!empty($id_familiar[$i]) && !empty($nombre_familiar[$i])) {
+                $familiardto->setId_familiar($id_familiar[$i]);
+                $familiardto->setNombre($nombre_familiar[$i]);
+                $familiardto->setApellido($apellido_familiar[$i]);
+                $familiardto->setEdad($edad_familiar[$i]);
+                $familiardto->setEscolaridad($escolaridad_familiar[$i]);
+                $familiardto->setParentesco($parentesco_familiar[$i]);
+                $familiardto->setUsuario($id_usuario);
+        
+                $familiardao = new FamiliarDAO();
+                $familiardao->registrarFamiliar($familiardto);
+            }
+        }
     }
+    
+    
+    
 
     // Datos de los hijos 
 
     $hijodto = new HijoDTO();
 
-    if (!empty($nombre_hijo)) {
-        $hijodto->setNombre($nombre_hijo);
-        $hijodto->setApellido($apellido);
-        $hijodto->setEdad($edad_hijo);
-        $hijodto->setFecha_nacimiento($fecha_nacimiento_hijo);
-        $hijodto->setUsuario($id_usuario);
-        
-        $hijodao = new HijoDAO();
-        $hijodao->registrarHijo($hijodto);
+    if (isset($nombre_hijo)) {
+        for ($i=0; $i < count($nombre_hijo); $i++) { 
+            if (!empty($nombre_hijo[$i])) {
+                $hijodto->setNombre($nombre_hijo[$i]);
+                $hijodto->setApellido($apellido[$i]);
+                $hijodto->setEdad($edad_hijo[$i]);
+                $hijodto->setFecha_nacimiento($fecha_nacimiento_hijo[$i]);
+                $hijodto->setUsuario($id_usuario);
+                
+                $hijodao = new HijoDAO();
+                $hijodao->registrarHijo($hijodto);
+            }
+        }
     }
+    
+
+    
 
 
     if ($resultado) {
@@ -193,5 +212,7 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
     "Tipo de contrato : ". $tipo_contrato ."<br>" . "fecha de ingreso : ". $fecha_ingreso ."<br>" . "Salario : ". $salario ."<br>" . "Valor día : ". $valor_dia ."<br>" .
     "Valor hora : ". $valor_hora ."<br>" . "Area : ". $area ."<br>" . "seccion : ". $seccion ."<br>" . "Cargo : ". $cargo ."<br>" . "Estado : ". $estado ."<br>" .
     "Perfil : ". $perfil ."<br>";
+
+    echo "<br>" . $id_familiar. " " . $nombre_familiar;
  }
 
