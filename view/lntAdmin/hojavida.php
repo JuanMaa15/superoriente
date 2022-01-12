@@ -176,7 +176,7 @@
             <button class="opcion-editar btn btn-verde my-2" id="btn-editar-datos-laborales" value="<?php echo $_GET['doc']; ?>" data-bs-toggle="modal" data-bs-target="#modificar-datos-laborales">
                 <i class="far fa-edit"></i> Editar datos laborales
             </button>
-            <button class="opcion-editar btn btn-verde my-2" id="btn-editar-datos-personales" value="<?php echo $_GET['doc']; ?>" data-bs-toggle="modal" data-bs-target="#modificar-datos-familiares">
+            <button class="opcion-editar btn btn-verde my-2" id="btn-editar-datos-familiares" value="<?php echo $_GET['doc']; ?>" data-bs-toggle="modal" data-bs-target="#modificar-datos-familiares">
                 <i class="far fa-edit"></i> Editar datos familiares
             </button>
         </div>

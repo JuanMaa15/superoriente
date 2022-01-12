@@ -759,7 +759,7 @@ var acciones = {
             $("#correo-ingresar").next().html("");
             if (pass.length != 0) {
                 $("#password-ingresar").next().html("");
-                alert("Bienvenido!");
+                //alert("Bienvenido!");
             }else{
                 $("#password-ingresar").next().html("Campo vacío, por favor ingrese la contraseña");
             }
@@ -776,6 +776,8 @@ var acciones = {
         switch (btn) {
 
             // ------------- Editar un registro -----------
+
+            
 
             // Estado civil
 
@@ -834,6 +836,8 @@ var acciones = {
                 });
             break;
 
+            // Datos laborales
+
             case "btn-editar-datos-laborales":
 
                 $.post('../../controller/usuario/EditarUsuario.php',{
@@ -842,6 +846,30 @@ var acciones = {
                 },function(responseText){
                     $("#editar-datos-laborales").html(responseText);             
                 });
+
+            break;
+
+            // Datops familiares
+
+            case "btn-editar-datos-familiares":
+
+                $("#editar-datos-familiares").html("");
+
+                $.post('../../controller/familiar/EditarFamiliar.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-datos-familiares").html(responseText);
+                });
+
+                setTimeout(() => {
+                    $.post('../../controller/hijo/EditarHijos.php',{
+                        id:id
+                    },function(responseText) {
+                        $("#editar-datos-familiares").append(responseText);
+                    });
+                },100);
+                
+
 
             break;
 
@@ -1350,6 +1378,79 @@ var acciones = {
                 });
                                                             
             }
+
+
+
+            break;
+
+            case "btn-actualizar-datos-familiares":
+
+            // ------------------- Datos Familiares ----------------
+
+            var contCamposH = $(".cont-familiar-act").toArray().length;
+
+                var id_familiar = [];
+                var nombre_familiar = [];
+                var apellido_familiar = [];
+                var edad_familiar = [];
+                var escolaridad_familiar = [];
+                var parentesco_familiar = [];
+
+                for (let i = 0; i < contF; i++) {
+                    id_familiar[i] = $("#id_familiar_act" + i).val();
+                    nombre_familiar[i] = $("#nombre_familiar_act" + i).val();
+                    apellido_familiar[i] = $("#apellido_familiar_act" + i).val();
+                    edad_familiar[i] = $("#edad_familiar_act" + i).val();
+                    escolaridad_familiar[i] = $("#escolaridad_familiar_act" + i).val();
+                    parentesco_familiar[i] = $("#parentesco_familiar_act" + i).val();
+                }
+
+                
+
+                // ------------------ Datos hijos ---------------
+
+                var contCamposH = $(".cont-hijo-act").toArray().length;
+
+                var id_hijo = [];
+                var nombre_hijo = [];
+                var apellido_hijo = [];
+                var edad_hijo = [];
+                var fecha_nacimiento_hijo = [];
+
+                for (let i = 0; i < contCamposH; i++) {
+                    id_hijo[i] = $("#id_hijo_act" + i).val();
+                    nombre_hijo[i] = $("#nombre_hijo_act" + i).val();
+                    apellido_hijo[i] = $("#apellido_hijo_act" + i).val();
+                    edad_hijo[i] = $("#edad_hijo_act" + i).val();
+                    fecha_nacimiento_hijo[i] = $("#fecha_nacimiento_hijo_act" + i).val();
+
+                }
+
+
+                $.post('../../controller/familiar/ActualizarFamiliar.php',{
+                    id_familiar:id_familiar,
+                    nombre_familiar:nombre_familiar,
+                    apellido_familiar: apellido_familiar,
+                    edad_familiar: edad_familiar,
+                    escolaridad_familiar: escolaridad_familiar,
+                    parentesco_familiar: parentesco_familiar
+
+
+                },function(responseText) {
+                    $("#rta-datos-familiares-act").html(responseText);
+                });
+
+                setTimeout(() => {
+                    $.post('../../controller/hijo/ActualizarHijos.php',{
+                        id_hijo:id_hijo,
+                        nombre_hijo: nombre_hijo,
+                        apellido_hijo: apellido_hijo,
+                        edad_hijo: edad_hijo,
+                        fecha_nacimiento_hijo: fecha_nacimiento_hijo
+                    },function(responseText) {
+                        $("#rta-datos-familiares-act").append(responseText);
+                    });
+                },100);
 
             break;
             default:

@@ -8,7 +8,7 @@ require_once ("../../models/DTO/UsuarioDTO.php");
 switch ($_POST['opc']) {
     case 'personales':
 
-        // -------------- Datos personales
+        // -------------- Datos personales -------------
         $id_usuario = $_POST['id_usuario'];
         $tipo_documento = intval($_POST['tipo_documento']);
         $fecha_expedicion = $_POST['fecha_expedicion'];
