@@ -1,5 +1,7 @@
 "use strict"
 var sumaAnchoContRegistro = 0;
+var contF = 0;
+var contH = 0;
 var acciones = {
     listo : function() {
 
@@ -12,8 +14,9 @@ var acciones = {
         $("#btn-registrar-estado-civil").click(acciones.enviarFormEstadoCivil);
         $("#btn-atras").click(acciones.volverForm);
         $("#agregar-familiar").click(acciones.agregarFamiliar);
-
-
+        $("#remover-familiar").click(acciones.removerFamiliar);
+        $("#agregar-hijo").click(acciones.agregarhijo);
+        $("#remover-hijo").click(acciones.removerhijo);
         
         
         // --------------- Se muestran las tablas con los datos ----------------
@@ -60,9 +63,130 @@ var acciones = {
 
     },
 
+    removerhijo : function() {
+        
+        
+        contH--
+
+        if (contH === 0) {
+            $(".cont-remover-hijo").removeClass("d-block").addClass("d-none");
+        }
+
+        $("#hijo" + contH).remove();
+    },
+
+    agregarhijo : function() {
+
+        
+
+        var cont_hijo = `
+        <div id="hijo` + contH +  `" class="border-bottom my-1 pb-1"  >
+            <div class="row">
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="nombre_hijo` + contH +  `" placeholder="Nombre">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="apellido_hijo` + contH +  `" placeholder="Apellido">
+                    <small class="text-danger"></small>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col my-3">
+                    <input class="form-control" type="number" id="edad_hijo` + contH +  `" placeholder="Edad">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="date" id="fecha_nacimiento_hijo` + contH +  `" placeholder="Escolaridad">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                
+            </div>
+        </div>
+    `;
+        
+        $("#cont-hijos").append(cont_hijo);
+
+        contH++;
+
+        if (contH > 0) {
+           // $("#opc-familiar").append("<div class='col-4'><button type='button' class='btn btn-verde' id='remover-familiar'>Remover familiar</button></div>");
+            $(".cont-remover-hijo").removeClass("d-none").addClass("d-block");
+        }
+
+        console.log(contH);
+    },
+
+    removerFamiliar : function () {
+       
+        
+        contF--
+
+        if (contF === 0) {
+            $(".cont-remover-familiar").removeClass("d-block").addClass("d-none");
+        }
+
+        $("#familiar" + contF).remove();
+      
+    },
+
     agregarFamiliar : function() {
 
-        alert("Presionado");
+        
+
+        var cont_familiar = `
+            <div id="familiar` + contF + `" class="border-bottom my-1 pb-1"  >
+            <div class="row">
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="id_familiar` + contF + `" placeholder="Nro de documento">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="nombre-familiar` + contF + `" placeholder="Nombre">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="apellido-familiar` + contF + `" placeholder="Apellido">
+                    <small class="text-danger"></small>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col my-3">
+                    <input class="form-control" type="number" id="edad-familiar` + contF + `" placeholder="Edad">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="escolaridad-familiar` + contF + `" placeholder="Escolaridad">
+                    <small class="text-danger"></small>
+                    
+                </div>
+                <div class="col my-3">
+                    <input class="form-control" type="text" id="parentesco-familiar` + contF + `" placeholder="Parentesco">
+                    <small class="text-danger"></small>
+                    
+                </div>
+            </div>
+        </div>
+        `;
+
+        $("#cont-familiares").append(cont_familiar);
+
+        contF++;
+
+        if (contF > 0) {
+           // $("#opc-familiar").append("<div class='col-4'><button type='button' class='btn btn-verde' id='remover-familiar'>Remover familiar</button></div>");
+            $(".cont-remover-familiar").removeClass("d-none").addClass("d-block");
+        }
+
+        console.log(contF);
 
     },
 
@@ -236,21 +360,49 @@ var acciones = {
 
             // ------------------- Datos Familiares ----------------
 
-            var id_familiar = $("#id_familiar").val();
-            var nombre_familiar = $("#nombre-familiar").val();
+            var id_familiar = [];
+            var nombre_familiar = [];
+            var apellido_familiar = [];
+            var edad_familiar = [];
+            var escolaridad_familiar = [];
+            var parentesco_familiar = [];
+
+            for (let i = 0; i < contF; i++) {
+                id_familiar[i] = $("#id_familiar" + i).val();
+                nombre_familiar[i] = $("#nombre-familiar" + i).val();
+                apellido_familiar[i] = $("#apellido-familiar" + i).val();
+                edad_familiar[i] = $("#edad-familiar" + i).val();
+                escolaridad_familiar[i] = $("#escolaridad-familiar" + i).val();
+                parentesco_familiar[i] = $("#parentesco-familiar" + i).val();
+            }
+
+           /*  var nombre_familiar = $("#apellido-familiar").val();
             var apellido_familiar = $("#apellido-familiar").val();
             var edad_familiar = $("#edad-familiar").val();
             var escolaridad_familiar = $("#escolaridad-familiar").val();
-            var parentesco_familiar = $("#parentesco-familiar").val();
+            var parentesco_familiar = $("#parentesco-familiar").val(); */
 
 
             // ------------------- Datos hijos ------------------
 
            // var id_hijo = $("#id_hijo").val();
-            var nombre_hijo = $("#nombre_hijo").val();
+
+            var nombre_hijo = [];
+            var apellido_hijo = [];
+            var edad_hijo = [];
+            var fecha_nacimiento_hijo = [];
+
+            for (let i = 0; i < contH; i++) {
+                 nombre_hijo[i] = $("#nombre_hijo" + i).val();
+                 apellido_hijo[i] = $("#apellido_hijo" + i).val();
+                 edad_hijo[i] = $("#edad_hijo" + i).val();
+                 fecha_nacimiento_hijo[i] = $("#fecha_nacimiento_hijo" + i).val();
+            }
+
+            /* var nombre_hijo = $("#nombre_hijo").val();
             var apellido_hijo = $("#apellido_hijo").val();
             var edad_hijo = $("#edad_hijo").val();
-            var fecha_nacimiento_hijo = $("#fecha_nacimiento_hijo").val();
+            var fecha_nacimiento_hijo = $("#fecha_nacimiento_hijo").val(); */
 
             
             var validar = 0;
@@ -501,6 +653,9 @@ var acciones = {
                 $("#perfil").next().html("Campo vacío, por favor ingrese el perfil");
 
             }
+
+           
+
     
            if (validar === 27) {
                 
@@ -537,7 +692,7 @@ var acciones = {
                     celular_emergencia: celular_emergencia,
                     parentesco_emergencia: parentesco_emergencia,
 
-
+                    
                     sucursal: sucursal,
                     tipo_contrato: tipo_contrato,
                     fecha_ingreso: fecha_ingreso,
@@ -604,7 +759,7 @@ var acciones = {
             $("#correo-ingresar").next().html("");
             if (pass.length != 0) {
                 $("#password-ingresar").next().html("");
-                alert("Bienvenido!");
+                //alert("Bienvenido!");
             }else{
                 $("#password-ingresar").next().html("Campo vacío, por favor ingrese la contraseña");
             }
@@ -621,6 +776,8 @@ var acciones = {
         switch (btn) {
 
             // ------------- Editar un registro -----------
+
+            
 
             // Estado civil
 
@@ -679,6 +836,8 @@ var acciones = {
                 });
             break;
 
+            // Datos laborales
+
             case "btn-editar-datos-laborales":
 
                 $.post('../../controller/usuario/EditarUsuario.php',{
@@ -687,6 +846,30 @@ var acciones = {
                 },function(responseText){
                     $("#editar-datos-laborales").html(responseText);             
                 });
+
+            break;
+
+            // Datops familiares
+
+            case "btn-editar-datos-familiares":
+
+                $("#editar-datos-familiares").html("");
+
+                $.post('../../controller/familiar/EditarFamiliar.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-datos-familiares").html(responseText);
+                });
+
+                setTimeout(() => {
+                    $.post('../../controller/hijo/EditarHijos.php',{
+                        id:id
+                    },function(responseText) {
+                        $("#editar-datos-familiares").append(responseText);
+                    });
+                },100);
+                
+
 
             break;
 
@@ -1195,6 +1378,79 @@ var acciones = {
                 });
                                                             
             }
+
+
+
+            break;
+
+            case "btn-actualizar-datos-familiares":
+
+            // ------------------- Datos Familiares ----------------
+
+            var contCamposH = $(".cont-familiar-act").toArray().length;
+
+                var id_familiar = [];
+                var nombre_familiar = [];
+                var apellido_familiar = [];
+                var edad_familiar = [];
+                var escolaridad_familiar = [];
+                var parentesco_familiar = [];
+
+                for (let i = 0; i < contF; i++) {
+                    id_familiar[i] = $("#id_familiar_act" + i).val();
+                    nombre_familiar[i] = $("#nombre_familiar_act" + i).val();
+                    apellido_familiar[i] = $("#apellido_familiar_act" + i).val();
+                    edad_familiar[i] = $("#edad_familiar_act" + i).val();
+                    escolaridad_familiar[i] = $("#escolaridad_familiar_act" + i).val();
+                    parentesco_familiar[i] = $("#parentesco_familiar_act" + i).val();
+                }
+
+                
+
+                // ------------------ Datos hijos ---------------
+
+                var contCamposH = $(".cont-hijo-act").toArray().length;
+
+                var id_hijo = [];
+                var nombre_hijo = [];
+                var apellido_hijo = [];
+                var edad_hijo = [];
+                var fecha_nacimiento_hijo = [];
+
+                for (let i = 0; i < contCamposH; i++) {
+                    id_hijo[i] = $("#id_hijo_act" + i).val();
+                    nombre_hijo[i] = $("#nombre_hijo_act" + i).val();
+                    apellido_hijo[i] = $("#apellido_hijo_act" + i).val();
+                    edad_hijo[i] = $("#edad_hijo_act" + i).val();
+                    fecha_nacimiento_hijo[i] = $("#fecha_nacimiento_hijo_act" + i).val();
+
+                }
+
+
+                $.post('../../controller/familiar/ActualizarFamiliar.php',{
+                    id_familiar:id_familiar,
+                    nombre_familiar:nombre_familiar,
+                    apellido_familiar: apellido_familiar,
+                    edad_familiar: edad_familiar,
+                    escolaridad_familiar: escolaridad_familiar,
+                    parentesco_familiar: parentesco_familiar
+
+
+                },function(responseText) {
+                    $("#rta-datos-familiares-act").html(responseText);
+                });
+
+                setTimeout(() => {
+                    $.post('../../controller/hijo/ActualizarHijos.php',{
+                        id_hijo:id_hijo,
+                        nombre_hijo: nombre_hijo,
+                        apellido_hijo: apellido_hijo,
+                        edad_hijo: edad_hijo,
+                        fecha_nacimiento_hijo: fecha_nacimiento_hijo
+                    },function(responseText) {
+                        $("#rta-datos-familiares-act").append(responseText);
+                    });
+                },100);
 
             break;
             default:
