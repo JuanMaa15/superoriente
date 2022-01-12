@@ -1,3 +1,12 @@
+
+<?php
+
+session_start();
+
+if (!isset($_SESSION['id_admin']) && !isset($_SESSION['id_empleado'])) {
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,3 +93,17 @@
     <script src="view/js/app.js"></script>
 </body>
 </html>
+
+<?php
+
+
+}else{
+    if (isset($_SESSION["id_admin"])) {
+        header("Location: view/lntAdmin/admin.php");
+    }else{
+        header("Location: view/lntEmpleado/empleado.php");
+    }
+}
+
+?>
+

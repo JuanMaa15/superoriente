@@ -89,13 +89,13 @@ class FamiliarDAO {
 
     // ---------------------------- Actualizar datos familiares -------------------------
 
-    public function editarDatosFamiliares($familiardto) {
+    public function actualizarDatosFamiliares($familiardto) {
 
         $cnx = Conexion::conectar();
 
         try {
             
-            $sql = "UPDATE tbl_familiar SET  nombre = ?, apellido = ?, edad = ?, escolaridad = ?, parentesco = ? WHERE id_usuario = '" . $familiardto->getUsuario() . "'";
+            $sql = "UPDATE tbl_familiar SET  nombre = ?, apellido = ?, edad = ?, escolaridad = ?, parentesco = ? WHERE id_familiar = '" . $familiardto->getId_familiar() . "'";
             $ps = $cnx->prepare($sql);
 
             //$id_familiar = $familiardto->getId_familiar();

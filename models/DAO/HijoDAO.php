@@ -81,4 +81,40 @@ class HijoDAO {
 
     }
 
+     // ---------------------------- Actualizar datos hijos -------------------------
+
+     public function actualizarDatosHijos($hijodto) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            
+            $sql = "UPDATE tbl_familiar SET  nombre = ?, apellido = ?, edad = ?, fecha_nacimiento = ? WHERE id_hijo = " . $hijodto->getId_hijo();
+            $ps = $cnx->prepare($sql);
+
+            //$id_familiar = $familiardto->getId_familiar();
+            $nombre = $hijodto->getNombre();
+            $apellido = $hijodto->getApellido();
+            $edad = $hijodto->getEdad();
+            $fecha_nacimiento = $hijodto->getFecha_nacimiento();
+            //$usuario = $familiardto->getUsuario();
+
+            $ps->bindParam(1, $nombre);
+            $ps->bindParam(2, $apellido);
+            $ps->bindParam(3, $edad);
+            $ps->bindParam(4, $escolaridad);
+            $ps->bindParam(5, $parentesco);
+
+            $ps->execute();
+
+            return true;
+
+        } catch (Exception $ex) {
+            print "Error al actualizar los datos familiares ". $ex->getMessage();
+        }
+        
+        return false;
+
+    }
+
 }

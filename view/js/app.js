@@ -17,6 +17,9 @@ var acciones = {
         $("#remover-familiar").click(acciones.removerFamiliar);
         $("#agregar-hijo").click(acciones.agregarhijo);
         $("#remover-hijo").click(acciones.removerhijo);
+
+
+        $("#buscar_empleado").keyup(acciones.buscarEmpleado);
         
         
         // --------------- Se muestran las tablas con los datos ----------------
@@ -60,6 +63,18 @@ var acciones = {
             $("#listado-estados-civiles").html(responseText);
         });
 
+
+    },
+
+    buscarEmpleado : function() {
+
+        var busqueda = $(this).val();
+
+        $.post('../../controller/usuario/ListaEnlaces.php',{
+            busqueda: busqueda
+        },function(responseText) {
+            $("#listado-enlaces").html(responseText);
+        });
 
     },
 
@@ -1387,7 +1402,7 @@ var acciones = {
 
             // ------------------- Datos Familiares ----------------
 
-            var contCamposH = $(".cont-familiar-act").toArray().length;
+            var contCamposF = $(".cont-familiar-act").toArray().length;
 
                 var id_familiar = [];
                 var nombre_familiar = [];
@@ -1396,7 +1411,7 @@ var acciones = {
                 var escolaridad_familiar = [];
                 var parentesco_familiar = [];
 
-                for (let i = 0; i < contF; i++) {
+                for (let i = 0; i < contCamposF; i++) {
                     id_familiar[i] = $("#id_familiar_act" + i).val();
                     nombre_familiar[i] = $("#nombre_familiar_act" + i).val();
                     apellido_familiar[i] = $("#apellido_familiar_act" + i).val();
@@ -1405,6 +1420,18 @@ var acciones = {
                     parentesco_familiar[i] = $("#parentesco_familiar_act" + i).val();
                 }
 
+                $.post('../../controller/familiar/ActualizarFamiliar.php',{
+                    id_familiar: id_familiar,
+                    nombre_familiar: nombre_familiar,
+                    apellido_familiar: apellido_familiar,
+                    edad_familiar: edad_familiar,
+                    escolaridad_familiar: escolaridad_familiar,
+                    parentesco_familiar: parentesco_familiar
+
+
+                },function(responseText) {
+                    $("#rta-datos-familiares-act").html(responseText);
+                });
                 
 
                 // ------------------ Datos hijos ---------------
@@ -1427,18 +1454,7 @@ var acciones = {
                 }
 
 
-                $.post('../../controller/familiar/ActualizarFamiliar.php',{
-                    id_familiar:id_familiar,
-                    nombre_familiar:nombre_familiar,
-                    apellido_familiar: apellido_familiar,
-                    edad_familiar: edad_familiar,
-                    escolaridad_familiar: escolaridad_familiar,
-                    parentesco_familiar: parentesco_familiar
-
-
-                },function(responseText) {
-                    $("#rta-datos-familiares-act").html(responseText);
-                });
+               
 
                 setTimeout(() => {
                     $.post('../../controller/hijo/ActualizarHijos.php',{

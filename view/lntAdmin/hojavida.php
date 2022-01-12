@@ -165,6 +165,29 @@
                             </div>
                             
                         </div>
+
+                        <div class="row">
+                            <div class="row-12">
+                                <h3 class="text-center my-3">Hijos</h3>
+                            </div>
+                            <div class="row">
+                                <?php
+                                    for ($i=0; $i < count($listaHijo); $i++) { 
+                                        ?>
+                                        <div class="col">
+                                            <p>Nombre: <?php echo $listaHijo[$i]->getNombre(); ?></p>
+                                            <p>Edad: <?php echo $listaHijo[$i]->getEdad(); ?></p>
+                                        </div>
+                                        <div class="col">
+                                            <p>Apellido: <?php echo $listaHijo[$i]->getApellido (); ?></p>
+                                            <p>Fecha nacimiento: <?php echo $listaHijo[$i]->getFecha_nacimiento(); ?></p>
+                                        </div>
+                                        <?php
+                                    }
+                                ?>
+                            </div>
+                            
+                        </div>
                     </div>  
                 </div>
             </div>

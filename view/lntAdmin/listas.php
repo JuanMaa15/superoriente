@@ -39,9 +39,15 @@
                     </div>
                 </div> -->
                 <div id="lista-enlaces" class="my-5  px-5">
-                    <div class="row">
+                    <div class="row justify-content-around">
                         <div class="col">
                             <h2>Lista de empleados</h2>
+                        </div>
+                        <div class="col-4">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" id="buscar_empleado" placeholder="Buscar" aria-label="Search">
+                            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                        </form>
                         </div>
                     </div>
                     <div class="row">
