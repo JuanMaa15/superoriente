@@ -17,6 +17,7 @@ var acciones = {
         $("#remover-familiar").click(acciones.removerFamiliar);
         $("#agregar-hijo").click(acciones.agregarhijo);
         $("#remover-hijo").click(acciones.removerhijo);
+        $("#btn-buscar-fecha").click(acciones.buscarEmpleadoFecha);
 
 
         $("#buscar_empleado").keyup(acciones.buscarEmpleado);
@@ -63,6 +64,43 @@ var acciones = {
             $("#listado-estados-civiles").html(responseText);
         });
 
+
+    },
+
+    buscarEmpleadoFecha : function() {
+
+        var fecha_inicio = $("#fecha_inicio").val();
+        var fecha_fin = $("#fecha_fin").val();
+        var validar = 0;
+
+        if (fecha_inicio.length !== 0) {
+            $("#fecha_inicio").next().html();
+            validar++;
+        }else{
+            $("#fecha_inicio").next().html("Campo vacío, por favor ingrese el inicio de la fecha");
+        }
+
+        if (fecha_fin.length !== 0) {
+            $("#fecha_fin").next().html();
+            validar++;
+        }else{
+            $("#fecha_fin").next().html("Campo vacío, por favor ingrese el fin de la fecha");
+        }
+
+        if (validar === 2) {
+            
+            $.post('../../controller/listas reportes/ListasUsuarios.php',{
+                fecha_inicio: fecha_inicio,
+                fecha_fin: fecha_fin
+            },function(responseText){
+
+                $("#lista-intervalo-fecha").html(responseText);
+
+            });
+
+        }else{
+            alert("Hay campos vacíos");
+        }
 
     },
 

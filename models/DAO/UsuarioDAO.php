@@ -157,7 +157,7 @@ class UsuarioDAO {
                     $row['telefono_fijo'],
                     $row['telefono_movil'],
                     $row['tipo_casa'],
-                    $row['genero'],
+                    $row['id_genero'],
                     $row['fecha_nacimiento'],
                     $row['edad'],
                     $row['direccion'],
@@ -682,6 +682,94 @@ class UsuarioDAO {
 
         return false;
 
+    }
+
+
+    // --------------------------- Reportes --------------------------------
+    // ---------------------------------------------------------------------
+    
+
+    // ----------------------------- Listas --------------------------------
+
+    public function ListaFechaUsuario($fecha_inicio, $fecha_fin) {
+
+        $cnx = Conexion::conectar();
+        $lista = array();
+        $i = 0;
+
+        try {
+            
+            $sql = "SELECT * FROM tbl_usuario WHERE fecha_ingreso BETWEEN '" . $fecha_inicio . "' AND '" . $fecha_fin . "'";
+            $rs = $cnx->query($sql);
+
+            while($row = $rs->fetch()) {
+                
+                $lista[$i] = new UsuarioDTO();
+                $lista[$i]->constructor(
+                    $row['id_usuario'],
+                        $row['id_tipo_documento'],
+                        $row['fecha_expedicion'],
+                        $row['lugar_expedicion'],
+                        $row['nombre'],
+                        $row['apellido'],
+                        $row['telefono_fijo'],
+                        $row['telefono_movil'],
+                        $row['id_casa'],
+                        $row['id_genero'],
+                        $row['fecha_nacimiento'],
+                        $row['edad'],
+                        $row['direccion'],
+                        $row['lugar_residencia'],
+                        $row['nivel_academico'],
+                        $row['area_academica'],
+                        $row['id_estado_civil'],
+                        $row['eps'],
+                        $row['nro_cuenta'],
+                        $row['id_tipo_sangre_rh'],
+                        $row['antecedentes'],
+                        $row['practica_deporte'],
+                        $row['consumo_cigarros'],
+                        $row['consumo_licor'],
+                        $row['consumo_spa'],
+                        $row['correo'],
+                        $row['pass'],
+                        $row['id_perfil'],
+                        $row['nombre_persona_emergencia'],
+                        $row['telefono_emergencia'],
+                        $row['celular_emergencia'],
+                        $row['parentesco_emergencia'],
+
+                        $row['sucursal'],
+                        $row['id_tipo_contrato'],
+                        $row['fecha_ingreso'],
+                        $row['fecha_retiro'],
+                        $row['motivo_retiro'],
+                        $row['salario'],
+                        $row['valor_dia'],
+                        $row['valor_hora'],
+                        $row['clase_riesgo'],
+                        $row['porcentaje_riesgo'],
+                        $row['area'],
+                        $row['seccion'],
+                        $row['cargo'],
+                        $row['pension'],
+                        $row['id_estado'],
+                );
+
+                $i++;
+
+            }
+
+            return $lista;
+
+            
+            
+        } catch (Exception $ex) {
+            print "Error al traer la lista de los empleados por fecha" . $ex;
+        }
+
+
+        return null;
     }
 
 }

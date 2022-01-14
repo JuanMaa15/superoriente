@@ -6,6 +6,8 @@ require_once ("../../models/DAO/UsuarioDAO.php");
 require_once ("../../models/DAO/TipoContratoDAO.php");
 
 
+setlocale(LC_TIME, "spanish");
+
 
 $id_usuario = $_GET['doc'];
 
@@ -18,7 +20,7 @@ $genero = '';
 if ($usuariodto->getGenero() == 1) {
     $genero = "El señor";
 }else{
-    $generp = "La señora";
+    $genero = "La señora";
 }
 
 $tipoContratodao = new TipoContratoDAO();
@@ -30,6 +32,14 @@ for ($i=0; $i < count($listaTiposContratos); $i++) {
     }
 }
 
+$fecha_inicio = $usuariodto->getFecha_ingreso();
+$fecha_fin = $usuariodto->getFecha_retiro();
+
+$modif_fecha_inicio = date("d-m-Y", strtotime($fecha_inicio));
+$modif_fecha_fin = date("d-m-Y", strtotime($fecha_fin));
+
+$desc_fecha_inicio = strftime("%d de %B de %Y", strtotime($modif_fecha_inicio));
+$desc_fecha_fin = strftime("%d de %B de %Y", strtotime($modif_fecha_fin));
 
 $pdf = new tFPDF();
 $pdf->SetMargins(30, 10 , 30);
@@ -37,7 +47,7 @@ $pdf->AddPage();
 $pdf->SetFont('Arial','',12);
 
 
-$pdf->Cell(70,60,'Rionegro, '. date('d M Y'), 0,1, 'L');
+$pdf->Cell(70,60,'Rionegro, '. strftime("%d de %B del %Y") , 0,1, 'L');
 
 $pdf->SetFont('Arial','B',12);
 $pdf->Cell(0,0,'EL DEPARTAMENTO DE RECURSOS HUMANOS DE: ', 0,0, 'C');
@@ -49,7 +59,15 @@ $pdf->Cell(0,0,'Identificado con NIT. 800.045.218-4', 0,0, 'C');
 $pdf->Ln(10);
 $pdf->Cell(0,0,'HACE CONSTAR QUE:', 0,0, 'C');
 $pdf->Ln(20);
-$pdf->MultiCell(0,5,utf8_decode( $genero  . ' '. strtoupper($usuariodto->getNombre(). " ". $usuariodto->getApellido()) .' con número de cédula ' . $usuariodto->getId_usuario() . ' labora en esta empresa con un contrato ' . $tipo_contrato . ', desde ' . $usuariodto->getFecha_ingreso() . ' desempeñándose bajo el cargo de ' . strtoupper($usuariodto->getCargo()) . ', devengando un salario $' . intval($usuariodto->getSalario()) . '.'), 'C');
+
+if ($usuariodto->getEstado() == 1) {
+    $pdf->MultiCell(0,5,utf8_decode( $genero  . ' '. strtoupper($usuariodto->getNombre(). " ". $usuariodto->getApellido()) .' con número de cédula ' . $usuariodto->getId_usuario() . ' labora en esta empresa con un contrato ' . $tipo_contrato . ', desde el ' . $desc_fecha_inicio . ' desempeñándose bajo el cargo de ' . strtoupper($usuariodto->getCargo()) . ', devengando un salario $' . intval($usuariodto->getSalario()) . '.'), 'C');
+
+}else{
+    $pdf->MultiCell(0,5,utf8_decode( $genero  . ' '. strtoupper($usuariodto->getNombre(). " ". $usuariodto->getApellido()) .' con número de cédula ' . $usuariodto->getId_usuario() . ' labora en esta empresa con un contrato ' . $tipo_contrato . ', desde el ' . $desc_fecha_inicio . ' hasta ' . $desc_fecha_fin . ' desempeñándose bajo el cargo de ' . strtoupper($usuariodto->getCargo()) . ', devengando un salario $' . intval($usuariodto->getSalario()) . '.'), 'C');
+
+}
+
 
 $pdf->Ln(20);
 $pdf->Cell(0,0,'Dicho certificado se expide a solicitud verbal de la interesada.', 0,0, 'L');

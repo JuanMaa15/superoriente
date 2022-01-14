@@ -192,6 +192,11 @@
                 </div>
             </div>
         </div>
+        <a href="listas.php" class="btn btn-verde position-fixed top-0 start-0 ms-3 mt-3">
+                << Volver
+        </a>
+
+        </div>
         <div class="cont-opciones-editar d-flex flex-column p-3 position-fixed top-0 end-0 me-3 mt-3">
             <button class="opcion-editar btn btn-verde my-2" id="btn-editar-datos-personales" value="<?php echo $_GET['doc']; ?>" data-bs-toggle="modal" data-bs-target="#modificar-datos-personales">
                 <i class="far fa-edit"></i> Editar datos personales

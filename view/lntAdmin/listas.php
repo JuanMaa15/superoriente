@@ -38,24 +38,57 @@
                         <div id="listado-usuarios"></div>
                     </div>
                 </div> -->
-                <div id="lista-enlaces" class="my-5  px-5">
-                    <div class="row justify-content-around">
-                        <div class="col">
-                            <h2>Lista de empleados</h2>
+                    <div id="lista-enlaces" class="my-5  px-5">
+                        <div class="row justify-content-around">
+                            <div class="col">
+                                <h2>Lista de empleados</h2>
+                            </div>
+                            <div class="col-4">
+                            <form class="d-flex">
+                                <input class="form-control me-2" type="search" id="buscar_empleado" placeholder="Buscar" aria-label="Search">
+                                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                            </form>
+                            </div>
                         </div>
-                        <div class="col-4">
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" id="buscar_empleado" placeholder="Buscar" aria-label="Search">
-                            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-                        </form>
+                        <div class="row">
+                            <div class="col overflow-auto">
+                                <div id="listado-enlaces"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col overflow-auto">
-                            <div id="listado-enlaces"></div>
+                    <div id="reportes-empleados-fechas" class="my-5 px-5">
+                        <div class="row">
+                            <div class="col">
+                                <h2>Reportes de entrada de los empleados</h2>
+                            </div>
                         </div>
+                        <div class="row justify-content-center py-4">
+                            <div class="col-4">
+                                <label for="">Fecha inicio</label>
+                                <input type="date" class="form-control" id="fecha_inicio">
+                                <small class="text-danger"></small>
+                            </div>
+                            <div class="col-4">
+                                <label for="">Fecha fin</label>
+                                <input type="date" class="form-control" id="fecha_fin">
+                                <small class="text-danger"></small>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-4">
+                                <button class="btn btn-verde w-100" id="btn-buscar-fecha">Buscar</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col"> 
+                                <div id="lista-intervalo-fecha">
+
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
-                </div>
                 </div>
             </div>
 
