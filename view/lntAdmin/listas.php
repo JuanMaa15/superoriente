@@ -43,11 +43,24 @@
                             <div class="col">
                                 <h2>Lista de empleados</h2>
                             </div>
-                            <div class="col-4">
-                            <form class="d-flex">
-                                <input class="form-control me-2" type="search" id="buscar_empleado" placeholder="Buscar" aria-label="Search">
-                                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-                            </form>
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col">
+                                        <select class="form-select" id="filtro-empleado">
+                                            <option selected value="todos">Todos</option>
+                                            <option value="activos">Activos</option>
+                                            <option value="inactivos">Inactivos</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <form class="d-flex">
+                                            <input class="form-control me-2" type="search" id="buscar_empleado" placeholder="Buscar" aria-label="Search">
+                                            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                                        </form>
+                                    </div>
+                                    
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="row">
@@ -83,6 +96,39 @@
                         <div class="row">
                             <div class="col"> 
                                 <div id="lista-intervalo-fecha">
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div id="reportes-empleados-salario" class="my-5 px-5">
+                        <div class="row">
+                            <div class="col">
+                                <h2>Reportes empleados por salario</h2>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center py-4">
+                            <div class="col-4">
+                                <input type="text" class="form-control" id="inicio_salario" placeholder="Desde...">
+                                <small class="text-danger"></small>
+                            </div>
+                            <div class="col-4">
+                        
+                                <input type="text" class="form-control" id="fin_salario" placeholder="Hasta">
+                                <small class="text-danger"></small>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-4">
+                                <button class="btn btn-verde w-100" id="btn-buscar-salario">Buscar</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col"> 
+                                <div id="lista-intervalo-salario">
 
                                 </div>
                             </div>

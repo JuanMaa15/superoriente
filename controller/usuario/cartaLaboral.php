@@ -61,10 +61,10 @@ $pdf->Cell(0,0,'HACE CONSTAR QUE:', 0,0, 'C');
 $pdf->Ln(20);
 
 if ($usuariodto->getEstado() == 1) {
-    $pdf->MultiCell(0,5,utf8_decode( $genero  . ' '. strtoupper($usuariodto->getNombre(). " ". $usuariodto->getApellido()) .' con número de cédula ' . $usuariodto->getId_usuario() . ' labora en esta empresa con un contrato ' . $tipo_contrato . ', desde el ' . $desc_fecha_inicio . ' desempeñándose bajo el cargo de ' . strtoupper($usuariodto->getCargo()) . ', devengando un salario $' . intval($usuariodto->getSalario()) . '.'), 'C');
+    $pdf->MultiCell(0,5,utf8_decode( $genero . ' '. strtoupper($usuariodto->getNombre(). " ". $usuariodto->getApellido()) .' con número de cédula ' . $usuariodto->getId_usuario() . ' labora en esta empresa con un contrato ' . $tipo_contrato . ', desde el ' . $desc_fecha_inicio . ' desempeñándose bajo el cargo de ' . strtoupper($usuariodto->getCargo()) . ', devengando un salario $' . intval($usuariodto->getSalario()) . '.'), 'C');
 
 }else{
-    $pdf->MultiCell(0,5,utf8_decode( $genero  . ' '. strtoupper($usuariodto->getNombre(). " ". $usuariodto->getApellido()) .' con número de cédula ' . $usuariodto->getId_usuario() . ' labora en esta empresa con un contrato ' . $tipo_contrato . ', desde el ' . $desc_fecha_inicio . ' hasta ' . $desc_fecha_fin . ' desempeñándose bajo el cargo de ' . strtoupper($usuariodto->getCargo()) . ', devengando un salario $' . intval($usuariodto->getSalario()) . '.'), 'C');
+    $pdf->MultiCell(0,5,utf8_decode( $genero  . ' '. strtoupper($usuariodto->getNombre(). " ". $usuariodto->getApellido()) .' con número de cédula ' . $usuariodto->getId_usuario() . ' laboró en esta empresa con un contrato a termino ' . $tipo_contrato . ', desde el ' . $desc_fecha_inicio . ' hasta ' . $desc_fecha_fin . ' desempeñándose bajo el cargo de ' . strtoupper($usuariodto->getCargo()) . ', devengando un salario $' . intval($usuariodto->getSalario()) . '.'), 'C');
 
 }
 

@@ -18,7 +18,8 @@ var acciones = {
         $("#agregar-hijo").click(acciones.agregarhijo);
         $("#remover-hijo").click(acciones.removerhijo);
         $("#btn-buscar-fecha").click(acciones.buscarEmpleadoFecha);
-
+        $("#btn-buscar-salario").click(acciones.buscarEmpleadoSalario);
+        $("#filtro-empleado").click(acciones.filtroEmpleado);
 
         $("#buscar_empleado").keyup(acciones.buscarEmpleado);
         
@@ -67,6 +68,60 @@ var acciones = {
 
     },
 
+    filtroEmpleado : function() {
+
+        var filtroEmpleado = $(this).val();
+
+        console.log("funcionando");
+
+  
+        $.post('../../controller/usuario/ListaEnlaces.php',{
+            opc: filtroEmpleado
+        },function(responseText) {
+            $("#listado-enlaces").html(responseText);
+        });
+
+    },
+
+    buscarEmpleadoSalario : function () {
+        
+        
+        var inicio_salario = $("#inicio_salario").val();
+        var fin_salario = $("#fin_salario").val();
+        var validar = 0;
+
+        if (inicio_salario.length !== 0) {
+            $("#inicio_salario").next().html("");
+            validar++;
+        }else{
+            $("#inicio_salario").next().html("Campo vacío, por favor ingrese el inicio del salario");
+        }
+
+        if (fin_salario.length !== 0) {
+            $("#fin_salario").next().html("");
+            validar++;
+        }else{
+            $("#fin_salario").next().html("Campo vacío, por favor ingrese el fin del salario");
+        }
+
+        if (validar === 2) {
+            
+            $.post('../../controller/listas reportes/ListasUsuarios.php',{
+                opc: "salario",
+                inicio_salario: inicio_salario,
+                fin_salario: fin_salario
+            },function(responseText){
+
+                $("#lista-intervalo-salario").html(responseText);
+
+            });
+
+        }else{
+            alert("Hay campos vacíos");
+        }
+
+    },
+
     buscarEmpleadoFecha : function() {
 
         var fecha_inicio = $("#fecha_inicio").val();
@@ -74,14 +129,14 @@ var acciones = {
         var validar = 0;
 
         if (fecha_inicio.length !== 0) {
-            $("#fecha_inicio").next().html();
+            $("#fecha_inicio").next().html("");
             validar++;
         }else{
             $("#fecha_inicio").next().html("Campo vacío, por favor ingrese el inicio de la fecha");
         }
 
         if (fecha_fin.length !== 0) {
-            $("#fecha_fin").next().html();
+            $("#fecha_fin").next().html("");
             validar++;
         }else{
             $("#fecha_fin").next().html("Campo vacío, por favor ingrese el fin de la fecha");
@@ -90,6 +145,7 @@ var acciones = {
         if (validar === 2) {
             
             $.post('../../controller/listas reportes/ListasUsuarios.php',{
+                opc: "fecha",
                 fecha_inicio: fecha_inicio,
                 fecha_fin: fecha_fin
             },function(responseText){

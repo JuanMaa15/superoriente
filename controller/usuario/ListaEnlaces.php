@@ -5,6 +5,7 @@ require_once ("../../models/DAO/UsuarioDAO.php");
 
 $usuariodao = new UsuarioDAO();
 
+
 $listaUsuarios = $usuariodao->listaUsuarios();
 
 $lista =  "<table class='table table-striped'>"
@@ -83,6 +84,134 @@ $lista .= "</tbody>"
         . "</table>";
 
 
-echo $lista;
+$btnDescargar = "";
+
+if (isset($_POST['opc'])) {
+
+    switch ($_POST['opc']) {
+        case 'activos':
+
+            $listaUsuarios = $usuariodao->ListaEstadoUsuario(1);
+
+            $lista = "<table class='table table-striped'>"
+            ."<thead>"
+            ."<tr>"
+                ."<th scope='col' class='pe-5'>Tipo_documento</th>"
+                ."<th scope='col' class='pe-5'>Nro_documento</th>"
+                ."<th scope='col' class='pe-5'>Nombre</th>"
+                ."<th scope='col' class='pe-5'>Apellido</th>"
+                ."<th scope='col' class='pe-5'>Estado</th>"
+                ."<th scope='col' class='pe-5'><i class='far fa-folder'></i> Carpeta</th>"
+                
+            ."</tr>"
+            ."</thead>"
+            ."<tbody>";
+
+            for ($i=0; $i < count($listaUsuarios); $i++) { 
+                $lista .= "<tr>"
+                ."<td>" . $listaUsuarios[$i]->getTipo_documento() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getEstado() . "</td>"
+                ."<td><a href='hojavida.php?doc=" . $listaUsuarios[$i]->getId_usuario() . "'><i class='far fa-folder'></i> Más información </a></td>";
+            
+            }
+
+            $lista .= "</tbody>"
+                    . "</table>";
+        
+            $btnDescargar = "<div class='row'>"
+                            ."<div class='col'>"
+                            ."<form method='POST' action='../../controller/reportes/ReporteEstadoUsuario.php'>"
+                            ."<input type='text' class='d-none' value='1' name='estado'>"
+                            ."<button type='submit' class='btn btn-verde' name='btn-reporte-estado''>Descargar Reporte</button>"
+                            ."</form>"
+                            
+                            . "</div>"
+                            . "</div>";
+        
+        break;
+        case 'inactivos':
+            $listaUsuarios = $usuariodao->ListaEstadoUsuario(2);
+
+            $lista = "<table class='table table-striped'>"
+            ."<thead>"
+            ."<tr>"
+                ."<th scope='col' class='pe-5'>Tipo_documento</th>"
+                ."<th scope='col' class='pe-5'>Nro_documento</th>"
+                ."<th scope='col' class='pe-5'>Nombre</th>"
+                ."<th scope='col' class='pe-5'>Apellido</th>"
+                ."<th scope='col' class='pe-5'>Estado</th>"
+                ."<th scope='col' class='pe-5'><i class='far fa-folder'></i> Carpeta</th>"
+                
+            ."</tr>"
+            ."</thead>"
+            ."<tbody>";
+
+            for ($i=0; $i < count($listaUsuarios); $i++) { 
+                $lista .= "<tr>"
+                ."<td>" . $listaUsuarios[$i]->getTipo_documento() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getEstado() . "</td>"
+                ."<td><a href='hojavida.php?doc=" . $listaUsuarios[$i]->getId_usuario() . "'><i class='far fa-folder'></i> Más información </a></td>";
+            }
+
+            $btnDescargar = "<div class='row'>"
+                            ."<div class='col'>"
+                            ."<form method='POST' action='../../controller/reportes/ReporteEstadoUsuario.php'>"
+                            ."<input type='text' class='d-none' value='2' name='estado'>"
+                            ."<button type='submit' class='btn btn-verde' name='btn-reporte-estado''>Descargar Reporte</button>"
+                            ."</form>"
+                            
+                            . "</div>"
+                            . "</div>";
+
+            $lista .= "</tbody>"
+            . "</table>";
+        break;
+
+        
+        case "todos":
+            $listaUsuarios = $usuariodao->listaUsuarios();
+
+            $lista = "<table class='table table-striped'>"
+            ."<thead>"
+            ."<tr>"
+                ."<th scope='col' class='pe-5'>Tipo_documento</th>"
+                ."<th scope='col' class='pe-5'>Nro_documento</th>"
+                ."<th scope='col' class='pe-5'>Nombre</th>"
+                ."<th scope='col' class='pe-5'>Apellido</th>"
+                ."<th scope='col' class='pe-5'><i class='far fa-folder'></i> Carpeta</th>"
+                
+            ."</tr>"
+            ."</thead>"
+            ."<tbody>";
+
+            for ($i=0; $i < count($listaUsuarios); $i++) { 
+                $lista .= "<tr>"
+                ."<td>" . $listaUsuarios[$i]->getTipo_documento() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+                ."<td><a href='hojavida.php?doc=" . $listaUsuarios[$i]->getId_usuario() . "'><i class='far fa-folder'></i> Más información </a></td>";
+            }
+
+            $lista .= "</tbody>"
+            . "</table>";
+
+            
+        break;
+        
+        default:
+     
+            break;
+    }
+
+}
+
+echo $lista ." ". $btnDescargar;
 
 
