@@ -22,6 +22,11 @@ var acciones = {
         $("#filtro-empleado").click(acciones.filtroEmpleado);
 
         $("#buscar_empleado").keyup(acciones.buscarEmpleado);
+
+
+        // ---------------- Verificación de campos (inputs) por teclado ------------
+
+        $("#correo").keyup(acciones.verificarCorreoBd);
         
         
         // --------------- Se muestran las tablas con los datos ----------------
@@ -65,6 +70,27 @@ var acciones = {
             $("#listado-estados-civiles").html(responseText);
         });
 
+
+    },
+
+    // ---------------- Verificación de campos (inputs) por teclado ------------
+
+
+    verificarCorreoBd : function() {
+
+    var correo = $(this).val();
+
+    if (correo.length != 0) {
+
+        $.post('../../controller/correo/VerificarCorreoBD.php',{
+            correo: correo
+        },function(responseText){
+            $("#correo").next().html(responseText);
+        });
+
+    }else{
+        $("#correo").next().html("Campo vacío, por favor ingrese el correo");
+    }
 
     },
 
@@ -873,6 +899,13 @@ var acciones = {
                 }, function(responseText) {
                     $("#rta-registro-empleado").html(responseText);
                     //setTimeout("location.reload()", 1800);
+                });
+
+
+                $.post('../../controller/correo/VerificarCorreoBD.php',{
+                    correo: correo
+                },function(responseText){
+                    $("#correo").next().html(responseText);
                 });
                                                             
             }else{

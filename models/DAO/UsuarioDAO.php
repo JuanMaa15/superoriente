@@ -1173,4 +1173,31 @@ class UsuarioDAO {
         return null;
     }
 
+
+    public function verificarCorreoBd($correo) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "SELECT correo FROM tbl_usuario WHERE correo = '" . $correo . "'";
+            $rs = $cnx->query($sql);
+
+            $countRows = $rs->rowCount();
+
+            if ($countRows <= -1) {
+
+                return true;
+
+            }else{
+                return false;
+            }
+
+        } catch (Exception $ex) {
+            print "Error al verificar el correo con la base de datos";     
+        }
+
+        return false;
+
+    }
+
 }
