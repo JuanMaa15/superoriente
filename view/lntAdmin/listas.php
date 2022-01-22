@@ -1,10 +1,23 @@
 <?php
     session_start();
 
+    require_once ('../../models/DAO/EstadoDAO.php');
+    require_once ('../../models/DAO/TipoContratoDAO.php');
+    require_once ('../../models/DAO/CasaDAO.php');
 
     if (isset($_SESSION['id_admin'])) {
 
+        // --- Instacia de los objetos ----
 
+        $estadodao = new EstadoDAO();
+        $tipoContratodao = new TipoContratoDAO();
+        $casadao = new CasaDAO();
+
+        // --- Listas ---
+
+        $listaEstados = $estadodao->listaEstados();
+        $listaTipoContratos = $tipoContratodao->listaTiposContratos();
+        $listaCasas = $casadao->listaCasas();
 ?>
 
 
@@ -48,8 +61,29 @@
                                     <div class="col">
                                         <select class="form-select" id="filtro-empleado">
                                             <option selected value="todos">Todos</option>
-                                            <option value="activos">Activos</option>
-                                            <option value="inactivos">Inactivos</option>
+                                            <?php
+                                                for ($i=0; $i < count($listaEstados); $i++) { 
+                                                    ?>
+                                                        <option  value="estado <?php echo $listaEstados[$i]->getId_estado(); ?>">Empleado <?php echo strtolower($listaEstados[$i]->getNombre()); ?></option>
+                                                       
+                                                    <?php
+                                                }
+
+                                                for ($i=0; $i < count($listaTipoContratos); $i++) { 
+                                                    ?>
+                                                        <option  value="contrato <?php echo $listaTipoContratos[$i]->getId_tipo_contrato(); ?>">Contrato <?php echo strtolower($listaTipoContratos[$i]->getNombre()); ?></option>
+                                                       
+                                                    <?php
+                                                }
+
+                                                for ($i=0; $i < count($listaCasas); $i++) { 
+                                                    ?>
+                                                        <option  value="casa <?php echo $listaCasas[$i]->getId_casa(); ?>">Tipo de casa <?php echo strtolower($listaCasas[$i]->getNombre()); ?></option>
+                                                       
+                                                    <?php
+                                                }
+                                            ?>
+                                            
                                         </select>
                                     </div>
                                     <div class="col">
@@ -135,6 +169,7 @@
                         </div>
                         
                     </div>
+
                 </div>
             </div>
 

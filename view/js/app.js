@@ -72,14 +72,52 @@ var acciones = {
 
         var filtroEmpleado = $(this).val();
 
-        console.log("funcionando");
+        var idFiltro = "";
+
+        if (filtroEmpleado.indexOf("estado") > -1){
+            idFiltro = filtroEmpleado.replace("estado", "").trim();
+
+            $.post('../../controller/usuario/ListaEnlaces.php',{
+                opc: "estado",
+                id: idFiltro
+            },function(responseText) {
+                $("#listado-enlaces").html(responseText);
+            });
+
+        }else if(filtroEmpleado.indexOf("contrato") > -1){
+            idFiltro = filtroEmpleado.replace("contrato", "").trim();
+
+            $.post('../../controller/usuario/ListaEnlaces.php',{
+                opc: "contrato",
+                id: idFiltro
+            },function(responseText) {
+                $("#listado-enlaces").html(responseText);
+            });
+
+             
+        }else if(filtroEmpleado.indexOf("casa") > -1) {
+            idFiltro = filtroEmpleado.replace("casa", "").trim();
+
+            $.post('../../controller/usuario/ListaEnlaces.php',{
+                opc: "casa",
+                id: idFiltro
+            },function(responseText) {
+                $("#listado-enlaces").html(responseText);
+            });
+        }else{
+            $.post('../../controller/usuario/ListaEnlaces.php',{
+                opc: filtroEmpleado,
+                id: ""
+            },function(responseText) {
+                $("#listado-enlaces").html(responseText);
+            });
+        }
+
+
+        //console.log(id_filtro);
 
   
-        $.post('../../controller/usuario/ListaEnlaces.php',{
-            opc: filtroEmpleado
-        },function(responseText) {
-            $("#listado-enlaces").html(responseText);
-        });
+        
 
     },
 

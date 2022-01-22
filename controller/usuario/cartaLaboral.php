@@ -15,9 +15,11 @@ $usuariodao = new UsuarioDAO();
 
 $usuariodto = $usuariodao->listaUsuario($id_usuario);
 
+$usuariodtoId = $usuariodao->listaUsuarioConId($id_usuario);
+
 $genero = '';
 
-if ($usuariodto->getGenero() == 1) {
+if ($usuariodtoId->getGenero() == 1) {
     $genero = "El señor";
 }else{
     $genero = "La señora";
@@ -27,7 +29,7 @@ $tipoContratodao = new TipoContratoDAO();
 $listaTiposContratos = $tipoContratodao->listaTiposContratos(); 
 $tipo_contrato = '';
 for ($i=0; $i < count($listaTiposContratos); $i++) { 
-    if ($usuariodto->getTipo_contrato() == $listaTiposContratos[$i]->getId_tipo_contrato()) {
+    if ($usuariodtoId->getTipo_contrato() == $listaTiposContratos[$i]->getId_tipo_contrato()) {
         $tipo_contrato = $listaTiposContratos[$i]->getNombre();
     }
 }
@@ -60,7 +62,7 @@ $pdf->Ln(10);
 $pdf->Cell(0,0,'HACE CONSTAR QUE:', 0,0, 'C');
 $pdf->Ln(20);
 
-if ($usuariodto->getEstado() == 1) {
+if ($usuariodtoId->getEstado() == 1) {
     $pdf->MultiCell(0,5,utf8_decode( $genero . ' '. strtoupper($usuariodto->getNombre(). " ". $usuariodto->getApellido()) .' con número de cédula ' . $usuariodto->getId_usuario() . ' labora en esta empresa con un contrato ' . $tipo_contrato . ', desde el ' . $desc_fecha_inicio . ' desempeñándose bajo el cargo de ' . strtoupper($usuariodto->getCargo()) . ', devengando un salario $' . intval($usuariodto->getSalario()) . '.'), 'C');
 
 }else{

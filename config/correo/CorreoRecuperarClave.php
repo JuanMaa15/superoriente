@@ -29,7 +29,7 @@ Class CorreoRecuperacion {
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('nuevocorreo290@gmail.com', 'TiendaGamer');
+            $mail->setFrom('nuevocorreo290@gmail.com', 'Superoriente');
             $mail->addAddress($destino, $nombre);     //Add a recipient
             /* $mail->addAddress('ellen@example.com');               //Name is optional
             $mail->addReplyTo('info@example.com', 'Information');

@@ -288,6 +288,82 @@ class UsuarioDAO {
     }
 
 
+    // ------------------------ Lista de datos del usuario con su código -------------------
+
+    public function listaUsuarioConId($id_usuario) {
+
+        $cnx = Conexion::conectar();
+        $usuariodto = null;
+
+        try {
+            
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh WHERE id_usuario = '" . $id_usuario . "'";
+            $rs = $cnx->query($sql);
+
+            $row = $rs->fetch();
+            $usuariodto = new UsuarioDTO();
+            $usuariodto->constructor(
+                $row['id_usuario'],
+                $row['id_tipo_documento'],
+                $row['fecha_expedicion'],
+                $row['lugar_expedicion'],
+                $row['nombre'],
+                $row['apellido'],
+                $row['telefono_fijo'],
+                $row['telefono_movil'],
+                $row['id_casa'],
+                $row['id_genero'],
+                $row['fecha_nacimiento'],
+                $row['edad'],
+                $row['direccion'],
+                $row['lugar_residencia'],
+                $row['nivel_academico'],
+                $row['area_academica'],
+                $row['id_estado_civil'],
+                $row['eps'],
+                $row['nro_cuenta'],
+                $row['id_tipo_sangre_rh'],
+                $row['antecedentes'],
+                $row['practica_deporte'],
+                $row['consumo_cigarros'],
+                $row['consumo_licor'],
+                $row['consumo_spa'],
+                $row['correo'],
+                $row['pass'],
+                $row['id_perfil'],
+                $row['nombre_persona_emergencia'],
+                $row['telefono_emergencia'],
+                $row['celular_emergencia'],
+                $row['parentesco_emergencia'],
+
+                $row['sucursal'],
+                $row['id_tipo_contrato'],
+                $row['fecha_ingreso'],
+                $row['fecha_retiro'],
+                $row['motivo_retiro'],
+                $row['salario'],
+                $row['valor_dia'],
+                $row['valor_hora'],
+                $row['clase_riesgo'],
+                $row['porcentaje_riesgo'],
+                $row['area'],
+                $row['seccion'],
+                $row['cargo'],
+                $row['pension'],
+                $row['id_estado'],
+            );
+
+            return $usuariodto;
+
+        } catch (Exception $e) {
+            print "Error, al traer los datos del usuario " . $e->getMessage();
+        }
+
+        return null;
+
+    }
+
+
     // --------------------------- Actualizar Usuario -------------------------------
 
     public function actualizarUsuario($usuariodto) {
@@ -595,25 +671,25 @@ class UsuarioDAO {
                 $usuariodto = new UsuarioDTO();
                 $usuariodto->constructor(
                     $row['id_usuario'],
-                    $row['tipo_documento'],
+                    $row['id_tipo_documento'],
                     $row['fecha_expedicion'],
                     $row['lugar_expedicion'],
                     $row['nombre'],
                     $row['apellido'],
                     $row['telefono_fijo'],
                     $row['telefono_movil'],
-                    $row['tipo_casa'],
-                    $row['genero'],
+                    $row['id_casa'],
+                    $row['id_genero'],
                     $row['fecha_nacimiento'],
                     $row['edad'],
                     $row['direccion'],
                     $row['lugar_residencia'],
                     $row['nivel_academico'],
                     $row['area_academica'],
-                    $row['estado_civil'],
+                    $row['id_estado_civil'],
                     $row['eps'],
                     $row['nro_cuenta'],
-                    $row['tipo_sangre_rh'],
+                    $row['id_tipo_sangre_rh'],
                     $row['antecedentes'],
                     $row['practica_deporte'],
                     $row['consumo_cigarros'],
@@ -628,7 +704,7 @@ class UsuarioDAO {
                     $row['parentesco_emergencia'],
 
                     $row['sucursal'],
-                    $row['tipo_contrato'],
+                    $row['id_tipo_contrato'],
                     $row['fecha_ingreso'],
                     $row['fecha_retiro'],
                     $row['motivo_retiro'],
@@ -641,7 +717,7 @@ class UsuarioDAO {
                     $row['seccion'],
                     $row['cargo'],
                     $row['pension'],
-                    $row['estado'],
+                    $row['id_estado'],
                 );
                 return $usuariodto;
 
@@ -928,6 +1004,169 @@ class UsuarioDAO {
             
         } catch (Exception $ex) {
             print "Error al traer la lista de los empleados por fecha" . $ex;
+        }
+
+
+        return null;
+    }
+
+
+    public function ListaTipoContratoUsuario($tipo_contrato) {
+
+        $cnx = Conexion::conectar();
+        $lista = array();
+        $i = 0;
+
+        try {
+            
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh WHERE tu.id_tipo_contrato = " . $tipo_contrato;
+            $rs = $cnx->query($sql);
+
+            while($row = $rs->fetch()) {
+                
+                $lista[$i] = new UsuarioDTO();
+                $lista[$i]->constructor(
+                    $row['id_usuario'],
+                        $row['tipo_documento'],
+                        $row['fecha_expedicion'],
+                        $row['lugar_expedicion'],
+                        $row['nombre'],
+                        $row['apellido'],
+                        $row['telefono_fijo'],
+                        $row['telefono_movil'],
+                        $row['tipo_casa'],
+                        $row['genero'],
+                        $row['fecha_nacimiento'],
+                        $row['edad'],
+                        $row['direccion'],
+                        $row['lugar_residencia'],
+                        $row['nivel_academico'],
+                        $row['area_academica'],
+                        $row['estado_civil'],
+                        $row['eps'],
+                        $row['nro_cuenta'],
+                        $row['tipo_sangre_rh'],
+                        $row['antecedentes'],
+                        $row['practica_deporte'],
+                        $row['consumo_cigarros'],
+                        $row['consumo_licor'],
+                        $row['consumo_spa'],
+                        $row['correo'],
+                        $row['pass'],
+                        $row['perfil'],
+                        $row['nombre_persona_emergencia'],
+                        $row['telefono_emergencia'],
+                        $row['celular_emergencia'],
+                        $row['parentesco_emergencia'],
+
+                        $row['sucursal'],
+                        $row['tipo_contrato'],
+                        $row['fecha_ingreso'],
+                        $row['fecha_retiro'],
+                        $row['motivo_retiro'],
+                        $row['salario'],
+                        $row['valor_dia'],
+                        $row['valor_hora'],
+                        $row['clase_riesgo'],
+                        $row['porcentaje_riesgo'],
+                        $row['area'],
+                        $row['seccion'],
+                        $row['cargo'],
+                        $row['pension'],
+                        $row['estado'],
+                );
+
+                $i++;
+
+            }
+
+            return $lista;
+
+            
+            
+        } catch (Exception $ex) {
+            print "Error al traer la lista de los empleados por tipo de contrato" . $ex;
+        }
+
+
+        return null;
+    }
+
+    public function ListaCasaUsuario($casa) {
+
+        $cnx = Conexion::conectar();
+        $lista = array();
+        $i = 0;
+
+        try {
+            
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh WHERE tu.id_casa = " . $casa;
+            $rs = $cnx->query($sql);
+
+            while($row = $rs->fetch()) {
+                
+                $lista[$i] = new UsuarioDTO();
+                $lista[$i]->constructor(
+                    $row['id_usuario'],
+                        $row['tipo_documento'],
+                        $row['fecha_expedicion'],
+                        $row['lugar_expedicion'],
+                        $row['nombre'],
+                        $row['apellido'],
+                        $row['telefono_fijo'],
+                        $row['telefono_movil'],
+                        $row['tipo_casa'],
+                        $row['genero'],
+                        $row['fecha_nacimiento'],
+                        $row['edad'],
+                        $row['direccion'],
+                        $row['lugar_residencia'],
+                        $row['nivel_academico'],
+                        $row['area_academica'],
+                        $row['estado_civil'],
+                        $row['eps'],
+                        $row['nro_cuenta'],
+                        $row['tipo_sangre_rh'],
+                        $row['antecedentes'],
+                        $row['practica_deporte'],
+                        $row['consumo_cigarros'],
+                        $row['consumo_licor'],
+                        $row['consumo_spa'],
+                        $row['correo'],
+                        $row['pass'],
+                        $row['perfil'],
+                        $row['nombre_persona_emergencia'],
+                        $row['telefono_emergencia'],
+                        $row['celular_emergencia'],
+                        $row['parentesco_emergencia'],
+
+                        $row['sucursal'],
+                        $row['tipo_contrato'],
+                        $row['fecha_ingreso'],
+                        $row['fecha_retiro'],
+                        $row['motivo_retiro'],
+                        $row['salario'],
+                        $row['valor_dia'],
+                        $row['valor_hora'],
+                        $row['clase_riesgo'],
+                        $row['porcentaje_riesgo'],
+                        $row['area'],
+                        $row['seccion'],
+                        $row['cargo'],
+                        $row['pension'],
+                        $row['estado'],
+                );
+
+                $i++;
+
+            }
+
+            return $lista;
+
+            
+            
+        } catch (Exception $ex) {
+            print "Error al traer la lista de los empleados por tipo de casa" . $ex;
         }
 
 

@@ -88,10 +88,12 @@ $btnDescargar = "";
 
 if (isset($_POST['opc'])) {
 
-    switch ($_POST['opc']) {
-        case 'activos':
+    $id = intval($_POST['id']);
 
-            $listaUsuarios = $usuariodao->ListaEstadoUsuario(1);
+    switch ($_POST['opc']) {
+        case 'estado':
+
+            $listaUsuarios = $usuariodao->ListaEstadoUsuario($id);
 
             $lista = "<table class='table table-striped'>"
             ."<thead>"
@@ -124,7 +126,7 @@ if (isset($_POST['opc'])) {
             $btnDescargar = "<div class='row'>"
                             ."<div class='col'>"
                             ."<form method='POST' action='../../controller/reportes/ReporteEstadoUsuario.php'>"
-                            ."<input type='text' class='d-none' value='1' name='estado'>"
+                            ."<input type='text' class='d-none' value='" . $id . "' name='estado'>"
                             ."<button type='submit' class='btn btn-verde' name='btn-reporte-estado''>Descargar Reporte</button>"
                             ."</form>"
                             
@@ -132,8 +134,10 @@ if (isset($_POST['opc'])) {
                             . "</div>";
         
         break;
-        case 'inactivos':
-            $listaUsuarios = $usuariodao->ListaEstadoUsuario(2);
+
+        case 'contrato':
+
+            $listaUsuarios = $usuariodao->ListaTipoContratoUsuario($id);
 
             $lista = "<table class='table table-striped'>"
             ."<thead>"
@@ -142,7 +146,7 @@ if (isset($_POST['opc'])) {
                 ."<th scope='col' class='pe-5'>Nro_documento</th>"
                 ."<th scope='col' class='pe-5'>Nombre</th>"
                 ."<th scope='col' class='pe-5'>Apellido</th>"
-                ."<th scope='col' class='pe-5'>Estado</th>"
+                ."<th scope='col' class='pe-5'>Tipo de contrato</th>"
                 ."<th scope='col' class='pe-5'><i class='far fa-folder'></i> Carpeta</th>"
                 
             ."</tr>"
@@ -155,23 +159,70 @@ if (isset($_POST['opc'])) {
                 ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
                 ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
                 ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
-                ."<td>" . $listaUsuarios[$i]->getEstado() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getTipo_contrato() . "</td>"
                 ."<td><a href='hojavida.php?doc=" . $listaUsuarios[$i]->getId_usuario() . "'><i class='far fa-folder'></i> Más información </a></td>";
+            
             }
 
+            $lista .= "</tbody>"
+                    . "</table>";
+        
             $btnDescargar = "<div class='row'>"
                             ."<div class='col'>"
-                            ."<form method='POST' action='../../controller/reportes/ReporteEstadoUsuario.php'>"
-                            ."<input type='text' class='d-none' value='2' name='estado'>"
-                            ."<button type='submit' class='btn btn-verde' name='btn-reporte-estado''>Descargar Reporte</button>"
+                            ."<form method='POST' action='../../controller/reportes/ReporteContratoUsuario.php'>"
+                            ."<input type='text' class='d-none' value='" . $id . "' name='contrato'>"
+                            ."<button type='submit' class='btn btn-verde' name='btn-reporte-contrato''>Descargar Reporte</button>"
                             ."</form>"
                             
                             . "</div>"
                             . "</div>";
+        
+        break;
+
+        case 'casa':
+
+            $listaUsuarios = $usuariodao->ListaCasaUsuario($id);
+
+            $lista = "<table class='table table-striped'>"
+            ."<thead>"
+            ."<tr>"
+                ."<th scope='col' class='pe-5'>Tipo_documento</th>"
+                ."<th scope='col' class='pe-5'>Nro_documento</th>"
+                ."<th scope='col' class='pe-5'>Nombre</th>"
+                ."<th scope='col' class='pe-5'>Apellido</th>"
+                ."<th scope='col' class='pe-5'>Casa</th>"
+                ."<th scope='col' class='pe-5'><i class='far fa-folder'></i> Carpeta</th>"
+                
+            ."</tr>"
+            ."</thead>"
+            ."<tbody>";
+
+            for ($i=0; $i < count($listaUsuarios); $i++) { 
+                $lista .= "<tr>"
+                ."<td>" . $listaUsuarios[$i]->getTipo_documento() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getTipo_casa() . "</td>"
+                ."<td><a href='hojavida.php?doc=" . $listaUsuarios[$i]->getId_usuario() . "'><i class='far fa-folder'></i> Más información </a></td>";
+            
+            }
 
             $lista .= "</tbody>"
-            . "</table>";
+                    . "</table>";
+        
+            $btnDescargar = "<div class='row'>"
+                            ."<div class='col'>"
+                            ."<form method='POST' action='../../controller/reportes/ReporteCasaUsuario.php'>"
+                            ."<input type='text' class='d-none' value='" . $id . "' name='tipo_casa'>"
+                            ."<button type='submit' class='btn btn-verde' name='btn-reporte-casa''>Descargar Reporte</button>"
+                            ."</form>"
+                            
+                            . "</div>"
+                            . "</div>";
+        
         break;
+
 
         
         case "todos":
