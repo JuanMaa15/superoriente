@@ -47,33 +47,31 @@
                         <div class="row"> 
                             <div class="col">
                                 <h3 class="text-center my-3">Datos personales</h3>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <p>Tipo de documento: <?php echo $listaUsuario->getTipo_documento(); ?></p>
+                                <div class="row justify-content-center">
+                                    <div class="col">
+                                        <p><b>Tipo de documento:</b> <?php echo $listaUsuario->getTipo_documento(); ?></p>
                                         <p>Lugar de expedición: <?php echo $listaUsuario->getLugar_expedicion(); ?></p>
                                         <p>Edad: <?php echo $listaUsuario->getEdad(); ?></p>
+                                        <p>Correo Electrónico: <?php echo $listaUsuario->getCorreo(); ?></p>
                                         <p>Género: <?php echo $listaUsuario->getGenero(); ?></p>
+                                        <p>Estado civil: <?php echo $listaUsuario->getEstado_civil(); ?></p>
                                         <p>Fecha de Nacimiento: <?php echo $listaUsuario->getFecha_nacimiento(); ?></p>
                                         <p>EPS: <?php echo $listaUsuario->getEps(); ?></p>
                                         <p>Nro de cuenta: <?php echo $listaUsuario->getNro_cuenta(); ?></p>
+                                        <p>Tipo de sangre: <?php echo $listaUsuario->getTipo_sangre(); ?></p>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col">
                                         <p>Documento: <?php echo $listaUsuario->getId_usuario(); ?></p>
+                                        <p>Fecha de expedición: <?php echo $listaUsuario->getFecha_expedicion(); ?> </p>
                                         <p>Nombre: <?php echo $listaUsuario->getNombre(). " " . $listaUsuario->getApellido(); ?> </p>
                                         <p>Telefono Fijo: <?php echo $listaUsuario->getTelefono_fijo(); ?></p>
+                                        <p>Telefono Móvil: <?php echo $listaUsuario->getTelefono_movil(); ?></p>
                                         <p>Dirección: <?php echo $listaUsuario->getDireccion(); ?></p>
                                         <p>Lugar residencia: <?php echo $listaUsuario->getLugar_residencia(); ?></p>
                                         <p>Area academico: <?php echo $listaUsuario->getArea_academica() ?></p>
+                                        <p>Nivel academico: <?php echo $listaUsuario->getNivel_academico(); ?></p>
                                         <p>Tipo de casa: <?php echo $listaUsuario->getTipo_casa(); ?></p>
                                         
-                                    </div>
-                                    <div class="col-4">
-                                        <p>Fecha de expedición: <?php echo $listaUsuario->getFecha_expedicion(); ?> </p>
-                                        <p>Correo Electrónico: <?php echo $listaUsuario->getCorreo(); ?></p>
-                                        <p>Telefono Móvil: <?php echo $listaUsuario->getTelefono_movil(); ?></p>
-                                        <p>Estado civil: <?php echo $listaUsuario->getEstado_civil(); ?></p>
-                                        <p>Nivel academico: <?php echo $listaUsuario->getNivel_academico(); ?></p>
-                                        <p>Tipo de sangre: <?php echo $listaUsuario->getTipo_sangre(); ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -81,12 +79,12 @@
                         <div class="row my-3"> 
                             <div class="col">
                                 <div class="row justify-content-center">
-                                    <div class="col-5  ">
+                                    <div class="col">
                                         <p>Antecedentes: <?php echo $listaUsuario->getAntecedentes(); ?></p>
                                         <p>Consumo de cigarros: <?php echo $listaUsuario->getConsumo_cigarros(); ?></p>
                                         <p>Consumo de spa: <?php echo $listaUsuario->getConsumo_spa(); ?></p>
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col">
                                         <p>Practica deporte: <?php echo $listaUsuario->getPractica_deporte(); ?></p>
                                         <P>Consumo licor: <?php echo $listaUsuario->getConsumo_licor(); ?></P>
                                         
@@ -95,9 +93,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row my-3"> 
+                        <div class="row my-3 border-bottom"> 
                             <div class="col">
-                                <div class="row">
+                                <div class="row justify-content-center">
                                     <div class="col">
                                         <p>Nombre de persona de emergencia: <?php echo $listaUsuario->getNombre_persona_emergencia(); ?></p>
                                         <p>Teléfono: <?php echo $listaUsuario->getTelefono_emergencia() ?></p>
@@ -112,7 +110,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row border-bottom">
                             <div class="col-12">
                                 <h3 class="text-center my-3">Datos laborales</h3>
                             </div>
@@ -139,7 +137,7 @@
                                 <p>Estado: <?php echo $listaUsuario->getEstado(); ?></p>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row border-bottom">
                             <div class="row-12">
                                 <h3 class="text-center my-3">Datos familiares <span class="fs-5">(Personas con las que vive).</span></h3>
                             </div>

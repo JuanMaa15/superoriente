@@ -1,5 +1,6 @@
 <?php
 
+require ("../../config/correo/CorreoRecuperarClave.php");
 
 require_once ("../../models/DAO/UsuarioDAO.php");
 require_once ("../../models/DAO/FamiliarDAO.php");
@@ -87,117 +88,139 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
     && !empty($password) && !empty($sucursal) && !empty($tipo_contrato) && !empty($fecha_ingreso) && !empty($salario)
     && !empty($valor_dia) && !empty($valor_hora) && !empty($area) && !empty($seccion) && !empty($cargo) && !empty($estado) 
     && !empty($perfil)) {
+
+        $usuariodao = new UsuarioDAO();
     
-    
+        $resultadoCorreo = $usuariodao->verificarCorreoBd($correo);
 
-    // Datos del usuario
+        if (!$resultadoCorreo) {
 
-    $usuariodto = new UsuarioDTO();
+             // Datos del usuario
 
-    $usuariodto->setId_usuario($id_usuario);
-    $usuariodto->setTipo_documento($tipo_documento);
-    $usuariodto->setFecha_expedicion($fecha_expedicion);
-    $usuariodto->setLugar_expedicion($lugar_expedicion);
-    $usuariodto->setNombre($nombre);
-    $usuariodto->setApellido($apellido);
-    $usuariodto->setTelefono_fijo($telefono_fijo);
-    $usuariodto->setTelefono_movil($telefono_movil);
-    $usuariodto->setTipo_casa($tipo_casa);
-    $usuariodto->setGenero($genero);
-    $usuariodto->setFecha_nacimiento($fecha_nacimiento);
-    $usuariodto->setEdad($edad);
-    $usuariodto->setNivel_academico($nivel_academico);
-    $usuariodto->setArea_academica($area_academica);
-    $usuariodto->setEstado_civil($estado_civil);
-    $usuariodto->setEps($eps);
-    $usuariodto->setNro_cuenta($nro_cuenta);
-    $usuariodto->setTipo_sangre($tipo_sangre);
-    $usuariodto->setAntecedentes($antecedentes);
-    $usuariodto->setPractica_deporte($practica_deporte);
-    $usuariodto->setConsumo_cigarros($consumo_cigarros);
-    $usuariodto->setConsumo_licor($consumo_licor);
-    $usuariodto->setConsumo_spa($consumo_spa);
-    $usuariodto->setCorreo($correo);
-    $usuariodto->setPassword($password);
-    $usuariodto->setPerfil($perfil);
-    $usuariodto->setNombre_persona_emergencia($nombre_persona_emergencia);
-    $usuariodto->setTelefono_emergencia($telefono_emergencia);
-    $usuariodto->setCelular_emergencia($celular_emergencia);
-    $usuariodto->setParentesco_emergencia($parentesco_emergencia);
+            $usuariodto = new UsuarioDTO();
 
-    $usuariodto->setSucursal($sucursal);
-    $usuariodto->setTipo_contrato($tipo_contrato);
-    $usuariodto->setFecha_ingreso($fecha_ingreso);
-    $usuariodto->setFecha_retiro($fecha_retiro);
-    $usuariodto->setMotivo_retiro($motivo_retiro);
-    $usuariodto->setSalario($salario);
-    $usuariodto->setValor_dia($valor_dia);
-    $usuariodto->setValor_hora($valor_hora);
-    $usuariodto->setClase_riesgo($clase_riesgo);
-    $usuariodto->setPorcentaje_riesgo($porcentaje_riesgo);
-    $usuariodto->setArea($area);
-    $usuariodto->setSeccion($seccion);
-    $usuariodto->setCargo($cargo);
-    $usuariodto->setPension($pension);
+            $usuariodto->setId_usuario($id_usuario);
+            $usuariodto->setTipo_documento($tipo_documento);
+            $usuariodto->setFecha_expedicion($fecha_expedicion);
+            $usuariodto->setLugar_expedicion($lugar_expedicion);
+            $usuariodto->setNombre($nombre);
+            $usuariodto->setApellido($apellido);
+            $usuariodto->setTelefono_fijo($telefono_fijo);
+            $usuariodto->setTelefono_movil($telefono_movil);
+            $usuariodto->setTipo_casa($tipo_casa);
+            $usuariodto->setGenero($genero);
+            $usuariodto->setFecha_nacimiento($fecha_nacimiento);
+            $usuariodto->setEdad($edad);
+            $usuariodto->setNivel_academico($nivel_academico);
+            $usuariodto->setArea_academica($area_academica);
+            $usuariodto->setEstado_civil($estado_civil);
+            $usuariodto->setEps($eps);
+            $usuariodto->setNro_cuenta($nro_cuenta);
+            $usuariodto->setTipo_sangre($tipo_sangre);
+            $usuariodto->setAntecedentes($antecedentes);
+            $usuariodto->setPractica_deporte($practica_deporte);
+            $usuariodto->setConsumo_cigarros($consumo_cigarros);
+            $usuariodto->setConsumo_licor($consumo_licor);
+            $usuariodto->setConsumo_spa($consumo_spa);
+            $usuariodto->setCorreo($correo);
+            $usuariodto->setPassword($password);
+            $usuariodto->setPerfil($perfil);
+            $usuariodto->setNombre_persona_emergencia($nombre_persona_emergencia);
+            $usuariodto->setTelefono_emergencia($telefono_emergencia);
+            $usuariodto->setCelular_emergencia($celular_emergencia);
+            $usuariodto->setParentesco_emergencia($parentesco_emergencia);
+
+            $usuariodto->setSucursal($sucursal);
+            $usuariodto->setTipo_contrato($tipo_contrato);
+            $usuariodto->setFecha_ingreso($fecha_ingreso);
+            $usuariodto->setFecha_retiro($fecha_retiro);
+            $usuariodto->setMotivo_retiro($motivo_retiro);
+            $usuariodto->setSalario($salario);
+            $usuariodto->setValor_dia($valor_dia);
+            $usuariodto->setValor_hora($valor_hora);
+            $usuariodto->setClase_riesgo($clase_riesgo);
+            $usuariodto->setPorcentaje_riesgo($porcentaje_riesgo);
+            $usuariodto->setArea($area);
+            $usuariodto->setSeccion($seccion);
+            $usuariodto->setCargo($cargo);
+            $usuariodto->setPension($pension);
 
 
-    $usuariodao = new UsuarioDAO();
+            
 
-    $resultado = $usuariodao->registrarUsuario($usuariodto);
+            $resultado = $usuariodao->registrarUsuario($usuariodto);
 
-    // Datos de los familiares
-    
-    $familiardto = new FamiliarDTO();
+            // Datos de los familiares
+            
+            $familiardto = new FamiliarDTO();
 
-    if (isset($id_familiar)) {
-        for ($i=0; $i < count($id_familiar); $i++) { 
-            if (!empty($id_familiar[$i]) && !empty($nombre_familiar[$i])) {
-                $familiardto->setId_familiar($id_familiar[$i]);
-                $familiardto->setNombre($nombre_familiar[$i]);
-                $familiardto->setApellido($apellido_familiar[$i]);
-                $familiardto->setEdad($edad_familiar[$i]);
-                $familiardto->setEscolaridad($escolaridad_familiar[$i]);
-                $familiardto->setParentesco($parentesco_familiar[$i]);
-                $familiardto->setUsuario($id_usuario);
-        
-                $familiardao = new FamiliarDAO();
-                $familiardao->registrarFamiliar($familiardto);
-            }
-        }
-    }
-    
-    
-    
-
-    // Datos de los hijos 
-
-    $hijodto = new HijoDTO();
-
-    if (isset($nombre_hijo)) {
-        for ($i=0; $i < count($nombre_hijo); $i++) { 
-            if (!empty($nombre_hijo[$i])) {
-                $hijodto->setNombre($nombre_hijo[$i]);
-                $hijodto->setApellido($apellido[$i]);
-                $hijodto->setEdad($edad_hijo[$i]);
-                $hijodto->setFecha_nacimiento($fecha_nacimiento_hijo[$i]);
-                $hijodto->setUsuario($id_usuario);
+            if (isset($id_familiar)) {
+                for ($i=0; $i < count($id_familiar); $i++) { 
+                    if (!empty($id_familiar[$i]) && !empty($nombre_familiar[$i])) {
+                        $familiardto->setId_familiar($id_familiar[$i]);
+                        $familiardto->setNombre($nombre_familiar[$i]);
+                        $familiardto->setApellido($apellido_familiar[$i]);
+                        $familiardto->setEdad($edad_familiar[$i]);
+                        $familiardto->setEscolaridad($escolaridad_familiar[$i]);
+                        $familiardto->setParentesco($parentesco_familiar[$i]);
+                        $familiardto->setUsuario($id_usuario);
                 
-                $hijodao = new HijoDAO();
-                $hijodao->registrarHijo($hijodto);
+                        $familiardao = new FamiliarDAO();
+                        $familiardao->registrarFamiliar($familiardto);
+                    }
+                }
             }
+            
+            
+            
+
+            // Datos de los hijos 
+
+            $hijodto = new HijoDTO();
+
+            if (isset($nombre_hijo)) {
+                for ($i=0; $i < count($nombre_hijo); $i++) { 
+                    if (!empty($nombre_hijo[$i])) {
+                        $hijodto->setNombre($nombre_hijo[$i]);
+                        $hijodto->setApellido($apellido[$i]);
+                        $hijodto->setEdad($edad_hijo[$i]);
+                        $hijodto->setFecha_nacimiento($fecha_nacimiento_hijo[$i]);
+                        $hijodto->setUsuario($id_usuario);
+                        
+                        $hijodao = new HijoDAO();
+                        $hijodao->registrarHijo($hijodto);
+                    }
+                }
+            }
+
+
+            $correoRecuperacion = new CorreoRecuperacion();
+
+            $asunto = utf8_decode("Bienvenido a la nueva apliacación web de Superoriente");
+            $mensaje = "<html><body>Hola, " . $nombre . " te damos la bienvenida a la página de superoriente donde podras realizar diferentes actividades para facilitar la información que solicites <a href='http://localhost:8081/proyecto carta laboral/Desarrollo'>Superoriente</a></body></html>"; 
+            $mensaje .= "<div><p>El usuario es tu correo personal y la contraseña es tu número de documento</p></div>";
+            $mensaje .= "<div><p>Cualquier inquietud comunicarse al: 302243424</p></div>";
+            $mensaje .= "<div><p>Gracias</p></div>"; 
+            $resultado = $correoRecuperacion->correoRecuperarClave($correo, $asunto, $mensaje, $nombre);
+            
+
+            
+
+
+            if ($resultado) {
+                echo "<div class='alert alert-success' role='alert'>Perfecto!!  Se ha registrado el usuario</div>";
+
+            }else{
+                echo "<div class='alert alert-danger' role='alert'>Error! No se pudo registrar el usuario</div>";
+            }
+
+        }else{
+            echo "<div class='alert alert-danger' role='alert'>Error! No se pudo registrar el usuario (Verifica que no hayan campos incorrectos)</div>";
         }
-    }
-    
-
-    
 
 
-    if ($resultado) {
-        echo "<div class='alert alert-success' role='alert'>Perfecto!!  Se ha registrado el usuario</div>";
 
-    }else{
-        echo "<div class='alert alert-danger' role='alert'>Error! No se pudo registrar el usuario</div>";
-    }
+   
 
 
 
