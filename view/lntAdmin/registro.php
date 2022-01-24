@@ -280,6 +280,14 @@
                                                         <small class="text-danger"></small>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col my-3">
+                                                        <label for="">Agregar una foto</label>
+                                                        <input class="form-control" type="file" id="foto">
+                                                        <small class="text-danger"></small>
+                                                    </div>
+                                
+                                                </div>
                                             </div>
                                             
                                             <div id="datos-laborales" class="cont-registro">
