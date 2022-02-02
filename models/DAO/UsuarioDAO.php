@@ -16,7 +16,7 @@ class UsuarioDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "INSERT INTO tbl_usuario(id_usuario, id_tipo_documento, fecha_expedicion, lugar_expedicion,  nombre, apellido, telefono_fijo, telefono_movil, id_casa, id_genero, fecha_nacimiento, edad, direccion, lugar_residencia, nivel_academico, area_academica, id_estado_civil, eps, nro_cuenta, id_tipo_sangre_rh, antecedentes, practica_deporte,consumo_cigarros, consumo_licor, consumo_spa, correo, pass, id_perfil, nombre_persona_emergencia, telefono_emergencia, celular_emergencia, parentesco_emergencia, sucursal, id_tipo_contrato, fecha_ingreso, fecha_retiro, motivo_retiro, salario, valor_dia, valor_hora, clase_riesgo, porcentaje_riesgo, area, seccion, cargo, pension, id_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)";
+            $sql = "INSERT INTO tbl_usuario(id_usuario, id_tipo_documento, fecha_expedicion, lugar_expedicion,  nombre, apellido, telefono_fijo, telefono_movil, id_casa, id_genero, fecha_nacimiento, edad, direccion, lugar_residencia, nivel_academico, area_academica, id_estado_civil, eps, nro_cuenta, id_tipo_sangre_rh, antecedentes, practica_deporte,consumo_cigarros, consumo_licor, consumo_spa, correo, pass, id_perfil, nombre_persona_emergencia, telefono_emergencia, celular_emergencia, parentesco_emergencia, sucursal, id_tipo_contrato, fecha_ingreso, fecha_retiro, motivo_retiro, salario, valor_dia, valor_hora, clase_riesgo, porcentaje_riesgo, area, seccion, cargo, pension, id_estado, foto) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?)";
 
             $ps = $cnx->prepare($sql);
 
@@ -69,6 +69,8 @@ class UsuarioDAO {
             $cargo = $usuariodto->getCargo();
             $pension = $usuariodto->getPension();
 
+            $foto = $usuariodto->getFoto();
+
             $ps->bindParam(1, $id_usuario);
             $ps->bindParam(2, $tipo_documento);
             $ps->bindParam(3, $fecha_expedicion);
@@ -117,6 +119,7 @@ class UsuarioDAO {
             $ps->bindParam(44, $seccion);
             $ps->bindParam(45, $cargo);
             $ps->bindParam(46, $pension);
+            $ps->bindParam(47, $foto);
 
             $ps->execute();
 

@@ -195,6 +195,22 @@ small {
     
 }
 
+#menu-desplegado {
+    display: block;
+    transform: scaleY(0) !important;
+    transition: all 0.3s ease !important;
+    transform-origin: top !important;
+    position: absolute;
+    scroll-behavior: smooth;
+}
+
+#menu-desplegado.desplegar {
+
+    
+    
+    transform: scaleY(1) !important;
+}
+
 
 /*-------------- Resposive ---------------*/
 

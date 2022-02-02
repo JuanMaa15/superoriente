@@ -12,6 +12,8 @@ var acciones = {
         $("#btn-registrar-tipo-documento").click(acciones.enviarFormTipoDocumento);
         $("#btn-registrar-genero").click(acciones.enviarFormGenero);
         $("#btn-registrar-estado-civil").click(acciones.enviarFormEstadoCivil);
+        $("#btn-registrar-tipo-contrato").click(acciones.enviarFormTipoContrato);
+
         $("#btn-atras").click(acciones.volverForm);
         $("#agregar-familiar").click(acciones.agregarFamiliar);
         $("#remover-familiar").click(acciones.removerFamiliar);
@@ -20,6 +22,12 @@ var acciones = {
         $("#btn-buscar-fecha").click(acciones.buscarEmpleadoFecha);
         $("#btn-buscar-salario").click(acciones.buscarEmpleadoSalario);
         $("#filtro-empleado").click(acciones.filtroEmpleado);
+        $("#menu-desplegable-listas").click(acciones.desplegarMenuListas);
+
+        $(".fecha_nacimiento").on('change', acciones.calcularEdadesHijos);
+
+
+        $("#fecha_nacimiento").on('change', acciones.calcularEdad);
 
         $("#buscar_empleado").keyup(acciones.buscarEmpleado);
 
@@ -53,6 +61,14 @@ var acciones = {
             $("#listado-tipos-documentos").html(responseText);
         }); 
 
+        // Tipos de contrato 
+
+        $.post('../../controller/tipo contrato/ListaTiposContratos.php',{
+
+        },function (responseText) {
+           $("#listado-tipos-contratos").html(responseText); 
+        });
+
 
         // Genero
 
@@ -71,6 +87,63 @@ var acciones = {
         });
 
 
+    },
+
+    // Despliega los enlaces de las listas que lo redireccionaran a cada una de estados
+
+
+    desplegarMenuListas : function (e) {
+        
+        e.preventDefault();
+
+        if (!$("#menu-desplegado").hasClass("desplegar")) {
+            $("#menu-desplegado").addClass("desplegar");
+        }else{
+            $("#menu-desplegado").removeClass("desplegar");
+        }
+        
+
+    },
+
+
+    // Me calcula la edad de los usuarios que contengan la clase "fecha_nacmiento" (Esta función es más enfocada en los hijos)
+
+    calcularEdadesHijos : function () {
+
+        
+        
+        var id_fecha_nacimiento = $(this).attr("id");
+
+        console.log(id_fecha_nacimiento);
+
+        for (let i = 0; i < contH; i++) {
+       
+            if(id_fecha_nacimiento === "fecha_nacimiento_hijo" + i) {
+
+                var fecha_seleccionada = $("#" + id_fecha_nacimiento).val();
+                var fecha_nacimiento = new Date(fecha_seleccionada);
+                var fecha_actual = new Date();
+                var edad = parseInt((fecha_actual - fecha_nacimiento) / (1000*60*60*24*365));
+
+                $("#edad_hijo" + i).val(edad);
+
+            }
+            
+        }
+
+    },
+    
+    // Me calcula la edad al seleccionar la fecha de nacimiento
+
+    calcularEdad : function() {
+
+        var fecha_seleccionada = $(this).val();
+        var fecha_nacimiento = new Date(fecha_seleccionada);
+        var fecha_actual = new Date();
+        var edad = parseInt((fecha_actual - fecha_nacimiento) / (1000*60*60*24*365));
+
+        $("#edad").val(edad);
+        
     },
 
     // ---------------- Verificación de campos (inputs) por teclado ------------
@@ -237,7 +310,7 @@ var acciones = {
     },
 
     removerhijo : function() {
-        
+
         
         contH--
 
@@ -246,6 +319,7 @@ var acciones = {
         }
 
         $("#hijo" + contH).remove();
+
     },
 
     agregarhijo : function() {
@@ -273,7 +347,7 @@ var acciones = {
                     
                 </div>
                 <div class="col my-3">
-                    <input class="form-control" type="date" id="fecha_nacimiento_hijo` + contH +  `" placeholder="Escolaridad">
+                    <input class="form-control fecha_nacimiento" type="date" id="fecha_nacimiento_hijo` + contH +  `" placeholder="Escolaridad">
                     <small class="text-danger"></small>
                     
                 </div>
@@ -284,6 +358,10 @@ var acciones = {
         
         $("#cont-hijos").append(cont_hijo);
 
+        
+
+        console.log("Contador de hijos: " + contH);
+
         contH++;
 
         if (contH > 0) {
@@ -291,7 +369,8 @@ var acciones = {
             $(".cont-remover-hijo").removeClass("d-none").addClass("d-block");
         }
 
-        console.log(contH);
+        $(".fecha_nacimiento").on('change', acciones.calcularEdadesHijos);
+        
     },
 
     removerFamiliar : function () {
@@ -304,6 +383,8 @@ var acciones = {
         }
 
         $("#familiar" + contF).remove();
+
+       
       
     },
 
@@ -361,9 +442,11 @@ var acciones = {
 
         console.log(contF);
 
+        
+
     },
 
-    // --------- Verifica y envía el formulario de tipo de documento -----
+    // --------- Verifica y envía el formulario de estado civil -----
 
 
     enviarFormEstadoCivil : function() {
@@ -386,6 +469,8 @@ var acciones = {
 
     },
 
+    // --------- Verifica y envía el formulario de genero -----
+
     enviarFormGenero : function () {
 
         
@@ -404,6 +489,8 @@ var acciones = {
         }
 
     },
+
+    // --------- Verifica y envía el formulario de tipo de documento -----
      
     enviarFormTipoDocumento: function () {
 
@@ -424,6 +511,28 @@ var acciones = {
             $("#nombre-tipo-documento").next().html("Campo vacío, por favor ingrese el tipo de documento");
         }
 
+    },
+
+    // --------- Verifica y envía el formulario de tipo de contrato -----
+
+    enviarFormTipoContrato : function () {
+
+        var nombre = $("#nombre-tipo-contrato").val();
+
+
+        if (nombre.length != 0) {
+            $("#nombre-tipo-contrato").next().html("");
+
+            $.post('../../controller/tipo contrato/RegistrarTipoContrato.php',{
+                nombre:nombre
+            },function(responseText){
+                $("#rta-tipo-contrato").html(responseText);
+                setTimeout("location.reload()", 1800);
+            });
+                
+        }else{
+            $("#nombre-tipo-contrato").next().html("Campo vacío, por favor ingrese el tipo de contrato");
+        }
     },
 
     volverForm : function () {
@@ -512,6 +621,8 @@ var acciones = {
             var telefono_emergencia = $("#telefono_emergencia").val();
             var celular_emergencia = $("#celular_emergencia").val();
             var parentesco_emergencia = $("#parentesco_emergencia").val();
+            //var foto = document.getElementById("foto").files[0];
+
 
             // ------- Datos Laboraless -------
             var sucursal = $("#sucursal").val();
@@ -830,9 +941,9 @@ var acciones = {
            
 
     
-           if (validar === 27) {
+           
                 
-                $.post('../../controller/usuario/RegistrarUsuario.php', {
+                /* $.post('../../controller/usuario/RegistrarUsuario.php', {
                     id_usuario: id_usuario,
                     tipo_documento: tipo_documento,
                     fecha_expedicion: fecha_expedicion,
@@ -864,7 +975,7 @@ var acciones = {
                     telefono_emergencia: telefono_emergencia,
                     celular_emergencia: celular_emergencia,
                     parentesco_emergencia: parentesco_emergencia,
-
+                    foto: foto,
                     
                     sucursal: sucursal,
                     tipo_contrato: tipo_contrato,
@@ -899,7 +1010,7 @@ var acciones = {
                 }, function(responseText) {
                     $("#rta-registro-empleado").html(responseText);
                     //setTimeout("location.reload()", 1800);
-                });
+                }); */
 
 
                 $.post('../../controller/correo/VerificarCorreoBD.php',{
@@ -907,11 +1018,95 @@ var acciones = {
                 },function(responseText){
                     $("#correo").next().html(responseText);
                 });
-                                                            
-            }else{
-                alert("Hay campos vacíos");
-            } 
+
+
+                /* var formData = new FormData();
+                var files = $("#foto")[0].files[0];
+                formData.append('file', files); */
+
+                if (validar === 27) {
+                    $.ajax({
+                        method : "POST",
+                        url : "../../controller/usuario/RegistrarUsuario.php",
+                        data : {
+                            "id_usuario" : id_usuario,
+                            "tipo_documento": tipo_documento,
+                            "fecha_expedicion": fecha_expedicion,
+                            "lugar_expedicion": lugar_expedicion,
+                            "nombre": nombre,
+                            "apellido":apellido,
+                            "telefono_fijo": telefono_fijo,
+                            "telefono_movil": telefono_movil,
+                            "tipo_casa": tipo_casa,
+                            "genero": genero,
+                           " fecha_nacimiento": fecha_nacimiento,
+                            "edad": edad,
+                           "direccion": direccion,
+                            "lugar_residencia": lugar_residencia,
+                            "nivel_academico": nivel_academico,
+                            "area_academica": area_academica,
+                            "estado_civil": estado_civil,
+                            "eps": eps,
+                            "nro_cuenta": nro_cuenta,
+                            "tipo_sangre": tipo_sangre,
+                            "antecedentes": antecedentes,
+                            "practica_deporte": practica_deporte,
+                            "consumo_cigarros": consumo_cigarros,
+                            "consumo_licor": consumo_licor,
+                           "consumo_spa": consumo_spa,
+                            "correo":correo,
+                            "password":password,
+                            "nombre_persona_emergencia": nombre_persona_emergencia,
+                            "telefono_emergencia": telefono_emergencia,
+                            "celular_emergencia": celular_emergencia,
+                            "parentesco_emergencia": parentesco_emergencia,
+                            
+                            
+                            "sucursal": sucursal,
+                            "tipo_contrato": tipo_contrato,
+                            "fecha_ingreso": fecha_ingreso,
+                            "fecha_retiro": fecha_retiro,
+                            "motivo_retiro": motivo_retiro,
+                            "salario": salario,
+                            "valor_dia": valor_dia,
+                            "valor_hora": valor_hora,
+                            "clase_riesgo": clase_riesgo,
+                            "porcentaje_riesgo": porcentaje_riesgo,
+                            "area": area,
+                            "seccion": seccion,
+                            "cargo": cargo,
+                           "pension": pension,
+                            "estado": estado,
+                            "perfil": perfil,
+                            
+    
+                            "id_familiar": id_familiar,
+                            "nombre_familiar": nombre_familiar,
+                            "apellido_familiar": apellido_familiar,
+                            "edad_familiar": edad_familiar,
+                            "escolaridad_familiar": escolaridad_familiar,
+                            "parentesco_familiar": parentesco_familiar,
+    
+                            "nombre_hijo": nombre_hijo,
+                            "apellido_hijo": apellido_hijo,
+                            "edad_hijo": edad_hijo,
+                            "fecha_nacimiento_hijo": fecha_nacimiento_hijo
+                        },
+                       // contentType: "multipart/form-data",
+                        
+                    }).done(function (data) {
+    
+                        $("#rta-registro-empleado").html(data);
+                
+                    }).fail(function (error) {
+                        $("#rta-registro-empleado").css({"color" : "red"}).html(error.responseText);
+                    });
+                                                                
+               
+            }
         }
+
+               
 
         if (parseInt(sumaAnchoContRegistro) === parseInt(anchoContPpal)) {
             $(this).val("Registrar");
@@ -952,12 +1147,29 @@ var acciones = {
         
         var btn = e.target.id;
         var id = e.target.value;
+
+        if (btn !== "menu-desplegable-listas") {
+
+            if ($("#menu-desplegado").hasClass("desplegar")) {
+                $("#menu-desplegado").removeClass("desplegar");
+            }
+        }
         
         switch (btn) {
 
             // ------------- Editar un registro -----------
 
+            // Tipo de contrato
             
+            case "btn-editar-tipo-contrato":
+
+                $.post('../../controller/tipo contrato/EditarTipoContrato.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-tipo-contrato").html(responseText);
+                });
+
+            break;
 
             // Estado civil
 
@@ -1056,6 +1268,28 @@ var acciones = {
             
 
             // Actualizar un registro
+
+            case "btn-actualizar-tipo-contrato":
+                
+                var  id_tipo_contrato = $("#id-tipo-contrato-act").val();
+                var nombre = $("#tipo-contrato-act").val();
+
+                if (nombre.length != 0) {
+                    $("#nombre-tipo-contrato-act").next().html("");
+
+                    $.post('../../controller/tipo contrato/ActualizarTipoContrato.php',{
+                        id_tipo_contrato: id_tipo_contrato,
+                        nombre:nombre
+                    },function(responseText){
+                        $("#rta-tipo-contrato-act").html(responseText);
+                        setTimeout("location.reload()", 1800);
+                    });
+                        
+                }else{
+                    $("#nombre-tipo-contrato-act").next().html("Campo vacío, por favor ingrese el tipo de contrato");
+                }
+
+            break;
 
             case "btn-actualizar-estado-civil":
 

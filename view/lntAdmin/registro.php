@@ -72,7 +72,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-registro my-3">
-                                    <form action="" id="form-registro-empleado">
+                                    <form method="post" action="" id="form-registro-empleado" enctype="multipart/form-data">
                                         <div class="d-flex overflow-hidden" id="cont-campos">
                                             <div id="datos-personales" class="cont-registro">
                                                 <h3>Datos Personales</h3>
@@ -280,14 +280,14 @@
                                                         <small class="text-danger"></small>
                                                     </div>
                                                 </div>
-                                                <div class="row">
+                                                <!-- <div class="row">
                                                     <div class="col my-3">
                                                         <label for="">Agregar una foto</label>
-                                                        <input class="form-control" type="file" id="foto">
+                                                        <input class="form-control" type="file" name="foto" id="foto">
                                                         <small class="text-danger"></small>
                                                     </div>
                                 
-                                                </div>
+                                                </div> -->
                                             </div>
                                             
                                             <div id="datos-laborales" class="cont-registro">
@@ -441,7 +441,7 @@
                                                 
                                             </div>
                                             <div class="col mt-1 mb-3">
-                                                <input class="form-control" type="date" id="fecha_nacimiento" placeholder="Fecha de nacimiento *">
+                                                <input class="form-control fecha_nacimiento" type="date" id="fecha_nacimiento"  placeholder="Fecha de nacimiento *">
                                                 <small class="text-danger"></small>
                                             </div>
                                             
@@ -472,6 +472,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    
     <script src="../js/app.js"></script>
 </body>
 </html>

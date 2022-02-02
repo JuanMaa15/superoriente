@@ -37,6 +37,7 @@ class UsuarioDTO {
     private $telefono_emergencia;
     private $celular_emergencia;
     private $parentesco_emergencia;
+    private $foto;
     
     private $sucursal;
     private $tipo_contrato;
@@ -238,6 +239,10 @@ class UsuarioDTO {
         return $this->parentesco_emergencia;
     }
 
+    function getFoto() {
+        return $this->foto;
+    }
+
     function getSucursal() {
         return $this->sucursal;
     }
@@ -424,6 +429,10 @@ class UsuarioDTO {
 
     function setParentesco_emergencia($parentesco_emergencia) {
         $this->parentesco_emergencia = $parentesco_emergencia;
+    }
+
+    function setFoto($foto) {
+        $this->foto = $foto;
     }
 
     function setSucursal($sucursal) {
