@@ -37,6 +37,7 @@ class UsuarioDTO {
     private $telefono_emergencia;
     private $celular_emergencia;
     private $parentesco_emergencia;
+    private $foto;
     
     private $sucursal;
     private $tipo_contrato;
@@ -52,6 +53,7 @@ class UsuarioDTO {
     private $seccion;
     private $cargo;
     private $pension;
+    private $tipo_dotacion;
     private $estado;
     
     function __construct() {
@@ -59,7 +61,7 @@ class UsuarioDTO {
     }
 
     
-    function constructor($id_usuario, $tipo_documento, $fecha_expedicion, $lugar_expedicion, $nombre, $apellido, $telefono_fijo, $telefono_movil, $tipo_casa, $genero, $fecha_nacimiento, $edad, $direccion, $lugar_residencia, $nivel_academico, $area_academica, $estado_civil, $eps, $nro_cuenta, $tipo_sangre, $antecedentes, $practica_deporte, $consumo_cigarros, $consumo_licor, $consumo_spa, $correo, $password, $perfil, $nombre_persona_emergencia, $telefono_emergencia, $celular_emergencia, $parentesco_emergencia, $sucursal, $tipo_contrato, $fecha_ingreso, $fecha_retiro, $motivo_retiro, $salario, $valor_dia, $valor_hora, $clase_riesgo, $porcentaje_riesgo, $area, $seccion, $cargo, $pension, $estado) {
+    function constructor($id_usuario, $tipo_documento, $fecha_expedicion, $lugar_expedicion, $nombre, $apellido, $telefono_fijo, $telefono_movil, $tipo_casa, $genero, $fecha_nacimiento, $edad, $direccion, $lugar_residencia, $nivel_academico, $area_academica, $estado_civil, $eps, $nro_cuenta, $tipo_sangre, $antecedentes, $practica_deporte, $consumo_cigarros, $consumo_licor, $consumo_spa, $correo, $password, $perfil, $nombre_persona_emergencia, $telefono_emergencia, $celular_emergencia, $parentesco_emergencia, $sucursal, $tipo_contrato, $fecha_ingreso, $fecha_retiro, $motivo_retiro, $salario, $valor_dia, $valor_hora, $clase_riesgo, $porcentaje_riesgo, $area, $seccion, $cargo, $pension, $tipo_dotacion, $estado) {
         $this->id_usuario = $id_usuario;
         $this->tipo_documento = $tipo_documento;
         $this->fecha_expedicion = $fecha_expedicion;
@@ -106,6 +108,7 @@ class UsuarioDTO {
         $this->seccion = $seccion;
         $this->cargo = $cargo;
         $this->pension = $pension;
+        $this->tipo_dotacion = $tipo_dotacion;
         $this->estado = $estado;
     }
 
@@ -238,6 +241,10 @@ class UsuarioDTO {
         return $this->parentesco_emergencia;
     }
 
+    function getFoto() {
+        return $this->foto;
+    }
+
     function getSucursal() {
         return $this->sucursal;
     }
@@ -292,6 +299,10 @@ class UsuarioDTO {
 
     function getPension() {
         return $this->pension;
+    }
+
+    function getTipo_dotacion() {
+        return $this->tipo_dotacion;
     }
 
     function getEstado() {
@@ -426,6 +437,10 @@ class UsuarioDTO {
         $this->parentesco_emergencia = $parentesco_emergencia;
     }
 
+    function setFoto($foto) {
+        $this->foto = $foto;
+    }
+
     function setSucursal($sucursal) {
         $this->sucursal = $sucursal;
     }
@@ -480,6 +495,10 @@ class UsuarioDTO {
 
     function setPension($pension) {
         $this->pension = $pension;
+    }
+
+    function setTipo_dotacion($tipo_dotacion) {
+        $this->tipo_dotacion = $tipo_dotacion;
     }
 
     function setEstado($estado) {

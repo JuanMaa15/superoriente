@@ -16,7 +16,7 @@ class UsuarioDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "INSERT INTO tbl_usuario(id_usuario, id_tipo_documento, fecha_expedicion, lugar_expedicion,  nombre, apellido, telefono_fijo, telefono_movil, id_casa, id_genero, fecha_nacimiento, edad, direccion, lugar_residencia, nivel_academico, area_academica, id_estado_civil, eps, nro_cuenta, id_tipo_sangre_rh, antecedentes, practica_deporte,consumo_cigarros, consumo_licor, consumo_spa, correo, pass, id_perfil, nombre_persona_emergencia, telefono_emergencia, celular_emergencia, parentesco_emergencia, sucursal, id_tipo_contrato, fecha_ingreso, fecha_retiro, motivo_retiro, salario, valor_dia, valor_hora, clase_riesgo, porcentaje_riesgo, area, seccion, cargo, pension, id_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)";
+            $sql = "INSERT INTO tbl_usuario(id_usuario, id_tipo_documento, fecha_expedicion, lugar_expedicion,  nombre, apellido, telefono_fijo, telefono_movil, id_casa, id_genero, fecha_nacimiento, edad, direccion, lugar_residencia, id_nivel_academico, area_academica, id_estado_civil, id_eps, nro_cuenta, id_tipo_sangre_rh, antecedentes, practica_deporte,consumo_cigarros, consumo_licor, consumo_spa, correo, pass, id_perfil, nombre_persona_emergencia, telefono_emergencia, celular_emergencia, parentesco_emergencia, id_sucursal, id_tipo_contrato, fecha_ingreso, fecha_retiro, motivo_retiro, salario, valor_dia, valor_hora, clase_riesgo, porcentaje_riesgo, id_area, id_seccion, id_cargo, id_pension, id_tipo_dotacion, id_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)";
 
             $ps = $cnx->prepare($sql);
 
@@ -68,6 +68,8 @@ class UsuarioDAO {
             $seccion = $usuariodto->getSeccion();
             $cargo = $usuariodto->getCargo();
             $pension = $usuariodto->getPension();
+            $tipo_dotacion = $usuariodto->getTipo_dotacion();
+           // $foto = $usuariodto->getFoto();
 
             $ps->bindParam(1, $id_usuario);
             $ps->bindParam(2, $tipo_documento);
@@ -117,6 +119,7 @@ class UsuarioDAO {
             $ps->bindParam(44, $seccion);
             $ps->bindParam(45, $cargo);
             $ps->bindParam(46, $pension);
+            $ps->bindParam(47, $tipo_dotacion);
 
             $ps->execute();
 
@@ -140,7 +143,7 @@ class UsuarioDAO {
         $i = 0;
         
         try {
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh";
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion";
             $rs = $cnx->query($sql);
             
             
@@ -180,7 +183,7 @@ class UsuarioDAO {
                     $row['telefono_emergencia'],
                     $row['celular_emergencia'],
                     $row['parentesco_emergencia'],
-
+                    
                     $row['sucursal'],
                     $row['tipo_contrato'],
                     $row['fecha_ingreso'],
@@ -195,6 +198,7 @@ class UsuarioDAO {
                     $row['seccion'],
                     $row['cargo'],
                     $row['pension'],
+                    $row['tipo_dotacion'],
                     $row['estado'],
                 );
 
@@ -221,7 +225,7 @@ class UsuarioDAO {
 
         try {
             
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh WHERE id_usuario = '" . $id_usuario . "'";
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE id_usuario = '" . $id_usuario . "'";
             $rs = $cnx->query($sql);
 
             $row = $rs->fetch();
@@ -274,6 +278,7 @@ class UsuarioDAO {
                 $row['seccion'],
                 $row['cargo'],
                 $row['pension'],
+                $row['tipo_dotacion'],
                 $row['estado'],
             );
 
@@ -297,7 +302,7 @@ class UsuarioDAO {
 
         try {
             
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh WHERE id_usuario = '" . $id_usuario . "'";
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE id_usuario = '" . $id_usuario . "'";
             $rs = $cnx->query($sql);
 
             $row = $rs->fetch();
@@ -317,10 +322,10 @@ class UsuarioDAO {
                 $row['edad'],
                 $row['direccion'],
                 $row['lugar_residencia'],
-                $row['nivel_academico'],
+                $row['id_nivel_academico'],
                 $row['area_academica'],
                 $row['id_estado_civil'],
-                $row['eps'],
+                $row['id_eps'],
                 $row['nro_cuenta'],
                 $row['id_tipo_sangre_rh'],
                 $row['antecedentes'],
@@ -346,10 +351,11 @@ class UsuarioDAO {
                 $row['valor_hora'],
                 $row['clase_riesgo'],
                 $row['porcentaje_riesgo'],
-                $row['area'],
-                $row['seccion'],
-                $row['cargo'],
-                $row['pension'],
+                $row['id_area'],
+                $row['id_seccion'],
+                $row['id_cargo'],
+                $row['id_pension'],
+                $row['id_tipo_dotacion'],
                 $row['id_estado'],
             );
 
@@ -424,7 +430,7 @@ class UsuarioDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_usuario SET id_tipo_documento = ?, fecha_expedicion = ?, lugar_expedicion = ?,  nombre = ?, apellido = ?, telefono_fijo = ?, telefono_movil = ?, id_casa = ?, id_genero = ?, fecha_nacimiento = ?, edad = ?, direccion = ?, lugar_residencia = ?, nivel_academico = ?, area_academica = ?, id_estado_civil = ?, eps = ?, nro_cuenta = ?, id_tipo_sangre_rh = ?, antecedentes = ?, practica_deporte = ?,consumo_cigarros = ?, consumo_licor = ?, consumo_spa = ?, correo = ?, pass = ?, id_perfil = ?, nombre_persona_emergencia = ?, telefono_emergencia = ?, celular_emergencia = ?, parentesco_emergencia = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "' ";
+            $sql = "UPDATE tbl_usuario SET id_tipo_documento = ?, fecha_expedicion = ?, lugar_expedicion = ?,  nombre = ?, apellido = ?, telefono_fijo = ?, telefono_movil = ?, id_casa = ?, id_genero = ?, fecha_nacimiento = ?, edad = ?, direccion = ?, lugar_residencia = ?, id_nivel_academico = ?, area_academica = ?, id_estado_civil = ?, id_eps = ?, nro_cuenta = ?, id_tipo_sangre_rh = ?, antecedentes = ?, practica_deporte = ?,consumo_cigarros = ?, consumo_licor = ?, consumo_spa = ?, correo = ?, pass = ?, id_perfil = ?, nombre_persona_emergencia = ?, telefono_emergencia = ?, celular_emergencia = ?, parentesco_emergencia = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "' ";
             $ps = $cnx->prepare($sql);
 
     
@@ -511,7 +517,7 @@ class UsuarioDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_usuario SET sucursal = ?, id_tipo_contrato = ?, fecha_ingreso = ?, fecha_retiro = ?, motivo_retiro = ?, salario = ?, valor_dia = ?, valor_hora = ?, clase_riesgo = ?, porcentaje_riesgo = ?, area = ?, seccion = ?, cargo = ?, pension = ?, id_estado = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "' ";
+            $sql = "UPDATE tbl_usuario SET id_sucursal = ?, id_tipo_contrato = ?, fecha_ingreso = ?, fecha_retiro = ?, motivo_retiro = ?, salario = ?, valor_dia = ?, valor_hora = ?, clase_riesgo = ?, porcentaje_riesgo = ?, id_area = ?, id_seccion = ?, id_cargo = ?, id_pension = ?, id_tipo_dotacion = ?, id_estado = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "' ";
             $ps = $cnx->prepare($sql);
 
     
@@ -529,6 +535,7 @@ class UsuarioDAO {
             $seccion = $usuariodto->getSeccion();
             $cargo = $usuariodto->getCargo();
             $pension = $usuariodto->getPension();
+            $tipo_dotacion = $usuariodto->getTipo_dotacion();
             $estado = $usuariodto->getEstado();
 
             $ps->bindParam(1, $sucursal);
@@ -545,7 +552,8 @@ class UsuarioDAO {
             $ps->bindParam(12, $seccion);
             $ps->bindParam(13, $cargo);
             $ps->bindParam(14, $pension);
-            $ps->bindParam(15, $estado);
+            $ps->bindParam(15, $tipo_dotacion);
+            $ps->bindParam(16, $estado);
 
             $ps->execute();
 
@@ -569,7 +577,7 @@ class UsuarioDAO {
         $usuariodto = null;
         
         try {
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh WHERE correo = '" . $usuario->getCorreo() . "'";
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE correo = '" . $usuario->getCorreo() . "'";
             $rs = $cnx->query($sql);
 
             $countRows = $rs->rowCount();
@@ -628,7 +636,8 @@ class UsuarioDAO {
                         $row['seccion'],
                         $row['cargo'],
                         $row['pension'],
-                        $row['estado'],
+                        $row['tipo_dotacion'],
+                        $row['estado']
                     );
 
                     return $usuariodto;
@@ -684,10 +693,10 @@ class UsuarioDAO {
                     $row['edad'],
                     $row['direccion'],
                     $row['lugar_residencia'],
-                    $row['nivel_academico'],
+                    $row['id_nivel_academico'],
                     $row['area_academica'],
                     $row['id_estado_civil'],
-                    $row['eps'],
+                    $row['id_eps'],
                     $row['nro_cuenta'],
                     $row['id_tipo_sangre_rh'],
                     $row['antecedentes'],
@@ -703,7 +712,7 @@ class UsuarioDAO {
                     $row['celular_emergencia'],
                     $row['parentesco_emergencia'],
 
-                    $row['sucursal'],
+                    $row['id_sucursal'],
                     $row['id_tipo_contrato'],
                     $row['fecha_ingreso'],
                     $row['fecha_retiro'],
@@ -713,10 +722,11 @@ class UsuarioDAO {
                     $row['valor_hora'],
                     $row['clase_riesgo'],
                     $row['porcentaje_riesgo'],
-                    $row['area'],
-                    $row['seccion'],
-                    $row['cargo'],
-                    $row['pension'],
+                    $row['id_area'],
+                    $row['id_seccion'],
+                    $row['id_cargo'],
+                    $row['id_pension'],
+                    $row['id_tipo_dotacion'],
                     $row['id_estado'],
                 );
                 return $usuariodto;
@@ -796,10 +806,10 @@ class UsuarioDAO {
                         $row['edad'],
                         $row['direccion'],
                         $row['lugar_residencia'],
-                        $row['nivel_academico'],
+                        $row['id_nivel_academico'],
                         $row['area_academica'],
                         $row['id_estado_civil'],
-                        $row['eps'],
+                        $row['id_eps'],
                         $row['nro_cuenta'],
                         $row['id_tipo_sangre_rh'],
                         $row['antecedentes'],
@@ -825,10 +835,11 @@ class UsuarioDAO {
                         $row['valor_hora'],
                         $row['clase_riesgo'],
                         $row['porcentaje_riesgo'],
-                        $row['area'],
-                        $row['seccion'],
-                        $row['cargo'],
-                        $row['pension'],
+                        $row['id_area'],
+                        $row['id_seccion'],
+                        $row['id_cargo'],
+                        $row['id_pension'],
+                        $row['id_tipo_dotacion'],
                         $row['id_estado'],
                 );
 
@@ -864,53 +875,54 @@ class UsuarioDAO {
                 $lista[$i] = new UsuarioDTO();
                 $lista[$i]->constructor(
                     $row['id_usuario'],
-                        $row['id_tipo_documento'],
-                        $row['fecha_expedicion'],
-                        $row['lugar_expedicion'],
-                        $row['nombre'],
-                        $row['apellido'],
-                        $row['telefono_fijo'],
-                        $row['telefono_movil'],
-                        $row['id_casa'],
-                        $row['id_genero'],
-                        $row['fecha_nacimiento'],
-                        $row['edad'],
-                        $row['direccion'],
-                        $row['lugar_residencia'],
-                        $row['nivel_academico'],
-                        $row['area_academica'],
-                        $row['id_estado_civil'],
-                        $row['eps'],
-                        $row['nro_cuenta'],
-                        $row['id_tipo_sangre_rh'],
-                        $row['antecedentes'],
-                        $row['practica_deporte'],
-                        $row['consumo_cigarros'],
-                        $row['consumo_licor'],
-                        $row['consumo_spa'],
-                        $row['correo'],
-                        $row['pass'],
-                        $row['id_perfil'],
-                        $row['nombre_persona_emergencia'],
-                        $row['telefono_emergencia'],
-                        $row['celular_emergencia'],
-                        $row['parentesco_emergencia'],
+                    $row['id_tipo_documento'],
+                    $row['fecha_expedicion'],
+                    $row['lugar_expedicion'],
+                    $row['nombre'],
+                    $row['apellido'],
+                    $row['telefono_fijo'],
+                    $row['telefono_movil'],
+                    $row['id_casa'],
+                    $row['id_genero'],
+                    $row['fecha_nacimiento'],
+                    $row['edad'],
+                    $row['direccion'],
+                    $row['lugar_residencia'],
+                    $row['id_nivel_academico'],
+                    $row['area_academica'],
+                    $row['id_estado_civil'],
+                    $row['id_eps'],
+                    $row['nro_cuenta'],
+                    $row['id_tipo_sangre_rh'],
+                    $row['antecedentes'],
+                    $row['practica_deporte'],
+                    $row['consumo_cigarros'],
+                    $row['consumo_licor'],
+                    $row['consumo_spa'],
+                    $row['correo'],
+                    $row['pass'],
+                    $row['id_perfil'],
+                    $row['nombre_persona_emergencia'],
+                    $row['telefono_emergencia'],
+                    $row['celular_emergencia'],
+                    $row['parentesco_emergencia'],
 
-                        $row['sucursal'],
-                        $row['id_tipo_contrato'],
-                        $row['fecha_ingreso'],
-                        $row['fecha_retiro'],
-                        $row['motivo_retiro'],
-                        $row['salario'],
-                        $row['valor_dia'],
-                        $row['valor_hora'],
-                        $row['clase_riesgo'],
-                        $row['porcentaje_riesgo'],
-                        $row['area'],
-                        $row['seccion'],
-                        $row['cargo'],
-                        $row['pension'],
-                        $row['id_estado'],
+                    $row['sucursal'],
+                    $row['id_tipo_contrato'],
+                    $row['fecha_ingreso'],
+                    $row['fecha_retiro'],
+                    $row['motivo_retiro'],
+                    $row['salario'],
+                    $row['valor_dia'],
+                    $row['valor_hora'],
+                    $row['clase_riesgo'],
+                    $row['porcentaje_riesgo'],
+                    $row['id_area'],
+                    $row['id_seccion'],
+                    $row['id_cargo'],
+                    $row['id_pension'],
+                    $row['id_tipo_dotacion'],
+                    $row['id_estado'],
                 );
 
                 $i++;
@@ -937,7 +949,7 @@ class UsuarioDAO {
 
         try {
             
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh WHERE tu.id_estado = " . $estado;
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE tu.id_estado = " . $estado;
             $rs = $cnx->query($sql);
 
             while($row = $rs->fetch()) {
@@ -991,6 +1003,7 @@ class UsuarioDAO {
                         $row['seccion'],
                         $row['cargo'],
                         $row['pension'],
+                        $row['tipo_dotacion'],
                         $row['estado'],
                 );
 
@@ -1019,7 +1032,7 @@ class UsuarioDAO {
 
         try {
             
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh WHERE tu.id_tipo_contrato = " . $tipo_contrato;
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE tu.id_tipo_contrato = " . $tipo_contrato;
             $rs = $cnx->query($sql);
 
             while($row = $rs->fetch()) {
@@ -1073,6 +1086,7 @@ class UsuarioDAO {
                         $row['seccion'],
                         $row['cargo'],
                         $row['pension'],
+                        $row['tipo_dotacion'],
                         $row['estado'],
                 );
 
@@ -1100,7 +1114,7 @@ class UsuarioDAO {
 
         try {
             
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh WHERE tu.id_casa = " . $casa;
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE tu.id_casa = " . $casa;
             $rs = $cnx->query($sql);
 
             while($row = $rs->fetch()) {
@@ -1154,6 +1168,7 @@ class UsuarioDAO {
                         $row['seccion'],
                         $row['cargo'],
                         $row['pension'],
+                        $row['tipo_dotacion'],
                         $row['estado'],
                 );
 

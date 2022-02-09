@@ -1,7 +1,7 @@
 
 <div class="col-2 position-relative">
     <div class=" bg-verde-tpt menu position-fixed top-0 start-0" id="menu">
-        <div class=" border-bottom">
+        <div class=" border-bottom border-end">
             <a class="navbar-brand bg-verde text-white d-flex justify-content-center py-3" href="admin.php"><i class="fas fa-user-shield pt-1 pe-2"> </i> Admin - <?php echo $_SESSION['nombre_admin']; ?> </a>
         </div>
         <div class="navbar w-100 h-100 flex-column">

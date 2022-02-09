@@ -40,6 +40,13 @@ $telefono_emergencia = $_POST['telefono_emergencia'];
 $celular_emergencia = $_POST['celular_emergencia'];
 $parentesco_emergencia = $_POST['parentesco_emergencia'];
 
+// foto
+
+/* $imagen = $_FILES['foto'];
+
+$nombre_imagen = $imagen['name'];
+$tipo_imagen = $imagen['type']; */
+
 // -------------------- Datos Laborales
 
 $sucursal = $_POST['sucursal'];
@@ -145,7 +152,25 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
             $usuariodto->setCargo($cargo);
             $usuariodto->setPension($pension);
 
+            if ($tipo_imagen == "image/jpg" || $tipo_imagen == "image/jpeg" || $tipo_imagen == "image/png" || $tipo_imagen == "image/gif") {
 
+                if (!is_dir("view/img")) {
+                    mkdir("img", 0777);
+
+
+                }else{
+                    move_uploaded_file($archivo['tmp_name'], 'view/img/'. $nombre);
+
+                    $usuariodto->setFoto('../img/'. $nombre);
+            
+                    header("Refresh: 5; URL=index.php ");
+                    echo "Imagen subida correctamente";
+                }
+            
+            }else{
+                header("Refresh: 5; URL=index.php");
+                echo "Sube una imagen con un formato correcto, por favor";
+            }
             
 
             $resultado = $usuariodao->registrarUsuario($usuariodto);
