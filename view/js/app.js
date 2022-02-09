@@ -907,9 +907,7 @@ var acciones = {
                 },function(responseText){
                     $("#correo").next().html(responseText);
                 });
-
-                
-                                                            
+                                         
             }else{
                 alert("Hay campos vacíos");
             } 
