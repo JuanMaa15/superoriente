@@ -18,7 +18,7 @@ class CargoDAO {
         $i = 0;
 
         try {
-            $sql = "SELECT * FROM tbl_cargo";
+            $sql = "SELECT * FROM tbl_cargo AS tc INNER JOIN tbl_seccion AS ts ON tc.id_seccion = ts.id_seccion INNER JOIN tbl_area AS ta ON tc.id_area = ta.id_area";
             $rs = $cnx->query($sql);
 
             while ($row = $rs->fetch()) {
@@ -26,7 +26,9 @@ class CargoDAO {
                 $lista[$i] = new CargoDTO();
                 $lista[$i]->constructor(
                     $row['id_cargo'],
-                    $row['cargo']
+                    $row['cargo'],
+                    $row['seccion'],
+                    $row['area']
                 );
                 $i++; 
             }
@@ -41,6 +43,7 @@ class CargoDAO {
 
     }
 
+
     //------------------- Registrar cargo ----------------
 
     public function registrarCargo($cargodto) {
@@ -48,12 +51,16 @@ class CargoDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "INSERT INTO tbl_cargo(cargo) VALUES (?)";
+            $sql = "INSERT INTO tbl_cargo(cargo, id_seccion, id_area) VALUES (?,?,?)";
             $ps = $cnx->prepare($sql);
 
             $cargo = $cargodto->getNombre();
+            $seccion = $cargodto->getSeccion();
+            $area = $cargodto->getArea();
 
             $ps->bindParam(1, $cargo);
+            $ps->bindParam(2, $seccion);
+            $ps->bindParam(3, $area);
 
             $ps->execute();
 
@@ -86,7 +93,9 @@ class CargoDAO {
             $cargodto = new CargoDTO();
             $cargodto->constructor(
                 $row['id_cargo'],
-                $row['cargo']
+                $row['cargo'],
+                $row['id_seccion'],
+                $row['id_area']
             );
 
              
@@ -107,12 +116,16 @@ class CargoDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_cargo SET cargo = ? WHERE id_cargo = " . $cargodto->getId_cargo();
+            $sql = "UPDATE tbl_cargo SET cargo = ?, id_seccion = ?, id_area = ? WHERE id_cargo = " . $cargodto->getId_cargo();
             $ps = $cnx->prepare($sql);
 
             $cargo = $cargodto->getNombre();
+            $seccion = $cargodto->getSeccion();
+            $area = $cargodto->getArea();
 
             $ps->bindParam(1, $cargo);
+            $ps->bindParam(2, $seccion);
+            $ps->bindParam(3, $area);
 
             $ps->execute();
 

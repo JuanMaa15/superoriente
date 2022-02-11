@@ -6,11 +6,13 @@ $cargodao = new CargoDAO();
 
 $listaCargos = $cargodao->listaCargos();
 
-$lista = "table class='table table-striped'"
+$lista = "<table class='table table-striped'>"
         . "<thead>"
             . "<tr>"
                 . "<th scope='col'>Código cargo</th>"
                 . "<th scope='col'>Cargo</th>"
+                . "<th scope='col'>Sección</th>"
+                . "<th scope='col'>Area</th>"
                 ."<th scope='col' class='px-5'>Opciones</th>"
             . "</tr>"
         . "</thead>"
@@ -20,6 +22,8 @@ for ($i=0; $i < count($listaCargos); $i++) {
     $lista .= "<tr>"
                . "<td>" . $listaCargos[$i]->getId_cargo() .  "</td>"
                . "<td>" . $listaCargos[$i]->getNombre() .  "</td>"
+               . "<td>" . $listaCargos[$i]->getSeccion() .  "</td>"
+               . "<td>" . $listaCargos[$i]->getArea() .  "</td>"
                . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-cargo' type='button' value='" . $listaCargos[$i]->getId_cargo() . "' data-bs-toggle='modal' data-bs-target='#editar-cargos'>Editar</button></td>"
 
             ."</tr>"; 

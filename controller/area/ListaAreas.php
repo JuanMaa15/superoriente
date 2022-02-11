@@ -6,7 +6,7 @@ $areadao = new AreaDAO();
 
 $listaAreas = $areadao->listaAreas();
 
-$lista = "table class='table table-striped'"
+$lista = "<table class='table table-striped'>"
         . "<thead>"
             . "<tr>"
                 . "<th scope='col'>Código area</th>"

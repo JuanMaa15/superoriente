@@ -6,7 +6,7 @@ $sucursaldao = new SucursalDAO();
 
 $listaSucursales = $sucursaldao->listaSucursales();
 
-$lista = "table class='table table-striped'"
+$lista = "<table class='table table-striped'>"
         . "<thead>"
             . "<tr>"
                 . "<th scope='col'>Código sucursal</th>"

@@ -14,6 +14,13 @@ var acciones = {
         $("#btn-registrar-estado-civil").click(acciones.enviarFormEstadoCivil);
         $("#btn-registrar-tipo-contrato").click(acciones.enviarFormTipoContrato);
         $("#btn-registrar-seccion").click(acciones.enviarFormSeccion);
+        $("#btn-registrar-area").click(acciones.enviarFormArea);    
+        $("#btn-registrar-cargo").click(acciones.enviarFormCargo);
+        $("#btn-registrar-sucursal").click(acciones.enviarFormSucursal);
+        $("#btn-registrar-eps").click(acciones.enviarFormEps);
+        $("#btn-registrar-nivel-academico").click(acciones.enviarFormNivelAcademico);
+        $("#btn-registrar-pension").click(acciones.enviarFormPension);
+        $("#btn-registrar-tipo-dotacion").click(acciones.enviarFormTipoDotacion);
 
         $("#btn-atras").click(acciones.volverForm);
         $("#agregar-familiar").click(acciones.agregarFamiliar);
@@ -95,6 +102,61 @@ var acciones = {
             $("#listado-secciones").html(responseText);
         });
 
+        //Area
+
+        $.post('../../controller/area/ListaAreas.php',{
+
+        },function(responseText) {
+            $("#listado-areas").html(responseText);
+        });
+
+        // Cargo 
+
+        $.post('../../controller/cargo/ListaCargos.php',{
+
+        },function(responseText) {
+            $("#listado-cargos").html(responseText);
+        });
+
+        // Sucursal
+
+        $.post('../../controller/sucursal/ListaSucursales.php',{
+
+        },function(responseText) {
+            $("#listado-sucursales").html(responseText);
+        });
+
+        // EPS
+
+        $.post('../../controller/eps/ListaEpss.php',{
+
+        },function(responseText) {
+            $("#listado-epss").html(responseText);
+        });
+
+        // Nivel academico
+
+        $.post('../../controller/nivel_academico/ListaNivelesAcademicos.php',{
+
+        },function(responseText) {
+            $("#listado-niveles-academicos").html(responseText);
+        });
+
+        // Pensión
+
+        $.post('../../controller/pension/ListaPensiones.php',{
+
+        },function(responseText) {
+            $("#listado-pensiones").html(responseText);
+        });
+
+        //Tipo de dotación
+
+        $.post('../../controller/tipo_dotacion/ListaTiposDotaciones.php',{
+
+        },function(responseText) {
+            $("#listado-tipos-dotaciones").html(responseText);
+        });
 
     },
 
@@ -456,6 +518,168 @@ var acciones = {
     },
 
     // --------------------- Verifica y envía los formularios ---------------------
+
+    // Tipon de dotación
+
+    enviarFormTipoDotacion : function(){
+
+        var nombre = $("#nombre-tipo-dotacion").val();
+
+        if (nombre.length != 0) {
+            $("#nombre-tipo-dotacion").next().html("");
+
+            $.post('../../controller/tipo_dotacion/RegistrarTipoDotacion.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-tipo-dotacion").html(responseText);
+            });
+        }else{
+            $("#nombre-tipo-dotacion").next().html("Campo vacío, por favor ingrese el tipo de dotacion");
+        }
+
+    },
+
+    // Pension
+
+    enviarFormPension : function() {
+        
+        var nombre = $("#nombre-pension").val();
+
+        if (nombre.length != 0) {
+            $("#nombre-pension").next().html("");
+
+            $.post('../../controller/pension/RegistrarPension.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-pension").html(responseText);
+            });
+        }else{
+            $("#nombre-pension").next().html("Campo vacío, por favor ingrese la pensión");
+        }
+
+    },
+
+    // Nivel academico 
+
+    enviarFormNivelAcademico : function() {
+
+        var nombre = $("#nombre-nivel-academico").val();
+
+        if (nombre.length != 0) {
+            $("#nombre-nivel-academico").next().html("");
+
+            $.post('../../controller/nivel_academico/RegistrarNivelAcademico.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-nivel-academico").html(responseText);
+            });
+        }else{
+            $("#nombre-nivel-academico").next().html("Campo vacío, por favor ingrese el nivel academico");
+        }
+
+    },
+
+    // Eps
+
+    enviarFormEps : function () {
+        var nombre = $("#nombre-eps").val();
+
+        if (nombre.length != 0) {
+            $("#nombre-eps").next().html("");
+
+            $.post('../../controller/eps/RegistrarEps.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-eps").html(responseText);
+            });
+        }else{
+            $("#nombre-eps").next().html("Campo vacío, por favor ingrese la EPS");
+        }
+    },
+
+    // Sucursal 
+
+    enviarFormSucursal : function() {
+
+        var nombre = $("#nombre-sucursal").val();
+
+        if (nombre.length != 0) {
+            $("#nombre-sucursal").next().html("");
+
+            $.post('../../controller/sucursal/RegistrarSucursal.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-sucursal").html(responseText);
+            });
+        }else{
+            $("#nombre-sucursal").next().html("Campo vacío, por favor ingrese la sucursal");
+        }
+    },
+
+    // Cargo 
+
+    enviarFormCargo : function () {
+        
+        var nombre = $("#nombre-cargo").val();
+        var id_seccion = $("#seccion-cargo").val();
+        var id_area = $("#area-cargo").val();
+
+        var validar = 0;
+
+        if (nombre.length !== 0) {
+            $("#nombre-cargo").next().html("");
+            validar++;
+            
+        }else{
+            $("#nombre-cargo").next().html("Campo vacío, por favor ingrese el cargo");
+        }
+
+        if (id_seccion.length !== 0) {
+            $("#seccion-cargo").next().html("");
+            validar++;
+            
+        }else{
+            $("#seccion-cargo").next().html("Campo vacío, por favor seleccione una sección");
+        }
+
+        if (id_area.length !== 0) {
+            $("#area-cargo").next().html("");
+            validar++;
+            
+        }else{
+            $("#area-cargo").next().html("Campo vacío, por favor seleccione un area");
+        }
+
+        if (validar === 3) {
+            $.post('../../controller/cargo/RegistrarCargo.php',{
+                nombre: nombre,
+                id_seccion: id_seccion,
+                id_area: id_area
+            },function(responseText){
+                $("#rta-cargo").html(responseText);
+            });
+        }
+
+
+    },
+
+    // Area
+    enviarFormArea : function () {
+        
+        var nombre = $("#nombre-area").val();
+
+        if (nombre.length != 0) {
+            $("#nombre-area").next().html("");
+
+            $.post('../../controller/area/RegistrarArea.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-area").html(responseText);
+            });
+        }else{
+            $("#nombre-area").next().html("Campo vacío, por favor ingrese el area");
+        }
+    },
 
     // Sección
 
@@ -1191,6 +1415,79 @@ var acciones = {
 
             // ------------- Editar un registro -----------
 
+            
+
+            // Tipo de dotación
+
+            case "btn-editar-tipo-dotacion":
+                $.post('../../controller/tipo_dotacion/EditarTipoDotacion.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-tipo-dotacion").html(responseText);
+                });
+            break;
+
+            // Pensión
+
+            case "btn-editar-pension":
+                $.post('../../controller/pension/EditarPension.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-pension").html(responseText);
+                });
+            break;
+
+            // Nivel academico
+
+            case "btn-editar-nivel-academico":
+                $.post('../../controller/nivel_academico/EditarNivelAcademico.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-nivel-academico").html(responseText);
+                });
+            break;
+
+            // Eps
+
+            case "btn-editar-eps":
+                $.post('../../controller/eps/EditarEps.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-eps").html(responseText);
+                });
+            break;
+
+            // Sucursal
+
+            case "btn-editar-sucursal":
+                $.post('../../controller/sucursal/EditarSucursal.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-sucursal").html(responseText);
+                });
+            break;
+
+
+            // Cargo 
+
+            case "btn-editar-cargo":
+                $.post('../../controller/cargo/EditarCargo.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-cargo").html(responseText);
+                });
+            break;
+
+            //Area 
+
+            case "btn-editar-area":
+                $.post('../../controller/area/EditarArea.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-area").html(responseText);
+                });
+            break;
+
             // Sección
 
             case "btn-editar-seccion":
@@ -1283,7 +1580,7 @@ var acciones = {
 
             break;
 
-            // Datops familiares
+            // Datos familiares
 
             case "btn-editar-datos-familiares":
 
@@ -1310,6 +1607,248 @@ var acciones = {
             
 
             // Actualizar un registro
+
+            case "btn-actualizar-tipo-dotacion":
+                
+                var id_tipo_dotacion = $("#id-tipo-notacion-act").val();
+                var nombre = $("#nombre-tipo-dotacion-act").val();
+                var validar = 0;
+
+                if (nombre.length !== 0) {
+                    $("#nombre-tipo-dotacion-act").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre-tipo-dotacion-act").next().html("Campo vacío, por favor ingrese el tipo de dotación");
+                }
+
+                if (id_tipo_dotacion.length !== 0) {
+                    $("#id-tipo-dotacion-act").next().html("");
+                    validar++;
+                }else{
+                    $("#id-tipo-dotacion-act").next().html("Campo vacío, por favor ingrese el código");
+                }
+
+                if (validar === 2) {
+
+                    $.post('../../controller/tipo_dotacion/ActualizarTipoDotacion.php',{
+                        id_tipo_dotacion: id_tipo_dotacion,
+                        nombre: nombre
+                    },function(responseText){
+                        $("#rta-tipo-dotacion-act").html(responseText);
+                    });    
+                    
+                }
+
+                
+            break;
+
+            case "btn-actualizar-pension":
+
+                var id_pension = $("#id-pension-act").val();
+                var nombre = $("#nombre-pension-act").val();
+                var validar = 0;
+
+                if (id_pension.length != 0) {
+                    $("#id-pension-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#id-pension-act").next().html("Campo vacío, por favor ingrese el código");
+                }
+
+                if (nombre.length != 0) {
+                    $("#nombre-pension-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#nombre-pension-act").next().html("Campo vacío, por favor ingrese la pensión");
+                }
+
+                
+
+                if (validar === 2) {
+
+                    $.post('../../controller/pension/ActualizarPension.php',{
+                        id_pension: id_pension,
+                        nombre: nombre
+                    },function(responseText){
+                        $("#rta-pension-act").html(responseText);
+                    });
+
+                }
+
+                
+
+            break;
+
+            case "btn-actualizar-nivel-academico":
+
+
+                var id_nivel_academico = $("#id-nivel-academico-act").val();
+                var nombre = $("#nombre-nivel-academico-act").val();
+                var validar = 0;
+
+                if (nombre.length != 0) {
+                    $("#nombre-nivel-academico-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#nombre-nivel-academico-act").next().html("Campo vacío, por favor ingrese el nombre");
+                }
+
+                if (id_nivel_academico.length != 0) {
+                    $("#id-nivel-academico-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#id-nivel-academico-act").next().html("Campo vacío, por favor ingrese el código");
+                }
+
+                 if (validar === 2) {
+
+                    $.post('../../controller/nivel_academico/ActualizarNivelAcademico.php',{
+                        id_nivel_academico: id_nivel_academico,
+                        nombre: nombre
+                    },function(responseText){
+                        $("#rta-nivel-academico-act").html(responseText);
+                    });
+
+                 }
+
+
+            break;
+
+            case "btn-actualizar-eps":
+                
+                var  id_eps = $("#id-eps-act").val();
+                var nombre = $("#nombre-eps-act").val();
+
+                if (nombre.length != 0) {
+                    $("#nombre-eps-act").next().html("");
+
+                    $.post('../../controller/eps/ActualizarEps.php',{
+                        id_eps: id_eps,
+                        nombre:nombre
+                    },function(responseText){
+                        $("#rta-eps-act").html(responseText);
+                        setTimeout("location.reload()", 1800);
+                    });
+                        
+                }else{
+                    $("#nombre-eps-act").next().html("Campo vacío, por favor ingrese la EPS");
+                }
+
+            break;
+
+
+            case "btn-actualizar-sucursal":
+                
+                var  id_sucursal = $("#id-sucursal-act").val();
+                var nombre = $("#nombre-sucursal-act").val();
+
+                if (nombre.length != 0) {
+                    $("#nombre-sucursal-act").next().html("");
+
+                    $.post('../../controller/sucursal/ActualizarSucursal.php',{
+                        id_sucursal: id_sucursal,
+                        nombre:nombre
+                    },function(responseText){
+                        $("#rta-sucursal-act").html(responseText);
+                        setTimeout("location.reload()", 1800);
+                    });
+                        
+                }else{
+                    $("#nombre-sucursal-act").next().html("Campo vacío, por favor ingrese la sucursal");
+                }
+
+            break;
+
+            case "btn-actualizar-cargo":
+
+                var id_cargo = $("#id-cargo-act").val();
+                var nombre = $("#nombre-cargo-act").val();
+                var id_seccion = $("#seccion-cargo-act").val();
+                var id_area = $("#area-cargo-act").val();
+
+                var validar = 0;
+
+                if (id_cargo.length !== 0) {
+                    $("#id-cargo-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#nombre-cargo").next().html("Campo vacío, por favor ingrese el código");
+                }
+
+                if (nombre.length !== 0) {
+                    $("#nombre-cargo-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#nombre-cargo-act").next().html("Campo vacío, por favor ingrese el cargo");
+                }
+
+                if (id_seccion.length !== 0) {
+                    $("#seccion-cargo-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#seccion-cargo-act").next().html("Campo vacío, por favor seleccione una sección");
+                }
+
+                if (id_area.length !== 0) {
+                    $("#area-cargo-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#area-cargo-act").next().html("Campo vacío, por favor seleccione un area");
+                }
+
+                if (validar === 4) {
+                    $.post('../../controller/cargo/ActualizarCargo.php',{
+                        id_cargo: id_cargo,
+                        nombre: nombre,
+                        id_seccion: id_seccion,
+                        id_area: id_area
+                    },function(responseText){
+                        $("#rta-cargo-act").html(responseText);
+                    });
+                }     
+
+            break;
+
+            case "btn-actualizar-area":
+
+                var id_area = $("#id-area-act").val();
+                var nombre = $("#nombre-area-act").val();
+
+                var validar = 0;
+
+                if (id_area.length != 0) {
+                    $("#id-area-act").next().html("");
+                    validar++;
+                }else{
+                    $("#id-area-act").next().html("Campo vacío, por favor el código del area");
+                }
+
+                if (nombre.length != 0) {
+                    $("#nombre-area-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#nombre-area-act").next().html("Campo vacío, por favor ingrese el area");
+                }
+
+                if (validar === 2) {
+                    $.post('../../controller/area/ActualizarArea.php',{
+                        id_area: id_area,
+                        nombre: nombre
+                    },function(responseText){
+                        $("#rta-area-act").html(responseText);
+                    })
+                }          
+
+            break;
 
             case "btn-actualizar-seccion":
 

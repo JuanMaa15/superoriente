@@ -13,10 +13,12 @@ $form = "<form>"
         ."<div class='my-2'>"
         ."<label class='form-label'>Código de area</label>"
         ."<input class='form-control' type='text' id='id-area-act' value='" . $areadto->getId_area() . "' readonly>"
+        ."<small class='text-danger'></small>"
         ."</div>"
         ."<div class='my-2'>"
         ."<label class='form-label'>Area</label>"
         ."<input class='form-control' type='text' id='nombre-area-act' value='" . $areadto->getNombre() . "'>"
+        ."<small class='text-danger'></small>"
         ."</div>"
         ."</form>";
 

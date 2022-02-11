@@ -1,10 +1,16 @@
 <?php
     session_start();
 
-    $_SESSION['id_admin'] = "1214124";
-    $_SESSION['nombre_admin'] = "Carlos";
-
     if (isset($_SESSION['id_admin'])) {
+
+        require_once ("../../models/DAO/SeccionDAO.php");
+        require_once ("../../models/DAO/AreaDAO.php");
+
+        $secciondao = new SeccionDAO();
+        $areadao = new AreaDAO();
+
+        $listaSecciones = $secciondao->listaSecciones();
+        $listaAreas = $areadao->listaAreas(); 
 
 ?>
 <!DOCTYPE html>
@@ -261,8 +267,36 @@
                                     <div class="form-registro my-3">
                                         <form action="">
                                             
-                                            <div class="my-5">
+                                            <div class="mt-5 mb-3">
                                                 <input class="form-control" type="text" id="nombre-cargo" placeholder="Cargo">
+                                                <small class="text-danger"></small>
+                                            </div>
+
+                                            <div class="my-3">
+                                                <select class="form-select" id="seccion-cargo">
+                                                    <option value="" selected>Seleccione la sección de trabajo</option>
+                                                    <?php
+                                                        for ($i=0; $i < count($listaSecciones); $i++):
+                                                            ?>
+                                                                <option value="<?php echo $listaSecciones[$i]->getId_seccion() ?>"> <?php echo $listaSecciones[$i]->getNombre() ?></option>
+                                                            <?php
+                                                        endfor;
+                                                    ?>
+                                                </select>
+                                                <small class="text-danger"></small>
+                                            </div>
+
+                                            <div class="mt-3 mb-5">
+                                                <select class="form-select" id="area-cargo">
+                                                    <option value="" selected>Seleccione el area de trabajo</option>
+                                                    <?php
+                                                        for ($i=0; $i < count($listaAreas); $i++):
+                                                            ?>
+                                                                <option value="<?php echo $listaAreas[$i]->getId_area() ?>"> <?php echo $listaAreas[$i]->getNombre() ?></option>
+                                                            <?php
+                                                        endfor;
+                                                    ?>
+                                                </select>
                                                 <small class="text-danger"></small>
                                             </div>
                                             
@@ -317,6 +351,150 @@
                         </div>
                         <div class="col-8">
                                 <div id="listado-sucursales">
+
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="row mt-3 mb-5">
+                        <div class="col-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h4>EPS</h4>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="form-registro my-3">
+                                        <form action="">
+                                            
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="nombre-eps" placeholder="EPS">
+                                                <small class="text-danger"></small>
+                                            </div>
+                                            
+                                            <div class="col my-5">
+                                                <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-eps">Registrar</button>
+                                            </div>
+               
+                                            <div id="rta-eps" class="my-2">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-8">
+                                <div id="listado-epss">
+
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="row mt-3 mb-5">
+                        <div class="col-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h4>Nivel Academico</h4>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="form-registro my-3">
+                                        <form action="">
+                                            
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="nombre-nivel-academico" placeholder="Nivel academico">
+                                                <small class="text-danger"></small>
+                                            </div>
+                                            
+                                            <div class="col my-5">
+                                                <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-nivel-academico">Registrar</button>
+                                            </div>
+               
+                                            <div id="rta-nivel-academico" class="my-2">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-8">
+                                <div id="listado-niveles-academicos">
+
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="row mt-3 mb-5">
+                        <div class="col-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h4>Pensión</h4>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="form-registro my-3">
+                                        <form action="">
+                                            
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="nombre-pension" placeholder="Pensión">
+                                                <small class="text-danger"></small>
+                                            </div>
+                                            
+                                            <div class="col my-5">
+                                                <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-pension">Registrar</button>
+                                            </div>
+               
+                                            <div id="rta-pension" class="my-2">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-8">
+                                <div id="listado-pensiones">
+
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="row mt-3 mb-5">
+                        <div class="col-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h4>Tipo de dotación</h4>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="form-registro my-3">
+                                        <form action="">
+                                            
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="nombre-tipo-dotacion" placeholder="Tipo de dotación">
+                                                <small class="text-danger"></small>
+                                            </div>
+                                            
+                                            <div class="col my-5">
+                                                <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-tipo-dotacion">Registrar</button>
+                                            </div>
+               
+                                            <div id="rta-tipo-dotacion" class="my-2">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-8">
+                                <div id="listado-tipos-dotaciones">
 
                                 </div>
                             </div>
@@ -460,7 +638,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editar-secursales" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editar-sucursales" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -474,6 +652,82 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id='btn-actualizar-sucursal'>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-epss" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar EPS</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-eps"></div>
+                    <div id="rta-eps-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-eps'>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-niveles-academicos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar nivel academico</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-nivel-academico"></div>
+                    <div id="rta-nivel-academico-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-nivel-academico'>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-pensiones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar pensión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-pension"></div>
+                    <div id="rta-pension-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-pension'>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-tipos-dotaciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar tipo de dotación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-tipo-dotacion"></div>
+                    <div id="rta-tipo-dotacion-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-tipo-dotacion'>Actualizar</button>
                 </div>
             </div>
         </div>

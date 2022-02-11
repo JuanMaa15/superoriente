@@ -13,7 +13,7 @@ if (!empty($nombre)) {
 
     $areadao = new AreaDAO();
 
-    $resultado = $areadao->registrarArea($areadao);
+    $resultado = $areadao->registrarArea($areadto);
 
     if ($resultado) {
         echo "<div class='alert alert-success' role='alert'>¡El area de trabajo se ha registrado correctamente!</div>";
