@@ -177,6 +177,150 @@
                                 </div>
                             </div>
                     </div>
+
+                    <div class="row mt-3 mb-5">
+                        <div class="col-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h4>Sección de trabajo</h4>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="form-registro my-3">
+                                        <form action="">
+                                            
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="nombre-seccion" placeholder="Sección">
+                                                <small class="text-danger"></small>
+                                            </div>
+                                            
+                                            <div class="col my-5">
+                                                <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-seccion">Registrar</button>
+                                            </div>
+               
+                                            <div id="rta-seccion" class="my-2">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-8">
+                                <div id="listado-secciones">
+
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="row mt-3 mb-5">
+                        <div class="col-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h4>Area de trabajo</h4>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="form-registro my-3">
+                                        <form action="">
+                                            
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="nombre-area" placeholder="Area">
+                                                <small class="text-danger"></small>
+                                            </div>
+                                            
+                                            <div class="col my-5">
+                                                <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-area">Registrar</button>
+                                            </div>
+               
+                                            <div id="rta-area" class="my-2">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-8">
+                                <div id="listado-areas">
+
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mb-5">
+                        <div class="col-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h4>Cargo</h4>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="form-registro my-3">
+                                        <form action="">
+                                            
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="nombre-cargo" placeholder="Cargo">
+                                                <small class="text-danger"></small>
+                                            </div>
+                                            
+                                            <div class="col my-5">
+                                                <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-cargo">Registrar</button>
+                                            </div>
+               
+                                            <div id="rta-cargo" class="my-2">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-8">
+                                <div id="listado-cargos">
+
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="row mt-3 mb-5">
+                        <div class="col-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h4>Sucursal</h4>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="form-registro my-3">
+                                        <form action="">
+                                            
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="nombre-sucursal" placeholder="Sucursal">
+                                                <small class="text-danger"></small>
+                                            </div>
+                                            
+                                            <div class="col my-5">
+                                                <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-sucursal">Registrar</button>
+                                            </div>
+               
+                                            <div id="rta-sucursal" class="my-2">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-8">
+                                <div id="listado-sucursales">
+
+                                </div>
+                            </div>
+                    </div>
                 </div>
             </div>
 
@@ -254,6 +398,82 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id='btn-actualizar-estado-civil'>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-secciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar sección</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-seccion"></div>
+                    <div id="rta-seccion-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-seccion'>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-areas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar area</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-area"></div>
+                    <div id="rta-area-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-area'>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-cargos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar cargo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-cargo"></div>
+                    <div id="rta-cargo-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-cargo'>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-secursales" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar sucursal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-sucursal"></div>
+                    <div id="rta-sucursal-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-sucursal'>Actualizar</button>
                 </div>
             </div>
         </div>

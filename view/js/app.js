@@ -13,6 +13,7 @@ var acciones = {
         $("#btn-registrar-genero").click(acciones.enviarFormGenero);
         $("#btn-registrar-estado-civil").click(acciones.enviarFormEstadoCivil);
         $("#btn-registrar-tipo-contrato").click(acciones.enviarFormTipoContrato);
+        $("#btn-registrar-seccion").click(acciones.enviarFormSeccion);
 
         $("#btn-atras").click(acciones.volverForm);
         $("#agregar-familiar").click(acciones.agregarFamiliar);
@@ -84,6 +85,14 @@ var acciones = {
 
         },function(responseText) {
             $("#listado-estados-civiles").html(responseText);
+        });
+
+        // Seccion
+
+        $.post('../../controller/seccion/ListaSecciones.php',{
+
+        },function(responseText) {
+            $("#listado-secciones").html(responseText);
         });
 
 
@@ -443,6 +452,29 @@ var acciones = {
         console.log(contF);
 
         
+
+    },
+
+    // --------------------- Verifica y envía los formularios ---------------------
+
+    // Sección
+
+
+    enviarFormSeccion : function() {
+
+        var nombre = $("#nombre-seccion").val();
+
+        if (nombre.length != 0) {
+            $("#nombre-seccion").next().html("");
+
+            $.post('../../controller/seccion/RegistrarSeccion.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-seccion").html(responseText);
+            })
+        }else{
+            $("#nombre-seccion").next().html("Campo vacío, por favor ingrese la sección");
+        }
 
     },
 
@@ -1159,6 +1191,16 @@ var acciones = {
 
             // ------------- Editar un registro -----------
 
+            // Sección
+
+            case "btn-editar-seccion":
+                $.post('../../controller/seccion/EditarSeccion.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-seccion").html(responseText);
+                });
+            break;
+
             // Tipo de contrato
             
             case "btn-editar-tipo-contrato":
@@ -1268,6 +1310,39 @@ var acciones = {
             
 
             // Actualizar un registro
+
+            case "btn-actualizar-seccion":
+
+                var id_seccion = $("#id-seccion-act").val();
+                var nombre = $("#nombre-seccion-act").val();
+
+                var validar = 0;
+
+                if (id_seccion.length != 0) {
+                    $("#id-seccion-act").next().html("");
+                    validar++;
+                }else{
+                    $("#id-seccion-act").next().html("Campo vacío, por favor el código de la sección");
+                }
+
+                if (nombre.length != 0) {
+                    $("#nombre-seccion-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#nombre-seccion-act").next().html("Campo vacío, por favor ingrese la sección");
+                }
+
+                if (validar === 2) {
+                    $.post('../../controller/seccion/ActualizarSeccion.php',{
+                        id_seccion: id_seccion,
+                        nombre: nombre
+                    },function(responseText){
+                        $("#rta-seccion-act").html(responseText);
+                    })
+                }          
+
+            break;
 
             case "btn-actualizar-tipo-contrato":
                 
