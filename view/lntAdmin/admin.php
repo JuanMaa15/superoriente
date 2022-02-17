@@ -50,6 +50,33 @@
                         </div>
 
                     </div>
+
+                    <div class="row mt-5">
+                        <div class="col">
+                        <h2 class="mb-3">Generar reportes</h2>
+                        </div>
+                    </div>
+                    <div class="row align-items-center border-bottom pb-4">
+                        <div class="col">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis dignissim mauris. Nam
+                                dui nisl, vehicula nec ultricies vitae, aliquam a neque. Donec aliquam gravida aliquet. Pellentesq
+                               ue pretium, ante a fringilla vulputate, elit diam convallis nulla, id tincidunt diam lacus dictum
+                                purus. Vivamus vel eros congue, molestie diam et, ultricies erat.</p>
+                        </div>
+                        <div class="col-4 px-5">
+                            <a href="registro.php" id="btn-img-registro" class="btn-img position-relative d-block w-100">
+                                <div class="cont-img">
+                                    <img class="w-100" src="../img/img-registro.jpg">
+                                </div>
+                                <div class="cont-descripcion p-2 position-absolute top-100 start-0  bg-negro-tpt w-100">
+                                    <h5 class="text-white">Registrar Empleado</h5>
+                                </div>
+                            </a>
+                            
+                        </div>
+
+                    </div>
+
                     <!-- <div class="row my-4 justify-content-center">
                         
                         <div class="col px-5">

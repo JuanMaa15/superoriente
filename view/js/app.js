@@ -2,8 +2,12 @@
 var sumaAnchoContRegistro = 0;
 var contF = 0;
 var contH = 0;
+var contenido_area = $("#area").html();
+
 var acciones = {
     listo : function() {
+
+        
 
         // ------ Se ejecutan las funciones por medio del evento click ----------------
 
@@ -189,20 +193,26 @@ var acciones = {
     // Muestra las opciones en el Combo Box de Area
 
     mostrarOpcionesArea : function () {
+
+        
         
         var seccion = $(this).val();
-        var area = $(this).val();
+        var area = $("#area").val();
+        /* var option_first = "<option value=''></option>"; */
+        
 
         if (seccion.length !== 0) {
             
+            $("#area").html(contenido_area);
             $(".opc-area").removeClass("d-none");
             $(".opc-area").addClass("d-block");
-
+           
+            $("#area option:first").remove();
 
         }else{
             $(".opc-area").addClass("d-none");
             $(".opc-area").removeClass("d-block");
-            $("#area").html("<option value=''>Area *</option>");
+           $("#area").html(`<option value=''>Area *</option>`);
             
         }
 

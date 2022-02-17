@@ -15,7 +15,7 @@ if (!empty($seccion) && !empty($area)) {
 
             $listaCargos = $cargodao->listaCargosId();
 
-            $cbxCargo = "<option value=''>Cargo *</option>";
+            $cbxCargo = "";
 
             $seccion = intval($seccion);
             $area = intval($area);

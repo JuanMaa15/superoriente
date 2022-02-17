@@ -55,7 +55,7 @@
                         </div>
 
                     </div>
-                    <div class="row ">
+                    <div class="row mt-5 pt-5">
                         <div class="col">
                             <h2 class="mb-3 text-center">Gestión de información</h2>
                         </div>
