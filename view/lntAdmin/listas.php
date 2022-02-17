@@ -42,16 +42,16 @@
             <?php include_once("menu.php"); ?>
             <div class="col-10 ps-0 py-5 position-relative">
                 <div class="bg-verde-tpt col w-100 d-flex justify-content-end position-fixed top-0 end-0">
-                <div class="nav-item dropdown py-3">
-                    <a class="navbar-brand dropdown-toggle text-white" href="#" id="menu-desplegable-listas">
-                        Listas de empleados
-                    </a>
-                    <ul class="dropdown-menu" id="menu-desplegado">
-                        <li><a class="dropdown-item" href="#lista-enlaces">Lista de empleados</a></li>
-                        <li><a class="dropdown-item" href="#reportes-empleados-fechas">Reporte inicio</a></li>
-                        <li><a class="dropdown-item" href="#reportes-empleados-salario">Reporte por salario</a></li>
-                    </ul>
-              </div>
+                    <div class="nav-item dropdown py-3">
+                        <a class="navbar-brand dropdown-toggle text-white" href="#" id="menu-desplegable-listas">
+                            Listas de empleados
+                        </a>
+                        <ul class="dropdown-menu" id="menu-desplegado">
+                            <li><a class="dropdown-item" href="#lista-enlaces">Lista de empleados</a></li>
+                            <li><a class="dropdown-item" href="#reportes-empleados-fechas">Reporte inicio</a></li>
+                            <li><a class="dropdown-item" href="#reportes-empleados-salario">Reporte por salario</a></li>
+                        </ul>
+                    </div>
 
                 </div>
                 <!-- <div class="row pb-4">

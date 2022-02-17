@@ -9,6 +9,13 @@
     require_once ('../../models/DAO/EstadoCivilDAO.php');
     require_once ('../../models/DAO/CasaDAO.php');
     require_once ('../../models/DAO/TipoSangreDAO.php');
+    require_once ('../../models/DAO/NivelAcademicoDAO.php');
+    require_once ('../../models/DAO/EpsDAO.php');
+    require_once ('../../models/DAO/SucursalDAO.php');
+    require_once ('../../models/DAO/AreaDAO.php');
+    require_once ('../../models/DAO/SeccionDAO.php');
+    require_once ('../../models/DAO/CargoDAO.php');
+    require_once ('../../models/DAO/PensionDAO.php');
 
     // Instanciar los objetos
     $perfildao = new PerfilDAO();
@@ -20,6 +27,15 @@
     $casadao = new CasaDAO();
     $estadodao = new EstadoDAO();
     $tipoSangredao = new TipoSangreDAO();
+
+    $nivelAcademicodao = new NivelAcademicoDAO();
+    $epsdao = new EpsDAO();
+    $sucursaldao = new SucursalDAO();
+    $areadao = new AreaDAO();
+    $secciondao = new SeccionDAO();
+    $cargodao = new CargoDAO();
+    $pensiondao = new PensionDAO();
+
 
 
     // Traer las listas de las tablas necesarias para realizar un registro
@@ -33,6 +49,16 @@
     $listaEstadosCiviles = $estadoCivildao->listaEstadosCiviles();
     $listaCasas = $casadao->listaCasas();
     $listaTipoSangre = $tipoSangredao->listaTiposSangre();
+
+    $listaNivelesAcademicos = $nivelAcademicodao->listaNivelesAcademicos();
+    $listaEps = $epsdao->listaEpss();
+    $listaSucursales = $sucursaldao->listaSucursales();
+    $listaAreas = $areadao->listaAreas();
+    $listaSeccion = $secciondao->listaSecciones();
+    $listaCargos = $cargodao->listaCargos();
+    $listaPensiones = $pensiondao->listaPensiones();
+
+
 
     if (isset($_SESSION['id_admin'])) {
 
@@ -166,7 +192,16 @@
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class="col my-3">
-                                                        <input class="form-control" type="text" id="nivel_academico" placeholder="Nivel Academico">
+                                                        <select class="form-select" id="nivel_academico">
+                                                                <option value="">Seleccionar nivel academico *</option>
+                                                                <?php
+                                                                        for ($i=0; $i < count($listaNivelesAcademicos); $i++) { 
+                                                                            ?>
+                                                                            <option value="<?php echo $listaNivelesAcademicos[$i]->getId_nivel_academico(); ?>"> <?php echo $listaNivelesAcademicos[$i]->getNombre(); ?></option>
+                                                                            <?php
+                                                                        }
+                                                                ?>
+                                                        </select>
                                                         <small class="text-danger"></small>
                                                     </div>
                                                 </div>
@@ -191,7 +226,16 @@
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class="col my-3">
-                                                         <input class="form-control" type="text" id="eps" placeholder="EPS *">
+                                                        <select class="form-select" id="eps">
+                                                            <option value="">Seleccionar EPS *</option>
+                                                            <?php
+                                                                    for ($i=0; $i < count($listaEps); $i++) { 
+                                                                        ?>
+                                                                        <option value="<?php echo $listaEps[$i]->getId_eps(); ?>"> <?php echo $listaEps[$i]->getNombre(); ?></option>
+                                                                        <?php
+                                                                    }
+                                                            ?>
+                                                        </select>                                              
                                                         <small class="text-danger"></small>
                                                     </div>
                                                 </div>
@@ -294,7 +338,16 @@
                                                 <h3>Datos laborales</h3>
                                                 <div class="row">
                                                     <div class=" col my-3">
-                                                        <input class="form-control" type="text" id="sucursal" placeholder="Sucursal *">
+                                                        <select class="form-select" id="sucursal">
+                                                            <option value="">Seleccionar sucursal *</option>
+                                                            <?php
+                                                                    for ($i=0; $i < count($listaSucursales); $i++) { 
+                                                                        ?>
+                                                                        <option value="<?php echo $listaSucursales[$i]->getId_sucursal(); ?>"> <?php echo $listaSucursales[$i]->getNombre(); ?></option>
+                                                                        <?php
+                                                                    }
+                                                            ?>
+                                                        </select>
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class="col my-3">
@@ -335,11 +388,11 @@
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class=" col my-3">
-                                                        <input class="form-control" type="text" id="valor_dia" placeholder="Valor día *">
+                                                        <input class="form-control" type="text" id="valor_dia" placeholder="Valor día *" readonly>
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class=" col my-3">
-                                                        <input class="form-control" type="text" id="valor_hora" placeholder="Valor Hora *">
+                                                        <input class="form-control" type="text" id="valor_hora" placeholder="Valor Hora *" readonly>
                                                         <small class="text-danger"></small>
                                                     </div>
                                                 </div>
@@ -356,21 +409,58 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class=" col my-3">
-                                                        <input class="form-control" type="text" id="area" placeholder="Area *">
+                                                        <select id="seccion" class="form-select">
+                                                            <option value="" selected>Sección *</option>
+                                                            <?php
+                                                            
+                                                                for ($i=0; $i < count($listaSeccion); $i++) { 
+                                                                    ?>
+                                                                        <option value="<?php echo $listaSeccion[$i]->getId_seccion(); ?>"><?php echo $listaSeccion[$i]->getNombre(); ?></option>
+                                                                    <?php
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                        
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class=" col my-3">
-                                                        <input class="form-control" type="text" id="seccion" placeholder="Sección *">
+                                                        <select id="area" class="form-select">
+                                                            <option value="">Area</option>
+                                                            
+                                                            <?php
+                                                            
+                                                            for ($i=0; $i < count($listaAreas); $i++) { 
+                                                                    ?>
+                                                                        <option value="<?php echo $listaAreas[$i]->getId_area(); ?>" class="d-none opc-area"><?php echo $listaAreas[$i]->getNombre(); ?></option>
+                                                                    <?php
+                                                                }
+                                                            ?>
+                                                            
+
+                                                        </select>
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class=" col my-3">
-                                                        <input class="form-control" type="text" id="cargo" placeholder="Cargo *">
+                                                        <select id="cargo" class="form-select">
+                                                            <option value="">Cargo</option>
+                                                            
+                                                        </select>
+                                                        
                                                         <small class="text-danger"></small>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class=" col my-3">
-                                                        <input class="form-control" type="text" id="pension" placeholder="Pensión">
+                                                        <select class="form-select" id="pension">
+                                                                <option value="">Seleccionar pension *</option>
+                                                                <?php
+                                                                    for ($i=0; $i < count($listaPensiones); $i++) { 
+                                                                        ?>
+                                                                            <option value="<?php echo $listaPensiones[$i]->getId_pension(); ?>"><?php echo $listaPensiones[$i]->getNombre(); ?></option>
+                                                                        <?php
+                                                                    }
+                                                                ?>
+                                                        </select>
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class=" col my-3">

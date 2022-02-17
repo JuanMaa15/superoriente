@@ -43,6 +43,40 @@ class CargoDAO {
 
     }
 
+    // ----------------------- Lista de cargos ------------------------------------
+
+    public function listaCargosId() {
+
+        $cnx = Conexion::conectar();
+        $lista = array();
+        $i = 0;
+
+        try {
+            $sql = "SELECT * FROM tbl_cargo";
+            $rs = $cnx->query($sql);
+
+            while ($row = $rs->fetch()) {
+
+                $lista[$i] = new CargoDTO();
+                $lista[$i]->constructor(
+                    $row['id_cargo'],
+                    $row['cargo'],
+                    $row['id_seccion'],
+                    $row['id_area']
+                );
+                $i++; 
+            }
+
+            return $lista;
+
+        } catch (Exception $e) {
+            print "Error al traer la lista de los cargos" . $e->getMessage();
+        }
+
+        return null;
+
+    }
+
 
     //------------------- Registrar cargo ----------------
 

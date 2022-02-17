@@ -31,6 +31,8 @@ var acciones = {
         $("#btn-buscar-salario").click(acciones.buscarEmpleadoSalario);
         $("#filtro-empleado").click(acciones.filtroEmpleado);
         $("#menu-desplegable-listas").click(acciones.desplegarMenuListas);
+        $("#seccion").click(acciones.mostrarOpcionesArea);
+        $("#area").click(acciones.mostrarOpcionesCargo);
 
         $(".fecha_nacimiento").on('change', acciones.calcularEdadesHijos);
 
@@ -38,6 +40,7 @@ var acciones = {
         $("#fecha_nacimiento").on('change', acciones.calcularEdad);
 
         $("#buscar_empleado").keyup(acciones.buscarEmpleado);
+        $("#salario").keyup(acciones.calcularValorDiaHora);
 
 
         // ---------------- Verificación de campos (inputs) por teclado ------------
@@ -157,6 +160,78 @@ var acciones = {
         },function(responseText) {
             $("#listado-tipos-dotaciones").html(responseText);
         });
+
+    },
+
+    // Muestra las opciones en el Combo Box de Cargo
+
+    mostrarOpcionesCargo : function() {
+
+        var area = $(this).val();
+        var seccion = $("#seccion").val();
+        var area = $("#area").val();
+
+        if (area.length !== 0) {
+            $.post('../../controller/cargo/CbxCargo.php',{
+                seccion: seccion,
+                area: area
+            },function(responseText){
+                $("#cargo").html(responseText);
+            });
+        }else{
+            $("#cargo").html("<option value=''>Cargo *</option>");
+        }
+
+        
+
+    },
+
+    // Muestra las opciones en el Combo Box de Area
+
+    mostrarOpcionesArea : function () {
+        
+        var seccion = $(this).val();
+        var area = $(this).val();
+
+        if (seccion.length !== 0) {
+            
+            $(".opc-area").removeClass("d-none");
+            $(".opc-area").addClass("d-block");
+
+
+        }else{
+            $(".opc-area").addClass("d-none");
+            $(".opc-area").removeClass("d-block");
+            $("#area").html("<option value=''>Area *</option>");
+            
+        }
+
+        if (area.length !== 0 && seccion.length !== 0) {
+
+            $.post('../../controller/cargo/CbxCargo.php',{
+                seccion: seccion,
+                area: area
+            },function(responseText){
+                $("#cargo").html(responseText);
+            });
+        }else{
+            $("#cargo").html("<option value=''>Cargo *</option>");
+        }
+
+    },
+
+
+    // Calcula el valor del día y de la hora al ingresar el salario
+
+    calcularValorDiaHora : function() {
+
+        var salario = parseInt($(this).val());
+        var valor_dia = salario / 30;
+        var valor_hora = valor_dia / 8;
+
+        $("#valor_dia").val(parseInt(valor_dia));
+        $("#valor_hora").val(parseInt(valor_hora));
+
 
     },
 
@@ -291,6 +366,7 @@ var acciones = {
 
     },
 
+    
     buscarEmpleadoSalario : function () {
         
         

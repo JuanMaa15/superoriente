@@ -33,7 +33,28 @@
         <div class="row">
             <?php include_once("menu.php");?>
             <div class="col-10 ps-0">
-                <div class="container mt-4 px-5">
+                <div class="container mt-4 px-5 position-relative">
+                    <div class="bg-verde-tpt col w-100 d-flex justify-content-end position-fixed top-0 end-0" id="menu-gestion">
+                        <div class="nav-item dropdown py-3">
+                            <a class="navbar-brand dropdown-toggle text-white" href="#" id="menu-desplegable-listas">
+                                Lista de gestión de tablas
+                            </a>
+                            <ul class="dropdown-menu" id="menu-desplegado">
+                                <li><a class="dropdown-item" href="#gestion-documento-identidad">Documento de identidad</a></li>
+                                <li><a class="dropdown-item" href="#gestion-tipo-contrato">Tipo de contrato</a></li>
+                                <li><a class="dropdown-item" href="#gestion-estado-civil">Estado civil</a></li>
+                                <li><a class="dropdown-item" href="#gestion-seccion">Sección de trabajo</a></li>
+                                <li><a class="dropdown-item" href="#gestion-area">Area de trabajo</a></li>
+                                <li><a class="dropdown-item" href="#gestion-cargo">Cargo</a></li>
+                                <li><a class="dropdown-item" href="#gestion-sucursal">Sucursal</a></li>
+                                <li><a class="dropdown-item" href="#gestion-eps">EPS</a></li>
+                                <li><a class="dropdown-item" href="#gestion-nivel-academico">Nivel academico</a></li>
+                                <li><a class="dropdown-item" href="#gestion-pension">Pensión</a></li>
+                                <li><a class="dropdown-item" href="#gestion-tipo-dotacion">Tipo de dotación</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
                     <div class="row ">
                         <div class="col">
                             <h2 class="mb-3 text-center">Gestión de información</h2>
@@ -43,7 +64,7 @@
                     
                 </div>
                 <div class="container mt-4 px-5">
-                    <div class="row my-3">
+                    <div class="row my-3" id="gestion-documento-identidad">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -78,7 +99,7 @@
                                 </div>
                             </div>
                     </div>
-                    <div class="row my-3">
+                    <div class="row my-3" id="gestion-tipo-contrato">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -113,7 +134,7 @@
                                 </div>
                             </div>
                     </div>
-                    <div class="row my-3">
+                    <div class="row my-3" id="gestion-genero">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -148,7 +169,7 @@
                                 </div>
                             </div>
                     </div>
-                    <div class="row mt-3 mb-5">
+                    <div class="row mt-3 mb-5" id="gestion-estado-civil">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -184,7 +205,7 @@
                             </div>
                     </div>
 
-                    <div class="row mt-3 mb-5">
+                    <div class="row mt-3 mb-5" id="gestion-seccion">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -220,7 +241,7 @@
                             </div>
                     </div>
 
-                    <div class="row mt-3 mb-5">
+                    <div class="row mt-3 mb-5" id="gestion-area">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -256,7 +277,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-3 mb-5">
+                    <div class="row mt-3 mb-5" id="gestion-cargo">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -320,7 +341,7 @@
                             </div>
                     </div>
 
-                    <div class="row mt-3 mb-5">
+                    <div class="row mt-3 mb-5" id="gestion-sucursal">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -356,7 +377,7 @@
                             </div>
                     </div>
 
-                    <div class="row mt-3 mb-5">
+                    <div class="row mt-3 mb-5" id="gestion-eps">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -392,7 +413,7 @@
                             </div>
                     </div>
 
-                    <div class="row mt-3 mb-5">
+                    <div class="row mt-3 mb-5" id="gestion-nivel-academico">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -428,7 +449,7 @@
                             </div>
                     </div>
 
-                    <div class="row mt-3 mb-5">
+                    <div class="row mt-3 mb-5" id="gestion-pension">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
@@ -464,7 +485,7 @@
                             </div>
                     </div>
 
-                    <div class="row mt-3 mb-5">
+                    <div class="row mt-3 mb-5" id="gestion-tipo-dotacion">
                         <div class="col-4">
                             <div class="card text-center">
                                 <div class="card-header">
