@@ -4,6 +4,10 @@
     require_once ('../../models/DAO/EstadoDAO.php');
     require_once ('../../models/DAO/TipoContratoDAO.php');
     require_once ('../../models/DAO/CasaDAO.php');
+    require_once('../../models/DAO/SeccionDAO.php');
+    require_once('../../models/DAO/AreaDAO.php');
+    require_once('../../models/DAO/CargoDAO.php');
+
 
     if (isset($_SESSION['id_admin'])) {
 
@@ -12,12 +16,18 @@
         $estadodao = new EstadoDAO();
         $tipoContratodao = new TipoContratoDAO();
         $casadao = new CasaDAO();
+        $secciondao = new SeccionDAO();
+        $areadao = new AreaDAO();
+        $cargodao = new CargoDAO();
 
         // --- Listas ---
 
         $listaEstados = $estadodao->listaEstados();
         $listaTipoContratos = $tipoContratodao->listaTiposContratos();
         $listaCasas = $casadao->listaCasas();
+        $listaSecciones = $secciondao->listaSecciones();
+        $listaAreas = $areadao->listaAreas();
+        $listaCargos = $cargodao->listaCargos();
 ?>
 
 
@@ -176,6 +186,104 @@
                         <div class="row">
                             <div class="col"> 
                                 <div id="lista-intervalo-salario">
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div id="reportes-empleados-cargo" class="my-5 px-5">
+                        <div class="row">
+                            <div class="col">
+                                <h2>Reportes por sección, area o cargo de los empleados</h2>
+                            </div>
+                        </div>
+                        <div class="row  align-items-center py-4">
+                            <div class="col">
+                                <div class="form-check row justify-content-center  flex-column align-items-center">
+                                    <div class="col-4 mt-3">
+                                        <input type="radio" class="opc-trabajo" class="form-check-input" id="opc-seccion">
+                                        <label class="form-check-label" for="opc-seccion">
+                                            Sección
+                                        </label>
+                                    </div>
+                                    <div class="col-4 my-2 ">
+                                         <input type="radio" class="opc-trabajo" class="form-check-input" id="opc-area">
+                                         <label class="form-check-label" for="opc-area">
+                                            Area
+                                        </label>
+                                    </div>
+                                    <div class="col-4 mb-3">
+                                         <input type="radio" class="opc-trabajo" class="form-check-input" id="opc-cargo">
+                                         <label class="form-check-label" for="opc-cargo">
+                                            Cargo
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="row ">
+                                    <h4 id="text_info">Seleccionar una opción</h4>
+                                    <div class="col d-none" id="campo-seccion">
+                                        <select class="form-select" id="seccion">
+                                            <option value="">Sección</option>
+                                            <?php
+                                                            
+                                                for ($i=0; $i < count($listaSeccion); $i++) { 
+                                                    ?>
+                                                        <option value="<?php echo $listaSeccion[$i]->getId_seccion(); ?>"><?php echo $listaSeccion[$i]->getNombre(); ?></option>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </select>
+                                        <small class="text-danger"></small>
+                                    </div>
+
+                                    <div class="col d-none" id="campo-area">
+                                        <select id="area" class="form-select">
+                                            <option value="">Area</option>
+                                            <?php
+                                                            
+                                                for ($i=0; $i < count($listaAreas); $i++) { 
+                                                        ?>
+                                                            <option value="<?php echo $listaAreas[$i]->getId_area(); ?>" class="d-none opc-area"><?php echo $listaAreas[$i]->getNombre(); ?></option>
+                                                        <?php
+                                                    }
+                                            ?>
+                                        </select>
+                                        <small class="text-danger"></small>
+                                    </div>
+
+                                    <div class="col d-none" id="campo-cargo">
+                                        <select id="cargo" class="form-select">
+                                            <option value="">Cargo</option>
+                                            <?php
+                                                            
+                                                for ($i=0; $i < count($listaCargos); $i++) { 
+                                                        ?>
+                                                            <option value="<?php echo $listaCargos[$i]->getId_cargo(); ?>" class="d-none opc-area"><?php echo $listaCargos[$i]->getNombre(); ?></option>
+                                                        <?php
+                                                    }
+                                                ?>
+                                        </select>
+                                        <small class="text-danger"></small>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-4">
+                                <button class="btn btn-verde w-100" id="btn-buscar-opcion-trabajo">Buscar</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col"> 
+                                <div id="lista-opcion-trabajo">
 
                                 </div>
                             </div>

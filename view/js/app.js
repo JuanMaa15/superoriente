@@ -33,6 +33,8 @@ var acciones = {
         $("#remover-hijo").click(acciones.removerhijo);
         $("#btn-buscar-fecha").click(acciones.buscarEmpleadoFecha);
         $("#btn-buscar-salario").click(acciones.buscarEmpleadoSalario);
+        $(".opc-trabajo").click(acciones.buscarEmpleadoOpcTrabajo);
+
         $("#filtro-empleado").click(acciones.filtroEmpleado);
         $("#menu-desplegable-listas").click(acciones.desplegarMenuListas);
         $("#seccion").click(acciones.mostrarOpcionesArea);
@@ -376,6 +378,16 @@ var acciones = {
 
     },
 
+
+    // Me habilita el campo relacionado con la selección de los RadioButtons
+
+    buscarEmpleadoOpcTrabajo : function () {
+      
+        var opc = $(this + ":checked").val();
+
+        alert("Funciona y su valor es: " + opc);
+
+    },
     
     buscarEmpleadoSalario : function () {
         

@@ -825,7 +825,7 @@ class UsuarioDAO {
                         $row['celular_emergencia'],
                         $row['parentesco_emergencia'],
 
-                        $row['sucursal'],
+                        $row['id_sucursal'],
                         $row['id_tipo_contrato'],
                         $row['fecha_ingreso'],
                         $row['fecha_retiro'],
@@ -907,7 +907,7 @@ class UsuarioDAO {
                     $row['celular_emergencia'],
                     $row['parentesco_emergencia'],
 
-                    $row['sucursal'],
+                    $row['id_sucursal'],
                     $row['id_tipo_contrato'],
                     $row['fecha_ingreso'],
                     $row['fecha_retiro'],
