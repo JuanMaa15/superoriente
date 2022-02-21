@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../../public/js/jquery.js"></script>
-
+    
 </head>
 <body>
     <!--------------- Body form -------- -->
@@ -200,23 +200,23 @@
                             </div>
                         </div>
                         <div class="row  align-items-center py-4">
-                            <div class="col">
-                                <div class="form-check row justify-content-center  flex-column align-items-center">
-                                    <div class="col-4 mt-3">
-                                        <input type="radio" class="opc-trabajo" class="form-check-input" id="opc-seccion">
+                            <div class="col ">
+                                <div class=" row justify-content-center flex-column align-items-center">
+                                    <div class="col-4 mt-3 form-check">
+                                        <input type="radio" class="form-check-input" id="opc-seccion" name="opcTrabajo" value="seccion"  checked>
                                         <label class="form-check-label" for="opc-seccion">
                                             Sección
                                         </label>
                                     </div>
-                                    <div class="col-4 my-2 ">
-                                         <input type="radio" class="opc-trabajo" class="form-check-input" id="opc-area">
-                                         <label class="form-check-label" for="opc-area">
+                                    <div class="col-4 my-2 form-check">
+                                        <input class="form-check-input"  type="radio" id="opc-area" name="opcTrabajo" value="area">
+                                        <label class="form-check-label" for="opc-area">
                                             Area
                                         </label>
                                     </div>
-                                    <div class="col-4 mb-3">
-                                         <input type="radio" class="opc-trabajo" class="form-check-input" id="opc-cargo">
-                                         <label class="form-check-label" for="opc-cargo">
+                                    <div class="col-4 mb-3 form-check">
+                                        <input class="form-check-input" type="radio" id="opc-cargo" name="opcTrabajo" value="cargo">
+                                        <label class="form-check-label" for="opc-cargo">
                                             Cargo
                                         </label>
                                     </div>
@@ -224,48 +224,48 @@
                             </div>
 
                             <div class="col">
-                                <div class="row ">
+                                <div class="row justify-content-center">
                                     <h4 id="text_info">Seleccionar una opción</h4>
-                                    <div class="col d-none" id="campo-seccion">
-                                        <select class="form-select" id="seccion">
+                                    <div class="col-8 d-none" id="campo-seccion">
+                                        <select class="form-select" id="seccion_reporte">
                                             <option value="">Sección</option>
                                             <?php
                                                             
-                                                for ($i=0; $i < count($listaSeccion); $i++) { 
+                                                for ($i=0; $i < count($listaSecciones); $i++):
                                                     ?>
-                                                        <option value="<?php echo $listaSeccion[$i]->getId_seccion(); ?>"><?php echo $listaSeccion[$i]->getNombre(); ?></option>
+                                                        <option value="<?php echo $listaSecciones[$i]->getId_seccion(); ?>"><?php echo $listaSecciones[$i]->getNombre(); ?></option>
                                                     <?php
-                                                }
+                                                endfor;
                                             ?>
                                         </select>
                                         <small class="text-danger"></small>
                                     </div>
 
-                                    <div class="col d-none" id="campo-area">
-                                        <select id="area" class="form-select">
+                                    <div class="col-8 d-none" id="campo-area">
+                                        <select id="area_reporte" class="form-select">
                                             <option value="">Area</option>
                                             <?php
                                                             
-                                                for ($i=0; $i < count($listaAreas); $i++) { 
+                                                for ($i=0; $i < count($listaAreas); $i++):
                                                         ?>
-                                                            <option value="<?php echo $listaAreas[$i]->getId_area(); ?>" class="d-none opc-area"><?php echo $listaAreas[$i]->getNombre(); ?></option>
+                                                            <option value="<?php echo $listaAreas[$i]->getId_area(); ?>"><?php echo $listaAreas[$i]->getNombre(); ?></option>
                                                         <?php
-                                                    }
+                                                    endfor;
                                             ?>
                                         </select>
                                         <small class="text-danger"></small>
                                     </div>
 
-                                    <div class="col d-none" id="campo-cargo">
-                                        <select id="cargo" class="form-select">
+                                    <div class="col-8 d-none" id="campo-cargo">
+                                        <select id="cargo_reporte" class="form-select">
                                             <option value="">Cargo</option>
                                             <?php
                                                             
-                                                for ($i=0; $i < count($listaCargos); $i++) { 
+                                                for ($i=0; $i < count($listaCargos); $i++):
                                                         ?>
-                                                            <option value="<?php echo $listaCargos[$i]->getId_cargo(); ?>" class="d-none opc-area"><?php echo $listaCargos[$i]->getNombre(); ?></option>
+                                                            <option value="<?php echo $listaCargos[$i]->getId_cargo(); ?>"><?php echo $listaCargos[$i]->getNombre(); ?></option>
                                                         <?php
-                                                    }
+                                                    endfor;
                                                 ?>
                                         </select>
                                         <small class="text-danger"></small>
@@ -298,7 +298,9 @@
         
     </div>
 
-    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script src="../js/app.js"></script>
    
 
     <!-- <div class="modal fade" id="editar-usuarios" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -320,9 +322,7 @@
         </div>
     </div> -->
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-    <script src="../js/app.js"></script>
+    
 </body>
 </html>
 

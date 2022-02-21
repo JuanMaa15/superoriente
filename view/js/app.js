@@ -3,6 +3,7 @@ var sumaAnchoContRegistro = 0;
 var contF = 0;
 var contH = 0;
 var contenido_area = $("#area").html();
+var opc_trabajo_reporte = "";
 
 var acciones = {
     listo : function() {
@@ -33,8 +34,9 @@ var acciones = {
         $("#remover-hijo").click(acciones.removerhijo);
         $("#btn-buscar-fecha").click(acciones.buscarEmpleadoFecha);
         $("#btn-buscar-salario").click(acciones.buscarEmpleadoSalario);
-        $(".opc-trabajo").click(acciones.buscarEmpleadoOpcTrabajo);
+        $("#btn-buscar-opcion-trabajo").click(acciones.buscarEmpleadoOpcTrabajo)
 
+        $("input:radio[name=opcTrabajo]").click(acciones.habilitarComboBox);
         $("#filtro-empleado").click(acciones.filtroEmpleado);
         $("#menu-desplegable-listas").click(acciones.desplegarMenuListas);
         $("#seccion").click(acciones.mostrarOpcionesArea);
@@ -381,11 +383,77 @@ var acciones = {
 
     // Me habilita el campo relacionado con la selección de los RadioButtons
 
-    buscarEmpleadoOpcTrabajo : function () {
+    habilitarComboBox : function () {
       
-        var opc = $(this + ":checked").val();
+        var opc = $("input:radio[name=opcTrabajo]:checked").val();
+       // var no_checked = $("input:radio[name=opcTrabajo]:checked");
+        var comboBox_seccion = $("#campo-seccion");
+        var comboBox_area = $("#campo-area");
+        var comboBox_cargo = $("#campo-cargo");
 
-        alert("Funciona y su valor es: " + opc);
+        $("#text_info").remove();
+
+        switch (opc) {
+            case "seccion":
+                
+                if (comboBox_seccion.hasClass("d-none")) {
+
+                    comboBox_area.addClass("d-none");
+                    comboBox_cargo.addClass("d-none");
+                
+                    
+                    comboBox_seccion.addClass("d-block");
+                    comboBox_seccion.removeClass("d-none");
+
+                    opc_trabajo_reporte = "seccion";
+
+                }else{
+
+                }
+
+            break;
+            case "area":
+
+                if (comboBox_area.hasClass("d-none")) {
+
+                    comboBox_seccion.addClass("d-none");
+                    comboBox_cargo.addClass("d-none");
+                
+                    
+                    comboBox_area.addClass("d-block");
+                    comboBox_area.removeClass("d-none");
+
+                    opc_trabajo_reporte = "area";
+
+                }
+
+            break;
+        
+            case "cargo":
+
+                if (comboBox_cargo.hasClass("d-none")) {
+
+                    comboBox_seccion.addClass("d-none");
+                    comboBox_area.addClass("d-none");
+                
+                    comboBox_cargo.addClass("d-block");
+                    comboBox_cargo.removeClass("d-none");
+
+                    opc_trabajo_reporte = "cargo";
+
+                }
+
+            break;
+            
+        }
+
+
+    },
+
+
+    buscarEmpleadoOpcTrabajo : function () {
+
+        
 
     },
     
