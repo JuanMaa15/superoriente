@@ -203,7 +203,7 @@
                             <div class="col ">
                                 <div class=" row justify-content-center flex-column align-items-center">
                                     <div class="col-4 mt-3 form-check">
-                                        <input type="radio" class="form-check-input" id="opc-seccion" name="opcTrabajo" value="seccion"  checked>
+                                        <input type="radio" class="form-check-input" id="opc-seccion" name="opcTrabajo" value="seccion">
                                         <label class="form-check-label" for="opc-seccion">
                                             Sección
                                         </label>

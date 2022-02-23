@@ -140,6 +140,229 @@ if (isset($_POST['opc'])) {
             echo $lista , $btnDescargar;
 
         break;
+
+        case "opc_trabajo":
+            
+            $seleccionado = $_POST['seleccionado'];
+
+            if ($seleccionado == "seccion") {
+
+                $id_seccion = $_POST['seccion'];
+
+                if (!empty($id_seccion) && preg_match('/[0-9]+/', $id_seccion)) {
+
+                    $id_seccion = intval($id_seccion);
+                    
+                    $listaUsuarios = $usuariodao->ListaSeccionUsuario($id_seccion);
+
+                    $btnDescargar = "";
+
+                    $lista =  "<table class='table table-striped'>"
+                                ."<thead>"
+                                ."<tr>"
+                                    ."<th scope='col' class='pe-5'>Nro_documento</th>"
+                                    ."<th scope='col' class='pe-5'>Nombre</th>"
+                                    ."<th scope='col' class='pe-5'>Apellido</th>"
+                                    ."<th scope='col' class='pe-5'>Sección</th>"
+                                ."</tr>"
+                                ."</thead>"
+                                ."<tbody>";
+
+                    if (count($listaUsuarios) > 0) {
+                            
+                        for ($i=0 ; $i < count($listaUsuarios); $i++) { 
+                            
+                            $lista .= "<tr>"
+                                        
+                                        ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+                                        ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+                                        ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+                                        ."<td>" . $listaUsuarios[$i]->getSeccion() . "</td>"
+                                        ."</tr>";
+
+
+                        }
+
+                        
+                        $btnDescargar = "<div class='row'>"
+                                    ."<div class='col'>"
+                                    ."<form method='POST' action='../../controller/reportes/ReporteOpcTrabajoUsuario.php'>"
+                                    ."<input type='text' class='d-none' value='" . $id_seccion . "' name='opc_seccion'>"
+                                    ."<input type='text' class='d-none' value='seccion' name='opc' readonly>"
+                                    ."<button type='submit' class='btn btn-verde' name='btn-reporte-opcion-trabajo'>Descargar Reporte</button>"
+                                    ."</form>"
+                                    
+                                    . "</div>"
+                                    . "</div>";
+
+                    }else{
+
+                        $lista .= "<tr>"
+                            ."<td colspan='5' class='py-4 text-center'>No hay registros entre los datos ingresados</td>"
+                            ."</tr>";
+
+                    }
+
+
+
+                    $lista .= "</tbody>"
+                            . "</table>";
+
+
+
+                 echo $lista , $btnDescargar;
+
+                }else{
+                    echo "Datos incorrectos";
+                }
+
+            }else if ($seleccionado == "area"){
+
+                $id_area = $_POST['area'];
+
+                if (!empty($id_area) && preg_match('/[0-9]+/', $id_area)) {
+
+                    $id_area = intval($id_area);
+                    
+                    $listaUsuarios = $usuariodao->ListaAreaUsuario($id_area);
+
+                    $btnDescargar = "";
+
+                    $lista =  "<table class='table table-striped'>"
+                                ."<thead>"
+                                ."<tr>"
+                                    ."<th scope='col' class='pe-5'>Nro_documento</th>"
+                                    ."<th scope='col' class='pe-5'>Nombre</th>"
+                                    ."<th scope='col' class='pe-5'>Apellido</th>"
+                                    ."<th scope='col' class='pe-5'>Area</th>"
+                                ."</tr>"
+                                ."</thead>"
+                                ."<tbody>";
+
+                    if (count($listaUsuarios) > 0) {
+                            
+                        for ($i=0 ; $i < count($listaUsuarios); $i++) { 
+                            
+                            $lista .= "<tr>"
+                                        
+                                        ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+                                        ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+                                        ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+                                        ."<td>" . $listaUsuarios[$i]->getArea() . "</td>"
+                                        ."</tr>";
+
+
+                        }
+
+                        
+                        $btnDescargar = "<div class='row'>"
+                                    ."<div class='col'>"
+                                    ."<form method='POST' action='../../controller/reportes/ReporteOpcTrabajoUsuario.php'>"
+                                    ."<input type='text' class='d-none' value='" . $id_area . "' name='opc_area'>"
+                                    ."<input type='text' class='d-none' value='area' name='opc' readonly>"
+                                    ."<button type='submit' class='btn btn-verde' name='btn-reporte-opcion-trabajo'>Descargar Reporte</button>"
+                                    ."</form>"
+                                    
+                                    . "</div>"
+                                    . "</div>";
+
+                    }else{
+
+                        $lista .= "<tr>"
+                            ."<td colspan='5' class='py-4 text-center'>No hay registros entre los datos ingresados</td>"
+                            ."</tr>";
+
+                    }
+
+
+
+                    $lista .= "</tbody>"
+                            . "</table>";
+
+
+
+                 echo $lista , $btnDescargar;
+
+                }else{
+                    echo "Datos incorrectos";
+                }
+
+            }else if ($seleccionado == "cargo") {
+
+                $id_cargo = $_POST['cargo'];
+
+                if (!empty($id_cargo) && preg_match('/[0-9]+/', $id_cargo)) {
+
+                    $id_cargo = intval($id_cargo);
+                    
+                    $listaUsuarios = $usuariodao->ListaCargoUsuario($id_cargo);
+
+                    $btnDescargar = "";
+
+                    $lista =  "<table class='table table-striped'>"
+                                ."<thead>"
+                                ."<tr>"
+                                    ."<th scope='col' class='pe-5'>Nro_documento</th>"
+                                    ."<th scope='col' class='pe-5'>Nombre</th>"
+                                    ."<th scope='col' class='pe-5'>Apellido</th>"
+                                    ."<th scope='col' class='pe-5'>Cargo</th>"
+                                ."</tr>"
+                                ."</thead>"
+                                ."<tbody>";
+
+                    if (count($listaUsuarios) > 0) {
+                            
+                        for ($i=0 ; $i < count($listaUsuarios); $i++) { 
+                            
+                            $lista .= "<tr>"
+                                        
+                                        ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+                                        ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+                                        ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+                                        ."<td>" . $listaUsuarios[$i]->getCargo() . "</td>"
+                                        ."</tr>";
+
+
+                        }
+
+                        
+                        $btnDescargar = "<div class='row'>"
+                                    ."<div class='col'>"
+                                    ."<form method='POST' action='../../controller/reportes/ReporteOpcTrabajoUsuario.php'>"
+                                    ."<input type='text' class='d-none' value='" . $id_cargo . "' name='opc_cargo'>"
+                                    ."<input type='text' class='d-none' value='cargo' name='opc' readonly>"
+                                    ."<button type='submit' class='btn btn-verde' name='btn-reporte-opcion-trabajo'>Descargar Reporte</button>"
+                                    ."</form>"
+                                    
+                                    . "</div>"
+                                    . "</div>";
+
+                    }else{
+
+                        $lista .= "<tr>"
+                            ."<td colspan='5' class='py-4 text-center'>No hay registros entre los datos ingresados</td>"
+                            ."</tr>";
+
+                    }
+
+
+
+                    $lista .= "</tbody>"
+                            . "</table>";
+
+
+
+                 echo $lista , $btnDescargar;
+
+                }else{
+                    echo "Datos incorrectos";
+                }
+                
+            }else{
+                echo "La opción seleccionada no es correcta";
+            }
+
+        break;
         default:
             # code...
         break;

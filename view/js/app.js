@@ -41,6 +41,8 @@ var acciones = {
         $("#menu-desplegable-listas").click(acciones.desplegarMenuListas);
         $("#seccion").click(acciones.mostrarOpcionesArea);
         $("#area").click(acciones.mostrarOpcionesCargo);
+        $("#btn-mostrar-ocultar").click(acciones.mostrarMenu);
+        $("#enlace-administracion").click(acciones.desplegarSubmenu);
 
         $(".fecha_nacimiento").on('change', acciones.calcularEdadesHijos);
 
@@ -168,6 +170,54 @@ var acciones = {
         },function(responseText) {
             $("#listado-tipos-dotaciones").html(responseText);
         });
+
+    },
+
+
+    // Despliega el submenú de administración en el menú lateral
+
+    desplegarSubmenu : function(e) {
+
+
+        e.preventDefault();
+
+        var submenu_administracion = $("#submenu-administracion");
+
+        if (!submenu_administracion.hasClass("desplegar-submenu")){
+
+            submenu_administracion.addClass("desplegar-submenu");
+
+        }else{
+            submenu_administracion.removeClass("desplegar-submenu");
+        }
+
+    },
+
+    // Muestra el la barra lateral del menú completa
+
+    mostrarMenu : function() {
+
+        //alert("funciona");
+        var cont_menu = $("#cont_menu");
+        var cont_ppal_menu = $("#cont-ppal-menu");
+     
+
+        if (!cont_menu.hasClass("mostrar-menu")) {
+
+            cont_menu.addClass("mostrar-menu");
+
+            cont_ppal_menu.removeClass("col-1");
+            cont_ppal_menu.addClass("col-2");
+   
+            
+
+        }else{
+            cont_menu.removeClass("mostrar-menu");
+
+            cont_ppal_menu.removeClass("col-2");
+            cont_ppal_menu.addClass("col-1")
+
+        }
 
     },
 
@@ -453,7 +503,79 @@ var acciones = {
 
     buscarEmpleadoOpcTrabajo : function () {
 
+        if (opc_trabajo_reporte.length !== 0) {
+
+            
+        switch (opc_trabajo_reporte) {
+            case "seccion":
+                    
+                var seccion = $("#seccion_reporte").val();
+
+                if (seccion.length !== 0) {
+                    $("#seccion_reporte").next().html("");
+                    $.post('../../controller/listas reportes/ListasUsuarios.php',{
+                        seccion: seccion,
+                        seleccionado: "seccion",
+                        opc: "opc_trabajo"
+                    },function (responseText){
+                        $("#lista-opcion-trabajo").html(responseText);
+                    });
+    
+                }else{
+                    $("#seccion_reporte").next().html("Campo vacío, seleccione una opción");
+                }
+                
+            break;
+
+            case "area":
+                    
+                var area = $("#area_reporte").val();
+
+                if (area.length !== 0) {
+                    $("#area_reporte").next().html("");
+                    $.post('../../controller/listas reportes/ListasUsuarios.php',{
+                        area: area,
+                        seleccionado: "area",
+                        opc: "opc_trabajo"
+                    },function (responseText){
+                        $("#lista-opcion-trabajo").html(responseText);
+                    });
+                }else{
+                    $("#area_reporte").next().html("Campo vacío, seleccione una opción");
+                }
+
+                
+
+            break;
+
+            case "cargo":
+                    
+                var cargo = $("#cargo_reporte").val();
+
+                if (cargo.length !== 0) {
+                    $("#cargo_reporte").next().html("");
+                    $.post('../../controller/listas reportes/ListasUsuarios.php',{
+                        cargo: cargo,
+                        seleccionado: "cargo",
+                        opc: "opc_trabajo"
+                    },function (responseText){
+                        $("#lista-opcion-trabajo").html(responseText);
+                    });
+                }else{
+                    $("#cargo_reporte").next().html("Campo vacío, seleccione una opción");
+                }
+                
+
+            break;
         
+            default:
+                break;
+        }
+
+        }else{
+            alert("Seleccione una opción, por favor");
+        }
+
 
     },
     
