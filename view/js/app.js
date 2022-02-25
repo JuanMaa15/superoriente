@@ -182,13 +182,18 @@ var acciones = {
         e.preventDefault();
 
         var submenu_administracion = $("#submenu-administracion");
+        var icono = $("#enlace-administracion .icono-enlace i");
+        
 
         if (!submenu_administracion.hasClass("desplegar-submenu")){
 
             submenu_administracion.addClass("desplegar-submenu");
+            icono.addClass("rotar-icono");
+            
 
         }else{
             submenu_administracion.removeClass("desplegar-submenu");
+            icono.removeClass("rotar-icono");
         }
 
     },
@@ -200,7 +205,8 @@ var acciones = {
         //alert("funciona");
         var cont_menu = $("#cont_menu");
         var cont_ppal_menu = $("#cont-ppal-menu");
-     
+        var logo = $(".logo-img");
+
 
         if (!cont_menu.hasClass("mostrar-menu")) {
 
@@ -208,14 +214,15 @@ var acciones = {
 
             cont_ppal_menu.removeClass("col-1");
             cont_ppal_menu.addClass("col-2");
-   
-            
 
+            logo.addClass("aumentar");
+            
         }else{
             cont_menu.removeClass("mostrar-menu");
 
             cont_ppal_menu.removeClass("col-2");
-            cont_ppal_menu.addClass("col-1")
+            cont_ppal_menu.addClass("col-1");
+            logo.removeClass("aumentar");
 
         }
 

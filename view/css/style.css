@@ -6,6 +6,10 @@ body {
     /* background-color: #333 !important; */
 }
 
+a {
+    text-decoration: none;
+}
+
 :root {
     --verde: #6EEB83;
     --verdeTransparente: rgba(110, 235, 131, 0.9);
@@ -90,6 +94,9 @@ body {
 }
 
 
+
+
+
 #submenu-administracion {
     background-color: var(--verde);
     height: 0;
@@ -113,6 +120,14 @@ body {
 
     font-size: 0.9rem;
 
+}
+
+#enlace-administracion .icono-enlace.chico i {
+    transition: all 0.3s ease;
+}
+
+#enlace-administracion .icono-enlace.chico i.rotar-icono {
+    transform: rotateX(180deg);
 }
 
 /*
@@ -194,12 +209,17 @@ body {
 }
 
 .logo-img {
-    width: 17rem;
-
+    width: 3rem;
+    transition: all 0.5s ease-in-out;
 }
 
-.logo-img.pequeño img{
-    width: 8rem !important;
+.logo-img img{
+    width: 100% !important;
+}
+
+.logo-img.aumentar {
+    
+    width: 60% !important;
 }
 
 .label-mov {
@@ -330,9 +350,34 @@ small {
     overflow: auto !important;
 }
 
+.cont-icono {
+    border: 2px solid var(--verde);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    color: var(--negro);
+}
 
+.cont-icono .icono i{
+    font-size: 3rem;
+}
 
+.cont-icono:hover {
+    background-color: var(--verde);
+}
 
+.cont-icono:hover {
+    color: white;
+}
+
+.titulo-icono {
+    font-size: 1.5rem;
+
+}
 
 #btn-img-registro:hover .cont-img img,
 #btn-img-carta:hover .cont-img img {

@@ -13,7 +13,8 @@
     <title>SuperOriente - Iniciar Sesión</title>
     <link rel="shortcut icon" href="../img/logo.png" type="image/ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+<!--     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">-->
+    <script src="https://kit.fontawesome.com/4240342587.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/style.css">
     <script src="../../public/js/jquery.js"></script>
 
@@ -21,7 +22,7 @@
 <body>
     <!--------------- Body form -------- -->
     <div class="container-fluid ps-0">
-        <div class="row">
+        <div class="row justify-content-center">
             <?php include_once("menu.php");?>
             <div class="col-10 ps-0">
                 <div class="container mt-4 px-5">

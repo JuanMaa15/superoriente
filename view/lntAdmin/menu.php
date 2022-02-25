@@ -13,7 +13,7 @@
                 </div>
                 <nav id="menu" class="mt-3">
                     <ul>
-                        <li><a class="enlaces seleccionado" href="#">
+                        <li><a class="enlaces seleccionado" href="admin.php">
                         <div class="icono-enlace">
                             <i class="fa-solid fa-house"></i>
                         </div>
@@ -34,7 +34,7 @@
                             </a>
                             <ul class="" id="submenu-administracion">
                                 <li>
-                                    <a class="enlaces" href="#">
+                                    <a class="enlaces" href="reportes.php">
                                         <div class="icono-enlace">
                                             <i class="fa-solid fa-file-lines"></i>
                                         </div>
@@ -44,7 +44,7 @@
                                 
                                 </li>
                                 <li>
-                                    <a class="enlaces" href="#">
+                                    <a class="enlaces" href="personal.php">
                                         <div class="icono-enlace">
                                             <i class="fa-solid fa-user-gear"></i>
                                         </div>
@@ -58,22 +58,22 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="enlaces" href="#">
+                            <a class="enlaces" href="gestionInformacion.php">
                             <div class="icono-enlace">
                                 <i class="fa-solid fa-cash-register"></i>
                             </div>
                             
-                            Register
+                            Gestión_información
                             </a>
 
                         </li>
                         <li>
-                            <a class="enlaces" href="#">
+                            <a class="enlaces" href="Cerrar Sesión">
                             <div class="icono-enlace">
                                 <i class="fa-solid fa-file"></i>
                             </div>
                             
-                            Documents
+                            
                             </a>
 
                         </li>
@@ -88,10 +88,13 @@
             <div id="btn-mostrar-ocultar"  class="position-absolute">
                 <i class="fa-solid fa-bars"></i>
             </div>
+            <div class="logo-img position-absolute bottom-0 mb-5 start-50 translate-middle-x">
+                <img src="../img/logo.png" alt="Superoriente">
+            </div>
         </div>
 
 
-    <<!-- div class=" bg-verde-tpt menu position-fixed top-0 start-0" id="menu">
+    <!-- div class=" bg-verde-tpt menu position-fixed top-0 start-0" id="menu">
         <div class=" border-bottom border-end">
             <a class="navbar-brand bg-verde text-white d-flex justify-content-center py-3" href="admin.php"><i class="fas fa-user-shield pt-1 pe-2"> </i> Admin - <?php echo $_SESSION['nombre_admin']; ?> </a>
         </div>

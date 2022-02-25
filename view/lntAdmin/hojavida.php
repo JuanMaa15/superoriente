@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SuperOriente - Iniciar Sesión</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <script src="https://kit.fontawesome.com/4240342587.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/style.css">
     <script src="../../public/js/jquery.js"></script>
 
