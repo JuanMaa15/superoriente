@@ -3,6 +3,14 @@
 
     if (isset($_SESSION['id_admin'])) {
 
+        require_once('../../models/DAO/UsuarioDAO.php');
+
+        $usuariodao = new UsuarioDAO();
+
+        $listaUsuario = $usuariodao->listaUsuarios();
+        $listaUsuarioActivos = $usuariodao->ListaEstadoUsuario(1);
+        $listaUsuarioInactivos = $usuariodao->ListaEstadoUsuario(2);
+        $listaNuevosEmpleados = $usuariodao->ListaEmpleadosNuevos();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +34,97 @@
             <?php include_once("menu.php");?>
             <div class="col-10 ps-0">
                 <div class="container mt-4 px-5">
+
+                    <div class="row justify-content-center my-5">
+                        <div class="col">
+                            <div class="cont-info-inicio p-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <h3><?php echo count($listaUsuario); ?></h3>
+                                        <span class="fs-6">Empleados</span>
+                                    </div>
+                                    <div class="col d-flex justify-content-center align-items-center">
+                                        <i class="fa-solid fa-user-tie"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="cont-info-inicio p-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <h3><?php echo count($listaUsuarioActivos); ?></h3>
+                                        <span class="fs-6">Activos</span>
+                                    </div>
+                                    <div class="col d-flex justify-content-center align-items-center">
+                                    <i class="fa-solid fa-user-gear"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="cont-info-inicio">
+                                 <div class="row p-3">
+                                    <div class="col">
+                                        <h3><?php echo count($listaUsuarioInactivos); ?></h3>
+                                        <span class="fs-6">Inactivos</span>
+                                    </div>
+                                    <div class="col d-flex justify-content-center align-items-center">
+                                     <i class="fa-solid fa-user-large-slash"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
+                        <div class="col-4">
+                            <div class="cont-nuevos-empleados px-3">
+
+                                <div class="row border-bottom-black justify-content-around align-items-center">
+                            
+                                    <div class="col-3">
+                                        <h5 class="p-2">Nuevos empleados</h5>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="personal.php" class="btn btn-verde">Ver todos</a>
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Nro de documento</th>
+                                                <th scope="col">Nombre</th>
+                                                <th scope="col">Apellido</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    for ($i=0; $i < count($listaNuevosEmpleados); $i++):
+                                                        ?>
+                                                            <tr>
+                                                                <td><?php echo $listaNuevosEmpleados[$i]->getId_usuario(); ?></td>
+                                                                <td><?php echo $listaNuevosEmpleados[$i]->getNombre(); ?></td>
+                                                                <td><?php echo $listaNuevosEmpleados[$i]->getApellido(); ?></td>
+                                                            </tr>
+                                                        <?php
+                                                    endfor;
+                                                ?>
+                                                <td></td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-8">
+
+                        </div>
+                    </div>
+                    <!-- <div class="row">
                         <div class="col">
                         <h2 class="mb-3">Registrar un nuevo empleado</h2>
                         </div>
@@ -50,9 +148,9 @@
                             
                         </div>
 
-                    </div>
+                    </div> -->
 
-                    <div class="row mt-5">
+                    <!-- <div class="row mt-5">
                         <div class="col">
                         <h2 class="mb-3">Generar reportes</h2>
                         </div>
@@ -76,7 +174,7 @@
                             
                         </div>
 
-                    </div>
+                    </div> -->
 
                     <!-- <div class="row my-4 justify-content-center">
                         

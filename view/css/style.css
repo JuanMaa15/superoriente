@@ -4,6 +4,7 @@
 
 body {
     /* background-color: #333 !important; */
+    background-color: #f1f1f1;
 }
 
 a {
@@ -374,9 +375,25 @@ small {
     color: white;
 }
 
+.cont-info-inicio,
+.cont-nuevos-empleados,
+.cont-lista-reporte {
+    box-shadow: 2px 2px 2px 2px #e1e1e1 !important;
+    background-color: #fff !important;
+    
+}
+
+.cont-info-inicio i{
+    font-size: 3rem;
+}
+
 .titulo-icono {
     font-size: 1.5rem;
 
+}
+
+.border-bottom-black {
+    border-bottom: 2px solid #333;
 }
 
 #btn-img-registro:hover .cont-img img,

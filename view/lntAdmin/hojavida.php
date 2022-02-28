@@ -190,7 +190,7 @@
                 </div>
             </div>
         </div>
-        <a href="listas.php" class="btn btn-verde position-fixed top-0 start-0 ms-3 mt-3">
+        <a href="personal.php" class="btn btn-verde position-fixed top-0 start-0 ms-3 mt-3">
                 << Volver
         </a>
 

@@ -67,7 +67,7 @@
                             </a>
 
                         </li>
-                        <li>
+                        <!-- <li>
                             <a class="enlaces" href="Cerrar Sesión">
                             <div class="icono-enlace">
                                 <i class="fa-solid fa-file"></i>
@@ -76,7 +76,7 @@
                             
                             </a>
 
-                        </li>
+                        </li> -->
                     </ul>
                     
                     
