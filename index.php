@@ -35,7 +35,7 @@ if (!isset($_SESSION['id_admin']) && !isset($_SESSION['id_empleado'])) {
                                     <div class="logo-img">
                                         <img class="w-100 " src="view/img/logo.png">
                                     </div>
-
+        
                                 </div>
                             </div>
                             <div class="col bg-blanco-tpt">

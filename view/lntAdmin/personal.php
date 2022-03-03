@@ -37,7 +37,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SuperOriente - Iniciar Sesión</title>
+    <title>SuperOriente - Admin</title>
     <link rel="shortcut icon" href="../img/logo.png" type="image/ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4240342587.js" crossorigin="anonymous"></script>

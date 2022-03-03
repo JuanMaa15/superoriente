@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SuperOriente - Iniciar Sesión</title>
+    <title>SuperOriente - Admin</title>
     <link rel="shortcut icon" href="../img/logo.png" type="image/ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <!--     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">-->
@@ -30,9 +30,14 @@
 <body>
     <!--------------- Body form -------- -->
     <div class="container-fluid ps-0">
+        <div class="py-3">
+            <?php include_once("menu2.php"); ?>
+         </div>
         <div class="row justify-content-center">
             <?php include_once("menu.php");?>
             <div class="col-10 ps-0">
+                
+                
                 <div class="container mt-4 px-5">
 
                     <div class="row justify-content-center my-5">
