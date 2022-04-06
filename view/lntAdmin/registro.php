@@ -84,7 +84,7 @@
     <div class="container-fluid ps-0">
         <div class="row justify-content-center">
             <?php include_once("menu.php"); ?>
-            <div class="col-10 ps-0 py-5">
+            <div class="col-10 ps-0 py-5" id="cuerpo-pagina">
                 <div class="row pb-4">
                     <div class="col">
                         <h2 class="text-center">Registrar Empleado</h2>

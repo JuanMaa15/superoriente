@@ -52,7 +52,15 @@
                                         Personal
                                     </a>
                                 </li>
-
+                                <li>
+                                    <a class="enlaces" href="dotacion.php">
+                                        <div class="icono-enlace">
+                                            <i class="fa-solid fa-user-tie"></i>
+                                        </div>
+                                        
+                                        Dotaciones
+                                    </a>
+                                </li>
 
                                 
                             </ul>

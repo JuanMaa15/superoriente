@@ -34,7 +34,7 @@
     <div class="container-fluid ps-0">
         <div class="row justify-content-center">
             <?php include_once("menu.php");?>
-            <div class="col-10 ps-0" id="cont-cuerpo-doc">
+            <div class="col-10 ps-0" id="cuerpo-pagina">
                 <div class="container mt-4 px-5 position-relative">
                     <div class="bg-verde-tpt col w-100 d-flex justify-content-end position-fixed top-0 end-0" id="menu-gestion">
                         <div class="nav-item dropdown py-3">

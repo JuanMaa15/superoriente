@@ -35,14 +35,14 @@
          </div>
         <div class="row justify-content-center">
             <?php include_once("menu.php");?>
-            <div class="col-10 ps-0">
+            <div class="col-10 ps-0" id="cuerpo-pagina">
                 
                 
                 <div class="container mt-4 px-5">
 
                     <div class="row justify-content-center my-5">
                         <div class="col">
-                            <div class="cont-info-inicio p-3">
+                            <div class="cont-info-rapida p-3">
                                 <div class="row">
                                     <div class="col">
                                         <h3><?php echo count($listaUsuario); ?></h3>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <div class="cont-info-inicio p-3">
+                            <div class="cont-info-rapida p-3">
                                 <div class="row">
                                     <div class="col">
                                         <h3><?php echo count($listaUsuarioActivos); ?></h3>
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <div class="cont-info-inicio">
+                            <div class="cont-info-rapida">
                                  <div class="row p-3">
                                     <div class="col">
                                         <h3><?php echo count($listaUsuarioInactivos); ?></h3>

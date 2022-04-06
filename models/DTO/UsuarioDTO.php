@@ -55,13 +55,17 @@ class UsuarioDTO {
     private $pension;
     private $tipo_dotacion;
     private $estado;
-    
+    private $camisa;
+    private $pantalon;
+    private $zapato;
+    private $vestimenta;    
+
     function __construct() {
         
     }
 
     
-    function constructor($id_usuario, $tipo_documento, $fecha_expedicion, $lugar_expedicion, $nombre, $apellido, $telefono_fijo, $telefono_movil, $tipo_casa, $genero, $fecha_nacimiento, $edad, $direccion, $lugar_residencia, $nivel_academico, $area_academica, $estado_civil, $eps, $nro_cuenta, $tipo_sangre, $antecedentes, $practica_deporte, $consumo_cigarros, $consumo_licor, $consumo_spa, $correo, $password, $perfil, $nombre_persona_emergencia, $telefono_emergencia, $celular_emergencia, $parentesco_emergencia, $sucursal, $tipo_contrato, $fecha_ingreso, $fecha_retiro, $motivo_retiro, $salario, $valor_dia, $valor_hora, $clase_riesgo, $porcentaje_riesgo, $area, $seccion, $cargo, $pension, $tipo_dotacion, $estado) {
+    function constructor($id_usuario, $tipo_documento, $fecha_expedicion, $lugar_expedicion, $nombre, $apellido, $telefono_fijo, $telefono_movil, $tipo_casa, $genero, $fecha_nacimiento, $edad, $direccion, $lugar_residencia, $nivel_academico, $area_academica, $estado_civil, $eps, $nro_cuenta, $tipo_sangre, $antecedentes, $practica_deporte, $consumo_cigarros, $consumo_licor, $consumo_spa, $correo, $password, $perfil, $nombre_persona_emergencia, $telefono_emergencia, $celular_emergencia, $parentesco_emergencia, $sucursal, $tipo_contrato, $fecha_ingreso, $fecha_retiro, $motivo_retiro, $salario, $valor_dia, $valor_hora, $clase_riesgo, $porcentaje_riesgo, $area, $seccion, $cargo, $pension, $tipo_dotacion, $estado, $camisa, $pantalon, $zapato, $vestimenta) {
         $this->id_usuario = $id_usuario;
         $this->tipo_documento = $tipo_documento;
         $this->fecha_expedicion = $fecha_expedicion;
@@ -110,6 +114,10 @@ class UsuarioDTO {
         $this->pension = $pension;
         $this->tipo_dotacion = $tipo_dotacion;
         $this->estado = $estado;
+        $this->camisa = $camisa;
+        $this->pantalon = $pantalon;
+        $this->zapato = $zapato;
+        $this->vestimenta = $vestimenta;
     }
 
 
@@ -309,6 +317,22 @@ class UsuarioDTO {
         return $this->estado;
     }
 
+    function getCamisa() {
+        return $this->camisa;
+    }
+
+    function getPantalon() {
+        return $this->pantalon;
+    }
+
+    function getZapato() {
+        return $this->zapato;
+    }
+
+    function getVestimenta() {
+        return $this->vestimenta;
+    }
+
     function setId_usuario($id_usuario) {
         $this->id_usuario = $id_usuario;
     }
@@ -505,9 +529,21 @@ class UsuarioDTO {
         $this->estado = $estado;
     }
 
+    function setCamisa($camisa) {
+        $this->camisa = $camisa;
+    }
 
+    function setPantalon($pantalon) {
+        $this->pantalon = $pantalon;
+    }
 
+    function setZapato($zapato) {
+        $this->zapato = $zapato;
+    }
 
+    function setVestimenta($vestimenta) {
+        $this->vestimenta = $vestimenta;
+    }
     
 }
 

@@ -143,7 +143,7 @@ class UsuarioDAO {
         $i = 0;
         
         try {
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion";
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */";
             $rs = $cnx->query($sql);
             
             
@@ -200,6 +200,10 @@ class UsuarioDAO {
                     $row['pension'],
                     $row['tipo_dotacion'],
                     $row['estado'],
+                    $row['id_camisa'],
+                    $row['id_pantalon'],
+                    $row['id_zapato'],
+                    $row['id_vestimenta']
                 );
 
             
@@ -280,6 +284,10 @@ class UsuarioDAO {
                 $row['pension'],
                 $row['tipo_dotacion'],
                 $row['estado'],
+                $row['id_camisa'],
+                $row['id_pantalon'],
+                $row['id_zapato'],
+                $row['id_vestimenta']
             );
 
             return $usuariodto;
@@ -302,7 +310,7 @@ class UsuarioDAO {
 
         try {
             
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE id_usuario = '" . $id_usuario . "'";
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */ WHERE id_usuario = '" . $id_usuario . "'";
             $rs = $cnx->query($sql);
 
             $row = $rs->fetch();
@@ -357,6 +365,10 @@ class UsuarioDAO {
                 $row['id_pension'],
                 $row['id_tipo_dotacion'],
                 $row['id_estado'],
+                $row['id_camisa'],
+                $row['id_pantalon'],
+                $row['id_zapato'],
+                $row['id_vestimenta']
             );
 
             return $usuariodto;
@@ -637,7 +649,11 @@ class UsuarioDAO {
                         $row['cargo'],
                         $row['pension'],
                         $row['tipo_dotacion'],
-                        $row['estado']
+                        $row['estado'],
+                        $row['id_camisa'],
+                        $row['id_pantalon'],
+                        $row['id_zapato'],
+                        $row['id_vestimenta']
                     );
 
                     return $usuariodto;
@@ -652,7 +668,7 @@ class UsuarioDAO {
             }
 
         } catch (Exception $e) {
-            print "Error al iniciar sesión " + $e->getMessage();
+            print "Error al iniciar sesión " . $e->getMessage();
         }
 
         return null;
@@ -728,6 +744,10 @@ class UsuarioDAO {
                     $row['id_pension'],
                     $row['id_tipo_dotacion'],
                     $row['id_estado'],
+                    $row['id_camisa'],
+                    $row['id_pantalon'],
+                    $row['id_zapato'],
+                    $row['id_vestimenta']
                 );
                 return $usuariodto;
 
@@ -841,7 +861,12 @@ class UsuarioDAO {
                         $row['cargo'],
                         $row['pension'],
                         $row['tipo_dotacion'],
-                        $row['estado']
+                        $row['estado'],
+                        $row['id_camisa'],
+                        $row['id_pantalon'],
+                        $row['id_zapato'],
+                        $row['id_vestimenta']
+                        
                 );
 
                 $i++;
@@ -923,7 +948,11 @@ class UsuarioDAO {
                     $row['cargo'],
                     $row['pension'],
                     $row['tipo_dotacion'],
-                    $row['estado']
+                    $row['estado'],
+                    $row['id_camisa'],
+                    $row['id_pantalon'],
+                    $row['id_zapato'],
+                    $row['id_vestimenta']
                 );
 
                 $i++;
@@ -1006,7 +1035,11 @@ class UsuarioDAO {
                     $row['cargo'],
                     $row['pension'],
                     $row['tipo_dotacion'],
-                    $row['estado']
+                    $row['estado'],
+                    $row['id_camisa'],
+                    $row['id_pantalon'],
+                    $row['id_zapato'],
+                    $row['id_vestimenta']
                 );
 
                 $i++;
@@ -1088,7 +1121,11 @@ class UsuarioDAO {
                     $row['cargo'],
                     $row['pension'],
                     $row['tipo_dotacion'],
-                    $row['estado']
+                    $row['estado'],
+                    $row['id_camisa'],
+                    $row['id_pantalon'],
+                    $row['id_zapato'],
+                    $row['id_vestimenta']
                 );
 
                 $i++;
@@ -1170,7 +1207,11 @@ class UsuarioDAO {
                         $row['cargo'],
                         $row['pension'],
                         $row['tipo_dotacion'],
-                        $row['estado']
+                        $row['estado'],
+                        $row['id_camisa'],
+                        $row['id_pantalon'],
+                        $row['id_zapato'],
+                        $row['id_vestimenta']
                 );
 
                 $i++;
@@ -1252,7 +1293,11 @@ class UsuarioDAO {
                         $row['cargo'],
                         $row['pension'],
                         $row['tipo_dotacion'],
-                        $row['estado']
+                        $row['estado'],
+                        $row['id_camisa'],
+                        $row['id_pantalon'],
+                        $row['id_zapato'],
+                        $row['id_vestimenta']
                 );
 
                 $i++;
@@ -1335,7 +1380,11 @@ class UsuarioDAO {
                         $row['cargo'],
                         $row['pension'],
                         $row['tipo_dotacion'],
-                        $row['estado']
+                        $row['estado'],
+                        $row['id_camisa'],
+                        $row['id_pantalon'],
+                        $row['id_zapato'],
+                        $row['id_vestimenta']
                 );
 
                 $i++;
@@ -1417,8 +1466,12 @@ class UsuarioDAO {
                         $row['cargo'],
                         $row['pension'],
                         $row['tipo_dotacion'],
-                        $row['estado']
-                );
+                        $row['estado'],
+                        $row['id_camisa'],
+                        $row['id_pantalon'],
+                        $row['id_zapato'],
+                        $row['id_vestimenta']
+                    );
 
                 $i++;
 
@@ -1500,7 +1553,11 @@ class UsuarioDAO {
                         $row['cargo'],
                         $row['pension'],
                         $row['tipo_dotacion'],
-                        $row['estado']
+                        $row['estado'],
+                        $row['id_camisa'],
+                        $row['id_pantalon'],
+                        $row['id_zapato'],
+                        $row['id_vestimenta']
                 );
 
                 $i++;
@@ -1546,4 +1603,106 @@ class UsuarioDAO {
 
     }
 
+
+    // ================================= Registro de Dotaciones ============================
+
+    // --------------- Camisa ----------------
+
+
+    public function asignarCamisa($usuariodto) {
+
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET id_camisa = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "'";
+            $ps = $cnx->prepare($sql);
+            
+            $camisa = $usuariodto->getCamisa();
+
+            $ps->bindParam(1, $camisa);
+
+            $ps->execute();
+
+            return true;
+
+        } catch (Exception $e) {
+            echo "Error al asignar una camisa al empleado ". $e->getMessage();
+        }
+    }
+
+    // --------------- Pantalón ----------------
+
+
+    public function asignarPantalon($usuariodto) {
+
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET id_pantalon = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "'";
+            $ps = $cnx->prepare($sql);
+            
+            $pantalon = $usuariodto->getPantalon();
+
+            $ps->bindParam(1, $pantalon);
+
+            $ps->execute();
+
+            return true;
+
+        } catch (Exception $e) {
+            echo "Error al asignar un pantalón al empleado ". $e->getMessage();
+        }
+    }
+
+    // --------------- Zapato ----------------
+
+
+    public function asignarZapato($usuariodto) {
+
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET id_zapato = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "'";
+            $ps = $cnx->prepare($sql);
+            
+            $zapato = $usuariodto->getZapato();
+
+            $ps->bindParam(1, $zapato);
+
+            $ps->execute();
+
+            return true;
+
+        } catch (Exception $e) {
+            echo "Error al asignar un zapato al empleado ". $e->getMessage();
+        }
+    }
+
+    // --------------- Vestimenta ----------------
+
+
+    public function asignarVestimenta($usuariodto) {
+
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET id_vestimenta = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "'";
+            $ps = $cnx->prepare($sql);
+            
+            $vestimenta = $usuariodto->getVestimenta();
+
+            $ps->bindParam(1, $vestimenta);
+
+            $ps->execute();
+
+            return true;
+
+        } catch (Exception $e) {
+            echo "Error al asignar una vestimenta al empleado ". $e->getMessage();
+        }
+    }
 }

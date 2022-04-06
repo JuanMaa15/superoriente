@@ -29,7 +29,7 @@ if (!isset($_POST['busqueda'])) {
                     ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
                     ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
                     ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
-                    ."<td><a href='hojavida.php?doc=" . $listaUsuarios[$i]->getId_usuario() . "'><i class='far fa-folder'></i> Más información </a></td>";
+                    ."<td><a href='informacionEmpleado.html?doc=" . $listaUsuarios[$i]->getId_usuario() . "'><i class='far fa-folder'></i> Más información </a></td>";
                     
     
     }

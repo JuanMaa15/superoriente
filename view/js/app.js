@@ -26,6 +26,19 @@ var acciones = {
         $("#btn-registrar-nivel-academico").click(acciones.enviarFormNivelAcademico);
         $("#btn-registrar-pension").click(acciones.enviarFormPension);
         $("#btn-registrar-tipo-dotacion").click(acciones.enviarFormTipoDotacion);
+        $("#btn-registrar-camisa").click(acciones.enviarFormCamisa);
+        $("#btn-registrar-pantalon").click(acciones.enviarFormPantalon);
+        $("#btn-registrar-zapato").click(acciones.enviarFormZapato);
+        $("#btn-registrar-otra-vestimenta").click(acciones.enviarFormOtraVestimenta);
+        $("#btn-registrar-familiar").click(acciones.enviarFormFamiliar);
+        $("#btn-registrar-hijo").click(acciones.enviarFormHijo);
+
+        // Registro -  Asignar camisa
+
+        $("#btn-asignar-camisa-empleado").click(acciones.asignarCamisa);
+        $("#btn-asignar-pantalon-empleado").click(acciones.asignarPantalon);
+        $("#btn-asignar-zapato-empleado").click(acciones.asignarZapato);
+        $("#btn-asignar-vestimenta-empleado").click(acciones.asignarVestimenta);
 
         $("#btn-atras").click(acciones.volverForm);
         $("#agregar-familiar").click(acciones.agregarFamiliar);
@@ -37,26 +50,60 @@ var acciones = {
         $("#btn-buscar-opcion-trabajo").click(acciones.buscarEmpleadoOpcTrabajo)
 
         $("input:radio[name=opcTrabajo]").click(acciones.habilitarComboBox);
-        $("#filtro-empleado").click(acciones.filtroEmpleado);
+        
         $("#menu-desplegable-listas").click(acciones.desplegarMenuListas);
         $("#seccion").click(acciones.mostrarOpcionesArea);
         $("#area").click(acciones.mostrarOpcionesCargo);
         $("#btn-mostrar-ocultar").click(acciones.mostrarMenu);
         $("#enlace-administracion").click(acciones.desplegarSubmenu);
+        $(".enlace-info-empleado").click(acciones.mostrarContEmpleado);
+        $(".cont-info-rapida").click(acciones.desplegarAcordionDotacion);
+
 
         $(".fecha_nacimiento").on('change', acciones.calcularEdadesHijos);
-
-
         $("#fecha_nacimiento").on('change', acciones.calcularEdad);
 
-        $("#buscar_empleado").keyup(acciones.buscarEmpleado);
+        
         $("#salario").keyup(acciones.calcularValorDiaHora);
 
+        //Filtros
+        $("#filtro-empleado").click(acciones.filtroEmpleado);
+        $("#filtro-camisa").click(acciones.filtroCamisa);
+        $("#filtro-pantalon").click(acciones.filtroPantalon);
+        $("#filtro-zapato").click(acciones.filtroZapato);
+        $("#filtro-vestimenta").click(acciones.filtroVestimenta);
+
+        // Buscadores
+
+        $("#buscar_empleado").keyup(acciones.buscarEmpleado);
+        $("#buscador-camisa").keyup(acciones.buscarCamisa);
+        $("#buscador-pantalon").keyup(acciones.buscarPantalon);
+        $("#buscador-zapato").keyup(acciones.buscarZapato);
+        $("#buscador-vestimenta").keyup(acciones.buscarVestimenta);
+        $("#buscador-campo-usuario").keyup(acciones.buscarCampoUsuario);
+        $("#buscador-empleado-camisa").keyup(acciones.buscarEmpleadoCamisa);
+        $("#buscador-empleado-pantalon").keyup(acciones.buscarEmpleadoPantalon);
+        $("#buscador-empleado-zapato").keyup(acciones.buscarEmpleadoZapato);
+        $("#buscador-empleado-vestimenta").keyup(acciones.buscarEmpleadoVestimenta);
+
+        // Asignar: Descontar la cantidad de camisas disponibles por asignar cuando un checkbox este seleccionado
+
+        $(".checkbox-empleados").click(acciones.descontarCantidadDotaciones);
+        
 
         // ---------------- Verificación de campos (inputs) por teclado ------------
 
         $("#correo").keyup(acciones.verificarCorreoBd);
-        
+
+
+        // Validaciones
+
+        $("#cantidad-camisa").keyup(acciones.verificarCampoEstadoCamisa);
+        $("#cantidad-camisa").click(acciones.verificarCampoEstadoCamisa);
+        $("#cantidad-camisa-act").keyup(acciones.verificarCampoEstadoCamisaAct);
+        $("#cantidad-camisa-act").click(acciones.verificarCampoEstadoCamisaAct);
+        $("#estado-camisa").click(acciones.verificarCampoCantidadCamisa);
+        $("#estado-camisa-act").click(acciones.verificarCampoCantidadCamisaAct);
         
         // --------------- Se muestran las tablas con los datos ----------------
 
@@ -171,6 +218,466 @@ var acciones = {
             $("#listado-tipos-dotaciones").html(responseText);
         });
 
+        // Camisa
+
+        $.post('../../controller/camisa/ListaCamisas.php',{
+
+        },function(responseText) {
+            $("#listado-camisas").html(responseText);
+        });
+
+        // Pantalón
+
+        $.post('../../controller/pantalon/ListaPantalones.php',{
+
+        },function(responseText) {
+            $("#listado-pantalones").html(responseText);
+        });
+
+        // Zapato
+
+        $.post('../../controller/zapato/ListaZapatos.php',{
+
+        },function(responseText) {
+            $("#listado-zapatos").html(responseText);
+        });
+
+        // Otra vestimenta
+
+        $.post('../../controller/vestimenta/ListaVestimentas.php',{
+
+        },function(responseText) {
+            $("#listado-vestimentas").html(responseText);
+        });
+        
+
+    },
+
+    // Despliega el respectivo contenedor de la vestimenta
+
+
+    desplegarAcordionDotacion : function() {
+
+        var id = $(this).attr("id");
+
+        switch (id) {
+            case "acordion-cant-camisas":                
+                $("#cont-acordion-camisa").nextAll(".cont-acordion").slideUp("slow");
+                $("#cont-acordion-camisa").stop().slideToggle("slow");
+
+            break;
+            case "acordion-cant-pantalones":
+                $("#cont-acordion-pantalon").prevAll(".cont-acordion").slideUp("slow");
+                $("#cont-acordion-pantalon").nextAll(".cont-acordion").slideUp("slow");
+                $("#cont-acordion-pantalon").stop().slideToggle("slow");
+
+            break;
+            case "acordion-cant-zapatos":
+                $("#cont-acordion-zapato").prevAll(".cont-acordion").slideUp("slow");
+                $("#cont-acordion-zapato").nextAll(".cont-acordion").slideUp("slow");
+                $("#cont-acordion-zapato").stop().slideToggle("slow");
+
+                
+            break;
+            case "acordion-cant-vestimentas":
+                $("#cont-acordion-vestimenta").prevAll(".cont-acordion").slideUp("slow");
+                $("#cont-acordion-vestimenta").nextAll(".cont-acordion").slideUp("slow");
+                $("#cont-acordion-vestimenta").stop().slideToggle("slow");
+
+                
+            break;
+            default:
+                break;
+        }
+
+    },
+
+    // Asignar dotacion - Registro
+
+    asignarCamisa : function() {
+
+        var empleados_asignados = $(".checkbox-empleados-camisa:checked").length;
+
+        if (empleados_asignados > 0) {
+
+            $("#datos-camisa-empleado").next().html("");
+
+            $(".checkbox-empleados-camisa:checked").each(function(index) {
+
+                var id_usuario = $(this).val();
+                var id_camisa = $("#btn-asignar-camisa-empleado").val();
+                var cant_camisas = $("#campo-cant-camisas").val();
+
+                console.log("Id usuario: " +  id_usuario + " Id camisa: " + id_camisa + " cantidad de camisas " + cant_camisas);
+
+                $.post('../../controller/usuario/AsignarDotacionUsuario.php',{
+                    id_usuario: id_usuario,
+                    id_camisa: id_camisa,
+                    cant_camisas: cant_camisas,
+                    opc: "camisa"
+                },function(responseText){
+                    $("#rta-asignar-camisa").html(responseText);
+                    
+                });
+            });
+
+
+        }else{
+            $("#datos-camisa-empleado").next().html("<p class='text-center fs-5'>Seleccione almenos un empleado</p>");
+        }
+
+
+
+    },
+
+    asignarPantalon : function () {
+        var empleados_asignados = $(".checkbox-empleados:checked").length;
+
+        if (empleados_asignados > 0) {
+
+            $("#datos-pantalon-empleado").next().html("");
+
+            $(".checkbox-empleados:checked").each(function(index) {
+
+                var id_usuario = $(this).val();
+                var id_pantalon = $("#btn-asignar-pantalon-empleado").val();
+                var cant_pantalones = $("#campo-cant").val();
+
+
+                $.post('../../controller/usuario/AsignarDotacionUsuario.php',{
+                    id_usuario: id_usuario,
+                    id_pantalon: id_pantalon,
+                    cant_pantalones: cant_pantalones,
+                    opc: "pantalon"
+                },function(responseText){
+                    $("#rta-asignar-pantalon").html(responseText);
+                   
+                });
+            });
+
+
+        }else{
+            $("#datos-pantalon-empleado").next().html("<p class='text-center fs-5'>Seleccione almenos un empleado</p>");
+        }
+    },
+
+    asignarZapato : function() {
+        var empleados_asignados = $(".checkbox-empleados:checked").length;
+
+        if (empleados_asignados > 0) {
+
+            $("#datos-zapato-empleado").next().html("");
+
+            $(".checkbox-empleados:checked").each(function(index) {
+
+                var id_usuario = $(this).val();
+                var id_zapato = $("#btn-asignar-zapato-empleado").val();
+                var cant_zapatos = $("#campo-cant").val();
+
+
+                $.post('../../controller/usuario/AsignarDotacionUsuario.php',{
+                    id_usuario: id_usuario,
+                    id_zapato: id_zapato,
+                    cant_zapatos: cant_zapatos,
+                    opc: "zapato"
+                },function(responseText){
+                    $("#rta-asignar-zapato").html(responseText);
+                   
+                });
+            });
+
+
+        }else{
+            $("#datos-zapato-empleado").next().html("<p class='text-center fs-5'>Seleccione almenos un empleado</p>");
+        }
+    },
+
+    asignarVestimenta : function() {
+        var empleados_asignados = $(".checkbox-empleados:checked").length;
+
+        if (empleados_asignados > 0) {
+
+            $("#datos-vestimenta-empleado").next().html("");
+
+            $(".checkbox-empleados:checked").each(function(index) {
+
+                var id_usuario = $(this).val();
+                var id_vestimenta = $("#btn-asignar-vestimenta-empleado").val();
+                var cant_vestimentas = $("#campo-cant").val();
+
+
+                $.post('../../controller/usuario/AsignarDotacionUsuario.php',{
+                    id_usuario: id_usuario,
+                    id_vestimenta: id_vestimenta,
+                    cant_vestimentas: cant_vestimentas,
+                    opc: "vestimenta"
+                },function(responseText){
+                    $("#rta-asignar-vestimenta").html(responseText);
+                   
+                });
+            });
+
+
+        }else{
+            $("#datos-vestimenta-empleado").next().html("<p class='text-center fs-5'>Seleccione almenos un empleado</p>");
+        }
+    },
+    
+    // ============ Verificar campos ===================
+    
+    // ------------- Camisa --------------------
+
+    verificarCampoCantidadCamisaAct : function() {
+
+        var estado = $(this).val();
+
+        if (estado === '1') {
+            $("#cantidad-camisa-act").removeAttr('disabled');
+        }else{
+            $("#cantidad-camisa-act").prop('disabled', 'disabled').val("0");
+        }
+    },
+
+    verificarCampoCantidadCamisa : function() {
+
+        var estado = $(this).val();
+
+        if (estado === '1' || estado.length === 0) {
+            $("#cantidad-camisa").removeAttr('disabled').val("");
+        }else{
+            $("#cantidad-camisa").prop('disabled', 'disabled').val("0");
+        }
+    },
+
+    verificarCampoEstadoCamisa : function() {
+
+        var cantidad = parseInt($(this).val());
+
+        if (cantidad <= 0) {
+
+            $("#estado-camisa").prop('disabled','disabled').html("<option selected value='0'>Agotada</camisa>");
+        }else{
+            $("#estado-camisa").removeAttr('disabled').html("<option value=''>Seleccionar estado</option> <option value='1'>Disponible</option> <option value='0'>Agotada</option>");
+        }
+
+    },
+
+    verificarCampoEstadoCamisaAct : function() {
+        var cantidad = parseInt($(this).val());
+    
+        if (cantidad <= 0) {
+
+            $("#estado-camisa-act").prop('disabled','disabled').html("<option selected value='0'>Agotada</camisa>");
+        }else{
+            $("#estado-camisa-act").removeAttr('disabled').html("<option value=''>Seleccionar estado</option> <option value='1'>Disponible</option> <option value='0'>Agotada</option>");
+        }
+
+    },
+
+    descontarCantidadDotaciones : function() {
+
+        var cant = parseInt($("#campo-cant-fija").val());
+        var seleccionadas = $(".checkbox-empleados:checked").length;
+        var restantes = cant - seleccionadas; 
+
+        $("#campo-cant").val(restantes);
+
+        if (cant === seleccionadas) {
+            $(".checkbox-empleados").prop('disabled', 'disabled');
+            $(".checkbox-empleados:checked").removeAttr('disabled');
+        }
+   
+    },
+
+    mostrarContEmpleado : function(e) {
+        
+        var id_enlace = $(this).attr("id");
+
+        switch (id_enlace) {
+            case "enlace-perfil":
+
+                $(".nav-item.seleccionado").removeClass("seleccionado");
+                $("#" + id_enlace).closest(".nav-item").addClass("seleccionado");
+                $(".cont-gestion-empleado").addClass("d-none");
+                $("#cont-perfil").removeClass("d-none");
+            break;
+            case "enlace-familiares":
+                $(".nav-item.seleccionado").removeClass("seleccionado");
+                $("#" + id_enlace).closest(".nav-item").addClass("seleccionado");
+                $(".cont-gestion-empleado").addClass("d-none");
+                $("#cont-familiares").removeClass("d-none");
+            break;
+            
+        }
+
+        
+    },
+
+
+
+    // Buscador de datos personales del usuario
+
+    buscarCampoUsuario : function() {
+
+        var busqueda = $(this).val();
+        var id = $("#doc").val();
+        if (busqueda.length !== 0) {
+
+            $("#info-datos-personales").addClass("d-none");
+            $("#datos-personales-buscados").removeClass("d-none");
+            
+            $.post('../../controller/usuario/DatosUsuario.php',{
+                busqueda: busqueda,
+                id: id
+            },function(responseText){
+                $("#datos-personales-buscados").html(responseText);
+            });
+
+        }else{
+            $("#info-datos-personales").removeClass("d-none");
+            $("#datos-personales-buscados").addClass("d-none");
+        }
+    },
+
+    // Buscadores de las tablas de dotación
+
+    buscarCamisa : function() {
+
+        var busqueda = $(this).val();
+        
+
+        $.post('../../controller/camisa/ListaCamisas.php',{
+            busqueda: busqueda
+            
+        }, function(responseText) {
+            $("#listado-camisas").html(responseText);
+        });
+
+    },
+
+    buscarEmpleadoCamisa : function () {
+
+        var busqueda = $(this).val();
+
+        $(".cont-emple").each(function(index) {
+            
+            //console.log(index + ": " + $(this).text());
+            var clase = $(this).attr('class');
+            var datos = clase.replace('col-4 cont-emple', '');
+            
+            if (datos.indexOf(busqueda) > -1) {
+
+               
+                $(this).removeClass("d-none");
+            
+            }else{
+                $(this).addClass("d-none");
+            }
+
+        });
+        
+    },
+
+    buscarPantalon : function() {
+
+        var busqueda = $(this).val();
+
+        $.post('../../controller/pantalon/ListaPantalones.php',{
+            busqueda: busqueda
+        }, function(responseText) {
+            $("#listado-pantalones").html(responseText);
+        });
+
+    },
+
+    buscarEmpleadoPantalon : function() {
+
+        var busqueda = $(this).val();
+
+        $(".cont-emple").each(function(index) {
+            
+            //console.log(index + ": " + $(this).text());
+            var clase = $(this).attr('class');
+            var datos = clase.replace('col-4 cont-emple', '');
+            
+            if (datos.indexOf(busqueda) > -1) {
+
+               
+                $(this).removeClass("d-none");
+            
+            }else{
+                $(this).addClass("d-none");
+            }
+
+        });
+    },
+
+    buscarZapato : function() {
+
+        var busqueda = $(this).val();
+
+        $.post('../../controller/zapato/ListaZapatos.php',{
+            busqueda: busqueda
+        }, function(responseText) {
+            $("#listado-zapatos").html(responseText);
+        });
+
+    },
+
+    buscarEmpleadoZapato : function() {
+        var busqueda = $(this).val();
+
+        $(".cont-emple").each(function(index) {
+            
+            //console.log(index + ": " + $(this).text());
+            var clase = $(this).attr('class');
+            var datos = clase.replace('col-4 cont-emple', '');
+            
+            if (datos.indexOf(busqueda) > -1) {
+
+               
+                $(this).removeClass("d-none");
+            
+            }else{
+                $(this).addClass("d-none");
+            }
+
+        });
+
+    },
+
+    buscarVestimenta : function() {
+
+        var busqueda = $(this).val();
+
+        $.post('../../controller/vestimenta/ListaVestimentas.php',{
+            busqueda: busqueda
+        }, function(responseText) {
+            $("#listado-vestimentas").html(responseText);
+        });
+
+    },
+
+    buscarEmpleadoVestimenta : function() {
+        var busqueda = $(this).val();
+
+        $(".cont-emple").each(function(index) {
+            
+            //console.log(index + ": " + $(this).text());
+            var clase = $(this).attr('class');
+            var datos = clase.replace('col-4 cont-emple', '');
+            
+            if (datos.indexOf(busqueda) > -1) {
+
+               
+                $(this).removeClass("d-none");
+            
+            }else{
+                $(this).addClass("d-none");
+            }
+
+        });
+
     },
 
 
@@ -206,7 +713,7 @@ var acciones = {
         var cont_menu = $("#cont_menu");
         var cont_ppal_menu = $("#cont-ppal-menu");
         var logo = $(".logo-img");
-
+        var cuerpo_pagina = $("#cuerpo-pagina");
 
         if (!cont_menu.hasClass("mostrar-menu")) {
 
@@ -215,13 +722,18 @@ var acciones = {
             cont_ppal_menu.removeClass("col-1");
             cont_ppal_menu.addClass("col-2");
 
+            cuerpo_pagina.addClass("ps-5");
+            //cuerpo_pagina.removeClass("col-10");
+
+
             logo.addClass("aumentar");
             
         }else{
             cont_menu.removeClass("mostrar-menu");
-
             cont_ppal_menu.removeClass("col-2");
             cont_ppal_menu.addClass("col-1");
+
+            cuerpo_pagina.removeClass("ps-5");
             logo.removeClass("aumentar");
 
         }
@@ -368,19 +880,174 @@ var acciones = {
 
     verificarCorreoBd : function() {
 
-    var correo = $(this).val();
+        var correo = $(this).val();
 
-    if (correo.length != 0) {
+        if (correo.length != 0) {
 
-        $.post('../../controller/correo/VerificarCorreoBD.php',{
-            correo: correo
-        },function(responseText){
-            $("#correo").next().html(responseText);
-        });
+            $.post('../../controller/correo/VerificarCorreoBD.php',{
+                correo: correo
+            },function(responseText){
+                $("#correo").next().html(responseText);
+            });
 
-    }else{
-        $("#correo").next().html("Campo vacío, por favor ingrese el correo");
-    }
+        }else{
+            $("#correo").next().html("Campo vacío, por favor ingrese el correo");
+        }
+
+    },
+
+    filtroZapato : function () {
+
+        var filtro_zapato = $(this).val();
+        var id_filtro = "";
+
+        if (filtro_zapato.indexOf("dotacion") > -1) {
+            id_filtro = filtro_zapato.replace("dotacion", "").trim();
+
+            $.post('../../controller/zapato/ListaZapatos.php',{
+                opc: "dotacion",
+                id: id_filtro
+            },function(responseText) {
+                $("#listado-zapatos").html(responseText);
+            });
+
+            
+        }else if(filtro_zapato.indexOf("estado") > -1) {
+            id_filtro = filtro_zapato.replace("estado", "").trim();
+
+            $.post('../../controller/zapato/ListaZapatos.php',{
+                opc: "estado",
+                id: id_filtro
+            },function(responseText) {
+                $("#listado-zapatos").html(responseText);
+            });
+
+            
+        }else{
+            $.post('../../controller/zapato/ListaZapatos.php',{
+                
+            },function(responseText) {
+                $("#listado-zapatos").html(responseText);
+            });
+
+        }
+
+    },
+
+    // Filtros
+
+    filtroVestimenta : function () {
+
+        var filtro_vestimenta = $(this).val();
+        var id_filtro = "";
+
+        if (filtro_vestimenta.indexOf("dotacion") > -1) {
+            id_filtro = filtro_vestimenta.replace("dotacion", "").trim();
+
+            $.post('../../controller/vestimenta/ListaVestimentas.php',{
+                opc: "dotacion",
+                id: id_filtro
+            },function(responseText) {
+                $("#listado-vestimentas").html(responseText);
+            });
+
+            
+        }else if(filtro_vestimenta.indexOf("estado") > -1) {
+            id_filtro = filtro_vestimenta.replace("estado", "").trim();
+
+            $.post('../../controller/vestimenta/ListaVestimentas.php',{
+                opc: "estado",
+                id: id_filtro
+            },function(responseText) {
+                $("#listado-vestimentas").html(responseText);
+            });
+
+            
+        }else{
+            $.post('../../controller/vestimenta/ListaVestimentas.php',{
+                
+            },function(responseText) {
+                $("#listado-vestimentas").html(responseText);
+            });
+
+        }
+
+    },
+
+
+    filtroPantalon : function () {
+
+        var filtro_pantalon = $(this).val();
+        var id_filtro = "";
+
+        if (filtro_pantalon.indexOf("dotacion") > -1) {
+            id_filtro = filtro_pantalon.replace("dotacion", "").trim();
+
+            $.post('../../controller/pantalon/ListaPantalones.php',{
+                opc: "dotacion",
+                id: id_filtro
+            },function(responseText) {
+                $("#listado-pantalones").html(responseText);
+            });
+
+            
+        }else if(filtro_pantalon.indexOf("estado") > -1) {
+            id_filtro = filtro_pantalon.replace("estado", "").trim();
+
+            $.post('../../controller/pantalon/ListaPantalones.php',{
+                opc: "estado",
+                id: id_filtro
+            },function(responseText) {
+                $("#listado-pantalones").html(responseText);
+            });
+
+            
+        }else{
+            $.post('../../controller/pantalon/ListaPantalones.php',{
+                
+            },function(responseText) {
+                $("#listado-pantalones").html(responseText);
+            });
+
+        }
+
+    },
+
+    filtroCamisa : function () {
+
+        var filtro_camisa = $(this).val();
+        var id_filtro = "";
+
+        if (filtro_camisa.indexOf("dotacion") > -1) {
+            id_filtro = filtro_camisa.replace("dotacion", "").trim();
+
+            $.post('../../controller/camisa/ListaCamisas.php',{
+                opc: "dotacion",
+                id: id_filtro
+            },function(responseText) {
+                $("#listado-camisas").html(responseText);
+            });
+
+            
+        }else if(filtro_camisa.indexOf("estado") > -1) {
+            id_filtro = filtro_camisa.replace("estado", "").trim();
+
+            $.post('../../controller/camisa/ListaCamisas.php',{
+                opc: "estado",
+                id: id_filtro
+            },function(responseText) {
+                $("#listado-camisas").html(responseText);
+            });
+
+            
+        }else{
+            $.post('../../controller/camisa/ListaCamisas.php',{
+                
+            },function(responseText) {
+                $("#listado-camisas").html(responseText);
+            });
+
+        }
 
     },
 
@@ -813,6 +1480,426 @@ var acciones = {
     },
 
     // --------------------- Verifica y envía los formularios ---------------------
+
+    // Familiar
+
+    enviarFormFamiliar : function() {
+
+        var id_familiar = $("#id_familiar").val();
+        var nombre = $("#nombre-familiar").val();
+        var apellido = $("#apellido-familiar").val();
+        var edad = $("#edad-familiar").val();
+        var escolaridad = $("#escolaridad-familiar").val();
+        var parentesco = $("#escolaridad-familiar").val();
+        var id_usuario = $("#doc").val();
+        var validar = 0;
+
+        if (id_familiar.length !== 0) {
+            $("#id_familiar").next().html("");
+            validar++;
+        }else{
+            $("#id_familiar").next().html("Campo vacío, por favor ingrese el número de documento");
+        }
+
+        if (nombre.length !== 0) {
+            $("#nombre-familiar").next().html("");
+            validar++;
+        }else{
+            $("#nombre-familiar").next().html("Campo vacío, por favor ingrese el nombre")
+        }
+
+        if (apellido.length !== 0) {
+            $("#apellido-familiar").next().html("");
+            validar++;
+        }else{
+            $("#apellido-familiar").next().html("Campo vacío, por favor ingrese el apellido")
+        }
+
+        if (edad.length !== 0) {
+            $("#edad-familiar").next().html("");
+            validar++;
+        }else{
+            $("#edad-familiar").next().html("Campo vacío, por favor ingrese la edad")
+        }
+
+        if (escolaridad.length !== 0) {
+            $("#escolaridad-familiar").next().html("");
+            validar++;
+        }else{
+            $("#escolaridad-familiar").next().html("Campo vacío, por favor ingrese la escolaridad")
+        }
+
+        if (parentesco.length !== 0) {
+            $("#parentesco-familiar").next().html("");
+            validar++;
+        }else{
+            $("#parentesco-familiar").next().html("Campo vacío, por favor ingrese el parentesco")
+        }
+
+        if (id_usuario.length !== 0) {
+            validar++;
+        }
+
+
+        if (validar == 7) {
+
+            $.post('../../controller/familiar/registrarFamiliar.php',{
+                id_familiar: id_familiar,
+                nombre: nombre,
+                apellido: apellido,
+                edad: edad,
+                escolaridad: escolaridad,
+                parentesco: parentesco,
+                id_usuario: id_usuario
+            },function(responseText) {
+                $("#rta-familiar").html(responseText);
+            });
+
+        }
+        
+    },
+
+    // Otra vestimenta
+
+    enviarFormOtraVestimenta : function() {
+
+        var tallas = $(".checkbox-vestimenta:checked").toArray();
+
+        if (tallas.length !== 0) {
+            $("#cont-check-tallas-vestimenta").next().html("");
+            for (let i= 0; i < tallas.length; i++) {
+                
+                var nombre = $("#nombre-vestimenta").val();
+                var tipo_dotacion = $("#tipo-dotacion-vestimenta").val();
+                var talla = tallas[i].value;
+                var cantidad = $("#cantidad-vestimenta").val();
+                var estado = $("#estado-vestimenta").val();
+                
+                var validar = 0;
+
+                if (nombre.length !== 0) {
+                    $("#nombre-vestimenta").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre-vestimenta").next().html("Campo vacío, por favor ingrese el tipo o nombre de la vestimenta");
+                }
+
+                if (tipo_dotacion.length !== 0) {
+                    $("#tipo-dotacion-vestimenta").next().html("");
+                    validar++;
+
+                }else{
+                    $("#tipo-dotacion-vestimenta").next().html("Campo vacío, por favor ingrese el tipo de dotación");
+
+                }
+
+                if (talla.length !== 0) {
+                    $("#cont-check-tallas-vestimenta").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cont-check-tallas-vestimenta").next().html("Campo vacío, por favor ingrese la talla");
+
+                }
+
+                if (cantidad.length !== 0) {
+                    $("#cantidad-vestimenta").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cantidad-vestimenta").next().html("Campo vacío, por favor ingrese la cantidad");
+
+                }
+
+                if (estado.length !== 0) {
+                    $("#estado-vestimenta").next().html("");
+                    validar++;
+
+                }else{
+                    $("#estado-vestimenta").next().html("Campo vacío, por favor ingrese el estado de la vestimenta");
+
+                }
+
+                
+                if (validar === 5) {
+
+
+                    $.post('../../controller/vestimenta/RegistrarVestimenta.php',{
+                        nombre: nombre,
+                        tipo_dotacion: tipo_dotacion,
+                        talla: talla,
+                        cantidad: cantidad,
+                        estado: estado
+                    },function(responseText){
+                        $("#rta-otra-vestimenta").html(responseText);
+                    });
+
+                }
+
+            }
+        }else{
+            $("#cont-check-tallas-vestimenta").next().html("No hay tallas seleccionadas");
+        }
+    },
+
+    // Zapatos
+
+    enviarFormZapato : function() {
+
+        var tallas = $(".checkbox-zapato:checked").toArray();
+
+        if (tallas.length !== 0) {
+            $("#cont-check-tallas-zapato").next().html("");
+            for (let i= 0; i < tallas.length; i++) {
+                
+                var nombre = $("#nombre-zapato").val();
+                var tipo_dotacion = $("#tipo-dotacion-zapato").val();
+                var talla = tallas[i].value;
+                var cantidad = $("#cantidad-zapato").val();
+                var estado = $("#estado-zapato").val();
+                
+                var validar = 0;
+
+                if (nombre.length !== 0) {
+                    $("#nombre-zapato").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre-zapato").next().html("Campo vacío, por favor ingrese el tipo o nombre del zapato");
+                }
+
+                if (tipo_dotacion.length !== 0) {
+                    $("#tipo-dotacion-zapato").next().html("");
+                    validar++;
+
+                }else{
+                    $("#tipo-dotacion-zapato").next().html("Campo vacío, por favor ingrese el tipo de zapato");
+
+                }
+
+                if (talla.length !== 0) {
+                    $("#cont-check-tallas-zapato").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cont-check-tallas-zapato").next().html("Campo vacío, por favor ingrese la talla");
+
+                }
+
+                if (cantidad.length !== 0) {
+                    $("#cantidad-zapato").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cantidad-zapato").next().html("Campo vacío, por favor ingrese la cantidad");
+
+                }
+
+                if (estado.length !== 0) {
+                    $("#estado-camisa-zapato").next().html("");
+                    validar++;
+
+                }else{
+                    $("#estado-camisa-zapato").next().html("Campo vacío, por favor ingrese el estado de la camisa");
+
+                }
+
+                console.log(cantidad);
+
+                if (validar === 5) {
+
+                 
+                    $.post('../../controller/zapato/RegistrarZapato.php',{
+                        nombre: nombre,
+                        tipo_dotacion: tipo_dotacion,
+                        talla: talla,
+                        cantidad: cantidad,
+                        estado: estado
+                    },function(responseText){
+                        $("#rta-zapato").html(responseText);
+                    });
+
+                }
+
+            }
+        }else{
+            $("#cont-check-tallas-zapato").next().html("No hay tallas seleccionadas");
+        }
+
+    },
+
+    //Pantalon
+
+    enviarFormPantalon : function() {
+
+        
+        var tallas = $(".checkbox-pantalon:checked").toArray();
+
+        if (tallas.length !== 0) {
+            $("#cont-check-tallas-pantalon").next().html("");
+            for (let i= 0; i < tallas.length; i++) {
+                
+                var nombre = $("#nombre-pantalon").val();
+                var tipo_dotacion = $("#tipo-dotacion-pantalon").val();
+                var talla = tallas[i].value;
+                var cantidad = $("#cantidad-pantalon").val();
+                var estado = $("#estado-pantalon").val();
+                
+                var validar = 0;
+
+                if (nombre.length !== 0) {
+                    $("#nombre-pantalon").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre-pantalon").next().html("Campo vacío, por favor ingrese el tipo o nombre del pantalón");
+                }
+
+                if (tipo_dotacion.length !== 0) {
+                    $("#tipo-dotacion-pantalon").next().html("");
+                    validar++;
+
+                }else{
+                    $("#tipo-dotacion-pantalon").next().html("Campo vacío, por favor ingrese el tipo de pantalón");
+
+                }
+
+                if (talla.length !== 0) {
+                    $("#cont-check-tallas-pantalon").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cont-check-tallas-pantalon").next().html("Campo vacío, por favor ingrese la talla");
+
+                }
+
+                if (cantidad.length !== 0) {
+                    $("#cantidad-pantalon").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cantidad-pantalon").next().html("Campo vacío, por favor ingrese la cantidad");
+
+                }
+
+                if (estado.length !== 0) {
+                    $("#estado-camisa-pantalon").next().html("");
+                    validar++;
+
+                }else{
+                    $("#estado-camisa-pantalon").next().html("Campo vacío, por favor ingrese el estado de la camisa");
+
+                }
+
+
+                if (validar === 5) {
+
+                 
+                    $.post('../../controller/pantalon/RegistrarPantalon.php',{
+                        nombre: nombre,
+                        tipo_dotacion: tipo_dotacion,
+                        talla: talla,
+                        cantidad: cantidad,
+                        estado: estado
+                    },function(responseText){
+                        $("#rta-pantalon").html(responseText);
+                    });
+
+                }
+
+            }
+        }else{
+            $("#cont-check-tallas-pantalon").next().html("No hay tallas seleccionadas");
+        }
+        
+
+    },
+
+    // Camisa
+
+    enviarFormCamisa : function() {
+        
+        var tallas = $(".checkbox-camisa:checked").toArray();
+
+        if (tallas.length !== 0) {
+            $("#cont-check-tallas-camisa").next().html("");
+            for (let i= 0; i < tallas.length; i++) {
+                
+                var nombre = $("#nombre-camisa").val();
+                var tipo_dotacion = $("#tipo-dotacion-camisa").val();
+                var talla = tallas[i].value;
+                var cantidad = $("#cantidad-camisa").val();
+                var estado = $("#estado-camisa").val();
+                
+                var validar = 0;
+
+                if (nombre.length !== 0) {
+                    $("#nombre-camisa").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre-camisa").next().html("Campo vacío, por favor ingrese el tipo o nombre de la camisa");
+                }
+
+                if (tipo_dotacion.length !== 0) {
+                    $("#tipo-dotacion-camisa").next().html("");
+                    validar++;
+
+                }else{
+                    $("#tipo-dotacion-camisa").next().html("Campo vacío, por favor ingrese el tipo de camisa");
+
+                }
+
+                if (talla.length !== 0) {
+                    $("#cont-check-tallas-camisa").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cont-check-tallas-camisa").next().html("Campo vacío, por favor ingrese la talla");
+
+                }
+
+                if (cantidad.length !== 0) {
+                    $("#cantidad-camisa").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cantidad-camisa").next().html("Campo vacío, por favor ingrese la cantidad");
+
+                }
+
+                if (estado.length !== 0) {
+                    $("#estado-camisa").next().html("");
+                    validar++;
+
+                }else{
+                    $("#estado-camisa").next().html("Campo vacío, por favor ingrese el estado de la camisa");
+
+                }
+
+
+                if (validar === 5) {
+
+                 
+                    $.post('../../controller/camisa/RegistrarCamisa.php',{
+                        nombre: nombre,
+                        tipo_dotacion: tipo_dotacion,
+                        talla: talla,
+                        cantidad: cantidad,
+                        estado: estado
+                    },function(responseText){
+                        $("#rta-camisa").html(responseText);
+                    });
+
+                }
+
+            }
+        }else{
+            $("#cont-check-tallas-camisa").next().html("No hay tallas seleccionadas");
+        }
+        
+        
+
+       // alert("cantidad" + tallas.length)
+
+    },
 
     // Tipon de dotación
 
@@ -1693,6 +2780,18 @@ var acciones = {
             $("#correo-ingresar").next().html("Campo vacío, por favor ingrese el correo");
         }
     },
+
+    // ========================================================================
+
+
+    // ==========================
+
+    // Se ejecutan las funciones al hacer click en cualquier parte del documento
+
+    // =========================
+
+
+    // =======================================================================
  
     accionesClick : function(e) {
         
@@ -1708,9 +2807,121 @@ var acciones = {
         
         switch (btn) {
 
+            // ---------------- Asignar -------------
+
+            // Zapato
+            
+            case "btn-asignar-vestimenta":
+
+                $("#btn-asignar-vestimenta-empleado").val(id);
+               
+               $.post('../../controller/vestimenta/DatosVestimentaEmpleado.php',{
+                   id: id
+               },function(responseText){
+                   
+                   $("#datos-vestimenta-empleado").html(responseText);
+                   $(document).ready(acciones.listo);
+                   
+               });
+
+             break;
+
+            // Zapato
+            
+            case "btn-asignar-zapato":
+
+                $("#btn-asignar-zapato-empleado").val(id);
+               
+               $.post('../../controller/zapato/DatosZapatoEmpleado.php',{
+                   id: id
+               },function(responseText){
+                   
+                   $("#datos-zapato-empleado").html(responseText);
+                   $(document).ready(acciones.listo);
+                   
+               });
+
+             break;
+
+            // Pantalón
+            
+            case "btn-asignar-pantalon":
+
+                $("#btn-asignar-pantalon-empleado").val(id);
+               
+               $.post('../../controller/pantalon/DatosPantalonEmpleado.php',{
+                   id: id
+               },function(responseText){
+                   
+                   $("#datos-pantalon-empleado").html(responseText);
+                   $(document).ready(acciones.listo);
+                   
+               });
+
+             break;
+
+            // Camisa
+            
+              case "btn-asignar-camisa":
+
+                 $("#btn-asignar-camisa-empleado").val(id);
+                
+                $.post('../../controller/camisa/DatosCamisaEmpleado.php',{
+                    id: id
+                },function(responseText){
+                    
+                    $("#datos-camisa-empleado").html(responseText);
+                    $(document).ready(acciones.listo);
+                    
+                });
+
+              break;
+
             // ------------- Editar un registro -----------
 
-            
+            // Vestimenta
+
+            case "btn-editar-vestimenta":
+                $.post('../../controller/vestimenta/EditarVestimenta.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-vestimenta").html(responseText);
+                });
+         break;
+
+
+            //Zapato
+
+            case "btn-editar-zapato":
+                    $.post('../../controller/zapato/EditarZapato.php',{
+                        id:id
+                    },function(responseText) {
+                        $("#editar-zapato").html(responseText);
+                    });
+             break;
+
+            // Pantalon 
+
+                case "btn-editar-pantalon":
+                    $.post('../../controller/pantalon/EditarPantalon.php',{
+                        id:id
+                    },function(responseText) {
+                        $("#editar-pantalon").html(responseText);
+                    });
+                break;
+
+            // Camisa
+
+            case "btn-editar-camisa":
+                $.post('../../controller/camisa/EditarCamisa.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-camisa").html(responseText);
+
+                    $(document).ready(acciones.listo);
+                });
+            break;
+
 
             // Tipo de dotación
 
@@ -1852,7 +3063,6 @@ var acciones = {
             break;
 
             case "btn-editar-datos-personales":
-                //console.log("funciona");
 
                 $.post('../../controller/usuario/EditarUsuario.php',{
                     id:id,
@@ -1899,9 +3109,330 @@ var acciones = {
 
             break;
 
-            
+             // Actualizar un registro
 
-            // Actualizar un registro
+             case "btn-actualizar-vestimenta":
+
+                var id_vestimenta = $("#id-vestimenta-act").val();
+                var nombre = $("#nombre-vestimenta-act").val();
+                var tipo_dotacion = $("#tipo-dotacion-vestimenta-act").val();
+                var talla = $("#talla-vestimenta-act").val();
+                var cantidad = $("#cantidad-vestimenta-act").val();
+                var estado = $("#estado-vestimenta-act").val();
+
+                
+                var validar = 0;
+
+                if (id_vestimenta.length !== 0) {
+                    $("#id-vestimenta-act").next().html("");
+                    validar++;
+                }else{
+                    $("#id-vestimenta-act").next().html("Campo vacío, por favor ingrese el código de la vestimenta");
+                }
+
+                if (nombre.length !== 0) {
+                    $("#nombre-vestimenta-act").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre-vestimenta-act").next().html("Campo vacío, por favor ingrese el tipo o nombre de la vestimenta");
+                }
+
+                if (tipo_dotacion.length !== 0) {
+                    $("#tipo-dotacion-vestimenta-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#tipo-dotacion-vestimenta-act").next().html("Campo vacío, por favor ingrese el tipo de la vestimenta");
+
+                }
+
+                if (talla.length !== 0) {
+                    $("#talla-vestimenta-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#talla-vestimenta-act").next().html("Campo vacío, por favor ingrese la vestimenta");
+
+                }
+
+                if (cantidad.length !== 0) {
+                    $("#cantidad-vestimenta-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cantidad-vestimenta-act").next().html("Campo vacío, por favor ingrese la cantidad");
+
+                }
+
+                if (estado.length !== 0) {
+                    $("#estado-vestimenta-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#estado-vestimenta-act").next().html("Campo vacío, por favor ingrese el estado de la vestimenta");
+
+                }
+
+                if (validar === 6) {
+
+                    console.log(id_vestimenta + " " + nombre + " " + tipo_dotacion + " " + talla + " " + estado);
+
+
+                    $.post('../../controller/vestimenta/ActualizarVestimenta.php',{
+                        id_vestimenta: id_vestimenta,
+                        nombre: nombre,
+                        tipo_dotacion: tipo_dotacion,
+                        talla: talla,
+                        cantidad: cantidad,
+                        estado: estado
+                    },function(responseText){
+                        $("#rta-vestimenta-act").html(responseText);
+                    });
+
+                }
+
+            break;
+
+            case "btn-actualizar-zapato":
+
+                var id_zapato = $("#id-zapato-act").val();
+                var nombre = $("#nombre-zapato-act").val();
+                var tipo_dotacion = $("#tipo-dotacion-zapato-act").val();
+                var talla = $("#talla-zapato-act").val();
+                var cantidad = $("#cantidad-zapato-act").val();
+                var estado = $("#estado-zapato-act").val();
+
+                
+                var validar = 0;
+
+                if (id_zapato.length !== 0) {
+                    $("#id-zapato-act").next().html("");
+                    validar++;
+                }else{
+                    $("#id-zapato-act").next().html("Campo vacío, por favor ingrese el código del zapato");
+                }
+
+                if (nombre.length !== 0) {
+                    $("#nombre-zapato-act").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre-zapato-act").next().html("Campo vacío, por favor ingrese el tipo o nombre del zapato");
+                }
+
+                if (tipo_dotacion.length !== 0) {
+                    $("#tipo-dotacion-zapato-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#tipo-dotacion-zapato-act").next().html("Campo vacío, por favor ingrese el tipo de zapato");
+
+                }
+
+                if (talla.length !== 0) {
+                    $("#talla-zapato-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#talla-zapato-act").next().html("Campo vacío, por favor ingrese la talla");
+
+                }
+
+                if (cantidad.length !== 0) {
+                    $("#cantidad-zapato-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cantidad-zapato-act").next().html("Campo vacío, por favor ingrese la cantidad");
+
+                }
+
+                if (estado.length !== 0) {
+                    $("#estado-zapato-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#estado-zapato-act").next().html("Campo vacío, por favor ingrese el estado del zapato");
+
+                }
+
+                if (validar === 6) {
+
+                    $.post('../../controller/zapato/ActualizarZapato.php',{
+                        id_zapato: id_zapato,
+                        nombre: nombre,
+                        tipo_dotacion: tipo_dotacion,
+                        talla: talla,
+                        cantidad: cantidad,
+                        estado: estado
+                    },function(responseText){
+                        $("#rta-zapato-act").html(responseText);
+                    });
+
+                }
+
+            break;
+
+            case "btn-actualizar-pantalon":
+
+                var id_pantalon = $("#id-pantalon-act").val();
+                var nombre = $("#nombre-pantalon-act").val();
+                var tipo_dotacion = $("#tipo-dotacion-pantalon-act").val();
+                var talla = $("#talla-pantalon-act").val();
+                var cantidad = $("#cantidad-pantalon-act").val();
+                var estado = $("#estado-pantalon-act").val();
+
+                
+                var validar = 0;
+
+                if (id_pantalon.length !== 0) {
+                    $("#id-pantalon-act").next().html("");
+                    validar++;
+                }else{
+                    $("#id-pantalon-act").next().html("Campo vacío, por favor ingrese el código del pantalón");
+                }
+
+                if (nombre.length !== 0) {
+                    $("#nombre-pantalon-act").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre-pantalon-act").next().html("Campo vacío, por favor ingrese el tipo o nombre del pantalón");
+                }
+
+                if (tipo_dotacion.length !== 0) {
+                    $("#tipo-dotacion-pantalon-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#tipo-dotacion-pantalon-act").next().html("Campo vacío, por favor ingrese el tipo de pantalón");
+
+                }
+
+                if (talla.length !== 0) {
+                    $("#talla-pantalon-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#talla-pantalon-act").next().html("Campo vacío, por favor ingrese la talla");
+
+                }
+
+                if (cantidad.length !== 0) {
+                    $("#cantidad-pantalon-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cantidad-pantalon-act").next().html("Campo vacío, por favor ingrese la cantidad");
+
+                }
+
+                if (estado.length !== 0) {
+                    $("#estado-pantalon-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#estado-pantalon-act").next().html("Campo vacío, por favor ingrese el estado del pantalón");
+
+                }
+
+                if (validar === 6) {
+
+                    $.post('../../controller/pantalon/ActualizarPantalon.php',{
+                        id_pantalon: id_pantalon,
+                        nombre: nombre,
+                        tipo_dotacion: tipo_dotacion,
+                        talla: talla,
+                        cantidad: cantidad,
+                        estado: estado
+                    },function(responseText){
+                        $("#rta-pantalon-act").html(responseText);
+                    });
+
+                }
+
+            break;
+
+
+           
+
+            case "btn-actualizar-camisa":
+
+                var id_camisa = $("#id-camisa-act").val();
+                var nombre = $("#nombre-camisa-act").val();
+                var tipo_dotacion = $("#tipo-dotacion-camisa-act").val();
+                var talla = $("#talla-camisa-act").val();
+                var cantidad = $("#cantidad-camisa-act").val();
+                var estado = $("#estado-camisa-act").val();
+
+                
+                var validar = 0;
+
+                if (id_camisa.length !== 0) {
+                    $("#id-camisa-act").next().html("");
+                    validar++;
+                }else{
+                    $("#id-camisa-act").next().html("Campo vacío, por favor ingrese el código de la camisa");
+                }
+
+                if (nombre.length !== 0) {
+                    $("#nombre-camisa-act").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre-camisa-act").next().html("Campo vacío, por favor ingrese el tipo o nombre de la camisa");
+                }
+
+                if (tipo_dotacion.length !== 0) {
+                    $("#tipo-dotacion-camisa-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#tipo-dotacion-camisa-act").next().html("Campo vacío, por favor ingrese el tipo de camisa");
+
+                }
+
+                if (talla.length !== 0) {
+                    $("#talla-camisa-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#talla-camisa-act").next().html("Campo vacío, por favor ingrese la talla");
+
+                }
+
+                if (cantidad.length !== 0) {
+                    $("#cantidad-camisa-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#cantidad-camisa-act").next().html("Campo vacío, por favor ingrese la cantidad");
+
+                }
+
+                if (estado.length !== 0) {
+                    $("#estado-camisa-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#estado-camisa-act").next().html("Campo vacío, por favor ingrese el estado de la camisa");
+
+                }
+
+                if (validar === 6) {
+
+                 
+                    $.post('../../controller/camisa/ActualizarCamisa.php',{
+                        id_camisa: id_camisa,
+                        nombre: nombre,
+                        tipo_dotacion: tipo_dotacion,
+                        talla: talla,
+                        cantidad: cantidad,
+                        estado: estado
+                    },function(responseText){
+                        $("#rta-camisa-act").html(responseText);
+                    });
+
+                }
+
+            break;
 
             case "btn-actualizar-tipo-dotacion":
                 

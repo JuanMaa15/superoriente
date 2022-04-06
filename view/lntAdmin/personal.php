@@ -50,7 +50,7 @@
     <div class="container-fluid ps-0">
         <div class="row justify-content-center">
             <?php include_once("menu.php"); ?>
-            <div class="col-10 ps-0 py-5 position-relative">
+            <div class="col-10 ps-0 py-5 position-relative" id="cuerpo-pagina">
                 <!-- <div class="row pb-4">
                     <div class="col">
                         <h2 class="text-center">Lista Empleados</h2>
@@ -112,7 +112,7 @@
                                 </a>
                                 
                             </div>
-                            <div class="col-3">
+                            <!-- <div class="col-3">
                                 <a href="#">
                                     <div class="cont-icono p-3">
                                         <div class="icono">
@@ -124,7 +124,7 @@
                                     </div>
                                 </a>
                                 
-                            </div>
+                            </div> -->
                             
                         </div>
                     </div>

@@ -48,7 +48,7 @@
 <body>
     <!--------------- Body form -------- -->
     <div class="container-fluid ps-0">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" id="cuerpo-pagina">
             <?php include_once("menu.php"); ?>
             <div class="col-10 ps-0 py-5 position-relative">
                 <div class="bg-verde-tpt col w-100 d-flex justify-content-end position-fixed top-0 end-0">

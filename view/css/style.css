@@ -12,12 +12,15 @@ a {
 }
 
 :root {
+    --claro:#b1b1b1;
+    --verdeOscuro: #25d366;
     --verde: #6EEB83;
     --verdeTransparente: rgba(110, 235, 131, 0.9);
     /* --verdeTransparente: #40AD20; */
     --blancoTranspraente: rgba(255,255,255,0.9);
     --negroTransparente: rgb(13, 19, 23,0.5);
     --negro: #0D1317;
+    --negroOpaco: #333;
 }
 
 
@@ -106,7 +109,7 @@ a {
 }
 
 #submenu-administracion.desplegar-submenu {
-    height: 6rem;
+    height: 8.5rem;
 }
 
 
@@ -208,7 +211,10 @@ a {
     width: 50% !important;
 }
 
-
+.cont-acordion {
+    
+    display: none;
+}
 
 .logo-img {
     width: 3rem;
@@ -247,6 +253,10 @@ a {
 
 .titulos {
     font-size: 2.3rem;
+}
+
+.titulo-campos {
+    font-weight: bold !important;
 }
 
 .form-control {
@@ -295,6 +305,8 @@ small {
     font-size: 0.78rem !important;
 }
 
+
+
 #cont-ppal-menu {
     transition: all 0.5s ease-in-out;
 }
@@ -334,6 +346,27 @@ small {
     color: #f1f1f1;
 }
 
+.btn-editar-perfil {
+    background-color: transparent;
+    border: 1px solid var(--verdeOscuro);
+    color: var(--verdeOscuro);
+    transition: all 0.2s ease;
+}
+
+.btn-editar-perfil:hover {
+    background-color: var(--verdeOscuro);
+    color: #f1f1f1;
+}
+
+.btn-editar-perfil[disabled='disabled'] {
+    border: 1px solid #d1d1d1;
+    color: #d1d1d1;
+}
+
+.btn-editar-perfil[disabled='disabled']:hover {
+    background: transparent;
+    color: #d1d1d1;
+}
 
 .btn-img {
     overflow: hidden;
@@ -385,7 +418,16 @@ small {
     color: white;
 }
 
-.cont-info-inicio,
+.cont-info-rapida {
+    cursor: pointer; 
+    transition: all 0.4s ease;
+}
+
+.cont-info-rapida:hover {
+    box-shadow: 0px 0px 10px 2px #999 !important;
+}
+
+.cont-info-rapida,
 .cont-nuevos-empleados,
 .cont-lista-reporte {
     box-shadow: 2px 2px 2px 2px #e1e1e1 !important;
@@ -393,13 +435,57 @@ small {
     
 }
 
-.cont-info-inicio i{
+
+
+.cont-info-rapida i{
     font-size: 3rem;
 }
 
+.cont-foto-empleado {
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.cont-foto-empleado img{
+    width: 15rem;
+}
+
+.card-img-profile {
+    height: 10rem !important;
+    border-bottom: 2px solid #f1f1f1 !important;
+}
+
+.texto-negro-opaco {
+    color: var(--negroOpaco) !important;
+}
+
+.texto-verde-oscuro {
+    color: var(--verdeOscuro);
+}
+
+.texto-verde-oscuro:hover {
+    color: green;
+}
+
+.texto-claro {
+    color: var(--claro);
+}
+
+
 .titulo-icono {
     font-size: 1.5rem;
+}
 
+.titulo-perfil {
+    font-size: 1.5rem;
+    color: #333;
+
+    
+}
+
+
+.long-modal {
+    max-width: 1000px !important;
 }
 
 .border-bottom-black {
@@ -426,6 +512,13 @@ small {
     
 }
 
+#buscador-campo-usuario {
+    padding-top: 2.5px !important;
+    padding-bottom: 2px !important;
+    width: 15rem;
+    background-color: transparent;
+}
+
 #menu-desplegado {
     display: block;
     transform: scaleY(0) !important;
@@ -436,12 +529,56 @@ small {
 }
 
 #menu-desplegado.desplegar {
-
-    
     
     transform: scaleY(1) !important;
 }
 
+#nav-info-empleado .nav-item{
+    padding: 0 1rem !important;
+    position: relative;
+}
+
+#nav-info-empleado .nav-item.seleccionado::before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--verde);
+}
+
+#cont-foto-perfil-nombre .cont-foto-empleado{
+    z-index: 2;
+}
+
+#cont-foto-perfil-nombre::after {
+    content: "";
+    width: 100%;
+    height: 7rem;
+    position: absolute;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: var(--verdeTransparente);
+}
+
+#cont-perfil h4{
+    color: #444;
+}
+
+#cuerpo-pagina {
+    transition: all 0.5s ease;
+}
+
+#campo-cant {
+    width: 2.2rem;
+    margin-left: 0.3rem;
+    text-align: center;
+    display: inline-block;
+}
 
 /*-------------- Resposive ---------------*/
 

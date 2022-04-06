@@ -207,7 +207,7 @@
             </button>
         </div>
 
-        <div class="modal fade" id="modificar-datos-personales" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modificar-datos-personales" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog long-modal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -258,7 +258,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id='btn-actualizar-datos-familiares'>Actualizar</button>
+                    <button type="button" class="btn btn-primary" id="btn-editar-datos-familiares" value="<?php echo $_GET['doc']; ?>" data-bs-toggle="modal" data-bs-target="#modificar-datos-familiares">Actualizar</button>
                 </div>
             </div>
         </div>
