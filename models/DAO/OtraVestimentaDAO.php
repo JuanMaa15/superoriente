@@ -196,9 +196,9 @@ class OtraVestimentaDAO {
 
         try {
             if ($vestimentadto->getCantidad() <= 0) {
-                $sql = "UPDATE tbl_vestimenta SET cantidad = ?, estado = 0 WHERE id_vestimenta = ". $vestimentadto->getId_vestimenta();
+                $sql = "UPDATE tbl_otra_vestimenta SET cantidad = ?, estado = 0 WHERE id_vestimenta = ". $vestimentadto->getId_vestimenta();
             }else{
-                $sql = "UPDATE tbl_vestimenta SET cantidad = ? WHERE id_vestimenta = ". $vestimentadto->getId_vestimenta();
+                $sql = "UPDATE tbl_otra_vestimenta SET cantidad = ? WHERE id_vestimenta = ". $vestimentadto->getId_vestimenta();
 
             }
             $ps = $cnx->prepare($sql);

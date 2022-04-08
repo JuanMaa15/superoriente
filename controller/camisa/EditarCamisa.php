@@ -2,17 +2,32 @@
 
 require_once ("../../models/DAO/CamisaDAO.php");
 require_once ("../../models/DAO/TipoDotacionDAO.php");
-
+require_once ("../../models/DAO/TipoCamisaDAO.php");
 
 
 $id_camisa = intval($_POST['id']);
 
 $camisadao = new CamisaDAO();
-
 $camisadto = $camisadao->listaCamisa($id_camisa);
 
 $tipoDotaciondao = new TipoDotacionDAO();
 $listaTiposDotaciones = $tipoDotaciondao->listaTiposDotaciones();
+
+$tipoCamisadao = new TipoCamisaDAO();
+$listaTiposCamisas = $tipoCamisadao->listaTiposCamisas();
+
+$cbxTiposCamisas = "<select class='form-select' id='tipo-camisa-act'>";
+        
+        for ($i=0; $i < count($listaTiposCamisas); $i++) { 
+                if ($listaTiposCamisas[$i]->getId_tipo_camisa() == $camisadto->getNombre()) {
+                        $cbxTiposCamisas .= "<option selected value='" . $listaTiposCamisas[$i]->getId_tipo_camisa() . "'>" . $listaTiposCamisas[$i]->getNombre() . "</option>";
+                }else{
+                        $cbxTiposCamisas .= "<option value='" . $$listaTiposCamisas[$i]->getId_tipo_camisa() . "'>" . $listaTiposCamisas[$i]->getNombre() . "</option>";
+   
+                }
+        }
+
+$cbxTiposCamisas .= "</select>";
 
 $cbxTiposDotaciones = "<select class='form-select' id='tipo-dotacion-camisa-act'>";
         
@@ -64,8 +79,8 @@ $form = "<form>"
         ."<small class='text-danger'></small>"
         ."</div>"
         ."<div class='my-2'>"
-        ."<label class='form-label'>Camisa</label>"
-        ."<input class='form-control' type='text' id='nombre-camisa-act' value='" . $camisadto->getNombre() . "'>"
+        ."<label class='form-label'>Tipo de camisa</label>"
+        . $cbxTiposCamisas
         ."<small class='text-danger'></small>"
         ."</div>"
         ."<div class='my-2'>"

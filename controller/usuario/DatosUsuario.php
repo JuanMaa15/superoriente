@@ -65,6 +65,13 @@ if(isset($_POST['busqueda']) && isset($_POST['id'])) {
                              . "</div>";
     }
 
+    if (str_contains("Estrato", $busqueda)) {
+        $datos_encontrados .= "<div class='col-3 my-2'>"
+                                . "<h4 class='fs-6 titulo-campos'>Estrato</h4>"
+                                . "<p class=my-1>" . $usuariodto->getEstrato() . "</p>"
+                             . "</div>";
+    }
+
     if (str_contains("Género", $busqueda) || str_contains("Genero", $busqueda)) {
         $datos_encontrados .= "<div class='col-3 my-2'>"
                                 . "<h4 class='fs-6 titulo-campos'>Género</h4>"

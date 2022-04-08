@@ -2,6 +2,11 @@
     require_once ('../../models/DAO/UsuarioDAO.php');
     require_once ('../../models/DAO/FamiliarDAO.php');
     require_once ('../../models/DAO/HijoDAO.php');
+    require_once ('../../models/DAO/CamisaDAO.php');
+    require_once ('../../models/DAO/PantalonDAO.php');
+    require_once ('../../models/DAO/ZapatoDAO.php');
+    require_once ('../../models/DAO/OtraVestimentaDAO.php');
+
     session_start();
     
 
@@ -10,10 +15,18 @@
         $usuariodao = new UsuarioDAO();
         $familiardao = new FamiliarDAO();
         $hijodao = new HijoDAO();
+        $camisadao = new CamisaDAO();
+        $pantalondao = new PantalonDAO();
+        $zapatodao = new ZapatoDAO();
+        $otraVestimentadao = new OtraVestimentaDAO();
 
         $listaUsuario = $usuariodao->listaUsuario($_GET['doc']);
         $listaFamiliar = $familiardao->listaFamiliar($_GET['doc']);
         $listaHijo = $hijodao->listaHijo($_GET['doc']);
+        $listaCamisas = $camisadao->listaCamisas();
+        $listaPantalones = $pantalondao->listaPantalones();
+        $listaZapatos = $zapatodao->listaZapatos();
+        $listaVestimenta = $otraVestimentadao->listaVestimentas();
 ?>
 
 <!DOCTYPE html>
@@ -109,11 +122,15 @@
                                     <p class="my-1"><?php echo $listaUsuario->getTipo_casa(); ?></p>
                                 </div>
                                 <div class="col-3 my-2">
-                                    <h4 class="fs-6 titulo-campos"> Género</h4>
-                                    <p class="my-1"><?php echo $listaUsuario->getGenero(); ?></p>
+                                    <h4 class="fs-6 titulo-campos"> Estrato</h4>
+                                    <p class="my-1"><?php echo $listaUsuario->getEstrato(); ?></p>
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-3 my-2">
+                                    <h4 class="fs-6 titulo-campos"> Género</h4>
+                                    <p class="my-1"><?php echo $listaUsuario->getGenero(); ?></p>
+                                </div>
                                 <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> Edad</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getEdad(); ?></p>
@@ -126,12 +143,13 @@
                                     <h4 class="fs-6 titulo-campos"> Nivel académico</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getNivel_academico(); ?></p>
                                 </div>
+                                
+                            </div>
+                            <div class="row">
                                 <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> Area académica</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getArea_academica(); ?></p>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> Estado civil</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getEstado_civil(); ?></p>
@@ -144,12 +162,13 @@
                                     <h4 class="fs-6 titulo-campos"> Número de cuenta</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getNro_cuenta(); ?></p>
                                 </div>
-                                <div class="col-3 my-2">
+                                
+                            </div>
+                            <div class="row">
+                             <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> Tipo de sangre y RH</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getTipo_sangre(); ?></p>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> Lugar de residencia</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getLugar_residencia(); ?></p>
@@ -162,13 +181,14 @@
                                     <h4 class="fs-6 titulo-campos"> Antecedentes</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getAntecedentes(); ?></p>
                                 </div>
+                                
+                            </div>
+
+                            <div class="row">
                                 <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> ¿Practica deporte? ¿Cual?</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getPractica_deporte(); ?></p>
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> ¿Cuanto cigarros se fuma a la semana?</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getConsumo_cigarros(); ?></p>
@@ -181,13 +201,14 @@
                                     <h4 class="fs-6 titulo-campos"> ¿Con que frecuencia consume sustancias alucinogenas?</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getConsumo_spa(); ?></p>
                                 </div>
+                                
+                            </div>
+
+                            <div class="row">
                                 <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> Correo Eletrónico</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getCorreo(); ?></p>
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> Perfil</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getPerfil(); ?></p>
@@ -200,14 +221,14 @@
                                     <h4 class="fs-6 titulo-campos"> Teléfono fijo (Persona de emergencia)</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getTelefono_emergencia(); ?></p>
                                 </div>
+                                
+                            </div>
+
+                            <div class="row justify-content-center">
                                 <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> Teléfono Móvil (Persona de emergencia)</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getCelular_emergencia(); ?></p>
                                 </div>
-                            </div>
-
-                            <div class="row justify-content-center">
-                                
                                 <div class="col-3 my-2">
                                     <h4 class="fs-6 titulo-campos"> Parentesco (Persona de emergencia)</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getParentesco_emergencia(); ?></p>
@@ -251,8 +272,12 @@
                         </div>
                         <div class="row">
                             <div class="col-3 my-2">
-                                <h4 class="fs-6 titulo-campos"> Motivo del retiro</h4>
-                                <p class="my-1"><?php echo $listaUsuario->getMotivo_retiro(); ?></p>
+                                <h4 class="fs-6 titulo-campos">Antiguedad</h4>
+                                <p class="my-1"><?php echo $listaUsuario->getAntiguedad(); ?></p>
+                            </div>
+                            <div class="col-3 my-2">
+                                <h4 class="fs-6 titulo-campos"> Cesantía</h4>
+                                <p class="my-1"><?php echo $listaUsuario->getCesantia(); ?></p>
                             </div>
                             <div class="col-3 my-2">
                                 <h4 class="fs-6 titulo-campos"> Salario</h4>
@@ -262,21 +287,14 @@
                                 <h4 class="fs-6 titulo-campos"> Valor del día</h4>
                                 <p class="my-1"><?php echo $listaUsuario->getValor_dia(); ?></p>
                             </div>
+                            
+                        </div>
+                        <div class="row">
                             <div class="col-3 my-2">
                                 <h4 class="fs-6 titulo-campos"> Valor de la hora</h4>
                                 <p class="my-1"><?php echo $listaUsuario->getValor_hora(); ?></p>
                             </div>
                             
-                        </div>
-                        <div class="row">
-                            <div class="col-3 my-2">
-                                <h4 class="fs-6 titulo-campos"> Clase de riesgo</h4>
-                                <p class="my-1"><?php echo $listaUsuario->getClase_riesgo(); ?></p>
-                            </div>
-                            <div class="col-3 my-2">
-                                <h4 class="fs-6 titulo-campos"> Porcentaje de riesgo</h4>
-                                <p class="my-1"><?php echo $listaUsuario->getPorcentaje_riesgo(); ?></p>
-                            </div>
                             <div class="col-3 my-2">
                                 <h4 class="fs-6 titulo-campos"> Sección</h4>
                                 <p class="my-1"><?php echo $listaUsuario->getSeccion(); ?></p>
@@ -284,6 +302,10 @@
                             <div class="col-3 my-2">
                                 <h4 class="fs-6 titulo-campos"> Area</h4>
                                 <p class="my-1"><?php echo $listaUsuario->getArea(); ?></p>
+                            </div>
+                            <div class="col-3 my-2">
+                                <h4 class="fs-6 titulo-campos"> Clase de riesgo</h4>
+                                <p class="my-1"><?php echo $listaUsuario->getClase_riesgo(); ?></p>
                             </div>
                             
                         </div>
@@ -413,6 +435,11 @@
             </div>
 
             <div id="cont-familiares" class="my-4 d-none cont-gestion-empleado">
+                <div class="row mb-3">
+                    <div class="col">
+                        <h3 class="titulo-perfil">Gestionar familiares e hijos</h3>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-4">
                         <div class="card">
@@ -547,6 +574,188 @@
                     </div>
                 </div>
             </div>
+
+            <div id="cont-dotacion" class="my-3 d-none cont-gestion-empleado ">
+                <div class="row mb-2">
+                    <div class="col">
+                        <h2 class="titulo-perfil">Gestionar dotación del empleado</h2>
+                        <h5 class="texto-claro">Dotación <?php echo $listaUsuario->getTipo_dotacion(); ?></h5>
+                        <input type="text" id="campo-tipo-dotacion-empleado" class="d-none" value="<?php echo $listaUsuario->getTipo_dotacion(); ?>">
+                    </div>
+                </div>
+                
+                <div class="row">
+
+                    <?php
+                        if ($listaUsuario->getCamisa() == null) :
+                            ?>
+                                <div class="col">
+                                    <div class="bloque-dotacion bg-light p-5" id="bloque-agregar-camisa-empleado" data-bs-toggle="modal" data-bs-target="#modal-agregar-camisa">
+                                        <div class="col d-flex justify-content-center align-items-center">
+                                            <i class="fa-solid fa-shirt"></i>
+                                        </div>
+                                        <h5 class="text-center mt-5"><i class="fa-solid fa-circle-plus"></i> Agregar Camisa</h5>
+                                    </div>
+                                    
+                                </div>
+                            <?php
+                        else:
+
+                            for ($i=0; $i < count($listaCamisas); $i++) :
+                            
+                                if ($listaUsuario->getCamisa() == $listaCamisas[$i]->getId_camisa()) :
+
+                            ?>
+                            <div class="col">
+                                <div class="bloque-dotacion dotacion-agregada bg-light py-4 px-5">
+                                    <div class="col d-flex justify-content-center align-items-center">
+                                        <i class="fa-solid fa-shirt"></i>
+                                    </div>
+                                    <div class="text-center">
+                                        <p>Camisa: <?php echo $listaCamisas[$i]->getNombre(); ?></p>
+                                        <p>Talla: <?php echo $listaCamisas[$i]->getTalla(); ?></p>
+                                        <button class="btn btn-verde" id="btn-editar-camisa-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Editar</button>
+                                        <button class="btn btn-danger" id="btn-eliminar-camisa-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Eliminar</button>    
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                            <?php
+                                endif;
+                            endfor;
+                        endif;
+                    ?>
+                    
+                    <?php
+
+                        if ($listaUsuario->getPantalon() == null):
+                            ?>
+                            <div class="col">
+                                <div class="bloque-dotacion bg-light p-5">
+                                    <div class="col d-flex justify-content-center align-items-center">
+                                        <i class="fa-solid fa-table-columns"></i>
+                                    </div>
+                                    <h5 class="text-center mt-5"><i class="fa-solid fa-circle-plus"></i> Agregar Pantalón</h5>
+                                </div>
+                                
+                            </div>
+                            <?php
+                        else:
+                            for ($i=0; $i < count($listaPantalones); $i++) :
+                            
+                                if ($listaUsuario->getPantalon() == $listaPantalones[$i]->getId_pantalon()) :
+
+                            ?>
+                            <div class="col">
+                                <div class="bloque-dotacion dotacion-agregada bg-light py-4 px-5">
+                                    <div class="col d-flex justify-content-center align-items-center">
+                                        <i class="fa-solid fa-table-columns"></i>
+                                    </div>
+                                    <div class="text-center">
+                                        <p>Pantalón: <?php echo $listaPantalones[$i]->getNombre(); ?></p>
+                                        <p>Talla: <?php echo $listaPantalones[$i]->getTalla(); ?></p>
+                                        <button class="btn btn-verde" id="btn-editar-pantalon-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Editar</button>
+                                        <button class="btn btn-danger" id="btn-eliminar-pantalon-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Eliminar</button>    
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                            <?php
+                                endif;
+                            endfor;
+                        endif;
+                    ?>
+                    
+                    
+                    <?php
+
+                        if($listaUsuario->getZapato() == null) :
+                            ?>
+                                <div class="col">
+                                    <div class="bloque-dotacion bg-light p-5">
+                                        <div class="col d-flex justify-content-center align-items-center">
+                                            <i class="fa-solid fa-shoe-prints"></i>
+                                        </div>
+                                        <h5 class="text-center mt-5"><i class="fa-solid fa-circle-plus"></i> Agregar Zapatos</h5>
+                                    </div> 
+                                </div>
+                            <?php
+                            else:
+                                for ($i=0; $i < count($listaZapatos); $i++):
+                                
+                                    if ($listaUsuario->getZapato() == $listaZapatos[$i]->getId_zapato()):
+
+                                ?>
+                                <div class="col">
+                                    <div class="bloque-dotacion dotacion-agregada bg-light py-4 px-5">
+                                        <div class="col d-flex justify-content-center align-items-center">
+                                            <i class="fa-solid fa-shoe-prints"></i>
+                                        </div>
+                                        <div class="text-center">
+                                            <p>Zapatos: <?php echo $listaZapatos[$i]->getNombre(); ?></p>
+                                            <p>Talla: <?php echo $listaZapatos[$i]->getTalla(); ?></p>
+                                            <button class="btn btn-verde" id="btn-editar-zapato-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Editar</button>
+                                            <button class="btn btn-danger" id="btn-eliminar-zapato-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Eliminar</button>    
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+                                <?php
+                                    endif;
+                                endfor;
+                
+                        endif;
+
+                    ?>
+
+                    <?php
+
+                        if ($listaUsuario->getVestimenta() == null):
+                            ?>
+                            <div class="col">
+                                <div class="bloque-dotacion bg-light p-5">
+                                    <div class="col d-flex justify-content-center align-items-center">
+                                        <i class="fa-solid fa-person-booth"></i>
+                                    </div>
+                                    <h5 class="text-center mt-5"><i class="fa-solid fa-circle-plus"></i> Agregar Otro</h5>
+                                </div>
+                                
+                            </div>
+                            <?php
+                        else:
+
+                            for ($i=0; $i < count($listaVestimenta); $i++):
+                                
+                                if ($listaUsuario->getVestimenta() == $listaVestimenta[$i]->getId_vestimenta()):
+
+                            ?>
+                            <div class="col">
+                                <div class="bloque-dotacion dotacion-agregada bg-light py-4 px-5">
+                                    <div class="col d-flex justify-content-center align-items-center">
+                                        <i class="fa-solid fa-person-booth"></i>
+                                    </div>
+                                    <div class="text-center">
+                                        <p>Vestimenta: <?php echo $listaVestimenta[$i]->getNombre(); ?></p>
+                                        <p>Talla: <?php echo $listaVestimenta[$i]->getTalla(); ?></p>
+                                        <button class="btn btn-verde" id="btn-editar-vestimenta-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Editar</button>
+                                        <button class="btn btn-danger" id="btn-eliminar-vestimenta-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Eliminar</button>    
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                            <?php
+                                endif;
+                            endfor;
+
+                        endif;
+                    ?>
+                    
+                </div>        
+            </div>
         </div>
         
 
@@ -554,6 +763,26 @@
        
           
     </main>
+
+    <div class="modal fade" id="modal-agregar-camisa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar camisa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="listado-camisas-tipo-dotacion"></div>
+                    <div id="rta-agregar-camisa-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-agregar-camisa-empleado">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="modificar-datos-personales" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog long-modal">
             <div class="modal-content">

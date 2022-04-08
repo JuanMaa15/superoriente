@@ -15,6 +15,8 @@
     require_once('../../models/DAO/AreaDAO.php');
     require_once('../../models/DAO/CargoDAO.php');
     require_once('../../models/DAO/UsuarioDAO.php');
+    require_once('../../models/DAO/TipoCamisaDAO.php');
+    require_once('../../models/DAO/TipoPantalonDAO.php');
 
 
     if (isset($_SESSION['id_admin'])) {
@@ -28,6 +30,9 @@
         $zapatodao = new ZapatoDAO();
         $otraVestimentadao = new OtraVestimentaDAO();
         $usuariodao = new UsuarioDAO();
+        $tipoCamisadao = new TipoCamisaDAO();
+        $tipoPantalondao = new TipoPantalonDAO();
+
        /*  $estadodao = new EstadoDAO();
         $tipoContratodao = new TipoContratoDAO();
         $casadao = new CasaDAO();
@@ -50,7 +55,8 @@
         $listaZapatos = $zapatodao->listaZapatos();
         $listaVestimentas = $otraVestimentadao->listaVestimentas();
         $listaUsuarios = $usuariodao->listaUsuarios();
-
+        $listaTiposCamisas = $tipoCamisadao->listaTiposCamisas();
+        $listaTiposPantalones = $tipoPantalondao->listaTiposPantalones();
 ?>
 
 
@@ -74,9 +80,123 @@
         <div class="row justify-content-center">
             <?php include_once("menu.php"); ?>
             <div class="col-10 ps-0 py-5 position-relative" id="cuerpo-pagina">
-                <div class="row">
+                <div class="row align-items-center">
                     <div class="col">
                         <h2>Gestionar dotación</h2>
+                    </div>
+                    <div class="col-3">
+                        <div class="accordion accordion-flush" id="cont-acordion-listado">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#listado-asignaciones" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    Lista de asignaciones
+                                </button>
+                                </h2>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5 justify-content-center" id="cuerpo-acordion-listado">
+                    <div class="col-9">
+                        <div class="accordion-item">
+                            <div id="listado-asignaciones" class="accordion-collapse collapse" aria-labelledby="#listado-asignaciones" data-bs-parent="#cont-acordion-listado">
+                                <div class="accordion-body">
+                                    <div class="row justify-content-end">
+                                        <div class="col-4">
+                                            <form>
+                                                <input type="text" class="form-control" placeholder="Buscar empleado" id="buscador-empleado-dotacion">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col" id="cont-listado-asignaciones">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th scope="col">Doc</th>
+                                                        <th scope="col">Nombre</th>
+                                                        <th scope="col">Apellido</th>
+                                                        <th scope="col">Tipo de dotación</th>
+                                                        <th scope="col">Camisa</th>
+                                                        <th scope="col">Pantalón</th>
+                                                        <th scope="col">Zapatos</th>
+                                                        <th scope="col">Vestimenta</th>
+                                                        <th scope="col">Opciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                        $camisa = "";
+                                                        $pantalon = "";
+                                                        $zapatos = "";
+                                                        $vestimenta = "";
+                                                        $validar_existencias = false;
+                                                        for ($i=0; $i < count($listaUsuarios); $i++):
+                                                            if ($listaUsuarios[$i]->getCamisa() != null || $listaUsuarios[$i]->getPantalon() != null
+                                                            || $listaUsuarios[$i]->getZapato() != null || $listaUsuarios[$i]->getVestimenta() != null) :
+                                                                
+                                                                for ($j=0; $j < count($listaCamisas); $j++) { 
+                                                                    if ($listaUsuarios[$i]->getCamisa() == $listaCamisas[$j]->getId_camisa()) {
+                                                                        $camisa = $listaCamisas[$j]->getNombre();
+                                                                    }
+                                                                }
+
+                                                                for ($j=0; $j < count($listaPantalones); $j++) { 
+                                                                    if ($listaUsuarios[$i]->getPantalon() == $listaPantalones[$j]->getId_pantalon()) {
+                                                                        $pantalon = $listaPantalones[$j]->getNombre();
+                                                                    }
+                                                                }
+
+                                                                for ($j=0; $j < count($listaZapatos); $j++) { 
+                                                                    if ($listaUsuarios[$i]->getCamisa() == $listaZapatos[$j]->getId_zapato()) {
+                                                                        $zapatos = $listaZapatos[$j]->getNombre();
+                                                                    }
+                                                                }
+
+                                                                for ($j=0; $j < count($listaVestimentas); $j++) { 
+                                                                    if ($listaUsuarios[$i]->getCamisa() == $listaVestimentas[$j]->getId_vestimenta()) {
+                                                                        $vestimenta = $listaVestimentas[$j]->getNombre();
+                                                                    }
+                                                                }
+                                                                
+                                                                
+
+                                                                ?> 
+                                                                    <tr class="text-center">
+                                                                        <td><?php echo $listaUsuarios[$i]->getId_usuario(); ?></td>
+                                                                        <td><?php echo $listaUsuarios[$i]->getNombre(); ?></td>
+                                                                        <td><?php echo $listaUsuarios[$i]->getApellido(); ?></td>
+                                                                        <td><?php echo $listaUsuarios[$i]->getTipo_dotacion(); ?></td>
+                                                                        <td><?php echo $camisa ?></td>
+                                                                        <td><?php echo $pantalon; ?></td>
+                                                                        <td><?php echo $zapatos; ?></td>
+                                                                        <td><?php echo $vestimenta; ?></td>
+                                                                        <td><a href="informacionEmpleado.php?doc=<?php echo $listaUsuarios[$i]->getId_usuario(); ?>" class="btn btn-verde">Gestionar</a></td>
+                                                                    </tr>
+                                                                <?php       
+                                                                
+                                                                $validar_existencias = true;
+                                                            endif;
+                                                        endfor;
+
+                                                        if(!$validar_existencias) {
+                                                            ?>
+                                                            <tr>
+                                                                <td colspan='9' class='text-center py-4'>Aún no hay empleados con ropa de trabajo</td>
+                                                            </tr>
+
+                                                        <?php
+                                                        }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
                     </div>
                 </div>
                 <div class="row  bg-light mt-5 mb-3">
@@ -244,7 +364,18 @@
                                     <form action="">
                                         
                                         <div class="my-3">
-                                            <input class="form-control" type="text" id="nombre-camisa" placeholder="Camisa">
+
+                                            <select class="form-select" id="tipo-camisa">
+                                                
+                                                <option value="" selected>Tipo de camisa</option>
+                                                <?php
+                                                    for ($i=0; $i < count($listaTiposCamisas); $i++) { 
+                                                        ?>
+                                                    <option value="<?php echo $listaTiposCamisas[$i]->getId_tipo_camisa(); ?>"><?php echo $listaTiposCamisas[$i]->getNombre(); ?></option>
+                                                        <?php
+                                                    }
+                                                ?>
+                                            </select>
                                             <small class="text-danger"></small>
                                         </div>
                                         <div class="my-3">
@@ -361,8 +492,20 @@
                                     <form action="">
                                         
                                         <div class="my-3">
-                                            <input class="form-control" type="text" id="nombre-pantalon" placeholder="Pantalón">
-                                            <small class="text-danger"></small>
+                                            <select class="form-select" id="tipo-pantalon">
+                                                
+                                                <option value="" selected>Tipo de pantalón</option>
+                                                <?php
+                                                    for ($i=0; $i < count($listaTiposPantalones); $i++) { 
+                                                        ?>
+                                                    <option value="<?php echo $listaTiposPantalones[$i]->getId_tipo_pantalon(); ?>"><?php echo $listaTiposPantalones[$i]->getNombre(); ?></option>
+                                                        <?php
+                                                    }
+                                                ?> 
+                                        </select>    
+                                        
+                                        <small class="text-danger"></small>
+
                                         </div>
                                         <div class="my-3">
                                             <select class="form-select" id="tipo-dotacion-pantalon">

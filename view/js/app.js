@@ -33,6 +33,11 @@ var acciones = {
         $("#btn-registrar-familiar").click(acciones.enviarFormFamiliar);
         $("#btn-registrar-hijo").click(acciones.enviarFormHijo);
 
+
+        // Asignar camisa - Sección empleado
+
+        $("#bloque-agregar-camisa-empleado").click(acciones.listaCamisaEmpleado);
+
         // Registro -  Asignar camisa
 
         $("#btn-asignar-camisa-empleado").click(acciones.asignarCamisa);
@@ -58,6 +63,7 @@ var acciones = {
         $("#enlace-administracion").click(acciones.desplegarSubmenu);
         $(".enlace-info-empleado").click(acciones.mostrarContEmpleado);
         $(".cont-info-rapida").click(acciones.desplegarAcordionDotacion);
+        $(".accordion-button").click(acciones.mostrarCuerpoAcordion);
 
 
         $(".fecha_nacimiento").on('change', acciones.calcularEdadesHijos);
@@ -85,6 +91,7 @@ var acciones = {
         $("#buscador-empleado-pantalon").keyup(acciones.buscarEmpleadoPantalon);
         $("#buscador-empleado-zapato").keyup(acciones.buscarEmpleadoZapato);
         $("#buscador-empleado-vestimenta").keyup(acciones.buscarEmpleadoVestimenta);
+        $("#buscador-empleado-dotacion").keyup(acciones.buscarEmpleadoDotacion);
 
         // Asignar: Descontar la cantidad de camisas disponibles por asignar cuando un checkbox este seleccionado
 
@@ -253,6 +260,24 @@ var acciones = {
 
     },
 
+    // Cambia la clase "d-none" por "d-block" para mostrar el cuerpo del acordion
+
+    mostrarCuerpoAcordion : function () {
+
+        /* if ($("#cuerpo-acordion-listado").hasClass("d-none")){
+
+            setTimeout(() => {
+                $("#cuerpo-acordion-listado").removeClass("d-none");
+                ("#cuerpo-acordion-listado").addClass("d-block");
+            },1000);
+            
+        }else{
+            $("#cuerpo-acordion-listado").removeClass("d-block");
+            $("#cuerpo-acordion-listado").addClass("d-none");
+        } */
+    },
+
+
     // Despliega el respectivo contenedor de la vestimenta
 
 
@@ -292,21 +317,38 @@ var acciones = {
 
     },
 
+
+    // Agregar camisa desde la seccion de empleado
+
+    listaCamisaEmpleado : function() {
+
+        var tipo_dotacion = $("#campo-tipo-dotacion-empleado").val();
+
+        $.post('../../controller/camisa/ListaCamisas.php',{
+            tipo_dotacion: tipo_dotacion,
+            //opc: "camisa"
+        },function(responseText){
+            $("#listado-camisas-tipo-dotacion").html(responseText);
+            
+        });
+
+    },
+
     // Asignar dotacion - Registro
 
     asignarCamisa : function() {
 
-        var empleados_asignados = $(".checkbox-empleados-camisa:checked").length;
+        var empleados_asignados = $(".checkbox-empleados:checked").length;
 
         if (empleados_asignados > 0) {
 
             $("#datos-camisa-empleado").next().html("");
 
-            $(".checkbox-empleados-camisa:checked").each(function(index) {
+            $(".checkbox-empleados:checked").each(function(index) {
 
                 var id_usuario = $(this).val();
                 var id_camisa = $("#btn-asignar-camisa-empleado").val();
-                var cant_camisas = $("#campo-cant-camisas").val();
+                var cant_camisas = $("#campo-cant").val();
 
                 console.log("Id usuario: " +  id_usuario + " Id camisa: " + id_camisa + " cantidad de camisas " + cant_camisas);
 
@@ -442,9 +484,9 @@ var acciones = {
 
         var estado = $(this).val();
 
-        if (estado === '1' || estado.length === 0) {
-            $("#cantidad-camisa").removeAttr('disabled').val("");
-        }else{
+        if (estado === '1') {
+            $("#cantidad-camisa").removeAttr('disabled');
+        }else if(estado === '0'){
             $("#cantidad-camisa").prop('disabled', 'disabled').val("0");
         }
     },
@@ -507,6 +549,12 @@ var acciones = {
                 $(".cont-gestion-empleado").addClass("d-none");
                 $("#cont-familiares").removeClass("d-none");
             break;
+            case "enlace-dotacion":
+                $(".nav-item.seleccionado").removeClass("seleccionado");
+                $("#" + id_enlace).closest(".nav-item").addClass("seleccionado");
+                $(".cont-gestion-empleado").addClass("d-none");
+                $("#cont-dotacion").removeClass("d-none");
+            break;
             
         }
 
@@ -540,6 +588,18 @@ var acciones = {
     },
 
     // Buscadores de las tablas de dotación
+
+    buscarEmpleadoDotacion : function() {
+        
+        var busqueda = $(this).val();
+
+        $.post('../../controller/usuario/ListaEnlaces.php',{
+            busqueda_dotacion: busqueda
+            
+        }, function(responseText) {
+            $("#cont-listado-asignaciones").html(responseText);
+        });
+    },
 
     buscarCamisa : function() {
 
@@ -1738,7 +1798,7 @@ var acciones = {
             $("#cont-check-tallas-pantalon").next().html("");
             for (let i= 0; i < tallas.length; i++) {
                 
-                var nombre = $("#nombre-pantalon").val();
+                var nombre = $("#tipo-pantalon").val();
                 var tipo_dotacion = $("#tipo-dotacion-pantalon").val();
                 var talla = tallas[i].value;
                 var cantidad = $("#cantidad-pantalon").val();
@@ -1747,10 +1807,10 @@ var acciones = {
                 var validar = 0;
 
                 if (nombre.length !== 0) {
-                    $("#nombre-pantalon").next().html("");
+                    $("#tipo-pantalon").next().html("");
                     validar++;
                 }else{
-                    $("#nombre-pantalon").next().html("Campo vacío, por favor ingrese el tipo o nombre del pantalón");
+                    $("#tipo-pantalon").next().html("Campo vacío, por favor ingrese el tipo o nombre del pantalón");
                 }
 
                 if (tipo_dotacion.length !== 0) {
@@ -1803,6 +1863,8 @@ var acciones = {
                         $("#rta-pantalon").html(responseText);
                     });
 
+                    alert("funcionando");
+
                 }
 
             }
@@ -1823,7 +1885,7 @@ var acciones = {
             $("#cont-check-tallas-camisa").next().html("");
             for (let i= 0; i < tallas.length; i++) {
                 
-                var nombre = $("#nombre-camisa").val();
+                var nombre = $("#tipo-camisa").val();
                 var tipo_dotacion = $("#tipo-dotacion-camisa").val();
                 var talla = tallas[i].value;
                 var cantidad = $("#cantidad-camisa").val();
@@ -1832,10 +1894,10 @@ var acciones = {
                 var validar = 0;
 
                 if (nombre.length !== 0) {
-                    $("#nombre-camisa").next().html("");
+                    $("#tipo-camisa").next().html("");
                     validar++;
                 }else{
-                    $("#nombre-camisa").next().html("Campo vacío, por favor ingrese el tipo o nombre de la camisa");
+                    $("#tipo-camisa").next().html("Campo vacío, por favor ingrese el tipo o nombre de la camisa");
                 }
 
                 if (tipo_dotacion.length !== 0) {

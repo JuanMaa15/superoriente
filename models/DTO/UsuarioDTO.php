@@ -14,6 +14,7 @@ class UsuarioDTO {
     private $telefono_fijo;
     private $telefono_movil;
     private $tipo_casa;
+    private $estrato;
     private $genero;
     private $fecha_nacimiento;
     private $edad;
@@ -44,14 +45,16 @@ class UsuarioDTO {
     private $fecha_ingreso;
     private $fecha_retiro;
     private $motivo_retiro;
+    private $fecha_actual;
+    private $antiguedad;
+    private $cesantia;
     private $salario;
     private $valor_dia;
     private $valor_hora;
-    private $clase_riesgo;
-    private $porcentaje_riesgo;
     private $area;
     private $seccion;
     private $cargo;
+    private $clase_riesgo;
     private $pension;
     private $tipo_dotacion;
     private $estado;
@@ -65,7 +68,7 @@ class UsuarioDTO {
     }
 
     
-    function constructor($id_usuario, $tipo_documento, $fecha_expedicion, $lugar_expedicion, $nombre, $apellido, $telefono_fijo, $telefono_movil, $tipo_casa, $genero, $fecha_nacimiento, $edad, $direccion, $lugar_residencia, $nivel_academico, $area_academica, $estado_civil, $eps, $nro_cuenta, $tipo_sangre, $antecedentes, $practica_deporte, $consumo_cigarros, $consumo_licor, $consumo_spa, $correo, $password, $perfil, $nombre_persona_emergencia, $telefono_emergencia, $celular_emergencia, $parentesco_emergencia, $sucursal, $tipo_contrato, $fecha_ingreso, $fecha_retiro, $motivo_retiro, $salario, $valor_dia, $valor_hora, $clase_riesgo, $porcentaje_riesgo, $area, $seccion, $cargo, $pension, $tipo_dotacion, $estado, $camisa, $pantalon, $zapato, $vestimenta) {
+    function constructor($id_usuario, $tipo_documento, $fecha_expedicion, $lugar_expedicion, $nombre, $apellido, $telefono_fijo, $telefono_movil, $tipo_casa, $estrato, $genero, $fecha_nacimiento, $edad, $direccion, $lugar_residencia, $nivel_academico, $area_academica, $estado_civil, $eps, $nro_cuenta, $tipo_sangre, $antecedentes, $practica_deporte, $consumo_cigarros, $consumo_licor, $consumo_spa, $correo, $password, $perfil, $nombre_persona_emergencia, $telefono_emergencia, $celular_emergencia, $parentesco_emergencia, $sucursal, $tipo_contrato, $fecha_ingreso, $fecha_retiro, $motivo_retiro, $salario, $valor_dia, $valor_hora, $fecha_actual, $antiguedad, $cesantia, $area, $seccion, $cargo, $clase_riesgo, $pension, $tipo_dotacion, $estado, $camisa, $pantalon, $zapato, $vestimenta) {
         $this->id_usuario = $id_usuario;
         $this->tipo_documento = $tipo_documento;
         $this->fecha_expedicion = $fecha_expedicion;
@@ -75,6 +78,7 @@ class UsuarioDTO {
         $this->telefono_fijo = $telefono_fijo;
         $this->telefono_movil = $telefono_movil;
         $this->tipo_casa = $tipo_casa;
+        $this->estrato = $estrato;
         $this->genero = $genero;
         $this->fecha_nacimiento = $fecha_nacimiento;
         $this->edad = $edad;
@@ -106,11 +110,13 @@ class UsuarioDTO {
         $this->salario = $salario;
         $this->valor_dia = $valor_dia;
         $this->valor_hora = $valor_hora;
-        $this->clase_riesgo = $clase_riesgo;
-        $this->porcentaje_riesgo = $porcentaje_riesgo;
+        $this->fecha_actual = $fecha_actual;
+        $this->antiguedad = $antiguedad;
+        $this->cesantia = $cesantia;
         $this->area = $area;
         $this->seccion = $seccion;
         $this->cargo = $cargo;
+        $this->clase_riesgo = $clase_riesgo;
         $this->pension = $pension;
         $this->tipo_dotacion = $tipo_dotacion;
         $this->estado = $estado;
@@ -155,6 +161,10 @@ class UsuarioDTO {
 
     function getTipo_casa() {
         return $this->tipo_casa;
+    }
+
+    function getEstrato() {
+        return $this->estrato;
     }
 
     function getGenero() {
@@ -285,12 +295,16 @@ class UsuarioDTO {
         return $this->valor_hora;
     }
 
-    function getClase_riesgo() {
-        return $this->clase_riesgo;
+    function getFecha_actual() {
+        return $this->fecha_actual;
     }
 
-    function getPorcentaje_riesgo() {
-        return $this->porcentaje_riesgo;
+    function getAntiguedad() {
+        return $this->antiguedad;
+    }
+
+    function getCesantia() {
+        return $this->cesantia;
     }
 
     function getArea() {
@@ -303,6 +317,10 @@ class UsuarioDTO {
 
     function getCargo() {
         return $this->cargo;
+    }
+
+    function getClase_riesgo() {
+        return $this->clase_riesgo;
     }
 
     function getPension() {
@@ -367,6 +385,10 @@ class UsuarioDTO {
 
     function setTipo_casa($tipo_casa) {
         $this->tipo_casa = $tipo_casa;
+    }
+
+    function setEstrato($estrato) {
+        $this->estrato = $estrato;
     }
 
     function setGenero($genero) {
@@ -495,6 +517,18 @@ class UsuarioDTO {
 
     function setValor_hora($valor_hora) {
         $this->valor_hora = $valor_hora;
+    }
+
+    function setFecha_actual($fecha_actual) {
+        $this->fecha_actual = $fecha_actual;
+    }
+
+    function setAntiguedad($antiguedad) {
+        $this->antiguedad = $antiguedad;
+    }
+
+    function setCesantia($cesantia) {
+        $this->cesantia = $cesantia;
     }
 
     function setClase_riesgo($clase_riesgo) {
