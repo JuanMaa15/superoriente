@@ -315,7 +315,7 @@ class UsuarioDAO {
 
         try {
             
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_cesantia AS tces ON tu.id_cesantia = tces.id_cesantia INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_clase_riesgo AS tcr ON tu.id_clase_riesgo = tcr.id_clase_riesgo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */ WHERE id_usuario = '" . $id_usuario . "'";
+            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_cesantia AS tces ON tu.id_cesantia = tces.id_cesantia INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_clase_riesgo AS tcr ON tu.id_clase_riesgo = tcr.id_clase_riesgo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */ WHERE id_usuario = '" . $id_usuario . "'";
             $rs = $cnx->query($sql);
 
             $row = $rs->fetch();
@@ -1723,5 +1723,90 @@ class UsuarioDAO {
         } catch (Exception $e) {
             echo "Error al asignar una vestimenta al empleado ". $e->getMessage();
         }
+    }
+
+
+    // Eliminar camisa del empleado
+
+    public function eliminarCamisaEmpleado($id_usuario) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET id_camisa = NULL WHERE id_usuario = '" . $id_usuario . "'";
+            $ps = $cnx->prepare($sql);
+
+            $ps->execute();
+
+            return true;
+        } catch (Exception $ex) {
+            print "Error al eliminar la camisa del empleado";
+        }
+        
+        return false;
+
+    }
+
+    // Eliminar pantalón del empleado
+
+    public function eliminarPantalonEmpleado($id_usuario) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET id_pantalon = NULL WHERE id_usuario = '" . $id_usuario . "'";
+            $ps = $cnx->prepare($sql);
+
+            $ps->execute();
+
+            return true;
+        } catch (Exception $ex) {
+            print "Error al eliminar el pantalón del empleado" . $ex->getMessage();
+        }
+        
+        return false;
+
+    }
+
+    // Eliminar zapato del empleado
+
+    public function eliminarZapatoEmpleado($id_usuario) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET id_zapato = NULL WHERE id_usuario = '" . $id_usuario . "'";
+            $ps = $cnx->prepare($sql);
+
+            $ps->execute();
+
+            return true;
+        } catch (Exception $ex) {
+            print "Error al eliminar el zapato del empleado" . $ex->getMessage();
+        }
+        
+        return false;
+
+    }
+
+    // Eliminar zapato del empleado
+
+    public function eliminarVestimentaEmpleado($id_usuario) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET id_vestimenta = NULL WHERE id_usuario = '" . $id_usuario . "'";
+            $ps = $cnx->prepare($sql);
+
+            $ps->execute();
+
+            return true;
+        } catch (Exception $ex) {
+            print "Error al eliminar la vestimenta del empleado" . $ex->getMessage();
+        }
+        
+        return false;
+
     }
 }

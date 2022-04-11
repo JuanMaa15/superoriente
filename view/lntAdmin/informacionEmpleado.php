@@ -41,7 +41,7 @@
     <script src="https://kit.fontawesome.com/4240342587.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/style.css">
     <script src="../../public/js/jquery.js"></script>
-
+    
 </head>
 <body>
     <!--------------- Body form ----------- -->
@@ -221,7 +221,6 @@
                                     <h4 class="fs-6 titulo-campos"> Teléfono fijo (Persona de emergencia)</h4>
                                     <p class="my-1"><?php echo $listaUsuario->getTelefono_emergencia(); ?></p>
                                 </div>
-                                
                             </div>
 
                             <div class="row justify-content-center">
@@ -581,6 +580,7 @@
                         <h2 class="titulo-perfil">Gestionar dotación del empleado</h2>
                         <h5 class="texto-claro">Dotación <?php echo $listaUsuario->getTipo_dotacion(); ?></h5>
                         <input type="text" id="campo-tipo-dotacion-empleado" class="d-none" value="<?php echo $listaUsuario->getTipo_dotacion(); ?>">
+                        <input type="text" class="d-none" value="<?php echo $listaPantalones[$i]->getId_pantalon(); ?>">
                     </div>
                 </div>
                 
@@ -614,8 +614,10 @@
                                     <div class="text-center">
                                         <p>Camisa: <?php echo $listaCamisas[$i]->getNombre(); ?></p>
                                         <p>Talla: <?php echo $listaCamisas[$i]->getTalla(); ?></p>
-                                        <button class="btn btn-verde" id="btn-editar-camisa-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Editar</button>
-                                        <button class="btn btn-danger" id="btn-eliminar-camisa-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Eliminar</button>    
+                                        <input type="text" class="d-none" value="<?php echo $listaCamisas[$i]->getCantidad(); ?>" id="cant-disponibles-camisa">
+                                        <input type="text" class="d-none" value="<?php echo $listaCamisas[$i]->getId_camisa(); ?>">
+                                        <button class="btn btn-verde" id="btn-editar-camisa-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>" data-bs-toggle="modal" data-bs-target="#modal-editar-camisas">Editar</button>
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-eliminar-camisas">Eliminar</button>    
                                     </div>
 
                                 </div>
@@ -655,8 +657,10 @@
                                     <div class="text-center">
                                         <p>Pantalón: <?php echo $listaPantalones[$i]->getNombre(); ?></p>
                                         <p>Talla: <?php echo $listaPantalones[$i]->getTalla(); ?></p>
-                                        <button class="btn btn-verde" id="btn-editar-pantalon-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Editar</button>
-                                        <button class="btn btn-danger" id="btn-eliminar-pantalon-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Eliminar</button>    
+                                        <input type="text" class="d-none" value="<?php echo $listaPantalones[$i]->getCantidad(); ?>" id="cant-disponibles-pantalon">
+                                        <input type="text" class="d-none" value="<?php echo $listaPantalones[$i]->getId_pantalon(); ?>">
+                                        <button class="btn btn-verde" id="btn-editar-pantalon-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>" data-bs-toggle="modal" data-bs-target="#modal-editar-pantalones">Editar</button>
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-eliminar-pantalones">Eliminar</button>    
                                     </div>
 
                                 </div>
@@ -696,8 +700,10 @@
                                         <div class="text-center">
                                             <p>Zapatos: <?php echo $listaZapatos[$i]->getNombre(); ?></p>
                                             <p>Talla: <?php echo $listaZapatos[$i]->getTalla(); ?></p>
-                                            <button class="btn btn-verde" id="btn-editar-zapato-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Editar</button>
-                                            <button class="btn btn-danger" id="btn-eliminar-zapato-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Eliminar</button>    
+                                            <input type="text" class="d-none" value="<?php echo $listaZapatos[$i]->getCantidad(); ?>" id="cant-disponibles-zapatos">
+                                            <input type="text" class="d-none" value="<?php echo $listaZapatos[$i]->getId_zapato(); ?>">
+                                            <button class="btn btn-verde" id="btn-editar-zapato-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>" data-bs-toggle="modal" data-bs-target="#modal-editar-zapatos">Editar</button>
+                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-eliminar-zapatos">Eliminar</button>    
                                         </div>
 
                                     </div>
@@ -738,10 +744,11 @@
                                         <i class="fa-solid fa-person-booth"></i>
                                     </div>
                                     <div class="text-center">
-                                        <p>Vestimenta: <?php echo $listaVestimenta[$i]->getNombre(); ?></p>
-                                        <p>Talla: <?php echo $listaVestimenta[$i]->getTalla(); ?></p>
-                                        <button class="btn btn-verde" id="btn-editar-vestimenta-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Editar</button>
-                                        <button class="btn btn-danger" id="btn-eliminar-vestimenta-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Eliminar</button>    
+                                        <p class=" my-4 py-2">Vestimenta: <?php echo $listaVestimenta[$i]->getNombre(); ?></p>
+                                        <input type="text" class="d-none" value="<?php echo $listaVestimenta[$i]->getCantidad(); ?>" id="cant-disponibles-vestimenta">
+                                        <input type="text" class="d-none" value="<?php echo $listaVestimenta[$i]->getId_vestimenta(); ?>">
+                                        <button class="btn btn-verde" id="btn-editar-vestimenta-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>" data-bs-toggle="modal" data-bs-target="#modal-editar-vestimentas">Editar</button>
+                                        <button class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#modal-eliminar-otros">Eliminar</button>    
                                     </div>
 
                                 </div>
@@ -763,6 +770,158 @@
        
           
     </main>
+
+    <div class="modal fade" id="modal-editar-camisas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar camisas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-camisa-tipo-dotacion"></div>
+                    <div id="rta-actualizar-camisa" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-actualizar-camisa-empleado">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-editar-pantalones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Actualizar pantalones</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-pantalon-tipo-dotacion"></div>
+                    <div id="rta-actualizar-pantalon" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-actualizar-pantalon-empleado">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-editar-zapatos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar zapatos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-zapato-tipo-dotacion"></div>
+                    <div id="rta-actualizar-zapato" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-actualizar-zapato-empleado">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-editar-vestimentas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar vestimenta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-vestimenta-tipo-dotacion"></div>
+                    <div id="rta-actualizar-vestimenta" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-actualizar-vestimenta-empleado">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-delete fade" id="modal-eliminar-camisas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar dotación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>¿Esta seguro de eliminar la dotación al empleado?</div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-verde" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn-eliminar-camisa-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Si</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-delete fade" id="modal-eliminar-pantalones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar dotación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>¿Esta seguro de eliminar la dotación al empleado?</div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-verde" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn-eliminar-pantalon-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Si</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-delete fade" id="modal-eliminar-zapatos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar dotación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>¿Esta seguro de eliminar la dotación al empleado?</div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-verde" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn-eliminar-zapato-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Si</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-delete fade" id="modal-eliminar-otros" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar dotación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>¿Esta seguro de eliminar la dotación al empleado?</div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-verde" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn-eliminar-vestimenta-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Si</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="modal-agregar-otros" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -898,11 +1057,10 @@
         </div>
     </div>
 
-    
-
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
     <script src="../js/app.js"></script>
+
 </body>
 </html>
 

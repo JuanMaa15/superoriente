@@ -36,14 +36,21 @@ if (isset($_POST['tipo_dotacion'])) {
                             ."</div>"
                         . "</div>"
                     . "</div>";
+
+                $validar_existencias = true;
             }
             
 
         }
     }
 
-    $cont .= "</div>"
-            ."</div>";
+    if (!$validar_existencias) {
+        $cont .= "<div='col'>"
+        ."<h4 class='text-center py-4'>No hay pantalones disponibles</h4>"
+        ."</div>";
+    }
+
+    $cont .= "</div>";
 
     echo $cont;
 

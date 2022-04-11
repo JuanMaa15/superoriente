@@ -9,7 +9,7 @@ $listaVestimentasId = $otraVestimentadao->listaVestimentasId();
 
 if (isset($_POST['tipo_dotacion'])) {
 
-    
+    $validar_existencias = false;
     $cont = "<div class='row'>";
 
     $tipo_dotacion = $_POST['tipo_dotacion'];
@@ -34,16 +34,25 @@ if (isset($_POST['tipo_dotacion'])) {
                             ."</div>"
                         . "</div>"
                     . "</div>";
+
+                $validar_existencias = true;
             }
             
 
         }
     }
 
-    $cont .= "</div>"
-            ."</div>";
+    if (!$validar_existencias) {
+        $cont .= "<div='col'>"
+        ."<h4 class='text-center py-4'>No hay otras ropas de trabajo disponibles</h4>"
+        ."</div>";
+    }
+
+    $cont .= "</div>";
 
     echo $cont;
+
+    
 
 }else{
 
@@ -240,7 +249,6 @@ if (isset($_POST['tipo_dotacion'])) {
         
 
     }
-
 
 
 

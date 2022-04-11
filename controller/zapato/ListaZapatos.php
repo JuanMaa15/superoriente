@@ -11,6 +11,7 @@ $listaZapatosId = $zapatodao->listaZapatosId();
 if (isset($_POST['tipo_dotacion'])) {
 
     $cont = "<div class='row'>";
+    $validar_existencias = false;
 
     $tipo_dotacion = $_POST['tipo_dotacion'];
 
@@ -35,9 +36,17 @@ if (isset($_POST['tipo_dotacion'])) {
                             ."</div>"
                         . "</div>"
                     . "</div>";
+
+                $validar_existencias = true;
             }
         
         }
+    }
+
+    if (!$validar_existencias) {
+        $cont .= "<div='col'>"
+        ."<h4 class='text-center py-4'>No hay zapatos disponibles</h4>"
+        ."</div>";
     }
 
     $cont .= "</div>"

@@ -487,6 +487,11 @@ small {
     width: 15rem;
 }
 
+.modal-delete {
+    top: 50% !important;
+    transform: translateY(-20%) !important;
+}
+
 .card-img-profile {
     height: 10rem !important;
     border-bottom: 2px solid #f1f1f1 !important;

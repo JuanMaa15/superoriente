@@ -344,7 +344,7 @@ var acciones = {
             cant_vestimentas: cant_vestimentas,
             id_usuario: id_usuario
         },function(responseText) {
-            $("#rta-agregar-zapato-act").html(responseText);
+            $("#rta-agregar-otro-act").html(responseText);
         });
 
     },
@@ -451,7 +451,6 @@ var acciones = {
             tipo_dotacion: tipo_dotacion,
         },function(responseText){
             $("#listado-otros-tipo-dotacion").html(responseText);
-            
         });
 
     },
@@ -2970,6 +2969,66 @@ var acciones = {
         
         switch (btn) {
 
+            // Eliminar dotación a un empleado 
+
+            case "btn-eliminar-camisa-empleado": 
+
+                var cant_camisas = parseInt($("#cant-disponibles-camisa").val()) + 1;
+                var id_camisa =  $("#cant-disponibles-camisa").next().val();
+                $.post('../../controller/usuario/EliminarDotacionUsuario.php',{
+                    id: id,
+                    id_dotacion: id_camisa,
+                    cant_disp: cant_camisas,
+                    opc: "camisa"
+                },function() {
+                    location.reload();
+                });
+            break;
+
+            case "btn-eliminar-pantalon-empleado": 
+
+                var cant_pantalones = parseInt($("#cant-disponibles-pantalon").val()) + 1;
+                var id_pantalon =  $("#cant-disponibles-pantalon").next().val();
+                $.post('../../controller/usuario/EliminarDotacionUsuario.php',{
+                    id: id,
+                    id_dotacion: id_pantalon,
+                    cant_disp: cant_pantalones,
+                    opc: "pantalon"
+                },function() {
+                    location.reload();
+                });
+
+            break;
+
+            case "btn-eliminar-zapato-empleado": 
+    
+                var cant_zapatos = parseInt($("#cant-disponibles-zapatos").val()) + 1;
+                var id_zapato =  $("#cant-disponibles-zapatos").next().val();
+                $.post('../../controller/usuario/EliminarDotacionUsuario.php',{
+                    id: id,
+                    id_dotacion: id_zapato,
+                    cant_disp: cant_zapatos,
+                    opc: "zapato"
+                },function() {
+                    location.reload();
+                });
+
+            break;
+
+            case "btn-eliminar-vestimenta-empleado": 
+
+                var cant_vestimentas = parseInt($("#cant-disponibles-vestimenta").val()) + 1;
+                var id_vestimenta =  $("#cant-disponibles-vestimenta").next().val();
+                $.post('../../controller/usuario/EliminarDotacionUsuario.php',{
+                    id: id,
+                    id_dotacion: id_vestimenta,
+                    cant_disp: cant_vestimentas,
+                    opc: "otros"
+                },function() {
+                    location.reload();
+                });
+            break;
+
             // ---------------- Asignar -------------
 
             // Zapato
@@ -3232,6 +3291,54 @@ var acciones = {
                     opc: "personales"
                 },function(responseText){
                     $("#editar-datos-personales").html(responseText);             
+                });
+            break;
+
+            case "btn-editar-camisa-empleado":
+
+                 var id_dotacion = $("#cant-disponibles-camisa").next().val();
+
+                $.post('../../controller/usuario/EditarDotacionUsuario.php',{
+                    id_dotacion: id_dotacion,
+                    id: id,
+                    opc: "camisa"
+                },function(responseText){
+                    $("#editar-camisa-tipo-dotacion").html(responseText);           
+                });
+            break;
+
+            case "btn-editar-pantalon-empleado":
+
+                var id_dotacion = $("#cant-disponibles-pantalon").next().val();
+                $.post('../../controller/usuario/EditarDotacionUsuario.php',{
+                    id_dotacion: id_dotacion,
+                    id:id,
+                    opc: "pantalon"
+                },function(responseText){
+                    $("#editar-pantalon-tipo-dotacion").html(responseText);             
+                });
+            break;
+
+            case "btn-editar-zapato-empleado":
+                var id_dotacion = $("#cant-disponibles-zapatos").next().val();
+                $.post('../../controller/usuario/EditarDotacionUsuario.php',{
+                    id_dotacion: id_dotacion,
+                    id:id,
+                    opc: "zapato"
+                },function(responseText){
+                    $("#editar-zapato-tipo-dotacion").html(responseText);             
+                });
+            break;
+
+            case "btn-editar-vestimenta-empleado":
+
+                var id_dotacion = $("#cant-disponibles-vestimenta").next().val();
+                $.post('../../controller/usuario/EditarDotacionUsuario.php',{
+                    id_dotacion: id_dotacion,
+                    id:id,
+                    opc: "otros"
+                },function(responseText){
+                    $("#editar-vestimenta-tipo-dotacion").html(responseText);             
                 });
             break;
 
@@ -3932,6 +4039,25 @@ var acciones = {
             break;
 
             // Usuario
+            case "btn-actualizar-camisa-empleado":
+                var id_camisa = $(".input-agregar-dotacion:checked").val();
+                var cant_camisas = parseInt($(".input-agregar-dotacion:checked").next().val()) - 1;
+                var id_usuario = $("#doc").val();
+                var id_camisa_vieja = $("#cant-disponibles-vestimenta").next().val();
+                var cant_camisas_vieja = $("#cant-disponibles-vestimenta").val();
+                $.post('../../controller/usuario/ActualizarDotacionUsuario.php',{
+                    opc: "camisa",
+                    id_camisa: id_camisa,
+                    id_camisa_vieja: id_camisa_vieja,
+                    cant_camisas: cant_camisas,
+                    cant_camisas_vieja: cant_camisas_vieja,
+                    id_usuario: id_usuario
+                },function(responseText) {
+                    $("#rta-actualizar-camisa").html(responseText);
+                }); 
+
+            break;
+
             case "btn-actualizar-usuario":
 
                 var id_usuario = $("#id-usuario-act").val();
@@ -4460,6 +4586,8 @@ var acciones = {
                 },100);
 
             break;
+
+        
             default:
                 break;
         }
