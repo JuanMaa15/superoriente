@@ -41,7 +41,7 @@ class TipoZapatoDAO {
     }
 
 
-    // --------------------------- Registrar Tipo de camisa ----------------
+    // --------------------------- Registrar Tipo de zapato ----------------
 
     public function registrarTipoZapato($tipoZapatodto) {
 
@@ -70,7 +70,7 @@ class TipoZapatoDAO {
     }
 
 
-    // ---------------------- Datos del tipo de camisa ---------------------
+    // ---------------------- Datos del tipo de zapato ---------------------
 
 
     public function listaTipoZapato($id_tipo_zapato) {

@@ -18,26 +18,32 @@ if (isset($_POST['tipo_dotacion'])) {
     for ($i=0; $i < count($listaCamisas); $i++) { 
         
         if ($listaCamisas[$i]->getTipo_dotacion() == $tipo_dotacion ) {
-            $cont .= "<div class='col-6'>"
-            . "<div class='my-2'>"
-                . "<div class='form-check'>"
-                ."<input class='form-check-input' type='radio' value='" . $listaCamisas[$i]->getId_camisa() . "' id='flexCheckChecked'>"  
-                ."</div>"
-            ."</div>"
-            ."<div class='bloque-dotacion dotacion-agregada bg-light py-4 px-5'>"
-             ."<div class='col d-flex justify-content-center align-items-center'>"
-                ."<i class='fa-solid fa-shirt'></i>"
-            ."</div>"
-            ."<div class='text-center'>"
-                ."<p>Camisa: " . $listaCamisas[$i]->getNombre() . "</p>"
-                ."<p>Talla: " . $listaCamisas[$i]->getTalla() . "</p>"
-             . "</div>"
-        . "</div>";
+            if ($listaCamisas[$i]->getCantidad() > 0) {
+                $cont .= "<div class='col-6'>"
+                        ."<div class='my-2'>"
+                            . "<div class='form-check'>"
+                                . "<input class='form-check-input input-agregar-dotacion' type='radio' value='" . $listaCamisas[$i]->getId_camisa() . "' name='flexRadioDefault'>"
+                                . "<input class='form-control d-none' type='text' value='" . $listaCamisas[$i]->getCantidad() . "'>"  
+                            ."</div>"
+                        ."</div>"
+                        ."<div class='bloque-dotacion dotacion-agregada bg-light py-4 px-5'>"
+                            ."<div class='col d-flex justify-content-center align-items-center'>"
+                                ."<i class='fa-solid fa-shirt'></i>"
+                            ."</div>"
+                            ."<div class='text-center'>"
+                                ."<p>Camisa: " . $listaCamisas[$i]->getNombre() . "</p>"
+                                ."<p>Talla: " . $listaCamisas[$i]->getTalla() . "</p>"
+                            ."</div>"
+                        . "</div>"
+                    . "</div>";
+            }
+            
 
         }
     }
 
-    $cont .= "</div>";
+    $cont .= "</div>"
+            ."</div>";
 
     echo $cont;
 
@@ -204,33 +210,33 @@ if (isset($_POST['tipo_dotacion'])) {
         ."</tr>";
     }
 
-}else{
+    }else{
 
-    for ($i=0; $i < count($listaCamisas); $i++) { 
+        for ($i=0; $i < count($listaCamisas); $i++) { 
 
-            if ($listaCamisas[$i]->getEstado() == 1) {
-                $estado = "Disponible";
+                if ($listaCamisas[$i]->getEstado() == 1) {
+                    $estado = "Disponible";
 
-                
+                    
 
-            }else{
-                $estado = "Agotada";
-            }
+                }else{
+                    $estado = "Agotada";
+                }
 
-        $lista .= "<tr>"
-                . "<td>" . $listaCamisas[$i]->getId_camisa() .  "</td>"
-                . "<td>" . $listaCamisas[$i]->getNombre() .  "</td>"
-                . "<td>" . $listaCamisas[$i]->getTipo_dotacion() .  "</td>"
-                . "<td>" . $listaCamisas[$i]->getTalla() .  "</td>"
-                . "<td>" . $listaCamisas[$i]->getCantidad() .  "</td>"
+            $lista .= "<tr>"
+                    . "<td>" . $listaCamisas[$i]->getId_camisa() .  "</td>"
+                    . "<td>" . $listaCamisas[$i]->getNombre() .  "</td>"
+                    . "<td>" . $listaCamisas[$i]->getTipo_dotacion() .  "</td>"
+                    . "<td>" . $listaCamisas[$i]->getTalla() .  "</td>"
+                    . "<td>" . $listaCamisas[$i]->getCantidad() .  "</td>"
 
-                . "<td>" . $estado .  "</td>"
-                . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#editar-camisas'>Editar</button></td>"
-                . "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#asignar-camisas'>Asignar</button></td>"
-                ."</tr>"; 
+                    . "<td>" . $estado .  "</td>"
+                    . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#editar-camisas'>Editar</button></td>"
+                    . "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#asignar-camisas'>Asignar</button></td>"
+                    ."</tr>"; 
+        }
+
     }
-
-}
 
         $lista .= "</tbody>"
             . "</table>";

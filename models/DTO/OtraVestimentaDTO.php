@@ -5,7 +5,6 @@ class OtraVestimentaDTO {
     private $id_vestimenta;
     private $nombre;
     private $tipo_dotacion;
-    private $talla;
     private $cantidad;
     private $estado;
     
@@ -14,11 +13,10 @@ class OtraVestimentaDTO {
     }
 
     
-    function constructor($id_vestimenta, $nombre, $tipo_dotacion, $talla, $cantidad,$estado) {
+    function constructor($id_vestimenta, $nombre, $tipo_dotacion, $cantidad, $estado) {
         $this->id_vestimenta = $id_vestimenta;
         $this->nombre = $nombre;
         $this->tipo_dotacion = $tipo_dotacion;
-        $this->talla = $talla;
         $this->cantidad = $cantidad;
         $this->estado = $estado;
     }
@@ -33,10 +31,6 @@ class OtraVestimentaDTO {
 
     function getTipo_dotacion() {
         return $this->tipo_dotacion;
-    }
-
-    function getTalla() {
-        return $this->talla;
     }
 
     function getCantidad() {
@@ -57,10 +51,6 @@ class OtraVestimentaDTO {
 
     function setTipo_dotacion($tipo_dotacion) {
         $this->tipo_dotacion = $tipo_dotacion;
-    }
-
-    function setTalla($talla) {
-        $this->talla = $talla;
     }
 
     function setCantidad($cantidad) {

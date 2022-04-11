@@ -18,7 +18,7 @@ class ZapatoDAO {
         $i = 0;
 
         try {
-            $sql = "SELECT * FROM tbl_zapato AS tz INNER JOIN tbl_tipo_dotacion AS ttd ON tz.id_tipo_dotacion = ttd.id_tipo_dotacion";
+            $sql = "SELECT * FROM tbl_zapato AS tz INNER JOIN tbl_tipo_dotacion AS ttd ON tz.id_tipo_dotacion = ttd.id_tipo_dotacion INNER JOIN tbl_tipo_zapato AS ttz ON tz.id_tipo_zapato = ttz.id_tipo_zapato";
             $rs = $cnx->query($sql);
 
             while ($row = $rs->fetch()) {
@@ -26,7 +26,7 @@ class ZapatoDAO {
                 $lista[$i] = new ZapatoDTO();
                 $lista[$i]->constructor(
                     $row['id_zapato'],
-                    $row['zapato'],
+                    $row['tipo_zapato'],
                     $row['tipo_dotacion'],
                     $row['talla'],
                     $row['cantidad'],
@@ -62,7 +62,7 @@ class ZapatoDAO {
                 $lista[$i] = new ZapatoDTO();
                 $lista[$i]->constructor(
                     $row['id_zapato'],
-                    $row['zapato'],
+                    $row['id_tipo_zapato'],
                     $row['id_tipo_dotacion'],
                     $row['talla'],
                     $row['cantidad'],
@@ -90,7 +90,7 @@ class ZapatoDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "INSERT INTO tbl_zapato(zapato, id_tipo_dotacion, talla, cantidad, estado) VALUES (?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_zapato(id_tipo_zapato, id_tipo_dotacion, talla, cantidad, estado) VALUES (?,?,?,?,?)";
             $ps = $cnx->prepare($sql);
 
             $zapato = $zapatodto->getNombre();
@@ -136,7 +136,7 @@ class ZapatoDAO {
             $zapatodto = new ZapatoDTO();
             $zapatodto->constructor(
                 $row['id_zapato'],
-                $row['zapato'],
+                $row['id_tipo_zapato'],
                 $row['id_tipo_dotacion'],
                 $row['talla'],
                 $row['cantidad'],
@@ -161,7 +161,7 @@ class ZapatoDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_zapato SET zapato = ?, id_tipo_dotacion = ?, talla = ?, cantidad = ?, estado = ? WHERE id_zapato = " . $zapatodto->getId_zapato();
+            $sql = "UPDATE tbl_zapato SET id_tipo_zapato = ?, id_tipo_dotacion = ?, talla = ?, cantidad = ?, estado = ? WHERE id_zapato = " . $zapatodto->getId_zapato();
             $ps = $cnx->prepare($sql);
 
             $zapato = $zapatodto->getNombre();

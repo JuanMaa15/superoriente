@@ -2,7 +2,7 @@
 
 require_once ("../../models/DAO/ZapatoDAO.php");
 require_once ("../../models/DAO/TipoDotacionDAO.php");
-
+require_once ("../../models/DAO/TipoZapatoDAO.php");
 
 
 $id_zapato = intval($_POST['id']);
@@ -13,6 +13,22 @@ $zapatodto = $zapatodao->listaZapato($id_zapato);
 
 $tipoDotaciondao = new TipoDotacionDAO();
 $listaTiposDotaciones = $tipoDotaciondao->listaTiposDotaciones();
+
+$tipoZapatodao = new TipoZapatoDAO();
+$listaTiposZapatos = $tipoZapatodao->listaTiposZapatos();
+
+$cbxTiposZapatos = "<select class='form-select' id='tipo-zapato-act'>";
+        
+        for ($i=0; $i < count($listaTiposZapatos); $i++) { 
+                if ($listaTiposZapatos[$i]->getId_tipo_zapato() == $zapatodto->getNombre()) {
+                        $cbxTiposZapatos .= "<option selected value='" . $listaTiposZapatos[$i]->getId_tipo_zapato() . "'>" . $listaTiposZapatos[$i]->getNombre() . "</option>";
+                }else{
+                        $cbxTiposZapatos .= "<option value='" . $listaTiposZapatos[$i]->getId_tipo_zapato() . "'>" . $listaTiposZapatos[$i]->getNombre() . "</option>";
+   
+                }
+        }
+
+$cbxTiposZapatos .= "</select>";
 
 $cbxTiposDotaciones = "<select class='form-select' id='tipo-dotacion-zapato-act'>";
         
@@ -65,8 +81,8 @@ $form = "<form>"
         ."<small class='text-danger'></small>"
         ."</div>"
         ."<div class='my-2'>"
-        ."<label class='form-label'>Zapato</label>"
-        ."<input class='form-control' type='text' id='nombre-zapato-act' value='" . $zapatodto->getNombre() . "'>"
+        ."<label class='form-label'>Tipo de zapato</label>"
+        . $cbxTiposZapatos
         ."<small class='text-danger'></small>"
         ."</div>"
         ."<div class='my-2'>"

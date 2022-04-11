@@ -28,7 +28,6 @@ class OtraVestimentaDAO {
                     $row['id_vestimenta'],
                     $row['vestimenta'],
                     $row['tipo_dotacion'],
-                    $row['talla'],
                     $row['cantidad'],
                     $row['estado']
                 );
@@ -65,7 +64,6 @@ class OtraVestimentaDAO {
                     $row['id_vestimenta'],
                     $row['vestimenta'],
                     $row['id_tipo_dotacion'],
-                    $row['talla'],
                     $row['cantidad'],
                     $row['estado']
                 );
@@ -90,20 +88,18 @@ class OtraVestimentaDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "INSERT INTO tbl_otra_vestimenta(vestimenta, id_tipo_dotacion, talla, cantidad, estado) VALUES (?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_otra_vestimenta(vestimenta, id_tipo_dotacion, cantidad, estado) VALUES (?,?,?,?)";
             $ps = $cnx->prepare($sql);
 
             $vestimenta = $otraVestimentadto->getNombre();
             $tipo_dotacion = $otraVestimentadto->getTipo_dotacion();
-            $talla = $otraVestimentadto->getTalla();
             $cantidad = $otraVestimentadto->getCantidad();
             $estado = $otraVestimentadto->getEstado();
 
             $ps->bindParam(1, $vestimenta);
             $ps->bindParam(2, $tipo_dotacion);
-            $ps->bindParam(3, $talla);
-            $ps->bindParam(4, $cantidad);
-            $ps->bindParam(5, $estado);
+            $ps->bindParam(3, $cantidad);
+            $ps->bindParam(4, $estado);
 
             $ps->execute();
 
@@ -138,7 +134,6 @@ class OtraVestimentaDAO {
                 $row['id_vestimenta'],
                 $row['vestimenta'],
                 $row['id_tipo_dotacion'],
-                $row['talla'],
                 $row['cantidad'],
                 $row['estado']
             );
@@ -161,20 +156,18 @@ class OtraVestimentaDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_otra_vestimenta SET vestimenta = ?, id_tipo_dotacion = ?, talla = ?, cantidad = ?, estado = ? WHERE id_vestimenta = " . $otraVestimentadto->getId_vestimenta();
+            $sql = "UPDATE tbl_otra_vestimenta SET vestimenta = ?, id_tipo_dotacion = ?, cantidad = ?, estado = ? WHERE id_vestimenta = " . $otraVestimentadto->getId_vestimenta();
             $ps = $cnx->prepare($sql);
 
             $vestimenta = $otraVestimentadto->getNombre();
             $tipo_dotacion = $otraVestimentadto->getTipo_dotacion();
-            $talla = $otraVestimentadto->getTalla();
             $cantidad = $otraVestimentadto->getCantidad();
             $estado = $otraVestimentadto->getEstado();
 
             $ps->bindParam(1, $vestimenta);
             $ps->bindParam(2, $tipo_dotacion);
-            $ps->bindParam(3, $talla);
-            $ps->bindParam(4, $cantidad);
-            $ps->bindParam(5, $estado);
+            $ps->bindParam(3, $cantidad);
+            $ps->bindParam(4, $estado);
 
             $ps->execute();
 
@@ -213,7 +206,8 @@ class OtraVestimentaDAO {
         } catch (Exception $e) {
             echo "Error al actualizar la cantidad de las vestimentas " . $e->getMessage();
         }
-    }
+    
 
+    }
 
 }

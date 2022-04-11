@@ -632,7 +632,7 @@
                         if ($listaUsuario->getPantalon() == null):
                             ?>
                             <div class="col">
-                                <div class="bloque-dotacion bg-light p-5">
+                                <div class="bloque-dotacion bg-light p-5" id="bloque-agregar-pantalon-empleado" data-bs-toggle="modal" data-bs-target="#modal-agregar-pantalon">
                                     <div class="col d-flex justify-content-center align-items-center">
                                         <i class="fa-solid fa-table-columns"></i>
                                     </div>
@@ -674,7 +674,7 @@
                         if($listaUsuario->getZapato() == null) :
                             ?>
                                 <div class="col">
-                                    <div class="bloque-dotacion bg-light p-5">
+                                    <div class="bloque-dotacion bg-light p-5" id="bloque-agregar-zapato-empleado" data-bs-toggle="modal" data-bs-target="#modal-agregar-zapatos">
                                         <div class="col d-flex justify-content-center align-items-center">
                                             <i class="fa-solid fa-shoe-prints"></i>
                                         </div>
@@ -716,7 +716,7 @@
                         if ($listaUsuario->getVestimenta() == null):
                             ?>
                             <div class="col">
-                                <div class="bloque-dotacion bg-light p-5">
+                                <div class="bloque-dotacion bg-light p-5" id="bloque-agregar-otros-empleado" data-bs-toggle="modal" data-bs-target="#modal-agregar-otros">
                                     <div class="col d-flex justify-content-center align-items-center">
                                         <i class="fa-solid fa-person-booth"></i>
                                     </div>
@@ -763,6 +763,63 @@
        
           
     </main>
+
+    <div class="modal fade" id="modal-agregar-otros" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar otra ropa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="listado-otros-tipo-dotacion"></div>
+                    <div id="rta-agregar-otro-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-agregar-otra-ropa-empleado">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-agregar-zapatos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar zapatos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="listado-zapatos-tipo-dotacion"></div>
+                    <div id="rta-agregar-zapato-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-agregar-zapato-empleado">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-agregar-pantalon" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar pantalón</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="listado-pantalones-tipo-dotacion"></div>
+                    <div id="rta-agregar-pantalon-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-agregar-pantalon-empleado">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="modal-agregar-camisa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

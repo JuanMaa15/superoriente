@@ -17,7 +17,7 @@
     require_once('../../models/DAO/UsuarioDAO.php');
     require_once('../../models/DAO/TipoCamisaDAO.php');
     require_once('../../models/DAO/TipoPantalonDAO.php');
-
+    require_once('../../models/DAO/TipoZapatoDAO.php');
 
     if (isset($_SESSION['id_admin'])) {
 
@@ -32,6 +32,7 @@
         $usuariodao = new UsuarioDAO();
         $tipoCamisadao = new TipoCamisaDAO();
         $tipoPantalondao = new TipoPantalonDAO();
+        $tipoZapatodao = new TipoZapatoDAO();
 
        /*  $estadodao = new EstadoDAO();
         $tipoContratodao = new TipoContratoDAO();
@@ -57,6 +58,7 @@
         $listaUsuarios = $usuariodao->listaUsuarios();
         $listaTiposCamisas = $tipoCamisadao->listaTiposCamisas();
         $listaTiposPantalones = $tipoPantalondao->listaTiposPantalones();
+        $listaTiposZapatos = $tipoZapatodao->listaTiposZapatos();
 ?>
 
 
@@ -643,8 +645,18 @@
                                     <form action="">
                                         
                                         <div class="my-3">
-                                            <input class="form-control" type="text" id="nombre-zapato" placeholder="Zapatos">
-                                            <small class="text-danger"></small>
+                                            <select class="form-select" id="tipo-zapato">
+                                                    
+                                                    <option value="" selected>Tipo de zapato</option>
+                                                    <?php
+                                                        for ($i=0; $i < count($listaTiposZapatos); $i++) { 
+                                                            ?>
+                                                        <option value="<?php echo $listaTiposZapatos[$i]->getId_tipo_zapato(); ?>"><?php echo $listaTiposZapatos[$i]->getNombre(); ?></option>
+                                                            <?php
+                                                        }
+                                                    ?> 
+                                                    <small class="text-danger"></small>
+                                            </select>  
                                         </div>
                                         <div class="my-3">
                                             <select class="form-select" id="tipo-dotacion-zapato">
@@ -772,7 +784,7 @@
                     <div class="col-4">
                         <div class="card text-center">
                             <div class="card-header">
-                                <h4> Otra Vestimenta</h4>
+                                <h4> Otros</h4>
                             </div>
                             
                             <div class="card-body">
@@ -780,7 +792,7 @@
                                     <form action="">
                                         
                                         <div class="my-3">
-                                            <input class="form-control" type="text" id="nombre-vestimenta" placeholder="Vestimenta">
+                                            <input class="form-control" type="text" id="nombre-vestimenta" placeholder="Ropa de trabajo">
                                             <small class="text-danger"></small>
                                         </div>
                                         <div class="my-3">
@@ -795,43 +807,7 @@
                                             ?>
                                             </select>
                                             <small class="text-danger"></small>
-                                        </div>
-                                        <div class="my-3">
-                                        <div class="row justify-content-center" id="cont-check-tallas-vestimenta">
-                                            <h6 class="text-center">Tallas</h6>
-                                            <div class="col-3">
-                                                <div class="form-check text-start">
-                                                    <input type="checkbox" class="form-check-input checkbox-vestimenta" id="flexCheckDefault" value="XS">
-                                                    <label class="form-check-label" for="flexCheckDefault">XS</label>
-                                                </div>
-                                                <div class="form-check text-start">
-                                                    <input type="checkbox" class="form-check-input checkbox-vestimenta" value="S">
-                                                    <label class="form-check-label" for="">S</label>
-                                                </div>
-                                                <div class="form-check text-start">
-                                                    <input type="checkbox" class="form-check-input checkbox-vestimenta" value="M">
-                                                    <label class="form-check-label" for="">M</label>
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="col-3">
-                                                <div class="form-check text-start">
-                                                        <input type="checkbox" class="form-check-input checkbox-vestimenta" id="flexCheckDefault" value="L">
-                                                        <label class="form-check-label" for="flexCheckDefault">L</label>
-                                                    </div>
-                                                    <div class="form-check text-start">
-                                                        <input type="checkbox" class="form-check-input checkbox-vestimenta" value="XL">
-                                                        <label class="form-check-label" for="">XL</label>
-                                                    </div>
-                                                    <div class="form-check text-start">
-                                                        <input type="checkbox" class="form-check-input checkbox-vestimenta" value="XXL">
-                                                        <label class="form-check-label" for="">XXL</label>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <small class="text-danger"></small>
-                                        </div>
+                                        </div> 
                                         <div class="my-3">
                                             <input class="form-control" type="number" id="cantidad-vestimenta" placeholder="Cantidad">
                                             <small class="text-danger"></small>

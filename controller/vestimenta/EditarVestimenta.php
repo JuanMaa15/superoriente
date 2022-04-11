@@ -41,22 +41,6 @@ $cbxEstado = "<select class='form-select' id='estado-vestimenta-act'>";
 $cbxEstado .= "</select>";
 
 
-$tallas = ['XS','S','M','L','XL','XXL'];
-
-$cbxTalla = "<select class='form-select' id='talla-vestimenta-act'>";
-
-        for ($i=0; $i < count($tallas); $i++) { 
-            
-            if ($otraVestimentadto->getTalla() == $tallas[$i]) {
-                $cbxTalla .= "<option selected value='" . $tallas[$i] . "'>" . $tallas[$i] . "</option>";
-            }else{
-                $cbxTalla .= "<option value='" . $tallas[$i] . "'>" . $tallas[$i] . "</option>";
-
-            }
-        }
-
-$cbxTalla .= "</select>";
-
 $form = "<form>"
         ."<div class='my-2'>"
         ."<label class='form-label'>Código de la vestimenta</label>"
@@ -71,11 +55,6 @@ $form = "<form>"
         ."<div class='my-2'>"
         ."<label class='form-label'>Tipo de dotación</label>"
         .$cbxTiposDotaciones
-        ."<small class='text-danger'></small>"
-        ."</div>"
-        ."<div class='my-2'>"
-        ."<label class='form-label'>Talla</label>"
-        .$cbxTalla
         ."<small class='text-danger'></small>"
         ."</div>"
         ."<div class='my-2'>"

@@ -10,7 +10,7 @@ class TipoPantalonDTO {
     }
 
     function constructor($id_tipo_pantalon, $nombre) {
-        $this->id_tipo_camisa = $id_tipo_pantalon;
+        $this->id_tipo_pantalon = $id_tipo_pantalon;
         $this->nombre = $nombre;
        
     }
