@@ -16,6 +16,7 @@ $apellido = $_POST['apellido'];
 $telefono_fijo = $_POST['telefono_fijo'];
 $telefono_movil = $_POST['telefono_movil'];
 $tipo_casa = $_POST['tipo_casa'];
+$estrato = $_POST['estrato'];
 $genero = $_POST['genero'];
 $fecha_nacimiento = $_POST['fecha_nacimiento'];
 $edad = $_POST['edad'];
@@ -54,15 +55,16 @@ $tipo_contrato = intval($_POST['tipo_contrato']);
 $fecha_ingreso = $_POST['fecha_ingreso'];
 $fecha_retiro = $_POST['fecha_retiro'];
 $motivo_retiro = $_POST['motivo_retiro'];
+$cesantia = intval($_POST['cesantia']);
 $salario = floatval($_POST['salario']); 
 $valor_dia = floatval($_POST['valor_dia']);
 $valor_hora = floatval($_POST['valor_hora']);
-$clase_riesgo = $_POST['clase_riesgo'];
-$porcentaje_riesgo = $_POST['porcentaje_riesgo'];
+$clase_riesgo = intval($_POST['clase_riesgo']);
 $area = $_POST['area'];
 $seccion = $_POST['seccion'];
 $cargo = $_POST['cargo'];
 $pension = $_POST['pension'];
+$tipo_dotacion = intval($_POST['tipo_dotacion']);
 $estado = $_POST['estado'];
 $perfil = $_POST['perfil'];
 
@@ -92,9 +94,9 @@ if (isset($_POST['nombre_hijo'])) {
 if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) && !empty($lugar_expedicion)
     && !empty($nombre) && !empty($apellido) && !empty($tipo_casa) && !empty($genero) && !empty($fecha_nacimiento) && !empty($edad)
     && !empty($estado_civil) && !empty($eps) && !empty($nro_cuenta) && !empty($tipo_sangre) && !empty($correo)
-    && !empty($password) && !empty($sucursal) && !empty($tipo_contrato) && !empty($fecha_ingreso) && !empty($salario)
-    && !empty($valor_dia) && !empty($valor_hora) && !empty($area) && !empty($seccion) && !empty($cargo) && !empty($estado) 
-    && !empty($perfil)) {
+    && !empty($password) && !empty($sucursal) && !empty($tipo_contrato) && !empty($fecha_ingreso) && !empty($cesantia)
+    && !empty($salario) && !empty($valor_dia) && !empty($valor_hora) && !empty($area) && !empty($seccion)&& !empty($cargo)
+    && !empty($clase_riesgo) && !empty($tipo_dotacion) && !empty($estado) && !empty($perfil)) {
 
         $usuariodao = new UsuarioDAO();
     
@@ -142,17 +144,18 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
             $usuariodto->setFecha_ingreso($fecha_ingreso);
             $usuariodto->setFecha_retiro($fecha_retiro);
             $usuariodto->setMotivo_retiro($motivo_retiro);
+            $usuariodto->setCesantia($cesantia);
             $usuariodto->setSalario($salario);
             $usuariodto->setValor_dia($valor_dia);
             $usuariodto->setValor_hora($valor_hora);
             $usuariodto->setClase_riesgo($clase_riesgo);
-            $usuariodto->setPorcentaje_riesgo($porcentaje_riesgo);
             $usuariodto->setArea($area);
             $usuariodto->setSeccion($seccion);
             $usuariodto->setCargo($cargo);
             $usuariodto->setPension($pension);
+            $usuariodto->setTipo_dotacion($tipo_dotacion);
 
-            if ($tipo_imagen == "image/jpg" || $tipo_imagen == "image/jpeg" || $tipo_imagen == "image/png" || $tipo_imagen == "image/gif") {
+            /* if ($tipo_imagen == "image/jpg" || $tipo_imagen == "image/jpeg" || $tipo_imagen == "image/png" || $tipo_imagen == "image/gif") {
 
                 if (!is_dir("view/img")) {
                     mkdir("img", 0777);
@@ -170,7 +173,7 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
             }else{
                 header("Refresh: 5; URL=index.php");
                 echo "Sube una imagen con un formato correcto, por favor";
-            }
+            } */
             
 
             $resultado = $usuariodao->registrarUsuario($usuariodto);
@@ -261,6 +264,6 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
     "Valor hora : ". $valor_hora ."<br>" . "Area : ". $area ."<br>" . "seccion : ". $seccion ."<br>" . "Cargo : ". $cargo ."<br>" . "Estado : ". $estado ."<br>" .
     "Perfil : ". $perfil ."<br>";
 
-    echo "<br>" . $id_familiar. " " . $nombre_familiar;
+    //echo "<br>" . $id_familiar. " " . $nombre_familiar;
  }
 

@@ -16,7 +16,7 @@ class UsuarioDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "INSERT INTO tbl_usuario(id_usuario, id_tipo_documento, fecha_expedicion, lugar_expedicion,  nombre, apellido, telefono_fijo, telefono_movil, id_casa, id_genero, fecha_nacimiento, edad, direccion, lugar_residencia, id_nivel_academico, area_academica, id_estado_civil, id_eps, nro_cuenta, id_tipo_sangre_rh, antecedentes, practica_deporte,consumo_cigarros, consumo_licor, consumo_spa, correo, pass, id_perfil, nombre_persona_emergencia, telefono_emergencia, celular_emergencia, parentesco_emergencia, id_sucursal, id_tipo_contrato, fecha_ingreso, fecha_retiro, motivo_retiro, salario, valor_dia, valor_hora, clase_riesgo, porcentaje_riesgo, id_area, id_seccion, id_cargo, id_pension, id_tipo_dotacion, id_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)";
+            $sql = "INSERT INTO tbl_usuario(id_usuario, id_tipo_documento, fecha_expedicion, lugar_expedicion,  nombre, apellido, telefono_fijo, telefono_movil, id_casa, estrato, id_genero, fecha_nacimiento, edad, direccion, lugar_residencia, id_nivel_academico, area_academica, id_estado_civil, id_eps, nro_cuenta, id_tipo_sangre_rh, antecedentes, practica_deporte,consumo_cigarros, consumo_licor, consumo_spa, correo, pass, id_perfil, nombre_persona_emergencia, telefono_emergencia, celular_emergencia, parentesco_emergencia, id_sucursal, id_tipo_contrato, fecha_ingreso, fecha_retiro, motivo_retiro, id_cesantia, salario, valor_dia, valor_hora, id_area, id_seccion, id_cargo, id_clase_riesgo, id_pension, id_tipo_dotacion, id_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)";
 
             $ps = $cnx->prepare($sql);
 
@@ -29,6 +29,7 @@ class UsuarioDAO {
             $telefono_fijo = $usuariodto->getTelefono_fijo();
             $telefono_movil = $usuariodto->getTelefono_movil();
             $tipo_casa = $usuariodto->getTipo_casa();
+            $estrato = $usuariodto->getEstrato();
             $genero = $usuariodto->getGenero();
             $fecha_nacimiento = $usuariodto->getFecha_nacimiento();
             $edad = $usuariodto->getEdad();
@@ -59,11 +60,11 @@ class UsuarioDAO {
             $fecha_ingreso = $usuariodto->getFecha_ingreso();
             $fecha_retiro = $usuariodto->getFecha_retiro();
             $motivo_retiro =  $usuariodto->getMotivo_retiro();
+            $censatia = $usuariodto->getCesantia();
             $salario = $usuariodto->getSalario();
             $valor_dia = $usuariodto->getValor_dia();
             $valor_hora = $usuariodto->getValor_hora();
             $clase_riesgo = $usuariodto->getClase_riesgo();
-            $porcentaje_riesgo = $usuariodto->getPorcentaje_riesgo();
             $area = $usuariodto->getArea();
             $seccion = $usuariodto->getSeccion();
             $cargo = $usuariodto->getCargo();
@@ -80,46 +81,47 @@ class UsuarioDAO {
             $ps->bindParam(7, $telefono_fijo);
             $ps->bindParam(8, $telefono_movil);
             $ps->bindParam(9, $tipo_casa);
-            $ps->bindParam(10, $genero);
-            $ps->bindParam(11, $fecha_nacimiento);
-            $ps->bindParam(12, $edad);
-            $ps->bindParam(13, $direccion);
-            $ps->bindParam(14, $lugar_residencia);
-            $ps->bindParam(15, $nivel_academico);
-            $ps->bindParam(16, $area_academica);
-            $ps->bindParam(17, $estado_civil);
-            $ps->bindParam(18, $eps);
-            $ps->bindParam(19, $nro_cuenta);
-            $ps->bindParam(20, $tipo_sangre);
-            $ps->bindParam(21, $antecedentes);
-            $ps->bindParam(22, $practica_deporte);
-            $ps->bindParam(23, $consumo_cigarros);
-            $ps->bindParam(24, $consumo_licor);
-            $ps->bindParam(25, $consumo_spa);
-            $ps->bindParam(26, $correo);
-            $ps->bindParam(27, $password);
-            $ps->bindParam(28, $perfil);
-            $ps->bindParam(29, $nombre_persona_emergencia);
-            $ps->bindParam(30, $telefono_emergencia);
-            $ps->bindParam(31, $celular_emergencia);
-            $ps->bindParam(32, $parentesco_emergencia);
+            $ps->bindParam(10, $estrato);
+            $ps->bindParam(11, $genero);
+            $ps->bindParam(12, $fecha_nacimiento);
+            $ps->bindParam(13, $edad);
+            $ps->bindParam(14, $direccion);
+            $ps->bindParam(15, $lugar_residencia);
+            $ps->bindParam(16, $nivel_academico);
+            $ps->bindParam(17, $area_academica);
+            $ps->bindParam(18, $estado_civil);
+            $ps->bindParam(19, $eps);
+            $ps->bindParam(20, $nro_cuenta);
+            $ps->bindParam(21, $tipo_sangre);
+            $ps->bindParam(22, $antecedentes);
+            $ps->bindParam(23, $practica_deporte);
+            $ps->bindParam(24, $consumo_cigarros);
+            $ps->bindParam(25, $consumo_licor);
+            $ps->bindParam(26, $consumo_spa);
+            $ps->bindParam(27, $correo);
+            $ps->bindParam(28, $password);
+            $ps->bindParam(29, $perfil);
+            $ps->bindParam(30, $nombre_persona_emergencia);
+            $ps->bindParam(31, $telefono_emergencia);
+            $ps->bindParam(32, $celular_emergencia);
+            $ps->bindParam(33, $parentesco_emergencia);
 
 
-            $ps->bindParam(33, $sucursal);
-            $ps->bindParam(34, $tipo_contrato);
-            $ps->bindParam(35, $fecha_ingreso);
-            $ps->bindParam(36, $fecha_retiro);
-            $ps->bindParam(37, $motivo_retiro);
-            $ps->bindParam(38, $salario);
-            $ps->bindParam(39, $valor_dia);
-            $ps->bindParam(40, $valor_hora);
-            $ps->bindParam(41, $clase_riesgo);
-            $ps->bindParam(42, $porcentaje_riesgo);
+            $ps->bindParam(34, $sucursal);
+            $ps->bindParam(35, $tipo_contrato);
+            $ps->bindParam(36, $fecha_ingreso);
+            $ps->bindParam(37, $fecha_retiro);
+            $ps->bindParam(38, $motivo_retiro);
+            $ps->bindParam(39, $censatia);
+            $ps->bindParam(40, $salario);
+            $ps->bindParam(41, $valor_dia);
+            $ps->bindParam(42, $valor_hora);
             $ps->bindParam(43, $area);
             $ps->bindParam(44, $seccion);
             $ps->bindParam(45, $cargo);
-            $ps->bindParam(46, $pension);
-            $ps->bindParam(47, $tipo_dotacion);
+            $ps->bindParam(46, $clase_riesgo);
+            $ps->bindParam(47, $pension);
+            $ps->bindParam(48, $tipo_dotacion);
 
             $ps->execute();
 

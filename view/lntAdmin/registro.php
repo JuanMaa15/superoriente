@@ -16,6 +16,9 @@
     require_once ('../../models/DAO/SeccionDAO.php');
     require_once ('../../models/DAO/CargoDAO.php');
     require_once ('../../models/DAO/PensionDAO.php');
+    require_once ('../../models/DAO/CesantiaDAO.php');
+    require_once ('../../models/DAO/ClaseRiesgoDAO.php');
+    require_once ('../../models/DAO/TipoDotacionDAO.php');
 
     // Instanciar los objetos
     $perfildao = new PerfilDAO();
@@ -35,7 +38,9 @@
     $secciondao = new SeccionDAO();
     $cargodao = new CargoDAO();
     $pensiondao = new PensionDAO();
-
+    $tipoDotaciondao = new TipoDotacionDAO();
+    $cesantiadao = new CesantiaDAO();
+    $claseRiesgodao = new ClaseRiesgoDAO();
 
 
     // Traer las listas de las tablas necesarias para realizar un registro
@@ -57,7 +62,9 @@
     $listaSeccion = $secciondao->listaSecciones();
     $listaCargos = $cargodao->listaCargos();
     $listaPensiones = $pensiondao->listaPensiones();
-
+    $listaTiposDotaciones = $tipoDotaciondao->listaTiposDotaciones();
+    $listaCesantias = $cesantiadao->listaCesantias();
+    $listaClasesRiesgos = $claseRiesgodao->listaClasesRiesgos();
 
 
     if (isset($_SESSION['id_admin'])) {
@@ -102,7 +109,7 @@
                                         <div class="d-flex overflow-hidden" id="cont-campos">
                                             <div id="datos-personales" class="cont-registro">
                                                 <h3>Datos Personales</h3>
-                                                <div class="row">
+                                                <div class="row align-items-end">
                                                     
                                                     <div class=" col my-3">
                                                         <select id="tipo_documento" class="form-select">
@@ -123,6 +130,7 @@
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class="col my-3">
+                                                        <label for="fecha_expedicion" class="form-label">Fecha de expedición</label>
                                                         <input class="form-control" type="date" id="fecha_expedicion" placeholder="Fecha de expedición *">
                                                         <small class="text-danger"></small>
                                                     </div>
@@ -155,8 +163,19 @@
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class="col my-3">
+                                                        <select id="estrato" class="form-select">
+                                                            <option value="">Estrato * </option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col my-3">
                                                         <select class="form-select" id="tipo_casa">
-                                                            <option value="">Seleccionar tipo de casa *</option>
+                                                            <option value="">Tipo de vivienda *</option>
                                                             <?php
                                                                 for ($i=0; $i < count($listaCasas); $i++) { 
                                                                     ?>
@@ -172,9 +191,18 @@
                                                         <small class="text-danger"></small>
                                                     </div> -->
                                                 </div>
-                                                <div class="row">
-                                                    
+                                                <div class="row align-items-end">
+                                                     <div class="col mt-1 mb-3">
+                                                        <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
+                                                        <input class="form-control fecha_nacimiento" type="date" id="fecha_nacimiento"  placeholder="Fecha de nacimiento *">
+                                                        <small class="text-danger"></small>
+                                                    </div>
+                                                    <div class="col my-3">
+                                                        <input class="form-control" type="number" id="edad" placeholder="Edad *" readonly>
+                                                        <small class="text-danger"></small>
+                                                    </div>
                                                     <div class=" col my-3">
+                                                        
                                                         <select class="form-select" id="genero">
                                                             <option value="">Seleccionar género *</option>
                                                             <?php
@@ -187,10 +215,7 @@
                                                         </select>
                                                         <small class="text-danger"></small>
                                                     </div>
-                                                    <div class="col my-3">
-                                                        <input class="form-control" type="number" id="edad" placeholder="Edad *">
-                                                        <small class="text-danger"></small>
-                                                    </div>
+                                                    
                                                     <div class="col my-3">
                                                         <select class="form-select" id="nivel_academico">
                                                                 <option value="">Seleccionar nivel academico *</option>
@@ -397,12 +422,36 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class=" col-9 my-3">
-                                                        <input class="form-control" type="text" id="clase_riesgo" placeholder="Clase de riesgo">
+                                                    <div class=" col-4 my-3">
+                                                         <select id="cesantia" class="form-select">
+                                                            <option value="" selected>Cesantía *</option>
+                                                            <?php
+                                                            
+                                                                for ($i=0; $i < count($listaCesantias); $i++) { 
+                                                                    ?>
+                                                                        <option value="<?php echo $listaCesantias[$i]->getId_cesantia(); ?>"><?php echo $listaCesantias[$i]->getNombre(); ?></option>
+                                                                    <?php
+                                                                }
+                                                            ?>
+                                                        </select>
                                                         <small class="text-danger"></small>
                                                     </div>
-                                                    <div class=" col-3 my-3">
-                                                        <input class="form-control" type="text" id="porcentaje_riesgo" placeholder="Porcentaje de riesgo">
+                                                    <div class=" col-4 my-3">
+                                                    <select id="clase-riesgo" class="form-select">
+                                                            <option value="" selected>Clase de riesgo *</option>
+                                                            <?php
+                                                            
+                                                                for ($i=0; $i < count($listaClasesRiesgos); $i++) { 
+                                                                    ?>
+                                                                        <option value="<?php echo $listaClasesRiesgos[$i]->getId_clase_riesgo(); ?>"><?php echo $listaClasesRiesgos[$i]->getNombre(); ?></option>
+                                                                    <?php
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                        <small class="text-danger"></small>
+                                                    </div>
+                                                    <div class=" col-4 my-3">
+                                                        <input class="form-control" type="text" id="porcentaje_riesgo" placeholder="Porcentaje de riesgo" readonly>
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     
@@ -464,6 +513,40 @@
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class=" col my-3">
+                                                        <select class="form-select" id="tipo_dotacion">
+                                                            <option value="">Tipo de dotación *</option>
+                                                            <?php
+                                                                for ($i=0; $i < count($listaTiposDotaciones); $i++) { 
+                                                                    ?>
+                                                                        <option value="<?php echo $listaTiposDotaciones[$i]->getId_tipo_dotacion(); ?>"><?php echo $listaTiposDotaciones[$i]->getNombre(); ?></option>
+                                                                    <?php
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                        <small class="text-danger"></small>
+                                                    </div>
+
+                                                    <div class="col my-3">
+
+                                                        <select id="perfil" class="form-select">
+                                                            <option value="" selected>Seleccione perfil *</option>
+                                                            <?php
+                                                            
+                                                                for ($i=0; $i < count($listaPerfiles); $i++) { 
+                                                                    ?>
+                                                                        <option value="<?php echo $listaPerfiles[$i]->getId_perfil() ?>"><?php echo $listaPerfiles[$i]->getPerfil() ?></option>
+                                                                    <?php
+                                                                }
+                                                            ?>
+                                                        
+                                                        </select>
+                                                        <small class="text-danger"></small>
+                                                        
+                                                    </div>
+                            
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <div class=" col-4 my-3">
                                                         <select class="form-select" id="estado">
                                                             <option value="">Seleccionar estado *</option>
                                                             <?php
@@ -476,7 +559,6 @@
                                                         </select>
                                                         <small class="text-danger"></small>
                                                     </div>
-                            
                                                 </div>
                                             </div>
 
@@ -512,30 +594,7 @@
                                         </div>
                                         
                                        
-                                        <div class="row mt-3">
-                                            <div class=" col mt-1 mb-3">
-
-                                                <select id="perfil" class="form-select">
-                                                    <option value="" selected>Seleccione perfil *</option>
-                                                    <?php
-                                                    
-                                                        for ($i=0; $i < count($listaPerfiles); $i++) { 
-                                                            ?>
-                                                                <option value="<?php echo $listaPerfiles[$i]->getId_perfil() ?>"><?php echo $listaPerfiles[$i]->getPerfil() ?></option>
-                                                            <?php
-                                                        }
-                                                    ?>
-                                                
-                                                </select>
-                                                <small class="text-danger"></small>
-                                                
-                                            </div>
-                                            <div class="col mt-1 mb-3">
-                                                <input class="form-control fecha_nacimiento" type="date" id="fecha_nacimiento"  placeholder="Fecha de nacimiento *">
-                                                <small class="text-danger"></small>
-                                            </div>
-                                            
-                                        </div>
+                                        
                                         <div class="row">
                                             <div class="col my-2 d-flex justify-content-between">
                                                 <input type="button" class="btn btn-verde px-5" id="btn-atras" value="< Volver" disabled></input>

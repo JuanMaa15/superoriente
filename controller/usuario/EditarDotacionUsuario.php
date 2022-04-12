@@ -6,7 +6,7 @@ require_once('../../models/DAO/PantalonDAO.php');
 require_once('../../models/DAO/ZapatoDAO.php');
 require_once('../../models/DAO/OtraVestimentaDAO.php');
 
-if (true) {
+if (isset($_POST['id']) && isset($_POST['id_dotacion'])) {
 
     $id_usuario = $_POST['id'];
     $id_dotacion = intval($_POST['id_dotacion']);
@@ -187,7 +187,7 @@ if (true) {
                                 ."<i class='fa-solid fa-person-booth'></i>"
                             ."</div>"
                             ."<div class='text-center'>"
-                                ."<p>Zapato: " . $listaVestimentas[$i]->getNombre() . "</p>"
+                                ."<p>Ropa de trabajo: " . $listaVestimentas[$i]->getNombre() . "</p>"
                             ."</div>"
                         . "</div>"
                     . "</div>";
@@ -226,5 +226,5 @@ if (true) {
     echo $cont;
 
 }else{
-
+    echo "Error, está entrando a una sección de forma indebida";
 }

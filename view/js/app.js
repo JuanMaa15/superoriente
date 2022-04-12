@@ -76,6 +76,8 @@ var acciones = {
         $(".cont-info-rapida").click(acciones.desplegarAcordionDotacion);
         $(".accordion-button").click(acciones.mostrarCuerpoAcordion);
 
+        $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
+
 
         $(".fecha_nacimiento").on('change', acciones.calcularEdadesHijos);
         $("#fecha_nacimiento").on('change', acciones.calcularEdad);
@@ -268,6 +270,18 @@ var acciones = {
             $("#listado-vestimentas").html(responseText);
         });
         
+
+    },
+
+    llenarPorcentajeClaseRiesgo : function() {
+        
+        var clase_riesgo = $(this).val();
+
+        $.post('../../controller/clase_riesgo/traerPorcentaje.php',{
+            id: clase_riesgo
+        }, function(responseText) {
+            $("#porcentaje_riesgo").val(responseText);
+        });
 
     },
 
@@ -2399,6 +2413,7 @@ var acciones = {
             var telefono_fijo = $("#telefono_fijo").val();
             var telefono_movil = $("#telefono_movil").val();
             var tipo_casa =  $("#tipo_casa").val();
+            var estrato = $("#estrato").val();
             var genero = $("#genero").val();
             var fecha_nacimiento = $("#fecha_nacimiento").val();
             var edad = $("#edad").val();
@@ -2430,15 +2445,16 @@ var acciones = {
             var fecha_ingreso = $("#fecha_ingreso").val();
             var fecha_retiro = $("#fecha_retiro").val();
             var motivo_retiro = $("#motivo_retiro").val();
+            var cesantia = $("#cesantia").val();
             var salario = $("#salario").val();  
             var valor_dia = $("#valor_dia").val();
             var valor_hora = $("#valor_hora").val();
-            var clase_riesgo = $("#clase_riesgo").val();
-            var porcentaje_riesgo = $("#porcentaje_riesgo").val();
+            var clase_riesgo = $("#clase-riesgo").val();
             var area = $("#area").val();
             var seccion = $("#seccion").val();
             var cargo = $("#cargo").val();
             var pension = $("#pension").val();
+            var tipo_dotacion = $("#tipo_dotacion").val();
             var estado = $("#estado").val();
             var perfil = $("#perfil").val();
 
@@ -2526,7 +2542,7 @@ var acciones = {
 
             }
             
-          
+            
 
             if (nombre.length !== 0) {
                 $("#nombre").next().html("");
@@ -2565,6 +2581,14 @@ var acciones = {
                 validar++;
             }else{
                 $("#tipo_casa").next().html("Campo vacío, por favor ingrese el tipo de casa");
+
+            }
+
+            if (estrato.length !== 0) {
+                $("#estrato").next().html("");
+                validar++;
+            }else{
+                $("#estrato").next().html("Campo vacío, por favor seleccione el estrato");
 
             }
 
@@ -2674,6 +2698,15 @@ var acciones = {
 
             }
 
+            if (cesantia.length !== 0) {
+                $("#cesantia").next().html("");
+                validar++;
+            }else{
+                $("#cesantia").next().html("Campo vacío, por favor seleccione la cesantía");    
+            
+            }
+
+
             if (salario.length !== 0) {
                 $("#salario").next().html("");
                 validar++;
@@ -2722,6 +2755,22 @@ var acciones = {
 
             }
 
+            if (clase_riesgo.length !== 0) {
+                $("#clase-riesgo").next().html("");
+                validar++;
+            }else{
+                $("#clase-riesgo").next().html("Campo vacío, por favor seleccione la clase de riesgo");    
+            
+            }
+
+            if (tipo_dotacion.length !== 0) {   
+                $("#tipo_dotacion").next().html("");
+                validar++;
+            }else{
+                $("#tipo_dotacion").next().html("Campo vacío, por favor seleccione el tipo de dotación");    
+            
+            }
+
             if (estado.length !== 0) {
                 $("#estado").next().html("");
                 validar++;
@@ -2738,11 +2787,7 @@ var acciones = {
 
             }
 
-           
-
-    
-           
-                
+                      
                 /* $.post('../../controller/usuario/RegistrarUsuario.php', {
                     id_usuario: id_usuario,
                     tipo_documento: tipo_documento,
@@ -2824,7 +2869,13 @@ var acciones = {
                 var files = $("#foto")[0].files[0];
                 formData.append('file', files); */
 
-                if (validar === 27) {
+
+                console.log(validar);
+
+                if (validar === 31) {
+
+                    alert("funciona");
+
                     $.ajax({
                         method : "POST",
                         url : "../../controller/usuario/RegistrarUsuario.php",
@@ -2838,6 +2889,7 @@ var acciones = {
                             "telefono_fijo": telefono_fijo,
                             "telefono_movil": telefono_movil,
                             "tipo_casa": tipo_casa,
+                            "estrato": estrato,
                             "genero": genero,
                            " fecha_nacimiento": fecha_nacimiento,
                             "edad": edad,
@@ -2867,15 +2919,16 @@ var acciones = {
                             "fecha_ingreso": fecha_ingreso,
                             "fecha_retiro": fecha_retiro,
                             "motivo_retiro": motivo_retiro,
+                            "cesantia": cesantia,
                             "salario": salario,
                             "valor_dia": valor_dia,
                             "valor_hora": valor_hora,
                             "clase_riesgo": clase_riesgo,
-                            "porcentaje_riesgo": porcentaje_riesgo,
                             "area": area,
                             "seccion": seccion,
                             "cargo": cargo,
                            "pension": pension,
+                           "tipo_dotacion": tipo_dotacion,
                             "estado": estado,
                             "perfil": perfil,
                             
@@ -2903,6 +2956,8 @@ var acciones = {
                     });
                                                                 
                
+            }else{
+                alert("Hay campos importantes que etsán vacíos");
             }
         }
 
@@ -4043,8 +4098,8 @@ var acciones = {
                 var id_camisa = $(".input-agregar-dotacion:checked").val();
                 var cant_camisas = parseInt($(".input-agregar-dotacion:checked").next().val()) - 1;
                 var id_usuario = $("#doc").val();
-                var id_camisa_vieja = $("#cant-disponibles-vestimenta").next().val();
-                var cant_camisas_vieja = $("#cant-disponibles-vestimenta").val();
+                var id_camisa_vieja = $("#cant-disponibles-camisa").next().val();
+                var cant_camisas_vieja = $("#cant-disponibles-camisa").val();
                 $.post('../../controller/usuario/ActualizarDotacionUsuario.php',{
                     opc: "camisa",
                     id_camisa: id_camisa,
@@ -4054,6 +4109,63 @@ var acciones = {
                     id_usuario: id_usuario
                 },function(responseText) {
                     $("#rta-actualizar-camisa").html(responseText);
+                }); 
+
+            break;
+
+            case "btn-actualizar-pantalon-empleado":
+                var id_pantalon = $(".input-agregar-dotacion:checked").val();
+                var cant_pantalones = parseInt($(".input-agregar-dotacion:checked").next().val()) - 1;
+                var id_usuario = $("#doc").val();
+                var id_pantalon_viejo = $("#cant-disponibles-pantalon").next().val();
+                var cant_pantalones_viejo = $("#cant-disponibles-pantalon").val();
+                $.post('../../controller/usuario/ActualizarDotacionUsuario.php',{
+                    opc: "pantalon",
+                    id_pantalon: id_pantalon,
+                    id_pantalon_viejo: id_pantalon_viejo,
+                    cant_pantalones: cant_pantalones,
+                    cant_pantalones_viejo: cant_pantalones_viejo,
+                    id_usuario: id_usuario
+                },function(responseText) {
+                    $("#rta-actualizar-pantalon").html(responseText);
+                }); 
+
+            break;
+
+            case "btn-actualizar-zapato-empleado":
+                var id_zapato = $(".input-agregar-dotacion:checked").val();
+                var cant_zapatos = parseInt($(".input-agregar-dotacion:checked").next().val()) - 1;
+                var id_usuario = $("#doc").val();
+                var id_zapato_viejo = $("#cant-disponibles-zapatos").next().val();
+                var cant_zapatos_viejo = $("#cant-disponibles-zapatos").val();
+                $.post('../../controller/usuario/ActualizarDotacionUsuario.php',{
+                    opc: "zapato",
+                    id_zapato: id_zapato,
+                    id_zapato_viejo: id_zapato_viejo,
+                    cant_zapatos: cant_zapatos,
+                    cant_zapatos_viejo: cant_zapatos_viejo,
+                    id_usuario: id_usuario
+                },function(responseText) {
+                    $("#rta-actualizar-zapato").html(responseText);
+                }); 
+
+            break;
+
+            case "btn-actualizar-vestimenta-empleado":
+                var id_vestimenta = $(".input-agregar-dotacion:checked").val();
+                var cant_vestimentas = parseInt($(".input-agregar-dotacion:checked").next().val()) - 1;
+                var id_usuario = $("#doc").val();
+                var id_vestimenta_vieja = $("#cant-disponibles-vestimenta").next().val();
+                var cant_vestimentas_vieja = $("#cant-disponibles-vestimenta").val();
+                $.post('../../controller/usuario/ActualizarDotacionUsuario.php',{
+                    opc: "vestimenta",
+                    id_vestimenta: id_vestimenta,
+                    id_vestimenta_vieja: id_vestimenta_vieja,
+                    cant_vestimentas: cant_vestimentas,
+                    cant_vestimentas_vieja: cant_vestimentas_vieja,
+                    id_usuario: id_usuario
+                },function(responseText) {
+                    $("#rta-actualizar-vestimenta").html(responseText);
                 }); 
 
             break;
