@@ -522,9 +522,106 @@
                                 </div>
                             </div>
                     </div>
+
+                    <div class="row mt-3 mb-5" id="gestion-cesantia">
+                        <div class="col-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h4>Cesantía</h4>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="form-registro my-3">
+                                        <form action="">
+                                            
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="nombre-cesantia" placeholder="Cesantía">
+                                                <small class="text-danger"></small>
+                                            </div>
+                                            
+                                            <div class="col my-5">
+                                                <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-cesantia">Registrar</button>
+                                            </div>
+               
+                                            <div id="rta-cesantia" class="my-2">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-8">
+                                <div id="listado-cesantias">
+
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="row mt-3 mb-5" id="gestion-clase-riesgo">
+                        <div class="col-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h4>Clase de riesgo</h4>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="form-registro my-3">
+                                        <form action="">
+                                            
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="nombre-clase-riesgo" placeholder="Clase riesgo">
+                                                <small class="text-danger"></small>
+                                            </div>
+
+                                            <div class="my-5">
+                                                <input class="form-control" type="text" id="porcentaje-clase-riesgo" placeholder="Porcentaje">
+                                                <small class="text-danger"></small>
+                                            </div>
+                                            
+                                            <div class="col my-5">
+                                                <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-clase-riesgo">Registrar</button>
+                                            </div>
+               
+                                            <div id="rta-clase-riesgo" class="my-2">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-8">
+                                <div id="listado-clase-riesgo">
+
+                                </div>
+                            </div>
+                    </div>
+
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-cesantias" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar cesantía</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-cesantia"></div>
+                    <div id="rta-cesantia-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-cesantia'>Actualizar</button>
+                </div>
+            </div>
         </div>
     </div>
    

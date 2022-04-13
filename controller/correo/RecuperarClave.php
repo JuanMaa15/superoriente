@@ -17,7 +17,7 @@
         $correoRecuperacion = new CorreoRecuperacion();
 
         $asunto = utf8_decode("Recuperación de la contraseña");
-        $mensaje = "<html><body>Hola, " . $usuariodto->getNombre() . "  Seleccione el siguiente enlace: <a href='http://localhost:8080/superoriente/formrecuperacion.php?doc=" . $usuariodto->getId_usuario() . "'>Restablecer mi contraseña</a></body></html>"; 
+        $mensaje = "<html><body>Hola, " . $usuariodto->getNombre() . "  Seleccione el siguiente enlace: <a href='http://localhost:8081/proyecto carta laboral/Desarrollo/formrecuperacion.php?doc=" . $usuariodto->getId_usuario() . "'>Restablecer mi contraseña</a></body></html>"; 
         $nombre = $usuariodto->getNombre();
        $resultado = $correoRecuperacion->correoRecuperarClave($correo, $asunto, $mensaje, $nombre);
 
@@ -35,4 +35,3 @@
         header("Location: ../../recuperarClave.php?error=credenciales_incorrectas");
     }
 
-    echo $usuariodto;

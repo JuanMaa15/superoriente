@@ -229,13 +229,14 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
             $mensaje .= "<div><p>El usuario es tu correo personal y la contraseña es tu número de documento</p></div>";
             $mensaje .= "<div><p>Cualquier inquietud comunicarse al: 302243424</p></div>";
             $mensaje .= "<div><p>Gracias</p></div>"; 
-            $resultado = $correoRecuperacion->correoRecuperarClave($correo, $asunto, $mensaje, $nombre);
+
+          $resultado2 = $correoRecuperacion->correoRecuperarClave($correo, $asunto, $mensaje, $nombre);
             
 
             
 
 
-            if ($resultado) {
+            if ($resultado2 && $resultado) {
                 echo "<div class='alert alert-success' role='alert'>Perfecto!!  Se ha registrado el usuario</div>";
 
             }else{

@@ -48,6 +48,9 @@
 <body>
     <!--------------- Body form -------- -->
     <div class="container-fluid ps-0">
+        <div class="py-3">
+            <?php include_once("menu2.php"); ?>
+         </div>
         <div class="row justify-content-center">
             <?php include_once("menu.php"); ?>
             <div class="col-10 ps-0 py-5 position-relative" id="cuerpo-pagina">

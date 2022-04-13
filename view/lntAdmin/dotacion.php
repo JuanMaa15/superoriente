@@ -19,6 +19,7 @@
     require_once('../../models/DAO/TipoPantalonDAO.php');
     require_once('../../models/DAO/TipoZapatoDAO.php');
 
+
     if (isset($_SESSION['id_admin'])) {
 
         // --- Instacia de los objetos ----
@@ -79,9 +80,12 @@
 <body>
     <!--------------- Body form -------- -->
     <div class="container-fluid ps-0">
+        <div class="py-3">
+            <?php include_once("menu2.php"); ?>
+         </div>
         <div class="row justify-content-center">
             <?php include_once("menu.php"); ?>
-            <div class="col-10 ps-0 py-5 position-relative" id="cuerpo-pagina">
+            <div class="col-10 mt-4 ps-0 py-5 position-relative" id="cuerpo-pagina">
                 <div class="row align-items-center">
                     <div class="col">
                         <h2>Gestionar dotación</h2>
@@ -268,10 +272,29 @@
                                             if ($listaTiposDotaciones[$i]->getNombre() == $listaCamisas[$j]->getTipo_dotacion()):
                                                     $cant_camisas++;
                                             endif;
+
+                                            
                                         endfor;
                                         ?>
                                             <div class="col-3">
                                                 <p class="fs-6 titulo-campos"><?php echo $listaTiposDotaciones[$i]->getNombre() . ": " . $cant_camisas; ?></p>
+                                                <div class="mt-2">
+                                                    <?php
+                                                    for ($j=0; $j < count($listaTiposCamisas); $j++):
+                                                        $cant_tipo_camisas = 0;
+                                                        for ($k=0; $k < count($listaCamisas); $k++) : 
+                                                            if ($listaCamisas[$k]->getNombre() == $listaTiposCamisas[$j]->getNombre()):
+                                                                $cant_tipo_camisas++;
+                                                            endif;
+                                                        endfor;
+                                                        ?>
+                                                            <p class="fs-6"><?php echo $listaTiposCamisas[$i]->getNombre() . ": " . $cant_tipo_camisas; ?></p>
+
+                                                        <?php
+                                                    endfor;
+                                                       
+                                                    ?>
+                                                </div>
                                             </div>
                                         <?php
                                     endfor;
@@ -296,6 +319,23 @@
                                         ?>
                                             <div class="col-3">
                                                 <p class="fs-6 titulo-campos"><?php echo $listaTiposDotaciones[$i]->getNombre() . ": " . $cant_pantalones; ?></p>
+                                                <div class="mt-2">
+                                                    <?php
+                                                    for ($j=0; $j < count($listaTiposPantalones); $j++):
+                                                        $cant_tipo_pantalones = 0;
+                                                        for ($k=0; $k < count($listaPantalones); $k++) : 
+                                                            if ($listaPantalones[$k]->getNombre() == $listaTiposPantalones[$j]->getNombre()):
+                                                                $cant_tipo_pantalones++;
+                                                            endif;
+                                                        endfor;
+                                                        ?>
+                                                            <p class="fs-6"><?php echo $listaTiposPantalones[$i]->getNombre() . ": " . $cant_tipo_pantalones; ?></p>
+
+                                                        <?php
+                                                    endfor;
+                                                       
+                                                    ?>
+                                                </div>
                                             </div>
                                         <?php
                                     endfor;
@@ -320,6 +360,23 @@
                                         ?>
                                             <div class="col-3">
                                                 <p class="fs-6 titulo-campos"><?php echo $listaTiposDotaciones[$i]->getNombre() . ": " . $cant_zapatos; ?></p>
+                                                <div class="mt-2">
+                                                    <?php
+                                                    for ($j=0; $j < count($listaTiposZapatos); $j++):
+                                                        $cant_tipo_zapatos = 0;
+                                                        for ($k=0; $k < count($listaZapatos); $k++) : 
+                                                            if ($listaZapatos[$k]->getNombre() == $listaTiposZapatos[$j]->getNombre()):
+                                                                $cant_tipo_zapatos++;
+                                                            endif;
+                                                        endfor;
+                                                        ?>
+                                                            <p class="fs-6"><?php echo $listaTiposZapatos[$i]->getNombre() . ": " . $cant_tipo_zapatos; ?></p>
+
+                                                        <?php
+                                                    endfor;
+                                                       
+                                                    ?>
+                                                </div>
                                             </div>
                                         <?php
                                     endfor;
@@ -344,6 +401,7 @@
                                         ?>
                                             <div class="col-3">
                                                 <p class="fs-6 titulo-campos"><?php echo $listaTiposDotaciones[$i]->getNombre() . ": " . $cant_vestimentas; ?></p>
+                                                
                                             </div>
                                         <?php
                                     endfor;
@@ -381,7 +439,7 @@
                                             <small class="text-danger"></small>
                                         </div>
                                         <div class="my-3">
-                                         <select class="form-select" id="tipo-dotacion-camisa">
+                                         <select class="form-select cbx-dotacion" id="tipo-dotacion-camisa">
                                              <option value="">Seleccionar un tipo de dotación</option>
                                             <?php
                                                 for ($i=0; $i < count($listaTiposDotaciones); $i++) { 

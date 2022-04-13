@@ -89,6 +89,9 @@
 <body>
     <!--------------- Body form -------- -->
     <div class="container-fluid ps-0">
+        <div class="py-3">
+            <?php include_once("menu2.php"); ?>
+         </div>
         <div class="row justify-content-center">
             <?php include_once("menu.php"); ?>
             <div class="col-10 ps-0 py-5" id="cuerpo-pagina">
@@ -361,7 +364,7 @@
                                             
                                             <div id="datos-laborales" class="cont-registro">
                                                 <h3>Datos laborales</h3>
-                                                <div class="row">
+                                                <div class="row  align-items-end">
                                                     <div class=" col my-3">
                                                         <select class="form-select" id="sucursal">
                                                             <option value="">Seleccionar sucursal *</option>
@@ -391,13 +394,15 @@
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class=" col my-3">
+                                                        <label for="fecha_ingreso" class="form-label">Fecha de ingreso</label>
                                                         <input class="form-control" type="date" id="fecha_ingreso" placeholder="Fecha de ingreso *">
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     
                                                 </div>
-                                                <div class="row">
+                                                <div class="row align-items-end">
                                                     <div class=" col my-3">
+                                                        <label for="fecha_retiro" class="form-label">Fecha de retiro</label>
                                                         <input class="form-control" type="date" id="fecha_retiro" placeholder="Fecha_retiro">
                                                         <small class="text-danger"></small>
                                                     </div>

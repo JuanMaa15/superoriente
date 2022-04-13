@@ -32,7 +32,8 @@ var acciones = {
         $("#btn-registrar-otra-vestimenta").click(acciones.enviarFormOtraVestimenta);
         $("#btn-registrar-familiar").click(acciones.enviarFormFamiliar);
         $("#btn-registrar-hijo").click(acciones.enviarFormHijo);
-
+        $("#btn-registrar-cesantia").click(acciones.enviarFormCesantia);
+        $("#btn-registrar-clase-riesgo").click(acciones.enviarFormClaseRiesgo);
 
         // Asignar dotacion - Sección empleado
 
@@ -75,6 +76,7 @@ var acciones = {
         $(".enlace-info-empleado").click(acciones.mostrarContEmpleado);
         $(".cont-info-rapida").click(acciones.desplegarAcordionDotacion);
         $(".accordion-button").click(acciones.mostrarCuerpoAcordion);
+        $(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
 
@@ -269,8 +271,41 @@ var acciones = {
         },function(responseText) {
             $("#listado-vestimentas").html(responseText);
         });
+
+        // Cesantías
+
+        $.post('../../controller/cesantia/ListaCesantias.php',{
+
+        },function(responseText) {
+            $("#listado-cesantias").html(responseText);
+        });
         
 
+    },
+
+    mostrarTallasDotacion : function() {
+
+        var id = $(this).attr("id");
+
+
+        switch (id) {
+            case "tipo-dotacion-camisa":
+
+            var id_tipo_dotacion = $("#" + id).val()
+
+                $.post('../../controller/camisa/TallasCamisa.php',{
+                    id_tipo_dotacion: id_tipo_dotacion
+                }, function(responseText) {
+                    $("#cont-check-tallas-camisa").html(responseText);
+                });
+                
+                
+
+            break;
+        
+            default:
+                break;
+        }
     },
 
     llenarPorcentajeClaseRiesgo : function() {
@@ -1675,6 +1710,61 @@ var acciones = {
     },
 
     // --------------------- Verifica y envía los formularios ---------------------
+
+    // Clase riesgo
+
+    enviarFormClaseRiesgo : function() {
+
+        var nombre = $("#nombre-clase-riesgo").val();
+        var porcentaje = $("#porcentaje-clase-riesgo").val();
+        var validar = 0;
+
+        if (nombre.length != 0) {
+            $("#nombre-clase-riesgo").next().html("");
+            validar++;
+            
+        }else{
+            $("#nombre-clase-riesgo").next().html("Campo vacío, por favor ingrese la clase de riesgo");
+        }
+
+        if (porcentaje.length != 0) {
+            $("#porcentaje-clase-riesgo").next().html("");
+            validar++;
+            
+        }else{
+            $("#porcentaje-clase-riesgo").next().html("Campo vacío, por favor ingrese el porcentaje");
+        }
+
+        if (validar == 2) {
+            $.post('../../controller/clase_riesgo/RegistrarClaseRiesgo.php',{
+                nombre: nombre,
+                porcentaje: porcentaje  
+            },function(responseText){
+                $("#rta-clase-riesgo").html(responseText);
+            });
+        }
+
+        
+    },
+
+    // Cesantía
+
+    enviarFormCesantia : function() {
+
+       var nombre = $("#nombre-cesantia").val();
+
+        if (nombre.length != 0) {
+            $("#nombre-cesantia").next().html("");
+
+            $.post('../../controller/cesantia/RegistrarCesantia.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-cesantia").html(responseText);
+            });
+        }else{
+            $("#nombre-cesantia").next().html("Campo vacío, por favor ingrese la cesantia");
+        }
+    },
 
     // Familiar
 
@@ -3156,6 +3246,16 @@ var acciones = {
 
             // ------------- Editar un registro -----------
 
+            //  Cesantía
+
+            case "btn-editar-cesantia":
+                $.post('../../controller/cesantia/EditarCesantia.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-cesantia").html(responseText);
+                });
+            break;
+
             // Vestimenta
 
             case "btn-editar-vestimenta":
@@ -3435,6 +3535,40 @@ var acciones = {
             break;
 
              // Actualizar un registro
+
+
+             case "btn-actualizar-cesantia":
+                var id_cesantia = $("#id-cesantia-act").val();
+                var nombre = $("#nombre-cesantia-act").val();
+                var validar = 0;
+
+                if (id_cesantia.length !== 0) {
+                    $("#id-cesantia-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#id-cesantia-act").next().html("Campo vacío, por favor ingrese el código de la cesantía");
+                }
+
+                if (nombre.length !== 0) {
+                    $("#nombre-cesantia-act").next().html("");
+                    validar++;
+                    
+                }else{
+                    $("#nombre-cesantia-act").next().html("Campo vacío, por favor ingrese la cesantia");
+                }
+
+                if (validar === 2) {
+                    $.post('../../controller/cesantia/ActualizarCesantia.php',{
+                        id_cesantia: id_cesantia,
+                        nombre: nombre
+                    },function(responseText){
+                        $("#rta-cesantia-act").html(responseText);
+                    });
+                }
+
+                
+            break;
 
              case "btn-actualizar-vestimenta":
 

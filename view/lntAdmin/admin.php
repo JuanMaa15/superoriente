@@ -83,13 +83,13 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-5">
                             <div class="cont-nuevos-empleados px-3">
 
                                 <div class="row border-bottom-black justify-content-around align-items-center">
                             
-                                    <div class="col-3">
-                                        <h5 class="p-2">Nuevos empleados</h5>
+                                    <div class="col-5">
+                                        <h5 class="pt-3 pb-1">Nuevos empleados</h5>
                                     </div>
                                     <div class="col-4">
                                         <a href="personal.php" class="btn btn-verde">Ver todos</a>
@@ -103,21 +103,30 @@
                                                 <th scope="col">Nro de documento</th>
                                                 <th scope="col">Nombre</th>
                                                 <th scope="col">Apellido</th>
+                                                <th scope="col">Días</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                     for ($i=0; $i < count($listaNuevosEmpleados); $i++):
+                                                        $fecha_actual = date_create(date('dmy'));
+                                                        $fecha_ingreso = date_create($listaNuevosEmpleados[$i]->getFecha_ingreso());
+
+                                                        $contador = date_diff($fecha_actual, $fecha_ingreso);
+
                                                         ?>
+                                                            
                                                             <tr>
                                                                 <td><?php echo $listaNuevosEmpleados[$i]->getId_usuario(); ?></td>
                                                                 <td><?php echo $listaNuevosEmpleados[$i]->getNombre(); ?></td>
                                                                 <td><?php echo $listaNuevosEmpleados[$i]->getApellido(); ?></td>
+                                                                <td><?php echo $contador->format('%a'); ?></td>
+
                                                             </tr>
                                                         <?php
                                                     endfor;
                                                 ?>
-                                                <td></td>
+                                              
                                             </tbody>
                                         </table>
                                     </div>
@@ -125,7 +134,7 @@
 
                             </div>
                         </div>
-                        <div class="col-8">
+                        <div class="col-7">
 
                         </div>
                     </div>
