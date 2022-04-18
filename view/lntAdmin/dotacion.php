@@ -917,11 +917,101 @@
                         </div>
                     </div>
                 </div>
+                <div class="row mt-5">
+                    <div class="col-12 mb-3">
+                        <h3 class="text-center">Gestión de los tipos de ropa</h3>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h4>Tipo de camisa</h4>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div class="form-registro my-3">
+                                    <form action="">
+                                        <div class="my-2">
+                                        <input type="text" class="form-control" id="nombre-tipo-camisa" placeholder="Tipo de camisa">
+                                        </div>
+                                        <div class="my-5">
+                                            <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-tipo-camisa">Registrar</button>
+                                        </div>
+            
+                                        <div id="rta-tipo-camisa" class="my-2">
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="listado-tipos-camisas">
+                            
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h4>Tipo de pantalón</h4>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div class="form-registro my-3">
+                                    <form action="">
+                                        <div class="my-2">
+                                        <input type="text" class="form-control" id="nombre-tipo-pantalon" placeholder="Tipo de pantalón">
+                                        </div>
+                                        <div class="my-5">
+                                            <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-tipo-pantalon">Registrar</button>
+                                        </div>
+            
+                                        <div id="rta-tipo-pantalon" class="my-2">
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="listado-tipos-pantalones">
+                            
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h4>Tipo de zapato</h4>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div class="form-registro my-3">
+                                    <form action="">
+                                        <div class="my-2">
+                                        <input type="text" class="form-control" id="nombre-tipo-zapato" placeholder="Tipo de zapato">
+                                        </div>
+                                        <div class="my-5">
+                                            <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-tipo-zapato">Registrar</button>
+                                        </div>
+            
+                                        <div id="rta-tipo-zapato" class="my-2">
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="listado-tipos-zapatos">
+                            
+                        </div>
+                    </div>
+                </div>
                         
                     </div>
 
                 </div>
+                
             </div>
+           
 
         </div>
         

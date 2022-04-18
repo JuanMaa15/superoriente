@@ -3047,7 +3047,7 @@ var acciones = {
                                                                 
                
             }else{
-                alert("Hay campos importantes que etsán vacíos");
+                alert("Hay campos importantes que están vacíos");
             }
         }
 
