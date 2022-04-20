@@ -1,4 +1,6 @@
 <?php
+require_once("../../config/conexion.php");
+
 require_once('../../models/DTO/TipoZapatoDTO.php');
 
 class TipoZapatoDAO {
@@ -85,10 +87,10 @@ class TipoZapatoDAO {
 
             $row = $rs->fetch();
 
-            $tipoPantalondto = new TipoZapatoDTO();
-            $tipoPantalondto->constructor(
-                $row['id_tipo_pantalon'],
-                $row['tipo_pantalon']
+            $tipoZapatodto = new TipoZapatoDTO();
+            $tipoZapatodto->constructor(
+                $row['id_tipo_zapato'],
+                $row['tipo_zapato']
             );
         
 
@@ -105,12 +107,12 @@ class TipoZapatoDAO {
 
     // --------------------- Actualizar el tipo de zapato ---------------
 
-    public function actualizarZapato($tipoZapatodto) {
+    public function actualizarTipoZapato($tipoZapatodto) {
 
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_tipo_zapato SET tipo_zapato = ? WHERE id_tipo_zapato = " . $tipoZapatodto->getId_tipo_pantalon();
+            $sql = "UPDATE tbl_tipo_zapato SET tipo_zapato = ? WHERE id_tipo_zapato = " . $tipoZapatodto->getId_tipo_zapato();
             $ps= $cnx->prepare($sql);
 
             $tipo_zapato = $tipoZapatodto->getNombre();

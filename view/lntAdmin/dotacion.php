@@ -288,7 +288,7 @@
                                                             endif;
                                                         endfor;
                                                         ?>
-                                                            <p class="fs-6"><?php echo $listaTiposCamisas[$i]->getNombre() . ": " . $cant_tipo_camisas; ?></p>
+                                                            <p class="fs-6"><?php echo $listaTiposCamisas[$j]->getNombre() . ": " . $cant_tipo_camisas; ?></p>
 
                                                         <?php
                                                     endfor;
@@ -329,7 +329,7 @@
                                                             endif;
                                                         endfor;
                                                         ?>
-                                                            <p class="fs-6"><?php echo $listaTiposPantalones[$i]->getNombre() . ": " . $cant_tipo_pantalones; ?></p>
+                                                            <p class="fs-6"><?php echo $listaTiposPantalones[$j]->getNombre() . ": " . $cant_tipo_pantalones; ?></p>
 
                                                         <?php
                                                     endfor;
@@ -370,7 +370,7 @@
                                                             endif;
                                                         endfor;
                                                         ?>
-                                                            <p class="fs-6"><?php echo $listaTiposZapatos[$i]->getNombre() . ": " . $cant_tipo_zapatos; ?></p>
+                                                            <p class="fs-6"><?php echo $listaTiposZapatos[$j]->getNombre() . ": " . $cant_tipo_zapatos; ?></p>
 
                                                         <?php
                                                     endfor;
@@ -931,7 +931,8 @@
                                 <div class="form-registro my-3">
                                     <form action="">
                                         <div class="my-2">
-                                        <input type="text" class="form-control" id="nombre-tipo-camisa" placeholder="Tipo de camisa">
+                                            <input type="text" class="form-control" id="nombre-tipo-camisa" placeholder="Tipo de camisa">
+                                            <small class="text-center"></small>
                                         </div>
                                         <div class="my-5">
                                             <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-tipo-camisa">Registrar</button>
@@ -959,7 +960,8 @@
                                 <div class="form-registro my-3">
                                     <form action="">
                                         <div class="my-2">
-                                        <input type="text" class="form-control" id="nombre-tipo-pantalon" placeholder="Tipo de pantalón">
+                                            <input type="text" class="form-control" id="nombre-tipo-pantalon" placeholder="Tipo de pantalón">
+                                            <small class="text-danger"></small>
                                         </div>
                                         <div class="my-5">
                                             <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-tipo-pantalon">Registrar</button>
@@ -1172,6 +1174,64 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id="btn-asignar-camisa-empleado">Asignar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-tipos-zapatos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar tipos de zapatos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-tipo-zapato"></div>
+                    <div id="rta-tipo-zapato-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-tipo-zapato'>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editar-tipos-pantalones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar tipos de pantalones</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-tipo-pantalon"></div>
+                    <div id="rta-tipo-pantalon-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-tipo-pantalon'>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="editar-tipos-camisas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar tipos de camisas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-tipo-camisa"></div>
+                    <div id="rta-tipo-camisa-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-tipo-camisa'>Actualizar</button>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 <?php
+require_once("../../config/conexion.php");
 require_once('../../models/DTO/TipoPantalonDTO.php');
 
 class TipoPantalonDAO {
@@ -7,7 +8,7 @@ class TipoPantalonDAO {
     var $rs; /* ResultSet */
     var $st; /* Statement */
 
-    // ---------------------------------- Lista de los tipos de panatalón ------------------
+    // ---------------------------------- Lista de los tipos de pantalón ------------------
 
 
     public function listaTiposPantalones() {

@@ -2,7 +2,7 @@
 var sumaAnchoContRegistro = 0;
 var contF = 0;
 var contH = 0;
-var contenido_area = $("#area").html();
+//var contenido_area = $("#area").html();
 var opc_trabajo_reporte = "";
 
 var acciones = {
@@ -34,6 +34,9 @@ var acciones = {
         $("#btn-registrar-hijo").click(acciones.enviarFormHijo);
         $("#btn-registrar-cesantia").click(acciones.enviarFormCesantia);
         $("#btn-registrar-clase-riesgo").click(acciones.enviarFormClaseRiesgo);
+        $("#btn-registrar-tipo-camisa").click(acciones.enviarFormTipoCamisa);
+        $("#btn-registrar-tipo-pantalon").click(acciones.enviarFormTipoPantalon);
+        $("#btn-registrar-tipo-zapato").click(acciones.enviarFormTipoZapato);
 
         // Asignar dotacion - Sección empleado
 
@@ -279,7 +282,31 @@ var acciones = {
         },function(responseText) {
             $("#listado-cesantias").html(responseText);
         });
-        
+
+        // Tipos de camisas
+
+
+        $.post('../../controller/tipo_camisa/ListaTiposCamisas.php',{
+
+        },function(responseText) {
+            $("#listado-tipos-camisas").html(responseText);
+        });
+
+        // Tipos de pantalones
+
+        $.post('../../controller/tipo_pantalon/ListaTiposPantalones.php',{
+
+        },function(responseText) {
+            $("#listado-tipos-pantalones").html(responseText);
+        });
+
+        // Tipos de zapatos
+
+        $.post('../../controller/tipo_zapato/ListaTiposZapatos.php',{
+
+        },function(responseText) {
+            $("#listado-tipos-zapatos").html(responseText);
+        });
 
     },
 
@@ -1710,6 +1737,70 @@ var acciones = {
     },
 
     // --------------------- Verifica y envía los formularios ---------------------
+    
+    enviarFormTipoZapato : function() {
+
+        var nombre = $("#nombre-tipo-zapato").val();
+
+        if (nombre.length !== 0) {
+
+            $("#nombre-tipo-zapato").next().html("");
+            $.post('../../controller/tipo_zapato/RegistrarTipoZapato.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-tipo-zapato").html(responseText);
+            });
+
+        }else{
+            $("#nombre-tipo-zapato").next().html("Campo vacío, por favor ingrese el tipo de zapato");
+
+        }
+
+    },
+
+    // Tipo pantalón
+
+    enviarFormTipoPantalon : function() {
+        
+        var nombre = $("#nombre-tipo-pantalon").val();
+
+        if (nombre.length !== 0) {
+
+            $("#nombre-tipo-pantalon").next().html("");
+            $.post('../../controller/tipo_pantalon/RegistrarTipoPantalon.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-tipo-pantalon").html(responseText);
+            });
+
+        }else{
+            $("#nombre-tipo-pantalon").next().html("Campo vacío, por favor ingrese el tipo de pantalon");
+
+        }
+
+    },
+
+    // Tipo camisa
+
+    enviarFormTipoCamisa : function() {
+        
+        var nombre = $("#nombre-tipo-camisa").val();
+
+        if (nombre.length !== 0) {
+
+            $("#nombre-tipo-camisa").next().html("");
+            $.post('../../controller/tipo_camisa/RegistrarTipoCamisa.php',{
+                nombre: nombre
+            },function(responseText){
+                $("#rta-tipo-camisa").html(responseText);
+            });
+
+        }else{
+            $("#nombre-tipo-camisa").next().html("Campo vacío, por favor ingrese el tipo de camisa");
+
+        }
+
+    },
 
     // Clase riesgo
 
@@ -3246,6 +3337,39 @@ var acciones = {
 
             // ------------- Editar un registro -----------
 
+            // Tipo de zapato
+
+            case "btn-editar-tipo-zapato":
+            
+                $.post('../../controller/tipo_zapato/EditarTipoZapato.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-tipo-zapato").html(responseText);
+                });
+            break;
+
+            // Tipo de pantalón
+
+            case "btn-editar-tipo-pantalon":
+            
+                $.post('../../controller/tipo_pantalon/EditarTipoPantalon.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-tipo-pantalon").html(responseText);
+                });
+            break;
+
+            // Tipo de camisa
+
+            case "btn-editar-tipo-camisa":
+            
+                $.post('../../controller/tipo_camisa/EditarTipoCamisa.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-tipo-camisa").html(responseText);
+                });
+            break;
+
             //  Cesantía
 
             case "btn-editar-cesantia":
@@ -3535,6 +3659,119 @@ var acciones = {
             break;
 
              // Actualizar un registro
+
+             case "btn-actualizar-tipo-zapato":
+
+                var id_tipo_zapato = $("#id-tipo-zapato-act").val();
+                var nombre = $("#nombre-tipo-zapato-act").val();
+                var validar = 0;
+                if (nombre.length !== 0) {
+        
+                    $("#nombre-tipo-zapato-act").next().html("");
+                    validar++;
+        
+                }else{
+                    $("#nombre-tipo-zapato-act").next().html("Campo vacío, por favor ingrese el tipo de zapato");
+        
+                }
+
+                if (id_tipo_zapato.length !== 0) {
+                    $("#id-tipo-zapato-act").next().html("");
+                    validar++;
+        
+                }else{
+                    $("#id-tipo-zapato-act").next().html("Campo vacío, por favor ingrese el código del tipo de zapato");
+        
+                }
+
+                if (validar === 2) {
+
+                    $.post('../../controller/tipo_zapato/ActualizarTipoZapato.php',{
+                        nombre: nombre,
+                        id_tipo_zapato: id_tipo_zapato
+                    },function(responseText){
+                        $("#rta-tipo-zapato-act").html(responseText);
+                    });
+                }
+
+                
+             break;
+
+             // Actualizar un registro
+
+             case "btn-actualizar-tipo-pantalon":
+
+                var id_tipo_pantalon = $("#id-tipo-pantalon-act").val();
+                var nombre = $("#nombre-tipo-pantalon-act").val();
+                var validar = 0;
+                if (nombre.length !== 0) {
+        
+                    $("#nombre-tipo-pantalon-act").next().html("");
+                    validar++;
+        
+                }else{
+                    $("#nombre-tipo-pantalon-act").next().html("Campo vacío, por favor ingrese el tipo de pantalón");
+        
+                }
+
+                if (id_tipo_pantalon.length !== 0) {
+                    $("#id-tipo-pantalon-act").next().html("");
+                    validar++;
+        
+                }else{
+                    $("#id-tipo-pantalon-act").next().html("Campo vacío, por favor ingrese el código del tipo de pantalón");
+        
+                }
+
+                if (validar === 2) {
+
+                    $.post('../../controller/tipo_pantalon/ActualizarTipoPantalon.php',{
+                        nombre: nombre,
+                        id_tipo_pantalon: id_tipo_pantalon
+                    },function(responseText){
+                        $("#rta-tipo-pantalon-act").html(responseText);
+                    });
+                }
+
+                
+             break;
+
+             case "btn-actualizar-tipo-camisa":
+
+                var id_tipo_camisa = $("#id-tipo-camisa-act").val();
+                var nombre = $("#nombre-tipo-camisa-act").val();
+                var validar = 0;
+                if (nombre.length !== 0) {
+        
+                    $("#nombre-tipo-camisa-act").next().html("");
+                    validar++;
+        
+                }else{
+                    $("#nombre-tipo-camisa-act").next().html("Campo vacío, por favor ingrese el tipo de camisa");
+        
+                }
+
+                if (id_tipo_camisa.length !== 0) {
+                    $("#id-tipo-camisa-act").next().html("");
+                    validar++;
+        
+                }else{
+                    $("#id-tipo-camisa-act").next().html("Campo vacío, por favor ingrese el código del tipo de camisa");
+        
+                }
+
+                if (validar === 2) {
+
+                    $.post('../../controller/tipo_camisa/ActualizarTipoCamisa.php',{
+                        nombre: nombre,
+                        id_tipo_camisa: id_tipo_camisa
+                    },function(responseText){
+                        $("#rta-tipo-camisa-act").html(responseText);
+                    });
+                }
+
+                
+             break;
 
 
              case "btn-actualizar-cesantia":
