@@ -41,6 +41,7 @@
     <script src="https://kit.fontawesome.com/4240342587.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/style.css">
     <script src="../../public/js/jquery.js"></script>
+
     
 </head>
 <body>
@@ -580,11 +581,14 @@
                         <h2 class="titulo-perfil">Gestionar dotación del empleado</h2>
                         <h5 class="texto-claro">Dotación <?php echo $listaUsuario->getTipo_dotacion(); ?></h5>
                         <input type="text" id="campo-tipo-dotacion-empleado" class="d-none" value="<?php echo $listaUsuario->getTipo_dotacion(); ?>">
-                        <input type="text" class="d-none" value="<?php echo $listaPantalones[$i]->getId_pantalon(); ?>">
+                        <!-- <input type="text" class="d-none" value="echo $listaPantalones[$i]->getId_pantalon(); "> -->
+               
                     </div>
                 </div>
                 
                 <div class="row">
+
+                                    
 
                     <?php
                         if ($listaUsuario->getCamisa() == null) :
@@ -1057,9 +1061,12 @@
         </div>
     </div>
 
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
     <script src="../js/app.js"></script>
+
+    
 
 </body>
 </html>

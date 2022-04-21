@@ -594,7 +594,7 @@
                             
                         </div>
                         <div class="col-8">
-                                <div id="listado-clase-riesgo">
+                                <div id="listado-clases-riesgos">
 
                                 </div>
                             </div>
@@ -603,6 +603,26 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="editar-clases-riesgos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar clases de riesgos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-clase-riesgo"></div>
+                    <div id="rta-clase-riesgo-act" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id='btn-actualizar-clase-riesgo'>Actualizar</button>
+                </div>
+            </div>
         </div>
     </div>
 

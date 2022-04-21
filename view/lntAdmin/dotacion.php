@@ -453,7 +453,7 @@
                                         </div>
                                         <div class="my-3">
                                             <h6 class="text-center">Tallas</h6>
-                                            <div class="row justify-content-center" id="cont-check-tallas-camisa">
+                                            <div class="row justify-content-center" id="cont-check-tallas-camisa" >
                                                 <div class="col-3">
                                                     <div class="form-check text-start">
                                                         <input type="checkbox" class="form-check-input checkbox-camisa" id="flexCheckDefault" value="XS">

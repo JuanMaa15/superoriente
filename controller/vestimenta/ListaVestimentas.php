@@ -44,7 +44,7 @@ if (isset($_POST['tipo_dotacion'])) {
 
     if (!$validar_existencias) {
         $cont .= "<div='col'>"
-        ."<h4 class='text-center py-4'>No hay otras ropas de trabajo disponibles</h4>"
+        ."<h4 class='text-center py-4'>No hay otras ropas de trabajo disponibles para este tipo de dotación</h4>"
         ."</div>";
     }
 

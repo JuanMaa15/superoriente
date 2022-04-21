@@ -79,7 +79,7 @@ var acciones = {
         $(".enlace-info-empleado").click(acciones.mostrarContEmpleado);
         $(".cont-info-rapida").click(acciones.desplegarAcordionDotacion);
         $(".accordion-button").click(acciones.mostrarCuerpoAcordion);
-        $(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
+        //$(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
 
@@ -281,6 +281,14 @@ var acciones = {
 
         },function(responseText) {
             $("#listado-cesantias").html(responseText);
+        });
+
+        // Clases de riesgos
+
+        $.post('../../controller/clase_riesgo/ListaClasesRiesgos.php',{
+
+        },function(responseText) {
+            $("#listado-clases-riesgos").html(responseText);
         });
 
         // Tipos de camisas
@@ -3370,6 +3378,17 @@ var acciones = {
                 });
             break;
 
+            // Clase de risgo
+
+            case "btn-editar-clase-riesgo":
+            
+                $.post('../../controller/clase_riesgo/EditarClaseRiesgo.php',{
+                    id:id
+                },function(responseText) {
+                    $("#editar-clase-riesgo").html(responseText);
+                });
+            break;
+
             //  Cesantía
 
             case "btn-editar-cesantia":
@@ -3772,6 +3791,56 @@ var acciones = {
 
                 
              break;
+
+             case "btn-actualizar-clase-riesgo":
+
+                var id_clase_riesgo = $("#id-clase-riesgo-act").val();
+                var nombre = $("#nombre-clase-riesgo-act").val();
+                var porcentaje = $("#porcentaje-clase-riesgo-act").val();
+
+                var validar = 0;
+                if (nombre.length !== 0) {
+        
+                    $("#nombre-clase-riesgo-act").next().html("");
+                    validar++;
+        
+                }else{
+                    $("#nombre-clase-riesgo-act").next().html("Campo vacío, por favor ingrese la clase de riesgo");
+        
+                }
+
+                if (id_clase_riesgo.length !== 0) {
+                    $("#id-clase-riesgo-act").next().html("");
+                    validar++;
+        
+                }else{
+                    $("#id-clase-riesgo-act").next().html("Campo vacío, por favor ingrese el código de la clase de riesgo");
+        
+                }
+
+                if (porcentaje.length !== 0) {
+                    $("#porcentaje-clase-riesgo-act").next().html("");
+                    validar++;
+        
+                }else{
+                    $("#porcentaje-clase-riesgo-act").next().html("Campo vacío, por favor ingrese el porcentaje");
+        
+                }
+
+                if (validar === 2) {
+
+                    $.post('../../controller/clase_riesgo/ActualizarClaseRiesgo.php',{
+                        nombre: nombre,
+                        porcentaje: porcentaje,
+                        id_clase_riesgo: id_clase_riesgo
+                    },function(responseText){
+                        $("#rta-clase-riesgo-act").html(responseText);
+                    });
+                }
+
+                
+             break;
+
 
 
              case "btn-actualizar-cesantia":
