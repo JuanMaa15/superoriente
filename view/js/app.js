@@ -2,7 +2,7 @@
 var sumaAnchoContRegistro = 0;
 var contF = 0;
 var contH = 0;
-//var contenido_area = $("#area").html();
+var contenido_area = $("#area").html();
 var opc_trabajo_reporte = "";
 
 var acciones = {

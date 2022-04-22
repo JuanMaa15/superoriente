@@ -19,6 +19,8 @@
     require_once ('../../models/DAO/CesantiaDAO.php');
     require_once ('../../models/DAO/ClaseRiesgoDAO.php');
     require_once ('../../models/DAO/TipoDotacionDAO.php');
+    require_once ('../../models/DAO/LugarResidenciaDAO.php');
+
 
     // Instanciar los objetos
     $perfildao = new PerfilDAO();
@@ -41,6 +43,7 @@
     $tipoDotaciondao = new TipoDotacionDAO();
     $cesantiadao = new CesantiaDAO();
     $claseRiesgodao = new ClaseRiesgoDAO();
+    $lugarResidenciadao = new LugarResidenciaDAO();
 
 
     // Traer las listas de las tablas necesarias para realizar un registro
@@ -65,6 +68,7 @@
     $listaTiposDotaciones = $tipoDotaciondao->listaTiposDotaciones();
     $listaCesantias = $cesantiadao->listaCesantias();
     $listaClasesRiesgos = $claseRiesgodao->listaClasesRiesgos();
+    $listaLugaresResidencia = $lugarResidenciadao->ListaLugaresResidencia();
 
 
     if (isset($_SESSION['id_admin'])) {
@@ -286,7 +290,16 @@
                                                         <small class="text-danger"></small>
                                                     </div>
                                                     <div class="col my-3">
-                                                        <input class="form-control" id="lugar_residencia" placeholder="Lugar de residencia"></input>
+                                                        <select class="form-select" id="lugar_residencia">
+                                                            <option value="">Lugar de residencia</option>
+                                                            <?php
+                                                                for ($i=0; $i < count($listaLugaresResidencia); $i++) { 
+                                                                    ?>
+                                                                        <option value="<?php echo $listaLugaresResidencia[$i]->getId_lugar_residencia(); ?>"><?php echo $listaLugaresResidencia[$i]->getNombre(); ?></option>
+                                                                    <?php
+                                                                }
+                                                            ?>
+                                                        </select>
                                                         <small class="text-danger"></small>
                                                     </div>
                                                 </div>
