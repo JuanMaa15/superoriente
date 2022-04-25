@@ -627,11 +627,16 @@ small {
     transition: all 0.5s ease;
 }
 
-#campo-cant {
+#campo-cant,
+#cant-filtros-reporte {
     width: 2.2rem;
     margin-left: 0.3rem;
     text-align: center;
     display: inline-block;
+}
+
+#cant-filtros-reporte {
+    width: 3rem;
 }
 
 /*-------------- Resposive ---------------*/

@@ -38,7 +38,7 @@ var acciones = {
         $("#btn-registrar-tipo-pantalon").click(acciones.enviarFormTipoPantalon);
         $("#btn-registrar-tipo-zapato").click(acciones.enviarFormTipoZapato);
 
-        // Asignar dotacion - Sección empleado
+        // Asignar dotación - Sección empleado
 
         $("#bloque-agregar-camisa-empleado").click(acciones.listaCamisaEmpleado);
         $("#bloque-agregar-pantalon-empleado").click(acciones.listaPantalonEmpleado);
@@ -79,6 +79,7 @@ var acciones = {
         $(".enlace-info-empleado").click(acciones.mostrarContEmpleado);
         $(".cont-info-rapida").click(acciones.desplegarAcordionDotacion);
         $(".accordion-button").click(acciones.mostrarCuerpoAcordion);
+        $("#btn-mostrar-filtros").click(acciones.mostrarFiltrosReporte);
         //$(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
@@ -315,6 +316,58 @@ var acciones = {
         },function(responseText) {
             $("#listado-tipos-zapatos").html(responseText);
         });
+
+    },
+
+
+    mostrarFiltrosReporte : function() {
+
+        var cant_filtros = $("#cant-filtros-reporte").val();
+         if (cant_filtros.length !== 0 ) {
+            cant_filtros = parseInt(cant_filtros);
+            if (cant_filtros !== 0) {
+                $("#btn-mostrar-filtros").next().html("");
+                var cont_filtros = '';
+                for (let i = 0; i < cant_filtros; i++) {
+                    cont_filtros += `<div class='col-3 my-3'>
+                                        <select class='listado-campos-usuario form-select' id='listado-campos` + i + `'>
+                                            <option selected>Campos del empleado</option>
+                                            <option value='tbl_casa' id='tbl_casa'>Tipo de vivienda</option>
+                                            <option value='estrato' id='estrato'>Estrato</option>
+                                            <option value='tbl_genero' id='tbl_genero'>Género</option>
+                                            <option value='tbl_lugar_residencia' id='tbl_lugar_residencia'>Lugar de residencia</option>
+                                            <option value='tbl_nivel_academico' id='tbl_nivel_academico'>Nivel academico</option>
+                                            <option value='tbl_estado_civil' id='tbl_estado_civil'>Estado civil</option>
+                                            <option value='tbl_eps' id='tbl_eps'>EPS</option>
+                                            <option value='tbl_tipo_sangre_rh' id='tbl_tipo_sangre_rh'>Tipo de sangre y RH</option>
+                                            <option value='tbl_sucursal' id='tbl_sucursal'>Sucursal</option>
+                                            <option value='tbl_tipo_contrato' id='tbl_tipo_contrato'>Tipo de contrato</option>
+                                            <option value='tbl_cesantia' id='tbl_cesantia'>Cesantía</option>
+                                            <option value='tbl_clase_riesgo' id='tbl_clase_riesgo'>Clase de riesgo</option>
+                                            <option value='tbl_seccion' id='tbl_seccion'>Sección</option>
+                                            <option value='tbl_area' id='tbl_area'>Area</option>
+                                            <option value='tbl_cargo' id='tbl_cargo'>Cargo</option>
+                                            <option value='tbl_pension' id='tbl_pension'>Pensión</option>
+                                            <option value='tbl_tipo_dotacion' id='tbl_tipo_dotacion'>Tipo de dotación</option>
+                                            <option value='tbl_hijo' id='tbl_hijo'>Hijos</option>
+                                            <option value='tbl_estado' id='tbl_estado'>Estado</option>
+                                        </select>
+                                        <div id='listado-datos`+ i + `'></div>
+                                    </div>`;
+                    
+                }
+
+                $("#cont-filtros-reporte").html(cont_filtros);
+
+                
+            }else{
+                $("#btn-mostrar-filtros").next().html("Ingrese la cantidad de filtros a usar para el reporte");
+
+            }
+            
+         }else{
+            $("#btn-mostrar-filtros").next().html("Ingrese la cantidad de filtros a usar para el reporte");
+         }
 
     },
 

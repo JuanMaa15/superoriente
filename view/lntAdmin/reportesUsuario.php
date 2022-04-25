@@ -298,6 +298,34 @@
                         </div>
                         
                     </div>
+                    <div id="reportes-empleado" class="my-4">
+                        <div class="row">
+                            <div class="col text-center">
+                                <h2>Reportes del empleado con filtros</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col d-flex align-items-center">
+                                Cantidad de filtros a usar: 
+                                <input type="text" id="cant-filtros-reporte" class="form-control" maxlength="2" >
+                                <button class="btn btn-verde p-1 ms-2" id="btn-mostrar-filtros" >Enviar</button>
+                                <small class="text-danger ms-3 d-block"></small>
+                            </div>
+                        </div>
+                        <div class="row" id="cont-filtros-reporte">
+                                
+                        </div>
+                        <div class="my-3 d-flex justify-content-center d-none">
+                            <button class="text-center btn btn-verde" id="btn-mostrar-reporte">Enviar</button>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="">
+
+                            </div>
+                        </div>
+                    </div>
+                    
 
                 </div>
             </div>
