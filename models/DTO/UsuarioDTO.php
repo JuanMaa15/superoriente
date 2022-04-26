@@ -3,7 +3,12 @@
 
 class UsuarioDTO {
 
+    // Variables para traer los datos de otra tabla
+    private $id_campo;
+    private $nombre_campo;
+    // -------
 
+    // Variables de los campos del usuario
 
     private $id_usuario;
     private $tipo_documento;
@@ -65,6 +70,27 @@ class UsuarioDTO {
 
     function __construct() {
         
+    }
+
+    function constructorTabla($id_campo, $nombre_campo) {
+        $this->id_campo = $id_campo;
+        $this->nombre_campo = $nombre_campo;
+    }
+
+    function getId_campo() {
+        return $this->id_campo;
+    }
+
+    function getNombre_campo() {
+        return $this->nombre_campo;
+    }
+
+    function setId_campo($id_campo) {
+        $this->id_campo = $id_campo;
+    }
+
+    function setNombre_campo($nombre_campo) {
+        $this->nombre_campo = $nombre_campo;
     }
 
     

@@ -4,6 +4,7 @@ var contF = 0;
 var contH = 0;
 var contenido_area = $("#area").html();
 var opc_trabajo_reporte = "";
+var cant_filtros;
 
 var acciones = {
     listo : function() {
@@ -67,7 +68,7 @@ var acciones = {
         $("#remover-hijo").click(acciones.removerhijo);
         $("#btn-buscar-fecha").click(acciones.buscarEmpleadoFecha);
         $("#btn-buscar-salario").click(acciones.buscarEmpleadoSalario);
-        $("#btn-buscar-opcion-trabajo").click(acciones.buscarEmpleadoOpcTrabajo)
+        $("#btn-buscar-opcion-trabajo").click(acciones.buscarEmpleadoOpcTrabajo);
 
         $("input:radio[name=opcTrabajo]").click(acciones.habilitarComboBox);
         
@@ -80,6 +81,8 @@ var acciones = {
         $(".cont-info-rapida").click(acciones.desplegarAcordionDotacion);
         $(".accordion-button").click(acciones.mostrarCuerpoAcordion);
         $("#btn-mostrar-filtros").click(acciones.mostrarFiltrosReporte);
+        $(".listado-campos-usuario").click(acciones.mostrarDatosTabla);
+        $("#btn-generar-listado-reporte").click(acciones.mostrarListaEmpleadosFiltro);
         //$(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
@@ -319,10 +322,88 @@ var acciones = {
 
     },
 
+    mostrarListaEmpleadosFiltro : function() {
+
+        var validar_listas = true;
+        var validar_campos = true;
+        var dato = [];
+        var valor_listas = [];
+         var array = $(".listado-campos-usuario").toArray();
+        
+        console.log(array.length);
+
+        for(let i = 0; i < array.length; i++){
+            
+            if (array[i].value.length !== 0) {
+                valor_listas[i] = array[i].value;
+            }else{
+                validar_listas = false;
+            }
+            
+        };
+
+        if (validar_listas) {
+            for (let i = 0; i < valor_listas.length; i++) {
+                
+                dato[i] = $(".radio_" + valor_listas[i].value + ":checked").val();
+                if (dato.length === 0) {
+                    validar_campos = false; 
+                }
+            }
+
+            if (validar_campos) {
+                for (let i = 0; i < valor_listas.length; i++) {
+                    dato[i] = $(".radio_" + valor_listas[i] + ":checked").val();    
+                }
+
+                $.post('../../controller/usuario/ListaEmpleadoFiltros.php',{
+                    dato:dato,
+                    lista: valor_listas
+                },function(responseText){
+                    $("#listado-empleado-filtros").html(responseText);
+                });
+
+            }else{
+                alert("Aún hay campos sin seleccionar");
+            }
+        }else{
+            alert("Aún hay listas sin seleccionar");
+        }
+ 
+    },
+
+    mostrarDatosTabla : function () {
+       
+        var id_listado_campos = $(this).attr("id");
+        var tabla = $(this).val();
+
+        if (tabla.length !== 0) {
+
+            for (let i = 0; i < cant_filtros; i++) {
+                    
+                if (id_listado_campos === 'listado-campos' + i) {
+    
+                    $.post('../../controller/usuario/MostrarDatosTabla.php',{
+                        tabla: tabla
+    
+                    },function(responseText){
+                        $("#listado-datos" + i).html(responseText);
+                    });
+    
+                    console.log("Coinciden!");
+                    $(document).ready(acciones.listo);
+    
+                }
+            
+            }
+
+        }  
+
+    },
 
     mostrarFiltrosReporte : function() {
 
-        var cant_filtros = $("#cant-filtros-reporte").val();
+         cant_filtros = $("#cant-filtros-reporte").val();
          if (cant_filtros.length !== 0 ) {
             cant_filtros = parseInt(cant_filtros);
             if (cant_filtros !== 0) {
@@ -331,7 +412,7 @@ var acciones = {
                 for (let i = 0; i < cant_filtros; i++) {
                     cont_filtros += `<div class='col-3 my-3'>
                                         <select class='listado-campos-usuario form-select' id='listado-campos` + i + `'>
-                                            <option selected>Campos del empleado</option>
+                                            <option value='' selected>Campos del empleado</option>
                                             <option value='tbl_casa' id='tbl_casa'>Tipo de vivienda</option>
                                             <option value='estrato' id='estrato'>Estrato</option>
                                             <option value='tbl_genero' id='tbl_genero'>Género</option>
@@ -352,13 +433,26 @@ var acciones = {
                                             <option value='tbl_hijo' id='tbl_hijo'>Hijos</option>
                                             <option value='tbl_estado' id='tbl_estado'>Estado</option>
                                         </select>
-                                        <div id='listado-datos`+ i + `'></div>
+                                        <div id='listado-datos`+ i + `' class='mt-3 ms-1'></div>
+                                        
                                     </div>`;
                     
                 }
 
+                cont_filtros +=`<div class='row mt-2'>
+                                    <div class='col d-flex justify-content-center'>
+                                        <button class='btn btn-verde' id='btn-generar-listado-reporte'>Generar lista</button>
+                                    </div>
+                                </div>
+                                <div class='row mt-4'>
+                                    <div class='col'>
+                                        <div id='listado-empleado-filtros'></div>
+                                    </div>
+                                </div>`;
+
                 $("#cont-filtros-reporte").html(cont_filtros);
 
+                $(document).ready(acciones.listo);
                 
             }else{
                 $("#btn-mostrar-filtros").next().html("Ingrese la cantidad de filtros a usar para el reporte");
@@ -778,7 +872,7 @@ var acciones = {
 
         var cant = parseInt($("#campo-cant-fija").val());
         var seleccionadas = $(".checkbox-empleados:checked").length;
-        var restantes = cant - seleccionadas; 
+        var restantes = cant - seleccionadas0; 
 
         $("#campo-cant").val(restantes);
 
