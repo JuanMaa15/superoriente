@@ -5,6 +5,8 @@ var contH = 0;
 var contenido_area = $("#area").html();
 var opc_trabajo_reporte = "";
 var cant_filtros;
+var filtros_seleccionados = []; 
+
 
 var acciones = {
     listo : function() {
@@ -83,6 +85,7 @@ var acciones = {
         $("#btn-mostrar-filtros").click(acciones.mostrarFiltrosReporte);
         $(".listado-campos-usuario").click(acciones.mostrarDatosTabla);
         $("#btn-generar-listado-reporte").click(acciones.mostrarListaEmpleadosFiltro);
+        $(".radio_listas").click(acciones.MostrarFiltrosSeleccionados);
         //$(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
@@ -138,11 +141,11 @@ var acciones = {
 
 
         // Usuarios
-        $.post('../../controller/usuario/ListaUsuarios.php',{
+        /* $.post('../../controller/usuario/ListaUsuarios.php',{
 
         }, function(responseText){
             $("#listado-usuarios").html(responseText);
-        });
+        }); */
 
         $.post('../../controller/usuario/ListaEnlaces.php',{
 
@@ -322,6 +325,37 @@ var acciones = {
 
     },
 
+    MostrarFiltrosSeleccionados : function() {
+
+        var clase_radio = $(this).attr("class");
+        var dato = $(this).attr("placeholder");
+        var cant_caracteres_clase = clase_radio.length;
+        var lista;
+        if (clase_radio.indexOf("tbl") > -1) {
+             lista = clase_radio.substring(40, cant_caracteres_clase); 
+        }else{
+            lista = clase_radio.substring(36, cant_caracteres_clase); 
+        }
+
+        lista = lista.charAt(0).toUpperCase() + lista.slice(1);
+
+        for (let i = 0; i < cant_filtros; i++) {
+            if ($(this).closest("#listado-datos" + i).prev().attr("id") === 'listado-campos' + i) {
+                filtros_seleccionados[i] = lista + ": " + dato + " ---- "; 
+                console.log("entra");
+                
+
+            }       
+
+            
+        }
+
+        $("#filtros-seleccionados").html(filtros_seleccionados);
+
+        
+ 
+    },
+
     mostrarListaEmpleadosFiltro : function() {
 
         var validar_listas = true;
@@ -329,8 +363,6 @@ var acciones = {
         var dato = [];
         var valor_listas = [];
          var array = $(".listado-campos-usuario").toArray();
-        
-        console.log(array.length);
 
         for(let i = 0; i < array.length; i++){
             
@@ -340,13 +372,13 @@ var acciones = {
                 validar_listas = false;
             }
             
-        };
+        }
 
         if (validar_listas) {
             for (let i = 0; i < valor_listas.length; i++) {
-                
-                dato[i] = $(".radio_" + valor_listas[i].value + ":checked").val();
-                if (dato.length === 0) {
+
+                dato[i] = $(".radio_" + valor_listas[i] + ":checked").val();
+                if (dato[i] === undefined) {
                     validar_campos = false; 
                 }
             }
@@ -356,6 +388,8 @@ var acciones = {
                     dato[i] = $(".radio_" + valor_listas[i] + ":checked").val();    
                 }
 
+                $("#rta-filtros-empleado").html("");
+
                 $.post('../../controller/usuario/ListaEmpleadoFiltros.php',{
                     dato:dato,
                     lista: valor_listas
@@ -364,10 +398,23 @@ var acciones = {
                 });
 
             }else{
-                alert("Aún hay campos sin seleccionar");
+                $("#rta-filtros-empleado").html(`<div class='row mt-2'>
+                                                    <div class='col' id=''>
+                                                        <div class="alert alert-danger" role="alert">
+                                                         Aún hay campos sin seleccionar
+                                                        </div>
+                                                    </div>
+                                                </div>`);
+                                                
             }
         }else{
-            alert("Aún hay listas sin seleccionar");
+            $("#rta-filtros-empleado").html(`<div class='row mt-2'>
+                                                    <div class='col' id=''>
+                                                        <div class="alert alert-danger" role="alert">
+                                                        Aún hay listas sin seleccionar
+                                                        </div>
+                                                    </div>
+                                                </div>`);
         }
  
     },
@@ -388,10 +435,8 @@ var acciones = {
     
                     },function(responseText){
                         $("#listado-datos" + i).html(responseText);
-                    });
-    
-                    console.log("Coinciden!");
-                    $(document).ready(acciones.listo);
+                        $(document).ready(acciones.listo);
+                    });                
     
                 }
             
@@ -439,9 +484,16 @@ var acciones = {
                     
                 }
 
-                cont_filtros +=`<div class='row mt-2'>
+                cont_filtros +=` <div id='rta-filtros-empleado'></div>
+                                <div class='row mt-2'>
                                     <div class='col d-flex justify-content-center'>
                                         <button class='btn btn-verde' id='btn-generar-listado-reporte'>Generar lista</button>
+                                    </div>
+                                </div>
+                                <div class='row my-2'>
+                                    <div class='col texto-claro'>
+                                        <h6 class='titulo-campos '>Selecciones:</h6>
+                                        <div id='filtros-seleccionados'></div>
                                     </div>
                                 </div>
                                 <div class='row mt-4'>

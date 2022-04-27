@@ -18,7 +18,7 @@ if (isset($_POST['tabla'])) {
 
         for ($i=0; $i < count($listadoTabla); $i++) { 
             $datos .= "<div class='form-check'>"
-            . "<input class='form-check-input radio_" . $tabla . "' type='radio' name='flexRadioDefault' value='" . $listadoTabla[$i]->getId_campo() . "'>"
+            . "<input class='form-check-input radio_listas radio_" . $tabla . "' type='radio' placeholder='" . $listadoTabla[$i]->getNombre_campo() . "' name='flexRadioDefault' value='" . $listadoTabla[$i]->getId_campo() . "'>"
             . "<label class='form-check-label' for='flexRadioDefault1'>"
             . $listadoTabla[$i]->getNombre_campo()
             . "</label>"
@@ -28,7 +28,7 @@ if (isset($_POST['tabla'])) {
     }else{
         for ($i=1; $i <= 6; $i++) { 
             $datos .= "<div class='form-check'>"
-            . "<input class='form-check-input' type='radio' name='flexRadioDefault' value='" . $i . "'>"
+            . "<input class='form-check-input radio_listas radio_estrato' type='radio' name='flexRadioDefault' value='" . $i . "'>"
             . "<label class='form-check-label' for='flexRadioDefault1'>"
             . $i
             . "</label>"

@@ -1670,7 +1670,7 @@ class UsuarioDAO {
                     $row['telefono_movil'],
                     $row['tipo_casa'],
                     $row['estrato'],
-                    $row['id_genero'],
+                    $row['genero'],
                     $row['fecha_nacimiento'],
                     $row['edad'],
                     $row['direccion'],

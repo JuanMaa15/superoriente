@@ -7,6 +7,8 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
     $dato = $_POST['dato'];
     $lista = $_POST['lista'];
     $validar_existencias = false;
+    $campos = array();
+    $cant_caracteres = "";
 
     $usuariodao = new UsuarioDAO();
     $revisar = "";
@@ -34,10 +36,18 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
     for ($i=0; $i < count($lista); $i++) { 
 
         //$dato[$i] = intval($dato[$i]);
+        if (str_contains($lista[$i], "tbl_")) {
+            $cant_caracteres = strlen($lista[$i]);
+            $campos[$i] = substr($lista[$i], 4, $cant_caracteres);
+        }else{
+            $campos[$i] = $lista[$i];
+        }
+        
 
         switch ($lista[$i]) {
             case 'tbl_tipo_documento':
                 $tipo_documento = "AND tu.id_tipo_documento = " . $dato[$i];
+                
             break;
             case 'tbl_casa':
                 $tipo_vivienda = "AND tu.id_casa = " . $dato[$i];
@@ -124,18 +134,30 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
         ."<td>" . $listaUsuarios[$i]->getSucursal() . "</td>"
         ."<td>" . $listaUsuarios[$i]->getTipo_contrato() . "</td>"
         ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
-        ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+        ."<td>" . $listaUsuarios[$i]->getGenero() . "</td>"
         . "</tr>";
 
         $validar_existencias = true;
     }
 
+    $btnReporte = "";
+
     if (!$validar_existencias) {
         $lista .= "<td colspan='8' class='text-center'>No hay empleados con esos filtros</td>";
+    }else{
+        $btnReporte = "<form action='../../controller/reportes/ReporteFiltrosUsuario.php' method='post'>";
+
+        for ($i=0; $i < count($campos); $i++) { 
+            $btnReporte .= "<input type='text' name='" . $campos[$i]. "' value='" . $dato[$i] . "' class='d-none'>";
+        }
+
+        $btnReporte .= "<button class='btn btn-verde' name='btn-reporte-empleados-filtros'>Generar reporte</button>"
+        ."</form>";
     }
 
     $lista .= "</tbody>"
-    . "</table>";
+    . "</table>"
+    . $btnReporte;
 
     echo $lista;
 
