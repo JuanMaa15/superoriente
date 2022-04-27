@@ -6,6 +6,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
 
     $dato = $_POST['dato'];
     $lista = $_POST['lista'];
+    $validar_existencias = false;
 
     $usuariodao = new UsuarioDAO();
     $revisar = "";
@@ -32,63 +33,65 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
     $estado = "";
     for ($i=0; $i < count($lista); $i++) { 
 
+        //$dato[$i] = intval($dato[$i]);
+
         switch ($lista[$i]) {
             case 'tbl_tipo_documento':
-                $tipo_documento = "AND id_tipo_documento = " . $dato[$i];
+                $tipo_documento = "AND tu.id_tipo_documento = " . $dato[$i];
             break;
             case 'tbl_casa':
-                $tipo_vivienda = "AND id_casa = " . $dato[$i];
+                $tipo_vivienda = "AND tu.id_casa = " . $dato[$i];
             break;
             case 'estrato':
-                $estrato = "AND estrato = " . $dato[$i];
+                $estrato = "AND tu.estrato = " . $dato[$i];
             break;
             case 'tbl_genero':
-                $genero = "AND id_genero = " . $dato[$i];
+                $genero = "AND tu.id_genero = " . $dato[$i];
             break;
             case 'tbl_lugar_residencia':
-                $lugar_residencia = "AND id_lugar_residencia = " . $dato[$i];
+                $lugar_residencia = "AND tu.id_lugar_residencia = " . $dato[$i];
             break;
             case 'tbl_nivel_academico':
-                $nivel_academico = "AND id_nivel_academico = " . $dato[$i];
+                $nivel_academico = "AND tu.id_nivel_academico = " . $dato[$i];
             break;
             case 'tbl_estado_civil':
-                $estado_civil = "AND id_estado_civil = " . $dato[$i];
+                $estado_civil = "AND tu.id_estado_civil = " . $dato[$i];
             break;
             case 'tbl_eps':
-                $eps = "AND id_eps = " . $dato[$i];
+                $eps = "AND tu.id_eps = " . $dato[$i];
             break;
             case 'tbl_tipo_sangre_rh':
-                $tipo_sangre_rh = "AND id_tipo_sangre_rh = " . $dato[$i];
+                $tipo_sangre_rh = "AND tu.id_tipo_sangre_rh = " . $dato[$i];
             break;
             case 'tbl_sucursal':
-                $sucursal = "AND id_sucursal = " . $dato[$i];
+                $sucursal = "AND tu.id_sucursal = " . $dato[$i];
             break;
             case 'tbl_tipo_contrato':
-                $tipo_contrato = "AND tbl_tipo_contrato = " . $dato[$i];
+                $tipo_contrato = "AND tu.id_tipo_contrato = " . $dato[$i];
             break;
             case 'tbl_cesantia':
-                $cesantia = "AND id_cesantia = " . $dato[$i];
+                $cesantia = "AND tu.id_cesantia = " . $dato[$i];
             break;
             case 'tbl_clase_riesgo':
-                $clase_riesgo = "AND id_clase_riesgo = " . $dato[$i];
+                $clase_riesgo = "AND tu.id_clase_riesgo = " . $dato[$i];
             break;
             case 'tbl_seccion':
-                $seccion = "AND id_seccion = " . $dato[$i];
+                $seccion = "AND tu.id_seccion = " . $dato[$i];
             break;
             case 'tbl_area':
-                $area = "AND id_area = " . $dato[$i];
+                $area = "AND tu.id_area = " . $dato[$i];
             break;
             case 'tbl_cargo':
-                $cargo = "AND id_cargo = " . $dato[$i];
+                $cargo = "AND tu.id_cargo = " . $dato[$i];
             break;
             case 'tbl_pension':
-                $pension = "AND id_pension = " . $dato[$i];
+                $pension = "AND tu.id_pension = " . $dato[$i];
             break;
             case 'tbl_tipo_dotacion':
-                $tipo_dotacion = "AND id_tipo_dotacion = " . $dato[$i];
+                $tipo_dotacion = "AND tu.id_tipo_dotacion = " . $dato[$i];
             break;
             case 'tbl_estado':
-                $estado = "AND id_estado = " . $dato[$i];
+                $estado = "AND tu.id_estado = " . $dato[$i];
             break;
             
         }
@@ -123,9 +126,17 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
         ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
         ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
         . "</tr>";
+
+        $validar_existencias = true;
+    }
+
+    if (!$validar_existencias) {
+        $lista .= "<td colspan='8' class='text-center'>No hay empleados con esos filtros</td>";
     }
 
     $lista .= "</tbody>"
     . "</table>";
+
+    echo $lista;
 
 }
