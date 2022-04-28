@@ -6,7 +6,7 @@ var contenido_area = $("#area").html();
 var opc_trabajo_reporte = "";
 var cant_filtros;
 var filtros_seleccionados = []; 
-
+var opc_anterior = [];
 
 var acciones = {
     listo : function() {
@@ -136,6 +136,12 @@ var acciones = {
         $("#cantidad-camisa-act").click(acciones.verificarCampoEstadoCamisaAct);
         $("#estado-camisa").click(acciones.verificarCampoCantidadCamisa);
         $("#estado-camisa-act").click(acciones.verificarCampoCantidadCamisaAct);
+
+    },
+
+    listados : function() {
+
+        
         
         // --------------- Se muestran las tablas con los datos ----------------
 
@@ -326,7 +332,7 @@ var acciones = {
     },
 
     MostrarFiltrosSeleccionados : function() {
-
+        
         var clase_radio = $(this).attr("class");
         var dato = $(this).attr("placeholder");
         var cant_caracteres_clase = clase_radio.length;
@@ -344,13 +350,14 @@ var acciones = {
                 filtros_seleccionados[i] = lista + ": " + dato + " ---- "; 
                 console.log("entra");
                 
-
             }       
-
-            
         }
 
         $("#filtros-seleccionados").html(filtros_seleccionados);
+
+        console.log("funciona");
+
+        $(document).ready(acciones.listo);
 
         
  
@@ -388,6 +395,8 @@ var acciones = {
                     dato[i] = $(".radio_" + valor_listas[i] + ":checked").val();    
                 }
 
+                $(document).ready(acciones.listo);
+
                 $("#rta-filtros-empleado").html("");
 
                 $.post('../../controller/usuario/ListaEmpleadoFiltros.php',{
@@ -423,26 +432,34 @@ var acciones = {
        
         var id_listado_campos = $(this).attr("id");
         var tabla = $(this).val();
+        
 
         if (tabla.length !== 0) {
-
+           
             for (let i = 0; i < cant_filtros; i++) {
-                    
+                
                 if (id_listado_campos === 'listado-campos' + i) {
+                    if (tabla !== opc_anterior[i]) {
+                        $.post('../../controller/usuario/MostrarDatosTabla.php',{
+                            tabla: tabla
+        
+                        },function(responseText){
+                            $("#listado-datos" + i).html(responseText);
+                            //console.log(tabla, opc_anterior[i])
+                            //console.log("No repetido");
+                            $(document).ready(acciones.listo);
+                            opc_anterior[i] = tabla;
+                                      
+                        });
+                    }    
+                            
     
-                    $.post('../../controller/usuario/MostrarDatosTabla.php',{
-                        tabla: tabla
-    
-                    },function(responseText){
-                        $("#listado-datos" + i).html(responseText);
-                        $(document).ready(acciones.listo);
-                    });                
-    
-                }
-            
+                }      
             }
 
         }  
+
+        
 
     },
 
@@ -477,10 +494,15 @@ var acciones = {
                                             <option value='tbl_tipo_dotacion' id='tbl_tipo_dotacion'>Tipo de dotación</option>
                                             <option value='tbl_hijo' id='tbl_hijo'>Hijos</option>
                                             <option value='tbl_estado' id='tbl_estado'>Estado</option>
+                                            <option value='salario' id='salario'>Salario</option>
+                                            <option value='fecha' id='fecha'>Fechas</option>
                                         </select>
                                         <div id='listado-datos`+ i + `' class='mt-3 ms-1'></div>
                                         
                                     </div>`;
+
+                        opc_anterior[i] = ""; 
+                        filtros_seleccionados[i] = "";
                     
                 }
 
@@ -503,8 +525,9 @@ var acciones = {
                                 </div>`;
 
                 $("#cont-filtros-reporte").html(cont_filtros);
-
+                
                 $(document).ready(acciones.listo);
+           
                 
             }else{
                 $("#btn-mostrar-filtros").next().html("Ingrese la cantidad de filtros a usar para el reporte");
@@ -5361,7 +5384,9 @@ var acciones = {
 
 // ------------ Se ejecutan las funciones descritas cuando se haga click en cualquier parte del documento ----
 $(document).click(acciones.accionesClick);
-// --------- Ejecuta todos los procesos cuando el documento este listo ----------------
+// --------- Ejecuta todos los procesos de eventos cuando el documento este listo ----------------
 $(document).ready(acciones.listo);
+// --------- Ejecuta todos los procesos para mostrar las tablas de base de datos cuando el documento este listo ----------------
+$(document).ready(acciones.listados);
 // --------- Ejecut --------------
 $(window).resize(acciones.redimensionar);
