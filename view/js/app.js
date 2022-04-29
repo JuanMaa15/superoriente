@@ -86,6 +86,9 @@ var acciones = {
         $(".listado-campos-usuario").click(acciones.mostrarDatosTabla);
         $("#btn-generar-listado-reporte").click(acciones.mostrarListaEmpleadosFiltro);
         $(".radio_listas").click(acciones.MostrarFiltrosSeleccionados);
+        $(".input_salario").keyup(acciones.MostrarSalariosIngresados);
+        $(".input_hijos").keyup(acciones.MostrarHijosIngresados);
+        $(".input_fecha").on('change', acciones.MostrarFechasIngresadas);
         //$(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
@@ -331,6 +334,52 @@ var acciones = {
 
     },
 
+    MostrarHijosIngresados : function () {
+        var nro_hijos = $(this).val();
+
+        for (let i = 0; i < cant_filtros; i++) {
+            if ($(this).closest("#listado-datos" + i).prev().attr("id") === 'listado-campos' + i) {
+                filtros_seleccionados[i] = "Hijos: " + nro_hijos + " ---- "; 
+                
+            }       
+        }
+
+        $("#filtros-seleccionados").html(filtros_seleccionados);
+
+    },
+
+    MostrarFechasIngresadas : function() {
+
+        var fecha1 = $("#input_fecha1").val();
+        var fecha2 = $("#input_fecha2").val();
+
+        for (let i = 0; i < cant_filtros; i++) {
+            if ($(this).closest("#listado-datos" + i).prev().attr("id") === 'listado-campos' + i) {
+                filtros_seleccionados[i] = "Fecha de ingreso entre " + fecha1 + " - " + fecha2 + " ---- "; 
+                
+            }       
+        }
+
+        $("#filtros-seleccionados").html(filtros_seleccionados);
+
+    },
+
+    MostrarSalariosIngresados : function() {
+
+        var salario1 = $("#input_salario1").val();
+        var salario2 = $("#input_salario2").val();
+
+        for (let i = 0; i < cant_filtros; i++) {
+            if ($(this).closest("#listado-datos" + i).prev().attr("id") === 'listado-campos' + i) {
+                filtros_seleccionados[i] = "Salario entre " + salario1 + " - " + salario2 + " ---- "; 
+                
+            }       
+        }
+
+        $("#filtros-seleccionados").html(filtros_seleccionados);
+
+    },
+
     MostrarFiltrosSeleccionados : function() {
         
         var clase_radio = $(this).attr("class");
@@ -357,7 +406,7 @@ var acciones = {
 
         console.log("funciona");
 
-        $(document).ready(acciones.listo);
+        //$(document).ready(acciones.listo);
 
         
  
@@ -369,8 +418,13 @@ var acciones = {
         var validar_campos = true;
         var dato = [];
         var valor_listas = [];
-         var array = $(".listado-campos-usuario").toArray();
-
+        var array = $(".listado-campos-usuario").toArray();
+        
+        var dato_salario1 = "";
+        var dato_salario2 = "";
+        var dato_fecha1 = "";
+        var dato_fecha2 = "";
+    
         for(let i = 0; i < array.length; i++){
             
             if (array[i].value.length !== 0) {
@@ -384,24 +438,75 @@ var acciones = {
         if (validar_listas) {
             for (let i = 0; i < valor_listas.length; i++) {
 
-                dato[i] = $(".radio_" + valor_listas[i] + ":checked").val();
-                if (dato[i] === undefined) {
-                    validar_campos = false; 
+                if (valor_listas[i] === "salario") {
+                   dato_salario1 = $(".radio_" + valor_listas[i] + "1").val();
+                   dato_salario2 = $(".radio_" + valor_listas[i] + "2").val();
+
+                    if (dato_salario1.length === 0) {
+                        validar_campos = false; 
+                    }
+
+                    if (dato_salario2.length === 0) {
+                        validar_campos = false; 
+                    }
+
+                }else if(valor_listas[i] === "fecha"){
+                    dato_fecha1 = $(".radio_" + valor_listas[i] + "1").val();
+                    dato_fecha2 = $(".radio_" + valor_listas[i] + "2").val();
+
+                    if (dato_fecha1.length === 0) {
+                        validar_campos = false; 
+                    }
+
+                    if (dato_fecha2.length === 0) {
+                        validar_campos = false; 
+                    }
+                }else if(valor_listas[i] === "tbl_hijo") {
+                    dato[i] = $(".radio_" + valor_listas[i]).val();
+                    if (dato[i].length === 0) {
+                        validar_campos = false; 
+                    }
+                }else{
+                    dato[i] = $(".radio_" + valor_listas[i] + ":checked").val();
+                    if (dato[i] === undefined) {
+                        validar_campos = false; 
+                    }
                 }
+
             }
 
             if (validar_campos) {
                 for (let i = 0; i < valor_listas.length; i++) {
-                    dato[i] = $(".radio_" + valor_listas[i] + ":checked").val();    
-                }
+                    if (valor_listas[i] === "salario") {
+                        dato_salario1 = $(".radio_" + valor_listas[i] + "1").val();
+                        dato_salario2 = $(".radio_" + valor_listas[i] + "2").val();
+     
+                     }else if(valor_listas[i] === "fecha"){
+                         dato_fecha1 = $(".radio_" + valor_listas[i] + "1").val();
+                         dato_fecha2 = $(".radio_" + valor_listas[i] + "2").val();
+     
+                     }else if(valor_listas[i] === "tbl_hijo") {
+                         dato[i] = $(".radio_" + valor_listas[i]).val();
+                         
+                     }else{
+                         dato[i] = $(".radio_" + valor_listas[i] + ":checked").val();
+                         
+                     } 
+                }               
 
                 $(document).ready(acciones.listo);
 
                 $("#rta-filtros-empleado").html("");
 
+                console.log(dato);
+
                 $.post('../../controller/usuario/ListaEmpleadoFiltros.php',{
                     dato:dato,
-                    lista: valor_listas
+                    lista: valor_listas,
+                    salario1: dato_salario1,
+                    salario2: dato_salario2,
+                    fecha1: dato_fecha1,
+                    fecha2: dato_fecha2
                 },function(responseText){
                     $("#listado-empleado-filtros").html(responseText);
                 });
@@ -495,7 +600,7 @@ var acciones = {
                                             <option value='tbl_hijo' id='tbl_hijo'>Hijos</option>
                                             <option value='tbl_estado' id='tbl_estado'>Estado</option>
                                             <option value='salario' id='salario'>Salario</option>
-                                            <option value='fecha' id='fecha'>Fechas</option>
+                                            <option value='fecha' id='fecha'>Fecha de ingreso</option>
                                         </select>
                                         <div id='listado-datos`+ i + `' class='mt-3 ms-1'></div>
                                         

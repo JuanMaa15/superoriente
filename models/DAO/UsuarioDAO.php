@@ -1731,6 +1731,43 @@ class UsuarioDAO {
         return null;
     }
 
+    // Listado de empleados por varios filtros
+
+    public function listaUsuarioFiltroHijos($id_usuario, $tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado) {
+        $cnx = Conexion::conectar();
+        $usuariodto = null;
+
+        
+        try {
+            $sql = "SELECT * FROM tbl_hijo AS thj INNER JOIN tbl_usuario AS tu ON thj.id_usuario = tu.id_usuario INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil
+             INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa 
+             INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_lugar_residencia AS tls ON tu.id_lugar_residencia = tls.id_lugar_residencia 
+             INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico 
+             INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_cesantia AS tces ON tu.id_cesantia = tces.id_cesantia INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion 
+             INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_clase_riesgo AS tcr ON tu.id_clase_riesgo = tcr.id_clase_riesgo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension 
+             INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE thj.id_usuario = ". $id_usuario . " " . $tipo_documento . " " . $tipo_vivienda . " " . $estrato . " " . $genero . " " . $lugar_residencia . " " . $nivel_academico . " " . $estado_civil .
+             " " . $eps . " " . $tipo_sangre_rh . " " . $sucursal . " " . $tipo_contrato . " " . $cesantia . " " . $clase_riesgo . " " . $seccion . " " . $area . " " . $cargo . " " . $pension . " " . $tipo_dotacion . " " . $estado;
+             /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */
+            $rs = $cnx->query($sql);
+            
+            
+            $cant_filas = $rs->rowCount();            
+            
+
+            echo $cant_filas;
+
+            $usuariodto = new UsuarioDTO();
+            $usuariodto->setHijos($cant_filas);
+
+            return $usuariodto;
+
+        } catch (Exception $e) {
+            print "Error al traer los datos de los usuarios " . $e->getMessage();
+        }
+
+        return null;
+    }
+
     // Traer datos de la tabla ingresada
 
     public function datosTabla($tabla) {

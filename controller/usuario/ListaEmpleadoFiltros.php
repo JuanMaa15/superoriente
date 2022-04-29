@@ -6,6 +6,23 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
 
     $dato = $_POST['dato'];
     $lista = $_POST['lista'];
+    $salario1 = isset($_POST['salario1']) ? intval($_POST['salario1']) : "";
+    $salario2 = isset($_POST['salario2']) ? intval($_POST['salario2']) : "";
+    $salarioF = "";
+
+
+    $fecha1 = isset($_POST['fecha1']) ? $_POST['fecha1'] : "";
+    $fecha2 = isset($_POST['fecha2']) ? $_POST['fecha2'] : "";
+    $fechaF = "";
+
+    if ($fecha1 != "" && $fecha2 != "") {
+        $salarioF = "AND fecha_ingreso BETWEEN " . $fecha1 . " AND " . $fecha1;
+    }
+
+    if ($salario1 != "" && $salario2 != "") {
+        $salarioF = "AND salario BETWEEN " . $salario1 . " AND " . $salario2;
+    }
+
     $validar_existencias = false;
     $campos = array();
     $cant_caracteres = "";
@@ -33,6 +50,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
     $pension = "";
     $tipo_dotacion = "";
     $estado = "";
+    $hijos = "";
     for ($i=0; $i < count($lista); $i++) { 
 
         //$dato[$i] = intval($dato[$i]);
@@ -103,11 +121,24 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
             case 'tbl_estado':
                 $estado = "AND tu.id_estado = " . $dato[$i];
             break;
+            case 'tbl_hijo':
+                $hijos = $dato[$i];
+            break;
             
         }
     }
 
     $listaUsuarios = $usuariodao->listaUsuarioFiltros($tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado); 
+
+    $listaUsuariosHijos = [];
+
+    for ($i=0; $i < count($listaUsuarios); $i++) { 
+        
+        $listaUsuariosHijos[$i] = $usuariodao->listaUsuarioFiltroHijos($listaUsuarios[$i]->getId_usuario(), $tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado, $hijos); 
+
+    }
+
+    
 
     $lista =  "<table class='table table-striped'>"
     ."<thead>"
@@ -119,26 +150,48 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
         ."<th scope='col'>Sucursal</th>"
         ."<th scope='col'>Tipo de contrato</th>"
         ."<th scope='col'>Dotación</th>"
-        ."<th scope='col'>Género</th>"
+        ."<th scope='col'>Hijos</th>"
         
     ."</tr>"
     ."</thead>"
     ."<tbody>"; 
 
-    for ($i=0; $i < count($listaUsuarios); $i++) { 
-        $lista .= "<tr>"
-        ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
-        ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
-        ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
-        ."<td>" . $listaUsuarios[$i]->getCargo() . "</td>"
-        ."<td>" . $listaUsuarios[$i]->getSucursal() . "</td>"
-        ."<td>" . $listaUsuarios[$i]->getTipo_contrato() . "</td>"
-        ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
-        ."<td>" . $listaUsuarios[$i]->getGenero() . "</td>"
-        . "</tr>";
-
-        $validar_existencias = true;
+    if ($hijos != "") {
+        for ($i=0; $i < count($listaUsuarios); $i++) { 
+            if ($listaUsuariosHijos[$i]->getHijos() == intval($hijos)) {
+                $lista .= "<tr>"
+                ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getCargo() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getSucursal() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getTipo_contrato() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
+                ."<td>" . $listaUsuariosHijos[$i]->getHijos() . "</td>"
+                . "</tr>";
+        
+                $validar_existencias = true;
+            }
+            
+        }
+    }else{
+        for ($i=0; $i < count($listaUsuarios); $i++) { 
+            $lista .= "<tr>"
+            ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+            ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+            ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+            ."<td>" . $listaUsuarios[$i]->getCargo() . "</td>"
+            ."<td>" . $listaUsuarios[$i]->getSucursal() . "</td>"
+            ."<td>" . $listaUsuarios[$i]->getTipo_contrato() . "</td>"
+            ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
+            ."<td>" . $listaUsuarios[$i]->getGenero() . "</td>"
+            . "</tr>";
+    
+            $validar_existencias = true;
+        }
     }
+
+    
 
     $btnReporte = "";
 
