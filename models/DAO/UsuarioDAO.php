@@ -1638,7 +1638,7 @@ class UsuarioDAO {
 
     // Listado de empleados por varios filtros
 
-    public function listaUsuarioFiltros($tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado) {
+    public function listaUsuarioFiltros($tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado, $salarioF, $fechaF) {
         $cnx = Conexion::conectar();
         $lista = array();
         $i = 0;
@@ -1651,7 +1651,7 @@ class UsuarioDAO {
              INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_cesantia AS tces ON tu.id_cesantia = tces.id_cesantia INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion 
              INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_clase_riesgo AS tcr ON tu.id_clase_riesgo = tcr.id_clase_riesgo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension 
              INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE id_usuario !='' " . $tipo_documento . " " . $tipo_vivienda . " " . $estrato . " " . $genero . " " . $lugar_residencia . " " . $nivel_academico . " " . $estado_civil .
-             " " . $eps . " " . $tipo_sangre_rh . " " . $sucursal . " " . $tipo_contrato . " " . $cesantia . " " . $clase_riesgo . " " . $seccion . " " . $area . " " . $cargo . " " . $pension . " " . $tipo_dotacion . " " . $estado;
+             " " . $eps . " " . $tipo_sangre_rh . " " . $sucursal . " " . $tipo_contrato . " " . $cesantia . " " . $clase_riesgo . " " . $seccion . " " . $area . " " . $cargo . " " . $pension . " " . $tipo_dotacion . " " . $estado . " " . $salarioF . " " . $fechaF;
              /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */
             $rs = $cnx->query($sql);
             
@@ -1698,13 +1698,14 @@ class UsuarioDAO {
                     $row['tipo_contrato'],
                     $row['fecha_ingreso'],
                     $row['fecha_retiro'],
-                    $row['motivo_retiro'],
-                    $row['fecha_actual'],
-                    $row['antiguedad'],
+                    
                     $row['cesantia'],
                     $row['salario'],
                     $row['valor_dia'],
                     $row['valor_hora'],
+                    $row['motivo_retiro'],
+                    $row['fecha_actual'],
+                    $row['antiguedad'],
                     $row['area'],
                     $row['seccion'],
                     $row['cargo'],
@@ -1733,7 +1734,7 @@ class UsuarioDAO {
 
     // Listado de empleados por varios filtros
 
-    public function listaUsuarioFiltroHijos($id_usuario, $tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado) {
+    public function listaUsuarioFiltroHijos($id_usuario, $tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado, $salarioF, $fechaF) {
         $cnx = Conexion::conectar();
         $usuariodto = null;
 
@@ -1746,7 +1747,7 @@ class UsuarioDAO {
              INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_cesantia AS tces ON tu.id_cesantia = tces.id_cesantia INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion 
              INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_clase_riesgo AS tcr ON tu.id_clase_riesgo = tcr.id_clase_riesgo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension 
              INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE thj.id_usuario = ". $id_usuario . " " . $tipo_documento . " " . $tipo_vivienda . " " . $estrato . " " . $genero . " " . $lugar_residencia . " " . $nivel_academico . " " . $estado_civil .
-             " " . $eps . " " . $tipo_sangre_rh . " " . $sucursal . " " . $tipo_contrato . " " . $cesantia . " " . $clase_riesgo . " " . $seccion . " " . $area . " " . $cargo . " " . $pension . " " . $tipo_dotacion . " " . $estado;
+             " " . $eps . " " . $tipo_sangre_rh . " " . $sucursal . " " . $tipo_contrato . " " . $cesantia . " " . $clase_riesgo . " " . $seccion . " " . $area . " " . $cargo . " " . $pension . " " . $tipo_dotacion . " " . $estado . " " . $salarioF . " " . $fechaF;
              /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */
             $rs = $cnx->query($sql);
             

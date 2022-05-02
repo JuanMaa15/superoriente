@@ -6,20 +6,20 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
 
     $dato = $_POST['dato'];
     $lista = $_POST['lista'];
-    $salario1 = isset($_POST['salario1']) ? intval($_POST['salario1']) : "";
-    $salario2 = isset($_POST['salario2']) ? intval($_POST['salario2']) : "";
+    $salario1 = isset($_POST['salario1']) ? intval($_POST['salario1']) : null;
+    $salario2 = isset($_POST['salario2']) ? intval($_POST['salario2']) : null;
     $salarioF = "";
 
 
-    $fecha1 = isset($_POST['fecha1']) ? $_POST['fecha1'] : "";
-    $fecha2 = isset($_POST['fecha2']) ? $_POST['fecha2'] : "";
+    $fecha1 = isset($_POST['fecha1']) ? $_POST['fecha1'] : null;
+    $fecha2 = isset($_POST['fecha2']) ? $_POST['fecha2'] : null;
     $fechaF = "";
 
-    if ($fecha1 != "" && $fecha2 != "") {
-        $salarioF = "AND fecha_ingreso BETWEEN " . $fecha1 . " AND " . $fecha1;
+    if ($fecha1 != null && $fecha2 != null) {
+        $fechaF = "AND fecha_ingreso BETWEEN " . $fecha1 . " AND " . $fecha2;
     }
 
-    if ($salario1 != "" && $salario2 != "") {
+    if ($salario1 != null && $salario2 != null) {
         $salarioF = "AND salario BETWEEN " . $salario1 . " AND " . $salario2;
     }
 
@@ -119,7 +119,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
                 $tipo_dotacion = "AND tu.id_tipo_dotacion = " . $dato[$i];
             break;
             case 'tbl_estado':
-                $estado = "AND tu.id_estado = " . $dato[$i];
+                $estado = "AND tu.id_estado = " . intval($dato[$i]);
             break;
             case 'tbl_hijo':
                 $hijos = $dato[$i];
@@ -128,13 +128,13 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
         }
     }
 
-    $listaUsuarios = $usuariodao->listaUsuarioFiltros($tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado); 
+    $listaUsuarios = $usuariodao->listaUsuarioFiltros($tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado, $salarioF, $fechaF); 
 
     $listaUsuariosHijos = [];
 
     for ($i=0; $i < count($listaUsuarios); $i++) { 
         
-        $listaUsuariosHijos[$i] = $usuariodao->listaUsuarioFiltroHijos($listaUsuarios[$i]->getId_usuario(), $tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado, $hijos); 
+        $listaUsuariosHijos[$i] = $usuariodao->listaUsuarioFiltroHijos($listaUsuarios[$i]->getId_usuario(), $tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado, $salarioF, $fechaF); 
 
     }
 
@@ -149,7 +149,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
         ."<th scope='col'>Cargo</th>"
         ."<th scope='col'>Sucursal</th>"
         ."<th scope='col'>Tipo de contrato</th>"
-        ."<th scope='col'>Dotación</th>"
+        ."<th scope='col'>Salario</th>"
         ."<th scope='col'>Hijos</th>"
         
     ."</tr>"
@@ -166,7 +166,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
                 ."<td>" . $listaUsuarios[$i]->getCargo() . "</td>"
                 ."<td>" . $listaUsuarios[$i]->getSucursal() . "</td>"
                 ."<td>" . $listaUsuarios[$i]->getTipo_contrato() . "</td>"
-                ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getSalario() . "</td>"
                 ."<td>" . $listaUsuariosHijos[$i]->getHijos() . "</td>"
                 . "</tr>";
         
@@ -184,7 +184,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
             ."<td>" . $listaUsuarios[$i]->getSucursal() . "</td>"
             ."<td>" . $listaUsuarios[$i]->getTipo_contrato() . "</td>"
             ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
-            ."<td>" . $listaUsuarios[$i]->getGenero() . "</td>"
+            ."<td>" . $listaUsuarios[$i]->getSalario() . "</td>"
             . "</tr>";
     
             $validar_existencias = true;
@@ -201,7 +201,18 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
         $btnReporte = "<form action='../../controller/reportes/ReporteFiltrosUsuario.php' method='post'>";
 
         for ($i=0; $i < count($campos); $i++) { 
-            $btnReporte .= "<input type='text' name='" . $campos[$i]. "' value='" . $dato[$i] . "' class='d-none'>";
+            $btnReporte .= "<input type='text' name='" . $campos[$i]<
+            . "' value='" . $dato[$i] . "' class='d-none'>";
+        }
+
+        if ($salario1 != "" && $salario2 != "") {
+            $btnReporte .= "<input type='text' name='salario1' value='" . $salario1 . "' class='d-none'>"
+           . "<input type='text' name='salario2' value='" . $salario2 . "' class='d-none'>";
+        }
+
+        if ($fecha1 != "" && $fecha2 != "") {
+            $btnReporte .= "<input type='text' name='fecha1' value='" . $fecha1 . "' class='d-none'>"
+           . "<input type='text' name='fecha2' value='" . $fecha2 . "' class='d-none'>";
         }
 
         $btnReporte .= "<button class='btn btn-verde' name='btn-reporte-empleados-filtros'>Generar reporte</button>"
