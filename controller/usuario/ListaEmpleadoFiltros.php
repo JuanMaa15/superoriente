@@ -2,9 +2,9 @@
 
 require_once '../../models/DAO/UsuarioDAO.php';
 
-if (isset($_POST['dato']) && isset($_POST['lista'])) {
+if (isset($_POST)) {
 
-    $dato = $_POST['dato'];
+    $dato = isset($_POST['dato']) ? $_POST['dato'] : null;
     $lista = $_POST['lista'];
     $salario1 = isset($_POST['salario1']) ? intval($_POST['salario1']) : null;
     $salario2 = isset($_POST['salario2']) ? intval($_POST['salario2']) : null;
@@ -16,7 +16,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
     $fechaF = "";
 
     if ($fecha1 != null && $fecha2 != null) {
-        $fechaF = "AND fecha_ingreso BETWEEN " . $fecha1 . " AND " . $fecha2;
+        $fechaF = "AND fecha_ingreso BETWEEN '" . $fecha1 . "' AND '" . $fecha2 . "'";
     }
 
     if ($salario1 != null && $salario2 != null) {
@@ -132,8 +132,9 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
 
     $listaUsuariosHijos = [];
 
+
     for ($i=0; $i < count($listaUsuarios); $i++) { 
-        
+   
         $listaUsuariosHijos[$i] = $usuariodao->listaUsuarioFiltroHijos($listaUsuarios[$i]->getId_usuario(), $tipo_documento, $tipo_vivienda, $estrato, $genero, $lugar_residencia, $nivel_academico, $estado_civil, $eps, $tipo_sangre_rh, $sucursal, $tipo_contrato, $cesantia, $clase_riesgo, $seccion, $area, $cargo, $pension, $tipo_dotacion, $estado, $salarioF, $fechaF); 
 
     }
@@ -150,7 +151,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
         ."<th scope='col'>Sucursal</th>"
         ."<th scope='col'>Tipo de contrato</th>"
         ."<th scope='col'>Salario</th>"
-        ."<th scope='col'>Hijos</th>"
+        ."<th scope='col'>Fecha ingreso</th>"
         
     ."</tr>"
     ."</thead>"
@@ -184,7 +185,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
             ."<td>" . $listaUsuarios[$i]->getSucursal() . "</td>"
             ."<td>" . $listaUsuarios[$i]->getTipo_contrato() . "</td>"
             ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
-            ."<td>" . $listaUsuarios[$i]->getSalario() . "</td>"
+            ."<td>" . $listaUsuarios[$i]->getFecha_ingreso() . "</td>"
             . "</tr>";
     
             $validar_existencias = true;
@@ -200,17 +201,19 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
     }else{
         $btnReporte = "<form action='../../controller/reportes/ReporteFiltrosUsuario.php' method='post'>";
 
-        for ($i=0; $i < count($campos); $i++) { 
-            $btnReporte .= "<input type='text' name='" . $campos[$i]<
-            . "' value='" . $dato[$i] . "' class='d-none'>";
+        if ($dato != null) {
+            for ($i=0; $i < count($campos); $i++) { 
+                $btnReporte .= "<input type='text' name='" . $campos[$i]
+                . "' value='" . $dato[$i] . "' class='d-none'>";
+            }
         }
-
-        if ($salario1 != "" && $salario2 != "") {
+        
+        if ($salario1 != null && $salario2 != null) {
             $btnReporte .= "<input type='text' name='salario1' value='" . $salario1 . "' class='d-none'>"
            . "<input type='text' name='salario2' value='" . $salario2 . "' class='d-none'>";
         }
 
-        if ($fecha1 != "" && $fecha2 != "") {
+        if ($fecha1 != null && $fecha2 != null) {
             $btnReporte .= "<input type='text' name='fecha1' value='" . $fecha1 . "' class='d-none'>"
            . "<input type='text' name='fecha2' value='" . $fecha2 . "' class='d-none'>";
         }

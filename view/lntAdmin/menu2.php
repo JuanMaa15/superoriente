@@ -5,12 +5,11 @@
             <div class="border-end d-inline me-3">
               <i class="fa-solid fa-user"></i>
             </div>
-            Carlos andres
+            <?php echo $_SESSION['nombre_admin'] ?>
 
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Cambiar contraseña</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="../../controller/usuario/LoginUsuario.php?accion=cerrar">Cerrar Sesión</a></li>
           </ul>

@@ -46,13 +46,14 @@ if (isset($_POST['busqueda_dotacion'])) {
     ."</thead>"
     ."<tbody>"; 
 
-    $camisa = "";
-    $pantalon = "";
-    $zapatos = "";
-    $vestimenta = "";
     $validar_existencias = false;
 
     for ($i=0; $i < count($listaUsuarios); $i++){
+
+        $camisa = "";
+        $pantalon = "";
+        $zapatos = "";
+        $vestimenta = "";
 
         if ($listaUsuarios[$i]->getCamisa() != null || $listaUsuarios[$i]->getPantalon() != null
         || $listaUsuarios[$i]->getZapato() != null || $listaUsuarios[$i]->getVestimenta() != null) {
@@ -70,14 +71,14 @@ if (isset($_POST['busqueda_dotacion'])) {
             }
 
             for ($j=0; $j < count($listaZapatos); $j++) { 
-                if ($listaUsuarios[$i]->getCamisa() == $listaZapatos[$j]->getId_zapato()) {
+                if ($listaUsuarios[$i]->getZapato() == $listaZapatos[$j]->getId_zapato()) {
                     $zapatos = $listaZapatos[$j]->getNombre();
                 }
             }
 
             for ($j=0; $j < count($listaVestimentas); $j++) { 
-                if ($listaUsuarios[$i]->getCamisa() == $listaVestimentas[$j]->getId_vestimenta()) {
-                    $vestimenta = $listaCamisas[$j]->getNombre();
+                if ($listaUsuarios[$i]->getVestimenta() == $listaVestimentas[$j]->getId_vestimenta()) {
+                    $vestimenta = $listaVestimentas[$j]->getNombre();
                 }
             }
 

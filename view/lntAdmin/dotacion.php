@@ -90,6 +90,9 @@
                     <div class="col">
                         <h2>Gestionar dotación</h2>
                     </div>
+                    <div class="col-2 d-flex justify-content-end ">
+                        <button class="btn btn-verde">Reporte dotación</button>
+                    </div>
                     <div class="col-3">
                         <div class="accordion accordion-flush" id="cont-acordion-listado">
                             <div class="accordion-item">
@@ -101,7 +104,9 @@
                                 
                             </div>
                         </div>
+                        
                     </div>
+                    
                 </div>
                 <div class="row mt-5 justify-content-center" id="cuerpo-acordion-listado">
                     <div class="col-9">
@@ -133,15 +138,17 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                        $camisa = "";
-                                                        $pantalon = "";
-                                                        $zapatos = "";
-                                                        $vestimenta = "";
+                                                        
                                                         $validar_existencias = false;
                                                         for ($i=0; $i < count($listaUsuarios); $i++):
                                                             if ($listaUsuarios[$i]->getCamisa() != null || $listaUsuarios[$i]->getPantalon() != null
                                                             || $listaUsuarios[$i]->getZapato() != null || $listaUsuarios[$i]->getVestimenta() != null) :
                                                                 
+                                                            $camisa = "";
+                                                            $pantalon = "";
+                                                            $zapatos = "";
+                                                            $vestimenta = "";
+
                                                                 for ($j=0; $j < count($listaCamisas); $j++) { 
                                                                     if ($listaUsuarios[$i]->getCamisa() == $listaCamisas[$j]->getId_camisa()) {
                                                                         $camisa = $listaCamisas[$j]->getNombre();
@@ -155,13 +162,13 @@
                                                                 }
 
                                                                 for ($j=0; $j < count($listaZapatos); $j++) { 
-                                                                    if ($listaUsuarios[$i]->getCamisa() == $listaZapatos[$j]->getId_zapato()) {
+                                                                    if ($listaUsuarios[$i]->getZapato() == $listaZapatos[$j]->getId_zapato()) {
                                                                         $zapatos = $listaZapatos[$j]->getNombre();
                                                                     }
                                                                 }
 
                                                                 for ($j=0; $j < count($listaVestimentas); $j++) { 
-                                                                    if ($listaUsuarios[$i]->getCamisa() == $listaVestimentas[$j]->getId_vestimenta()) {
+                                                                    if ($listaUsuarios[$i]->getVestimenta() == $listaVestimentas[$j]->getId_vestimenta()) {
                                                                         $vestimenta = $listaVestimentas[$j]->getNombre();
                                                                     }
                                                                 }
@@ -283,14 +290,18 @@
                                                     for ($j=0; $j < count($listaTiposCamisas); $j++):
                                                         $cant_tipo_camisas = 0;
                                                         for ($k=0; $k < count($listaCamisas); $k++) : 
-                                                            if ($listaCamisas[$k]->getNombre() == $listaTiposCamisas[$j]->getNombre()):
+                                                            if ($listaCamisas[$k]->getNombre() == $listaTiposCamisas[$j]->getNombre() && $listaCamisas[$k]->getTipo_dotacion() == $listaTiposDotaciones[$i]->getNombre()):
                                                                 $cant_tipo_camisas++;
                                                             endif;
                                                         endfor;
+
+                                                        if ($cant_tipo_camisas > 0):
                                                         ?>
+                                                            
                                                             <p class="fs-6"><?php echo $listaTiposCamisas[$j]->getNombre() . ": " . $cant_tipo_camisas; ?></p>
 
                                                         <?php
+                                                        endif;
                                                     endfor;
                                                        
                                                     ?>
@@ -324,14 +335,17 @@
                                                     for ($j=0; $j < count($listaTiposPantalones); $j++):
                                                         $cant_tipo_pantalones = 0;
                                                         for ($k=0; $k < count($listaPantalones); $k++) : 
-                                                            if ($listaPantalones[$k]->getNombre() == $listaTiposPantalones[$j]->getNombre()):
+                                                            if ($listaPantalones[$k]->getNombre() == $listaTiposPantalones[$j]->getNombre() && $listaPantalones[$k]->getTipo_dotacion() == $listaTiposDotaciones[$i]->getNombre()):
                                                                 $cant_tipo_pantalones++;
                                                             endif;
                                                         endfor;
+
+                                                        if ($cant_tipo_pantalones > 0) :
                                                         ?>
                                                             <p class="fs-6"><?php echo $listaTiposPantalones[$j]->getNombre() . ": " . $cant_tipo_pantalones; ?></p>
 
                                                         <?php
+                                                        endif;
                                                     endfor;
                                                        
                                                     ?>
@@ -365,14 +379,16 @@
                                                     for ($j=0; $j < count($listaTiposZapatos); $j++):
                                                         $cant_tipo_zapatos = 0;
                                                         for ($k=0; $k < count($listaZapatos); $k++) : 
-                                                            if ($listaZapatos[$k]->getNombre() == $listaTiposZapatos[$j]->getNombre()):
+                                                            if ($listaZapatos[$k]->getNombre() == $listaTiposZapatos[$j]->getNombre() && $listaZapatos[$k]->getTipo_dotacion() == $listaTiposDotaciones[$i]->getNombre()):
                                                                 $cant_tipo_zapatos++;
                                                             endif;
                                                         endfor;
+                                                        if ($cant_tipo_zapatos > 0) :
                                                         ?>
                                                             <p class="fs-6"><?php echo $listaTiposZapatos[$j]->getNombre() . ": " . $cant_tipo_zapatos; ?></p>
 
                                                         <?php
+                                                        endif;
                                                     endfor;
                                                        
                                                     ?>

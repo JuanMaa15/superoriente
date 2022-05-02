@@ -397,14 +397,14 @@ var acciones = {
         for (let i = 0; i < cant_filtros; i++) {
             if ($(this).closest("#listado-datos" + i).prev().attr("id") === 'listado-campos' + i) {
                 filtros_seleccionados[i] = lista + ": " + dato + " ---- "; 
-                console.log("entra");
+                //console.log("entra");
                 
             }       
         }
 
         $("#filtros-seleccionados").html(filtros_seleccionados);
 
-        console.log("funciona");
+        //console.log("funciona");
 
         //$(document).ready(acciones.listo);
 
@@ -498,7 +498,7 @@ var acciones = {
 
                 $("#rta-filtros-empleado").html("");
 
-                console.log(dato);
+                //console.log(dato);
 
                 $.post('../../controller/usuario/ListaEmpleadoFiltros.php',{
                     dato:dato,
