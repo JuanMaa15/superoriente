@@ -1753,8 +1753,6 @@ class UsuarioDAO {
             
             
             $cant_filas = $rs->rowCount() * -1;   
-
-            echo $cant_filas;
             
 
             $usuariodto = new UsuarioDTO();

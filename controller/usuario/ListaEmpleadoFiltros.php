@@ -150,7 +150,7 @@ if (isset($_POST)) {
         ."<th scope='col'>Cargo</th>"
         ."<th scope='col'>Sucursal</th>"
         ."<th scope='col'>Tipo de contrato</th>"
-        ."<th scope='col'>Salario</th>"
+        ."<th scope='col'>Tipo de dotación</th>"
         ."<th scope='col'>Fecha ingreso</th>"
         
     ."</tr>"
@@ -167,7 +167,7 @@ if (isset($_POST)) {
                 ."<td>" . $listaUsuarios[$i]->getCargo() . "</td>"
                 ."<td>" . $listaUsuarios[$i]->getSucursal() . "</td>"
                 ."<td>" . $listaUsuarios[$i]->getTipo_contrato() . "</td>"
-                ."<td>" . $listaUsuarios[$i]->getSalario() . "</td>"
+                ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
                 ."<td>" . $listaUsuariosHijos[$i]->getHijos() . "</td>"
                 . "</tr>";
         

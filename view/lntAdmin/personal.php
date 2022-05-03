@@ -77,8 +77,10 @@
                             <div class="col-8">
                                 <div class="row justify-content-end">
                                     
-                                    <div class="col-6">
-                                        <form class="d-flex">
+                                    <div class="col-8">
+                                        <form class="d-flex align-items-center">
+                                            <label for="" class="me-2">Mostrar:</label>
+                                            <input class="form-control me-2 w-50" type="number" id="mostrar_registros" placeholder="Mostrar" value="10">
                                             <input class="form-control me-2" type="search" id="buscar_empleado" placeholder="Buscar" aria-label="Search">
                                             <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
                                         </form>

@@ -89,6 +89,8 @@ var acciones = {
         $(".input_salario").keyup(acciones.MostrarSalariosIngresados);
         $(".input_hijos").keyup(acciones.MostrarHijosIngresados);
         $(".input_fecha").on('change', acciones.MostrarFechasIngresadas);
+        $("#mostrar_registros").keyup(acciones.mostrarRegistrosTabla);
+        $("#mostrar_registros").click(acciones.mostrarRegistrosTabla);
         //$(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
@@ -332,6 +334,27 @@ var acciones = {
             $("#listado-tipos-zapatos").html(responseText);
         });
 
+        // Usuarios con una cantidad de registros establecidos
+
+        var cant_registros = $("#mostrar_registros").val();
+
+        $.post('../../controller/usuario/ListaEnlaces.php',{
+            cant_registros: cant_registros
+        },function(responseText) {
+            $("#listado-enlaces").html(responseText);
+        });
+
+    },
+
+    mostrarRegistrosTabla : function () {
+        
+        var cant_registros = $("#mostrar_registros").val();
+
+        $.post('../../controller/usuario/ListaEnlaces.php',{
+            cant_registros: cant_registros
+        },function(responseText) {
+            $("#listado-enlaces").html(responseText);
+        });
     },
 
     MostrarHijosIngresados : function () {
