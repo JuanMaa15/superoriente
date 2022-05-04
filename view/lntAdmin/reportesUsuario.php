@@ -74,7 +74,7 @@
                         <div id="listado-usuarios"></div>
                     </div>
                 </div> -->
-                    <div id="lista-enlaces" class="my-5  px-5">
+                    <div id="lista-enlaces" class="my-5  px-5 d-none">
                         <div class="row justify-content-around">
                             <div class="col">
                                 <h2>Lista de empleados</h2>
@@ -122,11 +122,11 @@
                         </div>
                         <div class="row">
                             <div class="col overflow-auto">
-                                <div id="listado-enlaces"></div>
+                               <!--  <div id="listado-enlaces"></div> -->
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row d-none">
                         <div class="col">
                             <div id="reportes-empleados-fechas" class="my-5 py-3 px-5 cont-lista-reporte">
                                 <div class="row ">
@@ -201,7 +201,7 @@
 
                     
 
-                    <div id="reportes-empleados-cargo" class="my-5 px-5 cont-lista-reporte py-3">
+                    <div id="reportes-empleados-cargo" class="my-5 px-5 cont-lista-reporte py-3 d-none">
                         <div class="row">
                             <div class="col">
                                 <h2>Reportes por sección, area o cargo de los empleados</h2>

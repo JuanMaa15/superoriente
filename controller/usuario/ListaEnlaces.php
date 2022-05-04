@@ -46,13 +46,14 @@ if (isset($_POST['busqueda_dotacion'])) {
     ."</thead>"
     ."<tbody>"; 
 
-    $camisa = "";
-    $pantalon = "";
-    $zapatos = "";
-    $vestimenta = "";
     $validar_existencias = false;
 
     for ($i=0; $i < count($listaUsuarios); $i++){
+
+        $camisa = "";
+        $pantalon = "";
+        $zapatos = "";
+        $vestimenta = "";
 
         if ($listaUsuarios[$i]->getCamisa() != null || $listaUsuarios[$i]->getPantalon() != null
         || $listaUsuarios[$i]->getZapato() != null || $listaUsuarios[$i]->getVestimenta() != null) {
@@ -70,14 +71,14 @@ if (isset($_POST['busqueda_dotacion'])) {
             }
 
             for ($j=0; $j < count($listaZapatos); $j++) { 
-                if ($listaUsuarios[$i]->getCamisa() == $listaZapatos[$j]->getId_zapato()) {
+                if ($listaUsuarios[$i]->getZapato() == $listaZapatos[$j]->getId_zapato()) {
                     $zapatos = $listaZapatos[$j]->getNombre();
                 }
             }
 
             for ($j=0; $j < count($listaVestimentas); $j++) { 
-                if ($listaUsuarios[$i]->getCamisa() == $listaVestimentas[$j]->getId_vestimenta()) {
-                    $vestimenta = $listaCamisas[$j]->getNombre();
+                if ($listaUsuarios[$i]->getVestimenta() == $listaVestimentas[$j]->getId_vestimenta()) {
+                    $vestimenta = $listaVestimentas[$j]->getNombre();
                 }
             }
 
@@ -112,6 +113,64 @@ if (isset($_POST['busqueda_dotacion'])) {
          ."<td colspan='8' class='text-center py-4'>Aún no hay empleados con ropa de trabajo</td>"
     ."</tr>";
     }
+
+    echo $lista;
+
+}else if(isset($_POST['cant_registros'])){
+
+    $cant_registros = intval($_POST['cant_registros']);
+    $lista =  "<table class='table table-striped'>"
+    ."<thead>"
+    ."<tr>"
+        ."<th scope='col' class='pe-5'>Tipo_documento</th>"
+        ."<th scope='col' class='pe-5'>Nro_documento</th>"
+        ."<th scope='col' class='pe-5'>Nombre</th>"
+        ."<th scope='col' class='pe-5'>Apellido</th>"
+        ."<th scope='col' class='pe-5'><i class='far fa-folder'></i> Carpeta</th>"
+        
+    ."</tr>"
+    ."</thead>"
+    ."<tbody>";
+
+    if (empty($cant_registros)){
+        for ($i=0 ; $i < count($listaUsuarios); $i++) { 
+
+            $lista .= "<tr>"
+                    ."<td>" . $listaUsuarios[$i]->getTipo_documento() . "</td>"
+                    ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+                    ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+                    ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+                    ."<td><a href='informacionEmpleado.php?doc=" . $listaUsuarios[$i]->getId_usuario() . "'><i class='far fa-folder'></i> Más información </a></td>";
+                
+
+        }
+    }else{
+
+        if (count($listaUsuarios) >= $cant_registros ) {
+            for ($i=0 ; $i < $cant_registros; $i++) { 
+
+                $lista .= "<tr>"
+                        ."<td>" . $listaUsuarios[$i]->getTipo_documento() . "</td>"
+                        ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
+                        ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
+                        ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
+                        ."<td><a href='informacionEmpleado.php?doc=" . $listaUsuarios[$i]->getId_usuario() . "'><i class='far fa-folder'></i> Más información </a></td>";
+                    
+        
+            }
+        }else{
+            $lista .= "<td colspan='5' class='text-center'>Cantidad de resgistros no valida</td>"; 
+        }
+    
+    }
+
+    $lista .= "</tbody>"
+    . "</table>"
+    . "<div class='row'>"
+        . "<div class='col d-flex justify-content-end'>"
+            . "<div class='texto-claro'>Cantidad: " . count($listaUsuarios) . "</div>"
+        ."</div>"
+    ."</div>";
 
     echo $lista;
 
