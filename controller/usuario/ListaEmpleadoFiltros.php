@@ -176,6 +176,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
         }
     }else{
         for ($i=0; $i < count($listaUsuarios); $i++) { 
+            
             $lista .= "<tr>"
             ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"
             ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
@@ -201,7 +202,7 @@ if (isset($_POST['dato']) && isset($_POST['lista'])) {
         $btnReporte = "<form action='../../controller/reportes/ReporteFiltrosUsuario.php' method='post'>";
 
         for ($i=0; $i < count($campos); $i++) { 
-            $btnReporte .= "<input type='text' name='" . $campos[$i]<
+            $btnReporte .= "<input type='text' name='" . $campos[$i]
             . "' value='" . $dato[$i] . "' class='d-none'>";
         }
 
