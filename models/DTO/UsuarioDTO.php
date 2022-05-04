@@ -64,6 +64,9 @@ class UsuarioDTO {
     private $clase_riesgo;
     private $pension;
     private $tipo_dotacion;
+    private $talla_camisa;
+    private $talla_pantalon;
+    private $talla_zapato;
     private $estado;
     private $camisa;
     private $pantalon;
@@ -428,6 +431,22 @@ class UsuarioDTO {
         return $this->tipo_dotacion;
     }
 
+    // ----------- Tallas del empeleado
+
+    function getTalla_camisa() {
+        return $this->talla_camisa;
+    }
+
+    function getTalla_pantalon() {
+        return $this->talla_pantalon;
+    }
+
+    function getTalla_zapato() {
+        return $this->talla_zapato;
+    }
+
+    // ---------
+
     function getEstado() {
         return $this->estado;
     }
@@ -655,6 +674,22 @@ class UsuarioDTO {
     function setTipo_dotacion($tipo_dotacion) {
         $this->tipo_dotacion = $tipo_dotacion;
     }
+
+    // Tallas del empleado
+
+    function setTalla_camisa($talla_camisa) {
+        $this->talla_camisa = $talla_camisa;
+    }
+
+    function setTalla_pantalon($talla_pantalon) {
+        $this->talla_pantalon = $talla_pantalon;
+    }
+
+    function setTalla_zapato($talla_zapato) {
+        $this->talla_zapato = $talla_zapato;
+    }
+
+    // ---------------
 
     function setEstado($estado) {
         $this->estado = $estado;

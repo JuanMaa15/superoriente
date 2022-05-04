@@ -16,7 +16,7 @@ class UsuarioDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "INSERT INTO tbl_usuario(id_usuario, id_tipo_documento, fecha_expedicion, lugar_expedicion,  nombre, apellido, telefono_fijo, telefono_movil, id_casa, estrato, id_genero, fecha_nacimiento, edad, direccion, id_lugar_residencia, id_nivel_academico, area_academica, id_estado_civil, id_eps, nro_cuenta, id_tipo_sangre_rh, antecedentes, practica_deporte,consumo_cigarros, consumo_licor, consumo_spa, correo, pass, id_perfil, nombre_persona_emergencia, telefono_emergencia, celular_emergencia, parentesco_emergencia, id_sucursal, id_tipo_contrato, fecha_ingreso, fecha_retiro, motivo_retiro, id_cesantia, salario, valor_dia, valor_hora, id_area, id_seccion, id_cargo, id_clase_riesgo, id_pension, id_tipo_dotacion, id_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)";
+            $sql = "INSERT INTO tbl_usuario(id_usuario, id_tipo_documento, fecha_expedicion, lugar_expedicion,  nombre, apellido, telefono_fijo, telefono_movil, id_casa, estrato, id_genero, fecha_nacimiento, edad, direccion, id_lugar_residencia, id_nivel_academico, area_academica, id_estado_civil, id_eps, nro_cuenta, id_tipo_sangre_rh, antecedentes, practica_deporte,consumo_cigarros, consumo_licor, consumo_spa, correo, pass, id_perfil, nombre_persona_emergencia, telefono_emergencia, celular_emergencia, parentesco_emergencia, id_sucursal, id_tipo_contrato, fecha_ingreso, fecha_retiro, motivo_retiro, id_cesantia, salario, valor_dia, valor_hora, id_area, id_seccion, id_cargo, id_clase_riesgo, id_pension, id_tipo_dotacion, talla_camisa, talla_pantalon, talla_zapato, id_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)";
 
             $ps = $cnx->prepare($sql);
 
@@ -70,6 +70,9 @@ class UsuarioDAO {
             $cargo = $usuariodto->getCargo();
             $pension = $usuariodto->getPension();
             $tipo_dotacion = $usuariodto->getTipo_dotacion();
+            $talla_camisa = $usuariodto->getTalla_camisa();
+            $talla_pantalon = $usuariodto->getTalla_pantalon();
+            $talla_zapato = $usuariodto->getTalla_zapato();
            // $foto = $usuariodto->getFoto();
 
             $ps->bindParam(1, $id_usuario);
@@ -122,6 +125,9 @@ class UsuarioDAO {
             $ps->bindParam(46, $clase_riesgo);
             $ps->bindParam(47, $pension);
             $ps->bindParam(48, $tipo_dotacion);
+            $ps->bindParam(49, $talla_camisa);
+            $ps->bindParam(50, $talla_pantalon);
+            $ps->bindParam(51, $talla_zapato);
 
             $ps->execute();
 
@@ -298,6 +304,9 @@ class UsuarioDAO {
                 $row['id_vestimenta']
             );
 
+            $usuariodto->setTalla_camisa($row['talla_camisa']);
+            $usuariodto->setTalla_pantalon($row['talla_pantalon']);
+            $usuariodto->setTalla_zapato($row['talla_zapato']);
             return $usuariodto;
 
         } catch (Exception $e) {

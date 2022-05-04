@@ -2994,6 +2994,9 @@ var acciones = {
             var cargo = $("#cargo").val();
             var pension = $("#pension").val();
             var tipo_dotacion = $("#tipo_dotacion").val();
+            var talla_camisa = $("#talla_camisa").val();
+            var talla_pantalon = $("#talla_pantalon").val();
+            var talla_zapato = $("#talla_zapato").val();
             var estado = $("#estado").val();
             var perfil = $("#perfil").val();
 
@@ -3468,6 +3471,9 @@ var acciones = {
                             "cargo": cargo,
                            "pension": pension,
                            "tipo_dotacion": tipo_dotacion,
+                           "talla_camisa": talla_camisa,
+                           "talla_pantalon": talla_pantalon,
+                           "talla_zapato": talla_zapato,
                             "estado": estado,
                             "perfil": perfil,
                             

@@ -65,6 +65,9 @@ $seccion = $_POST['seccion'];
 $cargo = $_POST['cargo'];
 $pension = $_POST['pension'];
 $tipo_dotacion = intval($_POST['tipo_dotacion']);
+$talla_camisa = $_POST['talla_camisa'];
+$talla_pantalon = $_POST['talla_pantalon'];
+$talla_zapato = $_POST['talla_zapato'];
 $estado = $_POST['estado'];
 $perfil = $_POST['perfil'];
 
@@ -117,9 +120,12 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
             $usuariodto->setTelefono_fijo($telefono_fijo);
             $usuariodto->setTelefono_movil($telefono_movil);
             $usuariodto->setTipo_casa($tipo_casa);
+            $usuariodto->setEstrato($estrato);
             $usuariodto->setGenero($genero);
             $usuariodto->setFecha_nacimiento($fecha_nacimiento);
             $usuariodto->setEdad($edad);
+            $usuariodto->setDireccion($direccion);
+            $usuariodto->setLugar_residencia($lugar_residencia);
             $usuariodto->setNivel_academico($nivel_academico);
             $usuariodto->setArea_academica($area_academica);
             $usuariodto->setEstado_civil($estado_civil);
@@ -154,6 +160,9 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
             $usuariodto->setCargo($cargo);
             $usuariodto->setPension($pension);
             $usuariodto->setTipo_dotacion($tipo_dotacion);
+            $usuariodto->setTalla_camisa($talla_camisa);
+            $usuariodto->setTalla_pantalon($talla_pantalon);
+            $usuariodto->setTalla_zapato($talla_zapato);
 
             /* if ($tipo_imagen == "image/jpg" || $tipo_imagen == "image/jpeg" || $tipo_imagen == "image/png" || $tipo_imagen == "image/gif") {
 

@@ -322,6 +322,25 @@
                                 <h4 class="fs-6 titulo-campos"> Estado</h4>
                                 <p class="my-1"><?php echo $listaUsuario->getEstado(); ?></p>
                             </div>
+                            <div class="col-3 my-2">
+                                <h4 class="fs-6 titulo-campos"> Tipo de dotacion</h4>
+                                <p class="my-1"><?php echo $listaUsuario->getTipo_dotacion(); ?></p>
+                            </div>
+                            
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-3 my-2">
+                                <h4 class="fs-6 titulo-campos">Camisa</h4>
+                                <p class="my-1"><?php echo $listaUsuario->getTalla_camisa(); ?></p>
+                            </div>
+                            <div class="col-3 my-2">
+                                <h4 class="fs-6 titulo-campos">Pantalón</h4>
+                                <p class="my-1"><?php echo $listaUsuario->getTalla_pantalon(); ?></p>
+                            </div>
+                            <div class="col-3 my-2">
+                                <h4 class="fs-6 titulo-campos">Zapato</h4>
+                                <p class="my-1"><?php echo $listaUsuario->getTalla_zapato(); ?></p>
+                            </div>
                             
                         </div>
                         <div class="position-absolute top-0 end-0 mt-3 me-3">

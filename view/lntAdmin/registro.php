@@ -563,6 +563,53 @@
                                                     </div>
                             
                                                 </div>
+                                                <div class="row my-3">
+                                                    <div class="col-4">
+                                                        <select class="form-select" id="talla_camisa">
+                                                            <option value="">Camisa</option>
+                                                            <option value="XS">XS</option>
+                                                            <option value="S">S</option>
+                                                            <option value="M">M</option>
+                                                            <option value="L">L</option>
+                                                            <option value="XL">XL</option>
+                                                            <option value="XXL">XXL</option>
+                                                        </select>
+                                                        <small class="text-danger"></small>
+
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <select class="form-select" id="talla_pantalon">
+                                                            <option value="">Pantalon</option>
+                                                            <?php
+                                                            for ($i=28; $i < 45; $i++) : 
+                                                                if ($i % 2 == 0) :
+                                                                    ?>
+                                                                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                                    <?php
+                                                                endif;
+                                                            endfor;
+                                                            ?>
+                                                        </select>
+                                                        <small class="text-danger"></small>
+
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <select class="form-select" id="talla_zapato">
+                                                            <option value="">Zapato</option>
+                                                            <?php
+                                                            for ($i=34; $i < 43; $i++) : 
+                                                                if ($i % 2 == 0) :
+                                                                    ?>
+                                                                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                                    <?php
+                                                                endif;
+                                                            endfor;
+                                                            ?>
+                                                        </select>
+                                                        <small class="text-danger"></small>
+
+                                                    </div>
+                                                </div>
                                                 <div class="row justify-content-center">
                                                     <div class=" col-4 my-3">
                                                         <select class="form-select" id="estado">
