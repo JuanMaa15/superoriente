@@ -39,7 +39,7 @@ if (isset($_POST['btn-reporte-empleados-filtros'])) {
     }
 
     if ($fecha1 != "" && $fecha2 != "") {
-        $fechaF = "AND fecha_ingreso BETWEEN " . $fecha1 . " AND " . $fecha2;
+        $fechaF = "AND fecha_ingreso BETWEEN '" . $fecha1 . "' AND '" . $fecha2. "'";
     }
     
      

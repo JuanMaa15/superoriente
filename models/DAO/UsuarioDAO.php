@@ -327,7 +327,7 @@ class UsuarioDAO {
 
         try {
             
-            $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_lugar_residencia AS tls ON tu.id_lugar_residencia = tls.id_lugar_residencia INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_cesantia AS tces ON tu.id_cesantia = tces.id_cesantia INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_clase_riesgo AS tcr ON tu.id_clase_riesgo = tcr.id_clase_riesgo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */ WHERE id_usuario = '" . $id_usuario . "'";
+            $sql = "SELECT * FROM tbl_usuario /* AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_lugar_residencia AS tls ON tu.id_lugar_residencia = tls.id_lugar_residencia INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_cesantia AS tces ON tu.id_cesantia = tces.id_cesantia INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_clase_riesgo AS tcr ON tu.id_clase_riesgo = tcr.id_clase_riesgo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion */ /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */ WHERE id_usuario = '" . $id_usuario . "'";
             $rs = $cnx->query($sql);
 
             $row = $rs->fetch();
@@ -367,7 +367,7 @@ class UsuarioDAO {
                 $row['celular_emergencia'],
                 $row['parentesco_emergencia'],
 
-                $row['sucursal'],
+                $row['id_sucursal'],
                 $row['id_tipo_contrato'],
                 $row['fecha_ingreso'],
                 $row['fecha_retiro'],
@@ -390,6 +390,10 @@ class UsuarioDAO {
                 $row['id_zapato'],
                 $row['id_vestimenta']
             );
+
+            $usuariodto->setTalla_camisa($row['talla_camisa']);
+            $usuariodto->setTalla_pantalon($row['talla_pantalon']);
+            $usuariodto->setTalla_zapato($row['talla_zapato']);
 
             return $usuariodto;
 
@@ -462,7 +466,7 @@ class UsuarioDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_usuario SET id_tipo_documento = ?, fecha_expedicion = ?, lugar_expedicion = ?,  nombre = ?, apellido = ?, telefono_fijo = ?, telefono_movil = ?, id_casa = ?, id_genero = ?, fecha_nacimiento = ?, edad = ?, direccion = ?, id_lugar_residencia = ?, id_nivel_academico = ?, area_academica = ?, id_estado_civil = ?, id_eps = ?, nro_cuenta = ?, id_tipo_sangre_rh = ?, antecedentes = ?, practica_deporte = ?,consumo_cigarros = ?, consumo_licor = ?, consumo_spa = ?, correo = ?, pass = ?, id_perfil = ?, nombre_persona_emergencia = ?, telefono_emergencia = ?, celular_emergencia = ?, parentesco_emergencia = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "' ";
+            $sql = "UPDATE tbl_usuario SET id_tipo_documento = ?, fecha_expedicion = ?, lugar_expedicion = ?,  nombre = ?, apellido = ?, telefono_fijo = ?, telefono_movil = ?, estrato = ?, id_casa = ?, id_genero = ?, fecha_nacimiento = ?, edad = ?, direccion = ?, id_lugar_residencia = ?, id_nivel_academico = ?, area_academica = ?, id_estado_civil = ?, id_eps = ?, nro_cuenta = ?, id_tipo_sangre_rh = ?, antecedentes = ?, practica_deporte = ?,consumo_cigarros = ?, consumo_licor = ?, consumo_spa = ?, correo = ?, pass = ?, nombre_persona_emergencia = ?, telefono_emergencia = ?, celular_emergencia = ?, parentesco_emergencia = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "' ";
             $ps = $cnx->prepare($sql);
 
     
@@ -473,6 +477,7 @@ class UsuarioDAO {
             $apellido = $usuariodto->getApellido();
             $telefono_fijo = $usuariodto->getTelefono_fijo();
             $telefono_movil = $usuariodto->getTelefono_movil();
+            $estrato = $usuariodto->getEstrato();
             $tipo_casa = $usuariodto->getTipo_casa();
             $genero = $usuariodto->getGenero();
             $fecha_nacimiento = $usuariodto->getFecha_nacimiento();
@@ -492,7 +497,6 @@ class UsuarioDAO {
             $consumo_spa = $usuariodto->getConsumo_spa();
             $correo = $usuariodto->getCorreo();
             $password = $usuariodto->getPassword();
-            $perfil = $usuariodto->getPerfil();
             $nombre_persona_emergencia = $usuariodto->getNombre_persona_emergencia();
             $telefono_emergencia = $usuariodto->getTelefono_emergencia();
             $celular_emergencia = $usuariodto->getCelular_emergencia();
@@ -505,26 +509,26 @@ class UsuarioDAO {
             $ps->bindParam(5, $apellido);
             $ps->bindParam(6, $telefono_fijo);
             $ps->bindParam(7, $telefono_movil);
-            $ps->bindParam(8, $tipo_casa);
-            $ps->bindParam(9, $genero);
-            $ps->bindParam(10, $fecha_nacimiento);
-            $ps->bindParam(11, $edad);
-            $ps->bindParam(12, $direccion);
-            $ps->bindParam(13, $lugar_residencia);
-            $ps->bindParam(14, $nivel_academico);
-            $ps->bindParam(15, $area_academica);
-            $ps->bindParam(16, $estado_civil);
-            $ps->bindParam(17, $eps);
-            $ps->bindParam(18, $nro_cuenta);
-            $ps->bindParam(19, $tipo_sangre);
-            $ps->bindParam(20, $antecedentes);
-            $ps->bindParam(21, $practica_deporte);
-            $ps->bindParam(22, $consumo_cigarros);
-            $ps->bindParam(23, $consumo_licor);
-            $ps->bindParam(24, $consumo_spa);
-            $ps->bindParam(25, $correo);
-            $ps->bindParam(26, $password);
-            $ps->bindParam(27, $perfil);
+            $ps->bindParam(8, $estrato);
+            $ps->bindParam(9, $tipo_casa);
+            $ps->bindParam(10, $genero);
+            $ps->bindParam(11, $fecha_nacimiento);
+            $ps->bindParam(12, $edad);
+            $ps->bindParam(13, $direccion);
+            $ps->bindParam(14, $lugar_residencia);
+            $ps->bindParam(15, $nivel_academico);
+            $ps->bindParam(16, $area_academica);
+            $ps->bindParam(17, $estado_civil);
+            $ps->bindParam(18, $eps);
+            $ps->bindParam(19, $nro_cuenta);
+            $ps->bindParam(20, $tipo_sangre);
+            $ps->bindParam(21, $antecedentes);
+            $ps->bindParam(22, $practica_deporte);
+            $ps->bindParam(23, $consumo_cigarros);
+            $ps->bindParam(24, $consumo_licor);
+            $ps->bindParam(25, $consumo_spa);
+            $ps->bindParam(26, $correo);
+            $ps->bindParam(27, $password);
             $ps->bindParam(28, $nombre_persona_emergencia);
             $ps->bindParam(29, $telefono_emergencia);
             $ps->bindParam(30, $celular_emergencia);
@@ -549,7 +553,7 @@ class UsuarioDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_usuario SET id_sucursal = ?, id_tipo_contrato = ?, fecha_ingreso = ?, fecha_retiro = ?, motivo_retiro = ?, salario = ?, valor_dia = ?, valor_hora = ?, clase_riesgo = ?, porcentaje_riesgo = ?, id_area = ?, id_seccion = ?, id_cargo = ?, id_pension = ?, id_tipo_dotacion = ?, id_estado = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "' ";
+            $sql = "UPDATE tbl_usuario SET id_sucursal = ?, id_tipo_contrato = ?, fecha_ingreso = ?, fecha_retiro = ?, motivo_retiro = ?, salario = ?, valor_dia = ?, valor_hora = ?, id_clase_riesgo = ?, id_area = ?, id_seccion = ?, id_cargo = ?, id_pension = ?, id_tipo_dotacion = ?, id_estado = ?, id_cesantia = ?, id_perfil = ?, talla_camisa = ?, talla_pantalon = ?, talla_zapato = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "' ";
             $ps = $cnx->prepare($sql);
 
     
@@ -562,13 +566,17 @@ class UsuarioDAO {
             $valor_dia = $usuariodto->getValor_dia();
             $valor_hora = $usuariodto->getValor_hora();
             $clase_riesgo = $usuariodto->getClase_riesgo();
-            $porcentaje_riesgo = $usuariodto->getPorcentaje_riesgo();
             $area = $usuariodto->getArea();
             $seccion = $usuariodto->getSeccion();
             $cargo = $usuariodto->getCargo();
             $pension = $usuariodto->getPension();
             $tipo_dotacion = $usuariodto->getTipo_dotacion();
             $estado = $usuariodto->getEstado();
+            $cesantia = $usuariodto->getCesantia();
+            $perfil = $usuariodto->getPerfil();
+            $talla_pantalon = $usuariodto->getTalla_pantalon();
+            $talla_camisa = $usuariodto->getTalla_camisa();
+            $talla_zapato = $usuariodto->getTalla_zapato();
 
             $ps->bindParam(1, $sucursal);
             $ps->bindParam(2, $tipo_contrato);
@@ -579,13 +587,17 @@ class UsuarioDAO {
             $ps->bindParam(7, $valor_dia);
             $ps->bindParam(8, $valor_hora);
             $ps->bindParam(9, $clase_riesgo);
-            $ps->bindParam(10, $porcentaje_riesgo);
-            $ps->bindParam(11, $area);
-            $ps->bindParam(12, $seccion);
-            $ps->bindParam(13, $cargo);
-            $ps->bindParam(14, $pension);
-            $ps->bindParam(15, $tipo_dotacion);
-            $ps->bindParam(16, $estado);
+            $ps->bindParam(10, $area);
+            $ps->bindParam(11, $seccion);
+            $ps->bindParam(12, $cargo);
+            $ps->bindParam(13, $pension);
+            $ps->bindParam(14, $tipo_dotacion);
+            $ps->bindParam(15, $estado);
+            $ps->bindParam(16, $cesantia);
+            $ps->bindParam(17, $perfil);
+            $ps->bindParam(18, $talla_camisa);
+            $ps->bindParam(19, $talla_pantalon);
+            $ps->bindParam(20, $talla_zapato);
 
             $ps->execute();
 
@@ -1470,7 +1482,7 @@ class UsuarioDAO {
                         $row['fecha_nacimiento'],
                         $row['edad'],
                         $row['direccion'],
-                        $row['lugar_residencia'],
+                        $row['id_lugar_residencia'],
                         $row['nivel_academico'],
                         $row['area_academica'],
                         $row['estado_civil'],

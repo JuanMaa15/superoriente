@@ -17,6 +17,7 @@ switch ($_POST['opc']) {
         $apellido = $_POST['apellido'];
         $telefono_fijo = $_POST['telefono_fijo'];
         $telefono_movil = $_POST['telefono_movil'];
+        $estrato = $_POST['estrato'];
         $tipo_casa = $_POST['tipo_casa'];
         $genero = $_POST['genero'];
         $fecha_nacimiento = $_POST['fecha_nacimiento'];
@@ -36,7 +37,6 @@ switch ($_POST['opc']) {
         $consumo_spa = $_POST['consumo_spa'];
         $correo = $_POST['correo'];
         $password = $_POST['password'];
-        $perfil = $_POST['perfil'];
         $nombre_persona_emergencia = $_POST['nombre_persona_emergencia']; 
         $telefono_emergencia = $_POST['telefono_emergencia'];
         $celular_emergencia = $_POST['celular_emergencia'];
@@ -46,9 +46,10 @@ switch ($_POST['opc']) {
         if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) && !empty($lugar_expedicion)
         && !empty($nombre) && !empty($apellido) && !empty($tipo_casa) && !empty($genero) && !empty($fecha_nacimiento) && !empty($edad)
         && !empty($estado_civil) && !empty($eps) && !empty($nro_cuenta) && !empty($tipo_sangre) && !empty($correo)
-        && !empty($password) && !empty($perfil)) {
+        && !empty($password)) {
         
-        
+            
+            echo $estrato;
 
             // Datos del usuario
 
@@ -62,6 +63,7 @@ switch ($_POST['opc']) {
             $usuariodto->setApellido($apellido);
             $usuariodto->setTelefono_fijo($telefono_fijo);
             $usuariodto->setTelefono_movil($telefono_movil);
+            $usuariodto->setEstrato($estrato);
             $usuariodto->setTipo_casa($tipo_casa);
             $usuariodto->setGenero($genero);
             $usuariodto->setFecha_nacimiento($fecha_nacimiento);
@@ -72,6 +74,8 @@ switch ($_POST['opc']) {
             $usuariodto->setEps($eps);
             $usuariodto->setNro_cuenta($nro_cuenta);
             $usuariodto->setTipo_sangre($tipo_sangre);
+            $usuariodto->setLugar_residencia($lugar_residencia);
+            $usuariodto->setDireccion($direccion);
             $usuariodto->setAntecedentes($antecedentes);
             $usuariodto->setPractica_deporte($practica_deporte);
             $usuariodto->setConsumo_cigarros($consumo_cigarros);
@@ -79,7 +83,6 @@ switch ($_POST['opc']) {
             $usuariodto->setConsumo_spa($consumo_spa);
             $usuariodto->setCorreo($correo);
             $usuariodto->setPassword($password);
-            $usuariodto->setPerfil($perfil);
             $usuariodto->setNombre_persona_emergencia($nombre_persona_emergencia);
             $usuariodto->setTelefono_emergencia($telefono_emergencia);
             $usuariodto->setCelular_emergencia($celular_emergencia);
@@ -119,13 +122,18 @@ switch ($_POST['opc']) {
         $salario = floatval($_POST['salario']); 
         $valor_dia = floatval($_POST['valor_dia']);
         $valor_hora = floatval($_POST['valor_hora']);
-        $clase_riesgo = $_POST['clase_riesgo'];
-        $porcentaje_riesgo = $_POST['porcentaje_riesgo'];
+        $clase_riesgo = $_POST['clase_riesgo']; 
         $area = $_POST['area'];
         $seccion = $_POST['seccion'];
         $cargo = $_POST['cargo'];
         $pension = $_POST['pension'];
         $estado = $_POST['estado'];
+        $cesantia = $_POST['cesantia'];
+        $perfil = $_POST['perfil'];
+        $tipo_dotacion = $_POST['tipo_dotacion'];
+        $talla_camisa = $_POST['talla_camisa'];
+        $talla_pantalon = $_POST['talla_pantalon'];
+        $talla_zapato = $_POST['talla_zapato'];
 
         if (!empty($id_usuario) && !empty($sucursal) && !empty($tipo_contrato) && !empty($fecha_ingreso) && !empty($salario)
         && !empty($valor_dia) && !empty($valor_hora) && !empty($area) && !empty($seccion) && !empty($cargo) && !empty($estado)) {
@@ -142,12 +150,17 @@ switch ($_POST['opc']) {
             $usuariodto->setValor_dia($valor_dia);
             $usuariodto->setValor_hora($valor_hora);
             $usuariodto->setClase_riesgo($clase_riesgo);
-            $usuariodto->setPorcentaje_riesgo($porcentaje_riesgo);
             $usuariodto->setArea($area);
             $usuariodto->setSeccion($seccion);
             $usuariodto->setCargo($cargo);
             $usuariodto->setPension($pension);
             $usuariodto->setEstado($estado);
+            $usuariodto->setCesantia($cesantia);
+            $usuariodto->setPerfil($perfil);
+            $usuariodto->setTipo_dotacion($tipo_dotacion);
+            $usuariodto->setTalla_camisa($talla_camisa);
+            $usuariodto->setTalla_pantalon($talla_pantalon);
+            $usuariodto->setTalla_zapato($talla_zapato);
 
             $usuariodao = new UsuarioDAO();
 
@@ -157,7 +170,7 @@ switch ($_POST['opc']) {
                 echo "<div class='alert alert-success' role='alert'>Perfecto!!  Se ha actualizado los datos laborales del usuario</div>";
 
             }else{
-                echo "<div class='alert alert-danger' role='alert'>Error! No se pudo actualizar los datos laborales del usuario</div>";
+                echo "<div class='alert alert-danger' role='alsert'>Error! No se pudo actualizar los datos laborales del usuario</div>";
             }
 
         }else{

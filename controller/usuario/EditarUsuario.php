@@ -16,6 +16,13 @@ require_once ('../../models/DAO/AreaDAO.php');
 require_once ('../../models/DAO/SeccionDAO.php');
 require_once ('../../models/DAO/CargoDAO.php');
 require_once ('../../models/DAO/PensionDAO.php');
+require_once('../../models/DAO/LugarResidenciaDAO.php');
+require_once('../../models/DAO/ClaseRiesgoDAO.php');
+require_once('../../models/DAO/CesantiaDAO.php');
+require_once('../../models/DAO/TipoDotacionDAO.php');
+
+
+
 
 $id_usuario = $_POST['id'];
 
@@ -23,10 +30,8 @@ switch ($_POST['opc']) {
         case 'personales':
 
                 $usuariodao = new UsuarioDAO();
-                $usuariodto = $usuariodao->listaUsuario($id_usuario);
+                $usuariodto = $usuariodao->listaUsuarioConId($id_usuario);
                 
-                $perfildao = new PerfilDAO();
-                $listaPerfiles = $perfildao->listaPerfiles();
 
                 $tipoDocumentodao = new TipoDocumentoDAO();
                 $listaTiposDocumentos = $tipoDocumentodao->listaTiposDocumentos();
@@ -49,22 +54,15 @@ switch ($_POST['opc']) {
                 $epsdao = new EpsDAO();
                 $listaEpss = $epsdao->listaEpss();
 
-                $cbxPerfil = "<select class='form-select' id='perfil_act'>";
+                $lugarResidenciadao = new LugarResidenciaDAO();
+                $listaLugaresResidencia = $lugarResidenciadao->ListaLugaresResidencia();
 
-                for ($i=0; $i < count($listaPerfiles); $i++) { 
-                        if ($listaPerfiles[$i]->getPerfil() == $usuariodto->getPerfil()) {
-                                $cbxPerfil .= "<option selected value='" . $listaPerfiles[$i]->getId_perfil() . "'>" . $listaPerfiles[$i]->getPerfil() . "</option>";
-                        }else{
-                                $cbxPerfil .= "<option  value='" . $listaPerfiles[$i]->getId_perfil() . "'>" . $listaPerfiles[$i]->getPerfil() . "</option>";
-                        }
-                }
                 
-                $cbxPerfil .= "</select>";
 
                 $cbxTipoDocumento = "<select class='form-select' id='tipo_documento_act'>";
 
                 for ($i=0; $i < count($listaTiposDocumentos); $i++) { 
-                        if ($listaTiposDocumentos[$i]->getTipo_documento() == $usuariodto->getTipo_documento()) {
+                        if ($listaTiposDocumentos[$i]->getId_tipo_documento() == $usuariodto->getTipo_documento()) {
                                 $cbxTipoDocumento .= "<option selected value='" . $listaTiposDocumentos[$i]->getId_tipo_documento() . "'>" . $listaTiposDocumentos[$i]->getTipo_documento() . "</option>";
                         }else{
                                 $cbxTipoDocumento .= "<option value='" . $listaTiposDocumentos[$i]->getId_tipo_documento() . "'>" . $listaTiposDocumentos[$i]->getTipo_documento() . "</option>";
@@ -88,7 +86,7 @@ switch ($_POST['opc']) {
                 $cbxEstadoCivil = "<select class='form-select' id='estado_civil_act'>";
 
                 for ($i=0; $i < count($listaEstadosCiviles); $i++) { 
-                        if ($listaEstadosCiviles[$i]->getId_estado_civil() == $usuariodto->getNombre() ) {
+                        if ($listaEstadosCiviles[$i]->getId_estado_civil() == $usuariodto->getEstado_civil() ) {
                                 $cbxEstadoCivil .= "<option selected value='" . $listaEstadosCiviles[$i]->getId_estado_civil() . "'>" . $listaEstadosCiviles[$i]->getNombre() . "</option>";
                         }else {
                                 $cbxEstadoCivil .= "<option  value='" . $listaEstadosCiviles[$i]->getId_estado_civil() . "'>" . $listaEstadosCiviles[$i]->getNombre() . "</option>";
@@ -145,7 +143,29 @@ switch ($_POST['opc']) {
 
                 $cbxEps .= "</select>";
 
+                $cbxEstrato = "<select class='form-select' id='estrato_act'>";
 
+                for ($i=1; $i <= 6; $i++) { 
+                        if ($i == intval($usuariodto->getEstrato())) {
+                                $cbxEstrato .= "<option selected value='" . $i . "'>" . $i . "</option>";
+                        }else{
+                                $cbxEstrato .= "<option value='" . $i . "'>" . $i . "</option>";
+                        }
+                }
+
+                $cbxEstrato .= "</select>";
+
+                $cbxlugarResidencia = "<select class='form-select' id='lugar_residencia_act'>";
+
+                for ($i=0; $i < count($listaLugaresResidencia); $i++) { 
+                        if ($listaLugaresResidencia[$i]->getId_lugar_residencia() == $usuariodto->getLugar_residencia() ) {
+                                $cbxlugarResidencia .= "<option selected value='" . $listaLugaresResidencia[$i]->getId_lugar_residencia() . "'>" . $listaLugaresResidencia[$i]->getNombre() . "</option>";
+                        }else {
+                                $cbxlugarResidencia .= "<option value='" . $listaLugaresResidencia[$i]->getId_lugar_residencia() . "'>" . $listaLugaresResidencia[$i]->getNombre() . "</option>";
+                        }  
+                }
+
+                $cbxlugarResidencia .= "</select>";
                 
 
                 /* $cbxEps = "<select class='form-select' id='eps_act'>";
@@ -214,6 +234,11 @@ switch ($_POST['opc']) {
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
+                ."<label class='form-label'>Estrato</label>"
+                . $cbxEstrato
+                ."<small class='text-danger'></small>".
+                "</div>"
+                ."<div class='col my-2'>"
                 ."<label class='form-label'>Tipo de casa</label>"
                 . $cbxCasa
                 ."<small class='text-danger'></small>".
@@ -221,13 +246,19 @@ switch ($_POST['opc']) {
 
                 ."<div class='row'>"
                 ."<div class='col my-2'>"
-                ."<label class='form-label'>Género</label>"
-                . $cbxGenero
+                ."<label class='form-label'>Fecha de nacimiento</label>"
+                ."<input class='form-control' type='date' id='fecha_nacimiento' value='" . $usuariodto->getFecha_nacimiento().  "' >"
+                ."<small class='text-danger'></small>"
+                ."</div>"
+
+                ."<div class='col my-2'>"
+                ."<label class='form-label'>Edad</label>"
+                ."<input class='form-control' type='text' id='edad' value='" . $usuariodto->getEdad() .  "' readonly>"
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
-                ."<label class='form-label'>Edad</label>"
-                ."<input class='form-control' type='text' id='edad_act' value='" . $usuariodto->getEdad() .  "' >"
+                ."<label class='form-label'>Género</label>"
+                . $cbxGenero
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
@@ -238,6 +269,9 @@ switch ($_POST['opc']) {
                 ."</div>"
 
                 ."<div class='row'>"
+
+                
+
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>Area academica</label>"
                 ."<input class='form-control' type='text' id='area_academica_act' value='" . $usuariodto->getArea_academica() .  "' >"
@@ -257,19 +291,21 @@ switch ($_POST['opc']) {
                 ."</div>"
 
                 ."<div class='row'>"
+                
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>Número de cuenta de bancolombia</label>"
                 ."<input class='form-control' type='text' id='nro_cuenta_act' value='" . $usuariodto->getNro_cuenta() .  "' >"
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
+                
                 ."<label class='form-label'>Tipo de sangre con su rh</label>"
                 . $cbxTipoSangre
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>Lugar de residencia</label>"
-                ."<input class='form-control' type='text' id='lugar_residencia_act' value='" . $usuariodto->getLugar_residencia() .  "' >"
+                . $cbxlugarResidencia
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."</div>"
@@ -316,7 +352,7 @@ switch ($_POST['opc']) {
                 ."<div class='row'>"
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>Correo Eletrónico</label>"
-                ."<input class='form-control' type='text' id='correo_act' value='" . $usuariodto->getCorreo() .  "' >"
+                ."<input class='form-control' type='email' id='correo' value='" . $usuariodto->getCorreo() .  "' >"
                  ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
@@ -352,18 +388,7 @@ switch ($_POST['opc']) {
                 ."</div>"
                 ."</div>"
 
-                ."<div class='row'>"
-                ."<div class='col my-2'>"
-                ."<label class='form-label'>Perfil</label>"
-                . $cbxPerfil
-                ."<small class='text-danger'></small>"
-                ."</div>"
-                ."<div class='col my-2'>"
-                ."<label class='form-label'>Fecha de nacimiento</label>"
-                ."<input class='form-control' type='date' id='fecha_nacimiento_act' value='" . $usuariodto->getFecha_nacimiento().  "' >"
-                ."<small class='text-danger'></small>"
-                ."</div>"
-                ."</div>"
+                
 
                 ."</form>";
 
@@ -371,12 +396,14 @@ switch ($_POST['opc']) {
         
         case 'laborales':
                 
-                
+                $perfildao = new PerfilDAO();
+                $listaPerfiles = $perfildao->listaPerfiles();
+
                 $estadodao = new EstadoDAO();
                 $listaEstados = $estadodao->listaEstados();
 
                 $usuariodao = new UsuarioDAO();
-                $usuariodto = $usuariodao->listaUsuario($id_usuario);
+                $usuariodto = $usuariodao->listaUsuarioConId($id_usuario);
 
                 $tipoContratodao = new TipoContratoDAO();
                 $listaTipoContratos = $tipoContratodao->listaTiposContratos();
@@ -395,6 +422,27 @@ switch ($_POST['opc']) {
 
                 $pensiondao = new PensionDAO();
                 $listaPensiones = $pensiondao->listaPensiones();
+
+                $claseRiesgodao = new ClaseRiesgoDAO();
+                $listaClasesRiesgo = $claseRiesgodao->listaClasesRiesgos();
+
+                $cesantiadao = new CesantiaDAO();
+                $listaCesantias = $cesantiadao->listaCesantias();
+
+                $tipoDotaciondao = new TipoDotacionDAO();
+                $listaTiposDotacion = $tipoDotaciondao->listaTiposDotaciones(); 
+
+                $cbxPerfil = "<select class='form-select' id='perfil_act'>";
+
+                for ($i=0; $i < count($listaPerfiles); $i++) { 
+                        if ($listaPerfiles[$i]->getId_perfil() == $usuariodto->getPerfil()) {
+                                $cbxPerfil .= "<option selected value='" . $listaPerfiles[$i]->getId_perfil() . "'>" . $listaPerfiles[$i]->getPerfil() . "</option>";
+                        }else{
+                                $cbxPerfil .= "<option  value='" . $listaPerfiles[$i]->getId_perfil() . "'>" . $listaPerfiles[$i]->getPerfil() . "</option>";
+                        }
+                }
+                
+                $cbxPerfil .= "</select>";
 
 
                 $cbxEstado = "<select class='form-select' id='estado_act'>";
@@ -433,7 +481,7 @@ switch ($_POST['opc']) {
                                 
                 $cbxSucursal .= "</select>";
 
-                $cbxSeccion = "<select class='form-select' id='seccion_act'>";
+                $cbxSeccion = "<select class='form-select' id='seccion'>";
 
                                 for ($i=0; $i < count($listaSecciones); $i++) { 
                                         if ($listaSecciones[$i]->getId_seccion() == $usuariodto->getSeccion()) {
@@ -445,19 +493,19 @@ switch ($_POST['opc']) {
                                 
                 $cbxSeccion .= "</select>";
 
-                $cbxArea = "<select class='form-select' id='area_act'>";
+                $cbxArea = "<select class='form-select' id='area'>";
 
                                 for ($i=0; $i < count($listaAreas); $i++) { 
                                         if ($listaAreas[$i]->getId_area() == $usuariodto->getArea()) {
-                                                $cbxArea .= "<option selected value='" . $listaAreas[$i]->getId_area() . "'>" . $listaAreas[$i]->getNombre() . "</option>";
+                                                $cbxArea .= "<option selected class='d-none opc-area' value='" . $listaAreas[$i]->getId_area() . "'>" . $listaAreas[$i]->getNombre() . "</option>";
                                         }else{
-                                                $cbxArea .= "<option  value='" . $listaAreas[$i]->getId_area() . "'>" . $listaAreas[$i]->getNombre() . "</option>";
+                                                $cbxArea .= "<option class='d-none opc-area'  value='" . $listaAreas[$i]->getId_area() . "'>" . $listaAreas[$i]->getNombre() . "</option>";
                                         }
                                 }
                                 
                 $cbxArea .= "</select>";
 
-                $cbxCargo = "<select class='form-select' id='cargo_act'>";
+                $cbxCargo = "<select class='form-select' id='cargo'>";
 
                                 for ($i=0; $i < count($listaCargos); $i++) { 
                                         if ($listaCargos[$i]->getId_cargo() == $usuariodto->getCargo()) {
@@ -481,6 +529,86 @@ switch ($_POST['opc']) {
                                 
                 $cbxPension .= "</select>";
 
+                $cbxClaseRiesgo = "<select class='form-select' id='clase-riesgo'>";
+
+                                for ($i=0; $i < count($listaClasesRiesgo); $i++) { 
+                                        if ($listaClasesRiesgo[$i]->getId_clase_riesgo() == $usuariodto->getClase_riesgo()) {
+                                                $cbxClaseRiesgo .= "<option selected value='" . $listaClasesRiesgo[$i]->getId_clase_riesgo() . "'>" . $listaClasesRiesgo[$i]->getNombre() . "</option>";
+                                        }else{
+                                                $cbxClaseRiesgo .= "<option  value='" . $listaClasesRiesgo[$i]->getId_clase_riesgo() . "'>" . $listaClasesRiesgo[$i]->getNombre() . "</option>";
+                                        }
+                                }
+                                
+                $cbxClaseRiesgo .= "</select>";
+
+                $cbxCesantia = "<select class='form-select' id='cesantia_act'>";
+
+                for ($i=0; $i < count($listaCesantias); $i++) { 
+                        if ($listaCesantias[$i]->getId_cesantia() == $usuariodto->getCesantia()) {
+                                $cbxCesantia .= "<option selected value='" . $listaCesantias[$i]->getId_cesantia() . "'>" . $listaCesantias[$i]->getNombre() . "</option>";
+                        }else{
+                                $cbxCesantia .= "<option  value='" . $listaCesantias[$i]->getId_cesantia() . "'>" . $listaCesantias[$i]->getNombre() . "</option>";
+                        }
+                }
+                
+                $cbxCesantia .= "</select>";
+
+                $cbxTipoDotacion = "<select class='form-select' id='tipo_dotacion_act'>";
+
+                for ($i=0; $i < count($listaTiposDotacion); $i++) { 
+                        if ($listaTiposDotacion[$i]->getId_tipo_dotacion() == $usuariodto->getTipo_dotacion()) {
+                                $cbxTipoDotacion .= "<option selected value='" . $listaTiposDotacion[$i]->getId_tipo_dotacion() . "'>" . $listaTiposDotacion[$i]->getNombre() . "</option>";
+                        }else{
+                                $cbxTipoDotacion .= "<option  value='" . $listaTiposDotacion[$i]->getId_tipo_dotacion() . "'>" . $listaTiposDotacion[$i]->getNombre() . "</option>";
+                        }
+                }
+                
+                $cbxTipoDotacion .= "</select>";
+
+                $talla_camisa = ['XS','S','M','L','XL','XLL'];
+
+                $cbxCamisa = "<select class='form-select' id='talla_camisa_act'>";
+
+                for ($i=0; $i < count($talla_camisa); $i++) { 
+                        if ($talla_camisa[$i] == $usuariodto->getTalla_camisa()) {
+                                $cbxCamisa .= "<option selected value='" . $talla_camisa[$i] . "'>" . $talla_camisa[$i] . "</option>";
+                        }else{
+                                $cbxCamisa .= "<option value='" . $talla_camisa[$i] . "'>" . $talla_camisa[$i] . "</option>";
+                        }
+                }
+
+                $cbxCamisa .= "</select>";
+
+                $cbxPantalon = "<select class='form-select' id='talla_pantalon_act'>";
+
+                for ($i=28; $i < 45; $i++) { 
+                        if($i % 2 == 0) {
+                                if ($i == intval($usuariodto->getTalla_pantalon())) {
+                                        $cbxPantalon .= "<option selected value='" . $i . "'>" . $i . "</option>";
+                                }else{
+                                        $cbxPantalon .= "<option value='" . $i . "'>" . $i . "</option>";
+                                }
+                        }
+                        
+                }
+
+                $cbxPantalon .= "</select>";
+
+                
+                $cbxZapato = "<select class='form-select' id='talla_zapato_act'>";
+
+                for ($i=34; $i < 43; $i++) { 
+                        if($i % 2 == 0) {
+                                if ($i == intval($usuariodto->getTalla_zapato())) {
+                                        $cbxZapato .= "<option selected value='" . $i . "'>" . $i . "</option>";
+                                }else{
+                                        $cbxZapato .= "<option value='" . $i . "'>" . $i . "</option>";
+                                }
+                        }
+                        
+                }
+
+                $cbxZapato .= "</select>";
                                 
                 $form = "<form>"
                 ."<div class='row'>"
@@ -512,52 +640,39 @@ switch ($_POST['opc']) {
 
                 ."<div class='row'>"
                 ."<div class='col my-2'>"
-                ."<label class='form-label'>Fecha de retiro</label>"
-                ."<input class='form-control' type='text' id='fecha_retiro_act' value='" . $usuariodto->getFecha_retiro() .  "' >"
-                ."<small class='text-danger'></small>"
-                ."</div>"
-                ."<div class='col my-2'>"
-                ."<label class='form-label'>Motivo de retiro</label>"
-                ."<input class='form-control' type='text' id='motivo_retiro_act' value='" . $usuariodto->getMotivo_retiro() .  "' >"
-                ."<small class='text-danger'></small>"
-                ."</div>"
-                ."</div>"
-
-                ."<div class='row'>"
-                ."<div class='col my-2'>"
                 ."<label class='form-label'>Salario</label>"
-                ."<input class='form-control' type='text' id='salario_act' value='" . $usuariodto->getSalario() .  "' >"
+                ."<input class='form-control' type='text' id='salario' value='" . $usuariodto->getSalario() .  "' >"
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>Valor día</label>"
-                ."<input class='form-control' type='text' id='valor_dia_act' value='" . $usuariodto->getValor_dia() .  "' >"
+                ."<input class='form-control' type='text' id='valor_dia' value='" . $usuariodto->getValor_dia() .  "' readonly>"
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>Valor hora</label>"
-                ."<input class='form-control' type='text' id='valor_hora_act' value='" . $usuariodto->getValor_hora() .  "' >"
+                ."<input class='form-control' type='text' id='valor_hora' value='" . $usuariodto->getValor_hora() .  "' readonly>"
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."</div>"
 
                 ."<div class='row'>"
                 ."<div class='col my-2'>"
+                ."<label class='form-label'>Cesantía</label>"
+                . $cbxCesantia
+                ."<small class='text-danger'></small>"
+                ."</div>"
+                ."<div class='col my-2'>"
                 ."<label class='form-label'>Clase de riesgo</label>"
-                ."<input class='form-control' type='text' id='clase_riesgo_act' value='" . $usuariodto->getClase_riesgo() .  "' >"
+                . $cbxClaseRiesgo
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>Porcentaje riesgo</label>"
-                ."<input class='form-control' type='text' id='porcentaje_riesgo_act' value='" . $usuariodto->getPorcentaje_riesgo() .  "' >"
+                ."<input class='form-control' type='text' id='porcentaje_riesgo' value='' readonly>"
                 ."<small class='text-danger'></small>"
                 ."</div>"
-                ."<div class='col my-2'>"
-                ."<label class='form-label'>Pension</label>"
-                . $cbxPension
-                //."<input class='form-control' type='text' id='pension_act' value='" . $usuariodto->getPension() .  "' >"
-                ."<small class='text-danger'></small>"
-                ."</div>"
+                
                 ."</div>"
 
                 ."<div class='row'>"
@@ -573,7 +688,6 @@ switch ($_POST['opc']) {
                 //."<input class='form-control' type='text' id='area_act' value='" . $usuariodto->getArea() .  "' >"
                 ."<small class='text-danger'></small>"
                 ."</div>"
-                
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>Cargo</label>"
                 . $cbxCargo
@@ -583,12 +697,68 @@ switch ($_POST['opc']) {
                 ."</div>"
 
                 ."<div class='row justify-content-center'>"
+                ."<div class='col my-2'>"
+                ."<label class='form-label'>Pension</label>"
+                . $cbxPension
+                //."<input class='form-control' type='text' id='pension_act' value='" . $usuariodto->getPension() .  "' >"
+                ."<small class='text-danger'></small>"
+                ."</div>"
+                ."<div class='col my-2'>"
+                ."<label class='form-label'>Tipo de dotación</label>"
+                . $cbxTipoDotacion
+                ."<small class='text-danger'></small>"
+                ."</div>"
                 ."<div class='col-4 my-2'>"
+                ."<label class='form-label'>Perfil</label>"
+                . $cbxPerfil
+                ."<small class='text-danger'></small>"
+                ."</div>"
+                
+                ."</div>"
+
+                ."<div class='row'>"
+                ."<div class='col my-2'>"
+                ."<label class='form-label'>Camisa</label>"
+                . $cbxCamisa
+                ."<small class='text-danger'></small>"
+                ."</div>"
+
+                ."<div class='col my-2'>"
+                ."<label class='form-label'>Pantalón</label>"
+                . $cbxPantalon
+                ."<small class='text-danger'></small>"
+                ."</div>"
+
+                ."<div class='col my-2'>"
+                ."<label class='form-label'>Zapato</label>"
+                . $cbxZapato
+                ."<small class='text-danger'></small>"
+                ."</div>"
+                
+                ."</div>"
+
+                ."<div class='row'>"
+                ."<div class='col-6 my-2'>"
                 ."<label class='form-label'>Estado</label>"
                 . $cbxEstado
                 ."<small class='text-danger'></small>"
                 ."</div>"
+
+                ."<div class='col-6 my-2'>"
+                ."<label class='form-label'>Fecha de retiro</label>"
+                ."<input class='form-control' type='date' id='fecha_retiro_act' value='" . $usuariodto->getFecha_retiro() .  "' readonly>"
+                ."<small class='text-danger'></small>"
+                ."</div>"
                 
+                ."</div>"
+
+                
+                ."<div class='row'>"
+                ."<div class='col my-2'>"
+                ."<label class='form-label'>Motivo de retiro</label>"
+                ."<input class='form-control' type='text' id='motivo_retiro_act' value='" . $usuariodto->getMotivo_retiro() .  "' readonly>"
+                ."<small class='text-danger'></small>"
+                ."</div>"
                 ."</div>"
                 
                 ."</form>";

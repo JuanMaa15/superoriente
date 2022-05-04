@@ -89,7 +89,7 @@ class HijoDAO {
 
         try {
             
-            $sql = "UPDATE tbl_familiar SET  nombre = ?, apellido = ?, edad = ?, fecha_nacimiento = ? WHERE id_hijo = " . $hijodto->getId_hijo();
+            $sql = "UPDATE tbl_hijo SET  nombre = ?, apellido = ?, edad = ?, fecha_nacimiento = ? WHERE id_hijo = " . $hijodto->getId_hijo();
             $ps = $cnx->prepare($sql);
 
             //$id_familiar = $familiardto->getId_familiar();
@@ -102,8 +102,7 @@ class HijoDAO {
             $ps->bindParam(1, $nombre);
             $ps->bindParam(2, $apellido);
             $ps->bindParam(3, $edad);
-            $ps->bindParam(4, $escolaridad);
-            $ps->bindParam(5, $parentesco);
+            $ps->bindParam(4, $fecha_nacimiento);
 
             $ps->execute();
 

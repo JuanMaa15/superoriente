@@ -91,6 +91,7 @@ var acciones = {
         $(".input_fecha").on('change', acciones.MostrarFechasIngresadas);
         $("#mostrar_registros").keyup(acciones.mostrarRegistrosTabla);
         $("#mostrar_registros").click(acciones.mostrarRegistrosTabla);
+        $("#estado_act").click(acciones.habilitarRetiro);
         //$(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
@@ -343,6 +344,22 @@ var acciones = {
         },function(responseText) {
             $("#listado-enlaces").html(responseText);
         });
+
+    },
+
+    habilitarRetiro : function() {
+
+        var estado = $(this).val();
+
+        if (estado === '2') {
+            $("#fecha_retiro_act").removeAttr("readonly");
+            $("#motivo_retiro_act").removeAttr("readonly");
+        }else{
+            $("#fecha_retiro_act").attr("readonly", "readonly");
+            $("#motivo_retiro_act").attr("readonly", "readonly");
+            $("#fecha_retiro_act").val("");
+            $("#motivo_retiro_act").val("");
+        }
 
     },
 
@@ -3940,12 +3957,17 @@ var acciones = {
 
             case "btn-editar-datos-personales":
 
+
+
                 $.post('../../controller/usuario/EditarUsuario.php',{
                     id:id,
                     opc: "personales"
                 },function(responseText){
-                    $("#editar-datos-personales").html(responseText);             
+                    $("#editar-datos-personales").html(responseText);  
+                    $(document).ready(acciones.listo);           
                 });
+
+                
             break;
 
             case "btn-editar-camisa-empleado":
@@ -4004,7 +4026,8 @@ var acciones = {
                     id:id,
                     opc: "laborales"
                 },function(responseText){
-                    $("#editar-datos-laborales").html(responseText);             
+                    $("#editar-datos-laborales").html(responseText);           
+                    $(document).ready(acciones.listo);  
                 });
 
             break;
@@ -5020,10 +5043,11 @@ var acciones = {
                 var apellido = $("#apellido_act").val();
                 var telefono_fijo = $("#telefono_fijo_act").val();
                 var telefono_movil = $("#telefono_movil_act").val();
+                var estrato = $("#estrato_act").val();
                 var tipo_casa =  $("#tipo_casa_act").val();
                 var genero = $("#genero_act").val();
-                var fecha_nacimiento = $("#fecha_nacimiento_act").val();
-                var edad = $("#edad_act").val();
+                var fecha_nacimiento = $("#fecha_nacimiento").val();
+                var edad = $("#edad").val();
                 var direccion = $("#direccion_act").val();
                 var lugar_residencia = $("#lugar_residencia_act").val();
                 var nivel_academico = $("#nivel_academico_act").val();
@@ -5037,13 +5061,13 @@ var acciones = {
                 var consumo_cigarros = $("#consumo_cigarros_act").val();
                 var consumo_licor = $("#consumo_licor_act").val();
                 var consumo_spa = $("#consumo_spa_act").val();
-                var correo = $("#correo_act").val();
+                var correo = $("#correo").val();
                 var password = $("#pass_act").val();
                 var nombre_persona_emergencia = $("#nombre_persona_emergencia_act").val();
                 var telefono_emergencia = $("#telefono_emergencia_act").val();
                 var celular_emergencia = $("#celular_emergencia_act").val();
                 var parentesco_emergencia = $("#parentesco_emergencia_act").val();
-                var perfil = $("#perfil_act").val();
+           
 
                 var validar = 0;
 
@@ -5130,10 +5154,10 @@ var acciones = {
                 }
     
                 if (fecha_nacimiento.length !== 0) {
-                    $("#fecha_nacimiento_act").next().html("");
+                    $("#fecha_nacimiento").next().html("");
                     validar++;
                 }else{
-                    $("#fecha_nacimiento_act").next().html("Campo vacío, por favor ingrese la fecha de nacimiento");
+                    $("#fecha_nacimiento").next().html("Campo vacío, por favor ingrese la fecha de nacimiento");
     
                 }
     
@@ -5200,14 +5224,9 @@ var acciones = {
     
                 }
 
-                if (perfil.length !== 0) {
-                    $("#perfil_act").next().html("");
-                    validar++
-                }else{
-                    $("#perfil_act").next().html("Campo vacío, por favor selecciona un perfil");
-                }
+             
                 
-                if (validar === 17) {
+                if (validar === 16) {
 
                     $.post('../../controller/usuario/ActualizarUsuario.php', {
                         opc: "personales",
@@ -5219,6 +5238,7 @@ var acciones = {
                         apellido:apellido,
                         telefono_fijo: telefono_fijo,
                         telefono_movil: telefono_movil,
+                        estrato: estrato,
                         tipo_casa: tipo_casa,
                         genero: genero,
                         fecha_nacimiento: fecha_nacimiento,
@@ -5242,7 +5262,7 @@ var acciones = {
                         telefono_emergencia: telefono_emergencia,
                         celular_emergencia: celular_emergencia,
                         parentesco_emergencia: parentesco_emergencia,
-                        perfil: perfil
+                        
             
                     }, function(responseText) {
                         $("#rta-datos-personales-act").html(responseText);
@@ -5286,15 +5306,20 @@ var acciones = {
                 var fecha_ingreso = $("#fecha_ingreso_act").val();
                 var fecha_retiro = $("#fecha_retiro_act").val();
                 var motivo_retiro = $("#motivo_retiro_act").val();
-                var salario = $("#salario_act").val();  
-                var valor_dia = $("#valor_dia_act").val();
-                var valor_hora = $("#valor_hora_act").val();
-                var clase_riesgo = $("#clase_riesgo_act").val();
-                var porcentaje_riesgo = $("#porcentaje_riesgo_act").val();
-                var area = $("#area_act").val();
-                var seccion = $("#seccion_act").val();
-                var cargo = $("#cargo_act").val();
+                var salario = $("#salario").val();  
+                var valor_dia = $("#valor_dia").val();
+                var valor_hora = $("#valor_hora").val();
+                var cesantia = $("#cesantia_act").val();
+                var clase_riesgo = $("#clase-riesgo").val();
+                var area = $("#area").val();
+                var seccion = $("#seccion").val();
+                var cargo = $("#cargo").val();
                 var pension = $("#pension_act").val();
+                var tipo_dotacion = $("#tipo_dotacion_act").val();
+                var perfil = $("#perfil_act").val();
+                var talla_camisa = $("#talla_camisa_act").val();
+                var talla_pantalon = $("#talla_pantalon_act").val();
+                var talla_zapato = $("#talla_zapato_act").val();
                  var estado = $("#estado_act").val();
 
                  var validar = 0;
@@ -5334,62 +5359,125 @@ var acciones = {
             }
 
             if (salario.length !== 0) {
-                $("#salario_act").next().html("");
+                $("#salario").next().html("");
                 validar++;
             }else{
-                $("#salario_act").next().html("Campo vacío, por favor ingrese el salario");
+                $("#salario").next().html("Campo vacío, por favor ingrese el salario");
 
             }
 
             if (valor_dia.length != 0) {
-                $("#valor_dia_act").next().html("");
+                $("#valor_dia").next().html("");
                 validar++;
             }else{
-                $("#valor_dia_act").next().html("Campo vacío, por favor ingrese el valor del día");
-
+                $("#valor_dia").next().html("Campo vacío, por favor ingrese el valor del día");
             }
 
             if (valor_hora.length !== 0) {
-                $("#valor_hora_act").next().html("");
+                $("#valor_hora").next().html("");
                 validar++;
             }else{
-                $("#valor_hora_act").next().html("Campo vacío, por favor ingrese el valor de la hora");
+                $("#valor_hora").next().html("Campo vacío, por favor ingrese el valor de la hora");
 
             }
 
             if (area.length !== 0) {
-                $("#area_act").next().html("");
+                $("#area").next().html("");
                 validar++;
             }else{
-                $("#area_act").next().html("Campo vacío, por favor ingrese el area");
+                $("#area").next().html("Campo vacío, por favor ingrese el area");
 
             }
     
             if (seccion.length !== 0) {
-                $("#seccion_act").next().html("");
+                $("#seccion").next().html("");
                 validar++;
             }else{
-                $("#seccion_act").next().html("Campo vacío, por favor ingrese el area");
+                $("#seccion").next().html("Campo vacío, por favor ingrese el area");
 
             }
 
             if (cargo.length !== 0) {
-                $("#cargo_act").next().html("");
+                $("#cargo").next().html("");
                 validar++;
             }else{
-                $("#cargo_act").next().html("Campo vacío, por favor ingrese el cargo");
+                $("#cargo").next().html("Campo vacío, por favor ingrese el cargo");
 
             }
 
             if (estado.length !== 0) {
                 $("#estado_act").next().html("");
-                validar++;
+                if (estado === "2") {
+                    if (fecha_retiro.length !== 0) {
+                        $("#fecha_retiro_act").next().html("")
+                        if(motivo_retiro.length !== 0) {
+                            $("#motivo_retiro_act").next().html("");
+                            validar++;
+                        }else{
+                            $("#motivo_retiro_act").next().html("Campo vacío, por favor ingrese el motivo de retiro");
+                        } 
+                    }else{
+                        $("#fecha_retiro_act").next().html("Campo vacío, por favor ingrese la fecha de retiro");
+                    }
+                } else{
+                    validar++;
+                }
             }else{
-                $("#estado_act").next().html("Campo vacío, por favor ingrese el cargo");
+                $("#estado_act").next().html("Campo vacío, por favor ingrese el estado");
 
             }
 
-            if (validar === 11) {
+            if (cesantia.length !== 0) {
+                $("#cesantia_act").next().html("");
+                validar++;
+            }else{
+                $("#cesantia_act").next().html("Campo vacío, por favor ingrese la cesantía");
+
+            }
+
+            if (talla_camisa.length !== 0) {
+                $("#talla_camisa_act").next().html("");
+                validar++;
+            }else{
+                $("#talla_camisa_act").next().html("Campo vacío, por favor ingrese la camisa");
+
+            }
+
+            if (talla_pantalon.length !== 0) {
+                $("#talla_pantalon_act").next().html("");
+                validar++;
+            }else{
+                $("#talla_pantalon_act").next().html("Campo vacío, por favor ingrese el pantalón");
+
+            }
+
+            if (talla_zapato.length !== 0) {
+                $("#talla_zapato_act").next().html("");
+                validar++;
+            }else{
+                $("#talla_zapato_act").next().html("Campo vacío, por favor ingrese el zapato");
+
+            }
+
+            if (tipo_dotacion.length !== 0) {
+                $("#tipo_dotacion_act").next().html("");
+                validar++;
+            }else{
+                $("#tipo_dotacion_act").next().html("Campo vacío, por favor ingrese el tipo de dotación");
+
+            }
+
+            if (perfil.length !== 0) {
+                $("#perfil_act").next().html("");
+                validar++;
+            }else{
+                $("#perfil_act").next().html("Campo vacío, por favor ingrese el perfil");
+
+            }
+
+            
+
+            if (validar === 17) {
                 
                 $.post('../../controller/usuario/ActualizarUsuario.php', {
                     
@@ -5404,12 +5492,17 @@ var acciones = {
                     valor_dia: valor_dia,
                     valor_hora: valor_hora,
                     clase_riesgo: clase_riesgo,
-                    porcentaje_riesgo: porcentaje_riesgo,
                     area: area,
                     seccion: seccion,
                     cargo: cargo,
                     pension: pension,
-                    estado: estado
+                    estado: estado,
+                    cesantia: cesantia,
+                    talla_camisa: talla_camisa,
+                    talla_pantalon: talla_pantalon,
+                    talla_zapato: talla_zapato,
+                    perfil: perfil,
+                    tipo_dotacion: tipo_dotacion
                     
         
                 }, function(responseText) {

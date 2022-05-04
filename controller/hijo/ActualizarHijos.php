@@ -1,6 +1,6 @@
 <?php
 
-require_once ("../../models/DAO/FamiliarDAO.php");
+require_once ("../../models/DAO/HijoDAO.php");
 
 if (isset($_POST['id_hijo'])) {
     $id_hijo = $_POST['id_hijo'];
@@ -18,18 +18,18 @@ if (isset($_POST['id_hijo'])) {
 
                 $hijodto->setId_hijo($id_hijo[$i]);
                 $hijodto->setNombre($nombre_hijo[$i]);
-                $hijodto->setApellido($apellido[$i]);
+                $hijodto->setApellido($apellido_hijo[$i]);
                 $hijodto->setEdad($edad_hijo[$i]);
                 $hijodto->setFecha_nacimiento($fecha_nacimiento_hijo[$i]);
                 
                 $hijodao = new HijoDAO();
-                $hijodao->actualizarDatosHijos($hijodto);
+                $resultado = $hijodao->actualizarDatosHijos($hijodto);
             }
         }
     }
 
     
-
+    
 
 
 
