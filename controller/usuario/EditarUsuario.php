@@ -135,7 +135,7 @@ switch ($_POST['opc']) {
 
                 for ($i=0; $i < count($listaEpss); $i++) { 
                         if ($listaEpss[$i]->getId_eps() == $usuariodto->getEps() ) {
-                                $cbxEps .= "<option  value='" . $listaEpss[$i]->getId_eps() . "'>" . $listaEpss[$i]->getNombre() . "</option>";
+                                $cbxEps .= "<option selected value='" . $listaEpss[$i]->getId_eps() . "'>" . $listaEpss[$i]->getNombre() . "</option>";
                         }else {
                                 $cbxEps .= "<option value='" . $listaEpss[$i]->getId_eps() . "'>" . $listaEpss[$i]->getNombre() . "</option>";
                         }  
@@ -318,7 +318,7 @@ switch ($_POST['opc']) {
                 ."</div>"
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>Antecendes</label>"
-                ."<textarea class='form-control' type='text' id='antecedentes_act' value='" . $usuariodto->getAntecedentes() .  "' ></textarea>"
+                ."<textarea class='form-control' type='text' id='antecedentes_act'>" . $usuariodto->getAntecedentes() .  "</textarea>"
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."</div>"
@@ -326,12 +326,12 @@ switch ($_POST['opc']) {
                 ."<div class='row'>"
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>¿Practica deporte? ¿Cual?</label>"
-                ."<textarea class='form-control' type='text' id='practica_deporte_act' value='" . $usuariodto->getPractica_deporte() .  "' ></textarea>"
+                ."<textarea class='form-control' type='text' id='practica_deporte_act'>" . $usuariodto->getPractica_deporte() .  "</textarea>"
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>¿Cuantos cigarrillos se fuma a la semana?</label>"
-                ."<textarea class='form-control' type='text' id='consumo_cigarros_act' value='" . $usuariodto->getConsumo_cigarros() .  "' ></textarea>"
+                ."<textarea class='form-control' type='text' id='consumo_cigarros_act'>" . $usuariodto->getConsumo_cigarros() .  "</textarea>"
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."</div>"
@@ -339,12 +339,12 @@ switch ($_POST['opc']) {
                 ."<div class='row'>"
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>¿Cuantas copas de licor se toma a la semana?</label>"
-                ."<textarea class='form-control' type='text' id='consumo_licor_act' value='" . $usuariodto->getConsumo_licor() .  "' ></textarea>"
+                ."<textarea class='form-control' type='text' id='consumo_licor_act' >" . $usuariodto->getConsumo_licor() .  "</textarea>"
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."<div class='col my-2'>"
                 ."<label class='form-label'>¿Con que frecuencia consume sustancias alucinogenas?</label>"
-                ."<textarea class='form-control' type='text' id='consumo_spa_act' value='" . $usuariodto->getConsumo_spa() .  "' ></textarea>"
+                ."<textarea class='form-control' type='text' id='consumo_spa_act'>" . $usuariodto->getConsumo_spa() .  "</textarea>"
                 ."<small class='text-danger'></small>"
                 ."</div>"
                 ."</div>"
