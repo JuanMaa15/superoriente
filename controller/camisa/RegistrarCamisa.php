@@ -8,7 +8,7 @@ $talla = $_POST['talla'];
 $cantidad = $_POST['cantidad'];
 $estado = $_POST['estado'];
 
-if (!empty($nombre) && !empty($id_tipo_dotacion) && !empty($talla) && !empty($estado)) {
+if (!empty($nombre) && !empty($id_tipo_dotacion) && !empty($talla) && $estado != "") {
 
     if (preg_match('/[0-9]+/',$id_tipo_dotacion)) {
 

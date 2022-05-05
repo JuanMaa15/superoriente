@@ -6,6 +6,7 @@
     require_once ('../../models/DAO/PantalonDAO.php');
     require_once ('../../models/DAO/ZapatoDAO.php');
     require_once ('../../models/DAO/OtraVestimentaDAO.php');
+    require_once ('../../models/DAO/NivelAcademicoDAO.php');
 
     session_start();
     
@@ -19,6 +20,7 @@
         $pantalondao = new PantalonDAO();
         $zapatodao = new ZapatoDAO();
         $otraVestimentadao = new OtraVestimentaDAO();
+        $nivelAcademicodao = new NivelAcademicoDAO();
 
         $listaUsuario = $usuariodao->listaUsuario($_GET['doc']);
         $listaFamiliar = $familiardao->listaFamiliar($_GET['doc']);
@@ -27,6 +29,7 @@
         $listaPantalones = $pantalondao->listaPantalones();
         $listaZapatos = $zapatodao->listaZapatos();
         $listaVestimenta = $otraVestimentadao->listaVestimentas();
+        $listaNivelesAcademicos = $nivelAcademicodao->listaNivelesAcademicos();
 ?>
 
 <!DOCTYPE html>
@@ -515,6 +518,7 @@
                                 <th scope="col">Edad</th>
                                 <th scope="col">Escolaridad</th>
                                 <th scope="col">Parentesco</th>
+                                <th scope="col" colspan="2" class="text-center">Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -527,6 +531,8 @@
                                         <td><?php echo $listaFamiliar[$i]->getEdad(); ?></td>
                                         <td><?php echo $listaFamiliar[$i]->getEscolaridad(); ?></td>
                                         <td><?php echo $listaFamiliar[$i]->getParentesco(); ?></td>
+                                        <td><button class="btn btn-verde" type="button" id="btn-editar-familiar" value="<?php echo $listaFamiliar[$i]->getId_familiar(); ?>" data-bs-toggle="modal" data-bs-target="#editar-familiares">Editar</button></td>
+                                        <td><button class="btn btn-danger" type="button"  id="btn-ventana-eliminar-familiar" data-bs-toggle="modal" data-bs-target="#eliminar-familiares">Eliminar  </button></td>
                                         <?php
                                     }
                                 
@@ -538,7 +544,7 @@
                 </div>
 
                 <div class="row mt-5">
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="card">
                             <div class="card-header">
                                 Hijos
@@ -562,11 +568,26 @@
                                         <input class="form-control" type="text" id="edad_hijo" placeholder="Edad" readonly>
                                         <small class="text-danger"></small>
                                     </div>
+                                    <!--} <div class="my-3">
+                                        <select class="form-select" id="escolaridad_hijo">
+                                        <option selected value="">Escolaridad</option>
+                                        <?php
+                                        /*
+                                            for ($i=0; $i < count($listaNivelesAcademicos); $i++) { 
+                                                ?>
+                                                <option value="<?php echo $listaNivelesAcademicos[$i]->getId_nivel_academico(); ?>"><?php echo $listaNivelesAcademicos[$i]->getNombre(); ?></option>
+                                                <?php
+                                            }*/
+                                        ?>
+                                        </select>
+                                        <small class="text-danger"></small>
+                                    </div> -->
+                                    
                                     <div class="col my-3">
-                                        <button type="button" class="btn w-100 btn-verde" id="btn-registrar-familiar">Registrar</button>
+                                        <button type="button" class="btn w-100 btn-verde" id="btn-registrar-hijo">Registrar</button>
                                     </div>
        
-                                    <div id="rta-familiar" class="my-2">
+                                    <div id="rta-hijo" class="my-2">
 
                                     </div>
                                 </form>
@@ -574,21 +595,36 @@
                         </div>
                     
                     </div>
-                    <div class="col-9">
+                    <div class="col-8">
                         <table class="table table-striped">
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Fecha de nacimiento</th>
-                                <th>Edad</th>
-                                
-                            </tr>
-                            <tr>
-                                <td>Carlos</td>
-                                <td>Henao</td>
-                                <td>1975-01-23</td>
-                                <td>45</td>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Fecha de nacimiento</th>
+                                    <th scope="col">Edad</th>
+                                    <th scope="col" colspan="2" class="text-center">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+
+                                    for ($i=0; $i < count($listaHijo); $i++) { 
+                                        ?>  
+                                        <tr>
+                                            <td><?php echo $listaHijo[$i]->getNombre() ?></td>
+                                            <td><?php echo $listaHijo[$i]->getApellido() ?></td>
+                                            <td><?php echo $listaHijo[$i]->getFecha_nacimiento() ?></td>
+                                            <td><?php echo $listaHijo[$i]->getEdad() ?></td>
+                                            <td><button class="btn btn-verde" type="button" id="btn-editar-hijo" value="<?php echo $listaHijo[$i]->getId_hijo() ?>" data-bs-toggle="modal" data-bs-target="#editar-hijos">Editar</button></td>
+                                            <td><button class="btn btn-danger" type="button" id="btn-ventana-eliminar-hijo" data-bs-toggle="modal" data-bs-target="#eliminar-hijos">Eliminar</button></td>
+                                        </tr>
+                                            
+                                        <?php
+                                    }
+                                ?>
+                            </tbody>
+                            
                           </table>
                     </div>
                 </div>
@@ -793,6 +829,91 @@
        
           
     </main>
+
+    <!-- Confirmacion para eliminar un hijo -->
+        
+    <div class="modal modal-delete fade" id="eliminar-hijos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar hijo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>¿Esta seguro de eliminar este hijo?</div>
+                    <div class="mt-3" id="btns-modal-eliminar">
+                        <button type="button" class="btn btn-verde" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn-eliminar-hijo">Si</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Confirmacion para elimina un familiar -->
+        
+    <div class="modal modal-delete fade" id="eliminar-familiares" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar familiar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>¿Esta seguro de eliminar esta persona?</div>
+                    <div class="mt-3" id="btns-modal-eliminar">
+                        <button type="button" class="btn btn-verde" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn-eliminar-familiar">Si</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Ventana para editar un hijo -->
+
+    <div class="modal fade" id="editar-hijos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar hijo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-hijo"></div>
+                    <div id="rta-actualizar-hijo" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-actualizar-hijo">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!--  Ventana para editar un familiar -->
+
+   <div class="modal fade" id="editar-familiares" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar familiar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="editar-familiar"></div>
+                    <div id="rta-actualizar-familiar" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-actualizar-familiar">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="modal-editar-camisas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

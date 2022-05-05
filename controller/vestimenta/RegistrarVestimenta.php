@@ -7,7 +7,7 @@ $id_tipo_dotacion = $_POST['tipo_dotacion'];
 $cantidad = $_POST['cantidad'];
 $estado = $_POST['estado'];
 
-if (!empty($nombre) && !empty($id_tipo_dotacion) && !empty($estado)) {
+if (!empty($nombre) && !empty($id_tipo_dotacion) && $estado != "") {
 
     if (preg_match('/[0-9]+/',$id_tipo_dotacion)) {
 

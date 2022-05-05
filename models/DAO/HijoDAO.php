@@ -48,6 +48,42 @@ class HijoDAO {
 
     }
 
+
+    // ---------------------- Datos de un hijo -----------------
+
+    public function listaUnHijo($id_hijo) {
+
+        $cnx = Conexion::conectar();
+        $hijodto = null;
+
+
+        try {
+            
+            $sql = "SELECT * FROM tbl_hijo WHERE id_hijo = ". $id_hijo;
+            $rs = $cnx->query($sql);
+
+            $row = $rs->fetch();
+
+            $hijodto = new HijoDTO();
+            $hijodto->constructor(
+                $row['id_hijo'],
+                $row['nombre'],
+                $row['apellido'],
+                $row['edad'],
+                $row['fecha_nacimiento'],
+                $row['id_usuario']
+            );
+            
+            return $hijodto;
+
+        } catch (Exception $ex) {
+            print "Error al traer los datos del hijo" . $ex->getMessage();
+        }
+
+        return null;
+
+    }
+
     // ----------------------- Registrar Hijo -------------------
 
     public function registrarHijo($hijodto) {
@@ -112,6 +148,28 @@ class HijoDAO {
             print "Error al actualizar los datos familiares ". $ex->getMessage();
         }
         
+        return false;
+
+    }
+
+    // Eliminar hijo 
+
+    public function eliminarHijo($id_hijo) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "DELETE FROM tbl_hijo WHERE id_hijo = " . $id_hijo;
+            $ps = $cnx->prepare($sql);
+
+            $ps->execute();
+
+            return true;
+            
+        } catch (Exception $ex) {
+            print "Error al eliminar un hijo " . $ex->getMessage();
+        }
+
         return false;
 
     }

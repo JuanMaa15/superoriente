@@ -22,7 +22,7 @@ for ($i=28; $i < 46; $i++) {
 
 }
 
-if (!empty($nombre) && !empty($id_tipo_dotacion) && !empty($talla) && !empty($estado)) {
+if (!empty($nombre) && !empty($id_tipo_dotacion) && !empty($talla) && $estado != "") {
 
     if (preg_match('/[0-9]+/',$id_tipo_dotacion)) {
 

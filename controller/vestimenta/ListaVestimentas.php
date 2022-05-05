@@ -27,7 +27,7 @@ if (isset($_POST['tipo_dotacion'])) {
                         ."</div>"
                         ."<div class='bloque-dotacion dotacion-agregada bg-light py-4 px-5'>"
                             ."<div class='col d-flex justify-content-center align-items-center'>"
-                                ."<i class='fa-solid fa-table-columns'></i>"
+                                ."<i class='fa-solid fa-person-booth'></i>"
                             ."</div>"
                             ."<div class='text-center'>"
                                 ."<p>Ropa de trabajo: " . $listaVestimentas[$i]->getNombre() . "</p>"

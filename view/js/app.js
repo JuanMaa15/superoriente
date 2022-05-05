@@ -92,6 +92,8 @@ var acciones = {
         $("#mostrar_registros").keyup(acciones.mostrarRegistrosTabla);
         $("#mostrar_registros").click(acciones.mostrarRegistrosTabla);
         $("#estado_act").click(acciones.habilitarRetiro);
+        $("#btn-ventana-eliminar-familiar").click(acciones.agregarValorBotonFamiliar);
+        $("#btn-ventana-eliminar-hijo").click(acciones.agregarValorBotonHijo);
         //$(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
@@ -99,7 +101,8 @@ var acciones = {
 
         $(".fecha_nacimiento").on('change', acciones.calcularEdadesHijos);
         $("#fecha_nacimiento").on('change', acciones.calcularEdad);
-
+        $("#fecha_nacimiento_hijo").on('change', acciones.calcularEdadHijo);
+        $("#fecha_nacimiento_hijo_act").on('change', acciones.calcularEdadHijoAct);
         
         $("#salario").keyup(acciones.calcularValorDiaHora);
 
@@ -345,6 +348,20 @@ var acciones = {
             $("#listado-enlaces").html(responseText);
         });
 
+    },
+
+    agregarValorBotonHijo : function () {
+        var valor_boton = $("#btn-editar-hijo").val();
+
+        $("#btn-eliminar-hijo").val(valor_boton);
+    },
+
+    agregarValorBotonFamiliar : function() {
+
+        var valor_boton = $("#btn-editar-familiar").val();
+
+        $("#btn-eliminar-familiar").val(valor_boton);
+        //console.log(valor_boton);
     },
 
     habilitarRetiro : function() {
@@ -1469,15 +1486,34 @@ var acciones = {
 
     // Me calcula la edad de los usuarios que contengan la clase "fecha_nacmiento" (Esta función es más enfocada en los hijos)
 
-    calcularEdadesHijos : function () {
+    calcularEdadHijoAct : function() {
+        var fecha_seleccionada = $(this).val();
+        var fecha_nacimiento = new Date(fecha_seleccionada);
+        var fecha_actual = new Date();
+        var edad = parseInt((fecha_actual - fecha_nacimiento) / (1000*60*60*24*365));
 
-        
+        $("#edad_hijo_act").val(edad);
+    },
+
+    calcularEdadHijo : function() {
+
+        var fecha_seleccionada = $(this).val();
+        var fecha_nacimiento = new Date(fecha_seleccionada);
+        var fecha_actual = new Date();
+        var edad = parseInt((fecha_actual - fecha_nacimiento) / (1000*60*60*24*365));
+
+        $("#edad_hijo_act").val(edad);
+
+    },
+
+    calcularEdadesHijos : function () {
         
         var id_fecha_nacimiento = $(this).attr("id");
+        var cantCamposFechas = $(this).toArray().length;
 
         console.log(id_fecha_nacimiento);
 
-        for (let i = 0; i < contH; i++) {
+        for (let i = 0; i < cantCamposFechas; i++) {
        
             if(id_fecha_nacimiento === "fecha_nacimiento_hijo" + i) {
 
@@ -2112,6 +2148,54 @@ var acciones = {
     },
 
     // --------------------- Verifica y envía los formularios ---------------------
+
+    enviarFormHijo : function() {
+
+        var nombre = $("#nombre_hijo").val();
+        var apellido = $("#apellido_hijo").val();
+        var fecha_nacimiento = $("#fecha_nacimiento_hijo").val();
+        var edad = $("#edad_hijo").val();
+        var id_usuario = $("#doc").val();
+
+        console.log("usuario: " + id_usuario);
+        var validar = 0;
+
+        if (nombre.length !== 0) {
+            $("#nombre_hijo").next().html("");
+            validar++;
+        }else{
+            $("#nombre_hijo").next().html("Campo vacío, por favor ingrese el nombre");
+        }
+
+        if (apellido.length !== 0) {
+            $("#apellido_hijo").next().html("");
+            validar++;
+        }else{
+            $("#apellido_hijo").next().html("Campo vacío, por favor ingrese el apellido");
+        }
+
+        if (id_usuario.length !== 0) {
+            validar++;
+        }else{
+            alert("Error inesperado");
+        }
+
+        if (validar === 3) {
+            alert("entra");
+            $.post('../../controller/hijo/RegistrarHijo.php',{
+
+                nombre: nombre,
+                apellido: apellido,
+                fecha_nacimiento: fecha_nacimiento,
+                edad: edad,
+                id_usuario: id_usuario
+            },function(responseText){
+                $("#rta-hijo").html(responseText);
+            });
+
+        }
+
+    },
     
     enviarFormTipoZapato : function() {
 
@@ -2241,7 +2325,7 @@ var acciones = {
         var apellido = $("#apellido-familiar").val();
         var edad = $("#edad-familiar").val();
         var escolaridad = $("#escolaridad-familiar").val();
-        var parentesco = $("#escolaridad-familiar").val();
+        var parentesco = $("#parentesco-familiar").val();
         var id_usuario = $("#doc").val();
         var validar = 0;
 
@@ -2266,7 +2350,7 @@ var acciones = {
             $("#apellido-familiar").next().html("Campo vacío, por favor ingrese el apellido")
         }
 
-        if (edad.length !== 0) {
+        /* if (edad.length !== 0) {
             $("#edad-familiar").next().html("");
             validar++;
         }else{
@@ -2285,14 +2369,14 @@ var acciones = {
             validar++;
         }else{
             $("#parentesco-familiar").next().html("Campo vacío, por favor ingrese el parentesco")
-        }
+        } */
 
         if (id_usuario.length !== 0) {
             validar++;
         }
 
 
-        if (validar == 7) {
+        if (validar == 4) {
 
             $.post('../../controller/familiar/registrarFamiliar.php',{
                 id_familiar: id_familiar,
@@ -3586,6 +3670,30 @@ var acciones = {
         
         switch (btn) {
 
+            // Eliminar hij@
+
+            case "btn-eliminar-hijo":
+                $.post('../../controller/hijo/EliminarHijo.php',{
+                    id: id
+                },function(responseText){
+                    
+                    //$("#rta-eliminar-familiar").html(responseText);
+                    location.reload();
+                });
+            break;
+
+            // Eliminar familiar
+
+            case "btn-eliminar-familiar":
+                $.post('../../controller/familiar/EliminarFamiliar.php',{
+                    id: id
+                },function(responseText){
+                    
+                    //$("#rta-eliminar-familiar").html(responseText);
+                    location.reload();
+                });
+            break;
+
             // Eliminar dotación a un empleado 
 
             case "btn-eliminar-camisa-empleado": 
@@ -3717,6 +3825,30 @@ var acciones = {
               break;
 
             // ------------- Editar un registro -----------
+
+            // Hijo
+
+            case "btn-editar-hijo":
+                $.post('../../controller/hijo/EditarHijos.php',{
+                    id: id,
+                    opc: "2"
+                },function(responseText) {
+                    $("#editar-hijo").html(responseText);
+                    $(document).ready(acciones.listo);
+                });
+            break;
+
+            // Familiar
+
+            case "btn-editar-familiar":
+
+                $.post('../../controller/familiar/EditarFamiliar.php',{
+                    id: id,
+                    opc: "2"
+                },function(responseText) {
+                    $("#editar-familiar").html(responseText);
+                });
+            break;
 
             // Tipo de zapato
 
@@ -4039,16 +4171,19 @@ var acciones = {
                 $("#editar-datos-familiares").html("");
 
                 $.post('../../controller/familiar/EditarFamiliar.php',{
-                    id:id
+                    id:id,
+                    opc: "1"
                 },function(responseText) {
                     $("#editar-datos-familiares").html(responseText);
                 });
 
                 setTimeout(() => {
                     $.post('../../controller/hijo/EditarHijos.php',{
-                        id:id
+                        id:id,
+                        opc: "1"
                     },function(responseText) {
                         $("#editar-datos-familiares").append(responseText);
+                        $(document).ready(acciones.listo);
                     });
                 },100);
                 
@@ -4057,6 +4192,108 @@ var acciones = {
             break;
 
              // Actualizar un registro
+
+             
+             case "btn-actualizar-hijo": 
+                
+                var id_hijo = $("#id_hijo_act").val(); 
+                var nombre = $("#nombre_hijo_act").val();
+                var apellido = $("#apellido_hijo_act").val();
+                var fecha_nacimiento = $("#fecha_nacimiento_hijo_act").val();
+                var edad = $("#edad_hijo_act").val();
+        
+            
+                var validar = 0;
+
+                if (id_hijo.length !== 0) {
+                    $("#id_hijo_act").next().html("");
+                    validar++;
+                }else{
+                    $("#id_hijo_act").next().html("Campo vacío, por favor ingrese el código");
+                }
+        
+        
+                if (nombre.length !== 0) {
+                    $("#nombre_hijo").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre_hijo").next().html("Campo vacío, por favor ingrese el nombre");
+                }
+        
+                if (apellido.length !== 0) {
+                    $("#apellido_hijo").next().html("");
+                    validar++;
+                }else{
+                    $("#apellido_hijo").next().html("Campo vacío, por favor ingrese el apellido");
+                }
+        
+                if (validar === 3) {
+                    $.post('../../controller/hijo/ActualizarHijos.php',{
+                        
+                        id_hijo: id_hijo,
+                        nombre_hijo: nombre,
+                        apellido_hijo: apellido,
+                        fecha_nacimiento_hijo: fecha_nacimiento,
+                        edad_hijo: edad,
+                        opc: "2"
+                       
+                    },function(responseText){
+                        $("#rta-actualizar-hijo").html(responseText);
+                    });
+        
+                }
+             break;
+
+             case "btn-actualizar-familiar":
+                var id_familiar = $("#id_familiar_act").val();
+                var nombre = $("#nombre_familiar_act").val();
+                var apellido = $("#apellido_familiar_act").val();
+                var edad = $("#edad_familiar_act").val();
+                var escolaridad = $("#escolaridad_familiar_act").val();
+                var parentesco = $("#parentesco_familiar_act").val();
+                var validar = 0;
+
+                if (id_familiar.length !== 0) {
+                    $("#id_familiar_act").next().html("");
+                    validar++;
+                }else{
+                    $("#id_familiar_act").next().html("Campo vacío, por favor ingrese el número de documento");
+                }
+
+                if (nombre.length !== 0) {
+                    $("#nombre_familiar_act").next().html("");
+                    validar++;
+                }else{
+                    $("#nombre_familiar_act").next().html("Campo vacío, por favor ingrese el nombre")
+                }
+
+                if (apellido.length !== 0) {
+                    $("#apellido-familiar_act").next().html("");
+                    validar++;
+                }else{
+                    $("#apellido-familiar_act").next().html("Campo vacío, por favor ingrese el apellido")
+                }
+
+
+                
+
+                if (validar === 3) {
+
+                    $.post('../../controller/familiar/actualizarFamiliar.php',{
+                        id_familiar: id_familiar,
+                        nombre_familiar: nombre,
+                        apellido_familiar: apellido,
+                        edad_familiar: edad,
+                        escolaridad_familiar: escolaridad,
+                        parentesco_familiar: parentesco,
+                    
+                        opc: 2
+                    },function(responseText) {
+                        $("#rta-actualizar-familiar").html(responseText);
+                    });
+
+                }
+             break;
 
              case "btn-actualizar-tipo-zapato":
 
@@ -4094,8 +4331,6 @@ var acciones = {
 
                 
              break;
-
-             // Actualizar un registro
 
              case "btn-actualizar-tipo-pantalon":
 
@@ -5544,8 +5779,8 @@ var acciones = {
                     apellido_familiar: apellido_familiar,
                     edad_familiar: edad_familiar,
                     escolaridad_familiar: escolaridad_familiar,
-                    parentesco_familiar: parentesco_familiar
-
+                    parentesco_familiar: parentesco_familiar,
+                    opc: "1"
 
                 },function(responseText) {
                     $("#rta-datos-familiares-act").html(responseText);
@@ -5566,8 +5801,8 @@ var acciones = {
                     id_hijo[i] = $("#id_hijo_act" + i).val();
                     nombre_hijo[i] = $("#nombre_hijo_act" + i).val();
                     apellido_hijo[i] = $("#apellido_hijo_act" + i).val();
-                    edad_hijo[i] = $("#edad_hijo_act" + i).val();
-                    fecha_nacimiento_hijo[i] = $("#fecha_nacimiento_hijo_act" + i).val();
+                    edad_hijo[i] = $("#edad_hijo" + i).val();
+                    fecha_nacimiento_hijo[i] = $("#fecha_nacimiento_hijo" + i).val();
 
                 }
 
@@ -5580,7 +5815,8 @@ var acciones = {
                         nombre_hijo: nombre_hijo,
                         apellido_hijo: apellido_hijo,
                         edad_hijo: edad_hijo,
-                        fecha_nacimiento_hijo: fecha_nacimiento_hijo
+                        fecha_nacimiento_hijo: fecha_nacimiento_hijo,
+                        opc: "1"
                     },function(responseText) {
                         $("#rta-datos-familiares-act").append(responseText);
                     });

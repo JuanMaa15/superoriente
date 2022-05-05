@@ -9,7 +9,35 @@ class FamiliarDAO {
     var $rs; /* ResultSet */
     var $st; /* Statement */
 
-    // ------------------------- Lista familiar -----------------
+   //------------------------ Datos de un familiar ------------
+
+    public function listaUnFamiliar($id_familiar) {
+        $cnx = Conexion::conectar();
+        $familiardto = null;
+
+        try {
+            $sql = "SELECT * FROM tbl_familiar WHERE id_familiar = " . $id_familiar;
+            $rs = $cnx->query($sql);
+
+            $row = $rs->fetch();
+            $familiardto = new FamiliarDTO();
+            $familiardto->constructor(
+                    $row['id_familiar'],
+                    $row['nombre'],
+                    $row['apellido'],
+                    $row['edad'],
+                    $row['escolaridad'],
+                    $row['parentesco'],
+                    $row['id_usuario']
+            );
+
+            return $familiardto;
+        } catch (Exception $ex) {
+            print "Error al traer los datos del familiar" . $ex->getMessage();
+        }
+    }
+
+     // ------------------------- Lista familiar -----------------
 
     public function listaFamiliar($id_usuario) {
 
@@ -32,7 +60,7 @@ class FamiliarDAO {
                     $row['edad'],
                     $row['escolaridad'],
                     $row['parentesco'],
-                    $row['id_usuario'],
+                    $row['id_usuario']
                 );
 
                 $i++;
@@ -41,7 +69,7 @@ class FamiliarDAO {
             return $lista;
 
         } catch (Exception $ex) {
-            print "Error al traer la lista de los hijos" . $ex->getMessage();
+            print "Error al traer la lista de los familiares" . $ex->getMessage();
         }
 
         return null;
@@ -120,6 +148,29 @@ class FamiliarDAO {
             print "Error al actualizar los datos familiares ". $ex->getMessage();
         }
         
+        return false;
+
+    }
+
+
+    // Eliminar familiar 
+
+    public function eliminarFamiliar($id_familiar) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "DELETE FROM tbl_familiar WHERE id_familiar = " . $id_familiar;
+            $ps = $cnx->prepare($sql);
+
+            $ps->execute();
+
+            return true;
+
+        } catch (Exception $ex) {
+            print "Error al eliminar un familiar " . $ex->getMessage();
+        }
+
         return false;
 
     }
