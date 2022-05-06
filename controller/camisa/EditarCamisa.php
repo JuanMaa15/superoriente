@@ -22,7 +22,7 @@ $cbxTiposCamisas = "<select class='form-select' id='tipo-camisa-act'>";
                 if ($listaTiposCamisas[$i]->getId_tipo_camisa() == $camisadto->getNombre()) {
                         $cbxTiposCamisas .= "<option selected value='" . $listaTiposCamisas[$i]->getId_tipo_camisa() . "'>" . $listaTiposCamisas[$i]->getNombre() . "</option>";
                 }else{
-                        $cbxTiposCamisas .= "<option value='" . $$listaTiposCamisas[$i]->getId_tipo_camisa() . "'>" . $listaTiposCamisas[$i]->getNombre() . "</option>";
+                        $cbxTiposCamisas .= "<option value='" . $listaTiposCamisas[$i]->getId_tipo_camisa() . "'>" . $listaTiposCamisas[$i]->getNombre() . "</option>";
    
                 }
         }

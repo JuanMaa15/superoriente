@@ -6,6 +6,7 @@ var contenido_area = $("#area").html();
 var opc_trabajo_reporte = "";
 var cant_filtros;
 var filtros_seleccionados = []; 
+var cantFiltrosDotacion = 0;
 var opc_anterior = [];
 
 var acciones = {
@@ -94,6 +95,8 @@ var acciones = {
         $("#estado_act").click(acciones.habilitarRetiro);
         $("#btn-ventana-eliminar-familiar").click(acciones.agregarValorBotonFamiliar);
         $("#btn-ventana-eliminar-hijo").click(acciones.agregarValorBotonHijo);
+        $("#btn-agregar-filtro").click(acciones.agregarFiltroDotacion);
+        $("#btn-remover-filtro").click(acciones.removerFiltroDotacion);
         //$(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
@@ -350,10 +353,67 @@ var acciones = {
 
     },
 
+
+    removerFiltroDotacion : function() {
+        cantFiltrosDotacion--;
+
+        if (cantFiltrosDotacion === 0) {
+            $("#btn-remover-filtro").removeClass("d-block").addClass("d-none");
+        }
+
+        $("#filtro" + cantFiltrosDotacion).remove();
+    },
+
+    agregarFiltroDotacion : function () {
+
+        var cont_filtros = `<div class='col-3 my-3' id='filtro` + cantFiltrosDotacion + `'>
+                        <select class='listado-campos-usuario form-select' id='listado-campos` + cantFiltrosDotacion + `'>
+                            <option value='' selected>Campos del empleado</option>
+                            <option value='tbl_casa' id='tbl_casa'>Tipo de vivienda</option>
+                            <option value='estrato' id='estrato'>Estrato</option>
+                            <option value='tbl_genero' id='tbl_genero'>Género</option>
+                            <option value='tbl_lugar_residencia' id='tbl_lugar_residencia'>Lugar de residencia</option>
+                            <option value='tbl_nivel_academico' id='tbl_nivel_academico'>Nivel academico</option>
+                            <option value='tbl_estado_civil' id='tbl_estado_civil'>Estado civil</option>
+                            <option value='tbl_eps' id='tbl_eps'>EPS</option>
+                            <option value='tbl_tipo_sangre_rh' id='tbl_tipo_sangre_rh'>Tipo de sangre y RH</option>
+                            <option value='tbl_sucursal' id='tbl_sucursal'>Sucursal</option>
+                            <option value='tbl_tipo_contrato' id='tbl_tipo_contrato'>Tipo de contrato</option>
+                            <option value='tbl_cesantia' id='tbl_cesantia'>Cesantía</option>
+                            <option value='tbl_clase_riesgo' id='tbl_clase_riesgo'>Clase de riesgo</option>
+                            <option value='tbl_seccion' id='tbl_seccion'>Sección</option>
+                            <option value='tbl_area' id='tbl_area'>Area</option>
+                            <option value='tbl_cargo' id='tbl_cargo'>Cargo</option>
+                            <option value='tbl_pension' id='tbl_pension'>Pensión</option>
+                            <option value='tbl_tipo_dotacion' id='tbl_tipo_dotacion'>Tipo de dotación</option>
+                            <option value='tbl_hijo' id='tbl_hijo'>Hijos</option>
+                            <option value='tbl_estado' id='tbl_estado'>Estado</option>
+                            <option value='salario' id='salario'>Salario</option>
+                            <option value='fecha' id='fecha'>Fecha de ingreso</option>
+                        </select>
+                        <div id='listado-datos`+ cantFiltrosDotacion + `' class='mt-3 ms-1'></div>
+                        
+                    </div>`;
+
+                        opc_anterior[cantFiltrosDotacion] = ""; 
+                        filtros_seleccionados[cantFiltrosDotacion] = "";
+
+
+            $("#cont-reporte-filtro").prepend(cont_filtros);
+
+            $("#btn-remover-filtro").removeClass("d-none").addClass("d-block");
+
+        cantFiltrosDotacion++;
+
+        alert(cantFiltrosDotacion);
+
+    },
+
     agregarValorBotonHijo : function () {
         var valor_boton = $("#btn-editar-hijo").val();
 
         $("#btn-eliminar-hijo").val(valor_boton);
+        console.log(valor_boton);
     },
 
     agregarValorBotonFamiliar : function() {
@@ -1109,7 +1169,7 @@ var acciones = {
 
         var cant = parseInt($("#campo-cant-fija").val());
         var seleccionadas = $(".checkbox-empleados:checked").length;
-        var restantes = cant - seleccionadas0; 
+        var restantes = cant - seleccionadas; 
 
         $("#campo-cant").val(restantes);
 
@@ -4407,7 +4467,7 @@ var acciones = {
              break;
 
              case "btn-actualizar-clase-riesgo":
-
+                
                 var id_clase_riesgo = $("#id-clase-riesgo-act").val();
                 var nombre = $("#nombre-clase-riesgo-act").val();
                 var porcentaje = $("#porcentaje-clase-riesgo-act").val();
@@ -4441,7 +4501,7 @@ var acciones = {
         
                 }
 
-                if (validar === 2) {
+                if (validar === 3) {
 
                     $.post('../../controller/clase_riesgo/ActualizarClaseRiesgo.php',{
                         nombre: nombre,

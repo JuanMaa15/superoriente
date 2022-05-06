@@ -82,7 +82,7 @@
                                 
                             </div>
                             <div class="col-3">
-                                <a href="#">
+                                <a href="reportesDotacion.php">
                                     <div class="cont-icono p-3">
                                         <div class="icono">
                                             <i class="fa-solid fa-user-tie"></i>

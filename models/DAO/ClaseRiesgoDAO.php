@@ -103,18 +103,18 @@ class ClaseRiesgoDAO {
 
     }
 
-    // --------------------------- Actulizar cesantía ---------------------
+    // --------------------------- Actulizar clase de riesgo ---------------------
 
-    public function actualizarClaseRiesgo($cesantiadto) {
+    public function actualizarClaseRiesgo($claseRiesgodto) {
 
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_clase_riesgo SET clase_riesgo = ?, porcentaje = ? WHERE id_clase_riesgo = " . $cesantiadto->getId_clase_riesgo();
+            $sql = "UPDATE tbl_clase_riesgo SET clase_riesgo = ?, porcentaje = ? WHERE id_clase_riesgo = " . $claseRiesgodto->getId_clase_riesgo();
             $ps = $cnx->prepare($sql);
 
-            $clase_riesgo = $cesantiadto->getNombre();
-            $porcentaje = $cesantiadto->getPorcentaje();
+            $clase_riesgo = $claseRiesgodto->getNombre();
+            $porcentaje = $claseRiesgodto->getPorcentaje();
 
             $ps->bindParam(1, $clase_riesgo);
             $ps->bindParam(2, $porcentaje);

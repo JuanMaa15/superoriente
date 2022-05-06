@@ -18,11 +18,11 @@ if (!empty($id_clase_riesgo) && !empty($nombre)) {
 
         $claseRiesgodto->setId_clase_riesgo($id_clase_riesgo);
         $claseRiesgodto->setNombre($nombre);
-        $claseRiesgodto->setNombre($porcentaje);
+        $claseRiesgodto->setPorcentaje($porcentaje);
 
         $claseRiesgodao = new ClaseRiesgoDAO();
 
-        $resultado = $claseRiesgodao->actualizarClaseRiesgo($cesantiadto);
+        $resultado = $claseRiesgodao->actualizarClaseRiesgo($claseRiesgodto);
     
         if ($resultado) {
             echo "<div class='alert alert-success' role='alert'>¡La cesantía se ha actualizado correctamente!</div>";
