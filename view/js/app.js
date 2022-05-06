@@ -1502,7 +1502,7 @@ var acciones = {
         var fecha_actual = new Date();
         var edad = parseInt((fecha_actual - fecha_nacimiento) / (1000*60*60*24*365));
 
-        $("#edad_hijo_act").val(edad);
+        $("#edad_hijo").val(edad);
 
     },
 
