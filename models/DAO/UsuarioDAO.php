@@ -1753,10 +1753,36 @@ class UsuarioDAO {
         return null;
     }
 
-    public function listaDotacionFiltros($genero, $sucursal, $tipo_dotacion, $talla_camisa, $talla_pantalon, $talla_zapato, $tipo_camisa, $tipo_pantalon, $tipo_zapato) {
+    public function listaDotacionFiltros($genero, $sucursal, $tipo_dotacion, $camisa, $pantalon, $zapato) {
         $cnx = Conexion::conectar();
         $lista = array();
         $i = 0;
+       
+        $inner_camisa = "";
+        $inner_pantalon = "";
+        $inner_zapato = "";
+        $talla = "";
+        $tipo_ropa = "";    
+
+        echo $camisa;
+
+        if ($camisa != "") {
+            $inner_camisa = " INNER JOIN tbl_camisa AS tcma ON tu.id_camisa = tcma.id_camisa INNER JOIN tbl_tipo_camisa AS ttca ON tcma.id_tipo_camisa = ttca.id_tipo_camisa";
+            $tipo_ropa = "tipo_camisa";
+            $talla = "talla_camisa";
+        }else if($pantalon != " "){
+            $inner_pantalon = " INNER JOIN tbl_pantalon AS tpn ON tu.id_pantalon = tpn.id_pantalon INNER JOIN tbl_tipo_pantalon AS ttpn ON tpn.id_tipo_pantalon = ttpn.id_tipo_pantalon";
+            $tipo_ropa = "tipo_pantalon";
+            $talla = "talla_pantalon";
+        }else if($zapato != " ") {
+            $inner_zapato = " INNER JOIN tbl_zapato AS tzo ON tu.id_zapato = tzo.id_zapato INNER JOIN tbl_tipo_zapato AS ttzo ON tzo.id_tipo_zapato = ttzo.id_tipo_zapato"; 
+            $tipo_ropa = "tipo_zapato";
+            $talla = "talla_zapato";
+        }
+
+        echo $inner_camisa;
+        echo $tipo_ropa;
+        echo $talla;
         
         try {
             $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil
@@ -1765,12 +1791,11 @@ class UsuarioDAO {
              INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico 
              INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_cesantia AS tces ON tu.id_cesantia = tces.id_cesantia INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion 
              INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_clase_riesgo AS tcr ON tu.id_clase_riesgo = tcr.id_clase_riesgo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension 
-             INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion INNER JOIN tbl_camisa AS tcma ON tu.id_camisa = tcma.id_camisa INNER JOIN tbl_pantalon AS tpn ON tu.id_pantalon = tpn.id_pantalon 
-             INNER JOIN tbl_zapato AS tzo ON tu.id_zapato = tzo.id_zapato INNER JOIN tbl_tipo_camisa AS ttca ON tcma.id_tipo_camisa = ttca.id_tipo_camisa INNER JOIN tbl_tipo_pantalon AS ttpn ON tpn.id_tipo_pantalon = ttpn.id_tipo_pantalon
-             INNER JOIN tbl_tipo_zapato AS ttzo ON tzo.id_tipo_zapato = ttzo.id_tipo_zapato WHERE id_usuario !='' " . $genero . " " . $sucursal . " " . $tipo_dotacion . " " . $genero . " " . $talla_camisa . " " . $talla_pantalon . " " . $talla_zapato .
-             " " . $tipo_camisa . " " . $tipo_pantalon . " " . $tipo_zapato;
+             INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion " . " WHERE id_usuario !='' " . $camisa . " " . $pantalon . " " . $zapato;
              /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */
             $rs = $cnx->query($sql);
+
+            
             
             
             while ($row = $rs->fetch()) {
@@ -1830,13 +1855,13 @@ class UsuarioDAO {
                     $row['pension'],
                     $row['tipo_dotacion'],
                     $row['estado'],
-                    $row['tipo_camisa'],
-                    $row['tipo_pantalon'],
-                    $row['tipo_zapato'],
+                    "",
+                    "",
+                   "",
                     $row['id_vestimenta'],
-                    $row['talla'],
-                    $row['talla'],
-                    $row['talla'],
+                    $row[$talla],
+                    "",
+                    ""
                 );
 
             
