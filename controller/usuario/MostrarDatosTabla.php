@@ -12,7 +12,7 @@ if (isset($_POST['tabla'])) {
 
     $datos = "<form>";
 
-    if ($tabla != "estrato" && $tabla != "salario" && $tabla != "fecha" && $tabla != "tbl_hijo") {
+    if ($tabla != "estrato" && $tabla != "salario" && $tabla != "fecha" && $tabla != "tbl_hijo" && $tabla != "talla_camisa" && $tabla != "talla_pantalon" && $tabla != "talla_zapato") {
 
         $listadoTabla = $usuariodao->datosTabla($tabla);
 
@@ -53,10 +53,67 @@ if (isset($_POST['tabla'])) {
       . "<label class='form-label'>Fin</label>"
       . "<input class='form-control input_fecha radio_fecha2 my-2' id='input_fecha2' type='date'>"
     . "</div>";
-    }else if ($tabla = "tbl_hijo") {
+    }else if ($tabla == "tbl_hijo") {
       $datos .= "<div class='pe-1 d-flex justify-content-center'>"
         . "<input class='form-control input_hijo radio_tbl_hijo my-2 w-50' id='input_hijos'<' type='text' placeholder='Nro de hijos'>"
       . "</div>";
+    }else if($tabla == "talla_camisa"){
+     $datos .= "<div class='form-check'>"
+              . "<input class='form-check-input radio_listas radio_talla_camisa' type='radio' name='flexRadioDefault' value='XS'>"
+              . "<label class='form-check-label' for='flexRadioDefault1'>" 
+              . "XS"
+              . "</label>"
+            . "</div>"
+            ."<div class='form-check'>"
+              . "<input class='form-check-input radio_listas radio_talla_camisa' type='radio' name='flexRadioDefault' value='S'>"
+              . "<label class='form-check-label' for='flexRadioDefault1'>" 
+              . "S"
+              . "</label>"
+            . "</div>"
+            ."<div class='form-check'>"
+              . "<input class='form-check-input radio_listas radio_talla_camisa' type='radio' name='flexRadioDefault' value='M'>"
+              . "<label class='form-check-label' for='flexRadioDefault1'>" 
+              . "M"
+              . "</label>"
+            . "</div>"
+            ."<div class='form-check'>"
+              . "<input class='form-check-input radio_listas radio_talla_camisa' type='radio' name='flexRadioDefault' value='L'>"
+              . "<label class='form-check-label' for='flexRadioDefault1'>" 
+              . "L"
+              . "</label>"
+            . "</div>"
+            ."<div class='form-check'>"
+              . "<input class='form-check-input radio_listas radio_talla_camisa' type='radio' name='flexRadioDefault' value='XL'>"
+              . "<label class='form-check-label' for='flexRadioDefault1'>" 
+              . "XL"
+              . "</label>"
+            . "</div>"
+            ."<div class='form-check'>"
+              . "<input class='form-check-input radio_listas radio_talla_camisa' type='radio' name='flexRadioDefault' value='XXL'>"
+              . "<label class='form-check-label' for='flexRadioDefault1'>" 
+              . "XXL"
+              . "</label>"
+            . "</div>";
+    }else if($tabla == "talla_pantalon") {
+      for ($i=28; $i < 45; $i++) { 
+        if ($i % 2 == 0) {
+          $datos .= "<div class='form-check'>"
+              . "<input class='form-check-input radio_listas radio_talla_pantalon' type='radio' name='flexRadioDefault' value='" . $i . "'>"
+              . "<label class='form-check-label' for='flexRadioDefault1'>" 
+              . $i
+              . "</label>"
+            . "</div>";
+        }
+      }
+    }else if ($tabla == "talla_zapato") {
+      for ($i=34; $i < 43; $i++) { 
+          $datos .= "<div class='form-check'>"
+              . "<input class='form-check-input radio_listas radio_talla_zapato' type='radio' name='flexRadioDefault' value='" . $i . "'>"
+              . "<label class='form-check-label' for='flexRadioDefault1'>" 
+              . $i
+              . "</label>"
+            . "</div>";
+      }
     }
 
     

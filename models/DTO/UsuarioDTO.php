@@ -10,6 +10,10 @@ class UsuarioDTO {
 
     private $hijos;
 
+    private $tipo_camisa;
+    private $tipo_pantalon;
+    private $tipo_zapato;
+
     // Variables de los campos del usuario
 
     private $id_usuario;
@@ -76,6 +80,94 @@ class UsuarioDTO {
     function __construct() {
         
     }
+
+    function constructorUsuarioDotacion($id_usuario, $tipo_documento, $fecha_expedicion, $lugar_expedicion, $nombre, $apellido, $telefono_fijo, $telefono_movil, $tipo_casa, $estrato, $genero, $fecha_nacimiento, $edad, $direccion, $lugar_residencia, $nivel_academico, $area_academica, $estado_civil, $eps, $nro_cuenta, $tipo_sangre, $antecedentes, $practica_deporte, $consumo_cigarros, $consumo_licor, $consumo_spa, $correo, $password, $perfil, $nombre_persona_emergencia, $telefono_emergencia, $celular_emergencia, $parentesco_emergencia, $sucursal, $tipo_contrato, $fecha_ingreso, $fecha_retiro, $motivo_retiro, $salario, $valor_dia, $valor_hora, $fecha_actual, $antiguedad, $cesantia, $area, $seccion, $cargo, $clase_riesgo, $pension, $tipo_dotacion, $estado, $camisa, $pantalon, $zapato, $vestimenta, $talla_camisa, $talla_pantalon, $talla_zapato) {
+        $this->id_usuario = $id_usuario;
+        $this->tipo_documento = $tipo_documento;
+        $this->fecha_expedicion = $fecha_expedicion;
+        $this->lugar_expedicion = $lugar_expedicion;
+        $this->nombre = $nombre;
+        $this->apellido = $apellido;
+        $this->telefono_fijo = $telefono_fijo;
+        $this->telefono_movil = $telefono_movil;
+        $this->tipo_casa = $tipo_casa;
+        $this->estrato = $estrato;
+        $this->genero = $genero;
+        $this->fecha_nacimiento = $fecha_nacimiento;
+        $this->edad = $edad;
+        $this->direccion = $direccion;
+        $this->lugar_residencia = $lugar_residencia;
+        $this->nivel_academico = $nivel_academico;
+        $this->area_academica = $area_academica;
+        $this->estado_civil = $estado_civil;
+        $this->eps = $eps;
+        $this->nro_cuenta = $nro_cuenta;
+        $this->tipo_sangre = $tipo_sangre;
+        $this->antecedentes = $antecedentes;
+        $this->practica_deporte = $practica_deporte;
+        $this->consumo_cigarros = $consumo_cigarros;
+        $this->consumo_licor = $consumo_licor;
+        $this->consumo_spa = $consumo_spa;
+        $this->correo = $correo;
+        $this->password = $password;
+        $this->perfil = $perfil;
+        $this->nombre_persona_emergencia = $nombre_persona_emergencia;
+        $this->telefono_emergencia = $telefono_emergencia;
+        $this->celular_emergencia = $celular_emergencia;
+        $this->parentesco_emergencia = $parentesco_emergencia;
+        $this->sucursal = $sucursal;
+        $this->tipo_contrato = $tipo_contrato;
+        $this->fecha_ingreso = $fecha_ingreso;
+        $this->fecha_retiro = $fecha_retiro;
+        $this->motivo_retiro = $motivo_retiro;
+        $this->salario = $salario;
+        $this->valor_dia = $valor_dia;
+        $this->valor_hora = $valor_hora;
+        $this->fecha_actual = $fecha_actual;
+        $this->antiguedad = $antiguedad;
+        $this->cesantia = $cesantia;
+        $this->area = $area;
+        $this->seccion = $seccion;
+        $this->cargo = $cargo;
+        $this->clase_riesgo = $clase_riesgo;
+        $this->pension = $pension;
+        $this->tipo_dotacion = $tipo_dotacion;
+        $this->estado = $estado;
+        $this->camisa = $camisa;
+        $this->pantalon = $pantalon;
+        $this->zapato = $zapato;
+        $this->vestimenta = $vestimenta;
+        $this->talla_camisa = $talla_camisa;
+        $this->talla_pantalon = $talla_pantalon;
+        $this->talla_zapato = $talla_zapato;
+    }
+
+    // Listado reporte de la dotacuón
+
+    function getTipo_camisa() {
+        return $this->tipo_camisa;
+    }
+
+    function getTipo_pantalon() {
+        return $this->tipo_pantalon;
+    }
+
+    function getTipo_zapato() {
+        return $this->tipo_zapato;
+    }
+
+    function setTipo_camisa($tipo_camisa) {
+        $this->tipo_camisa = $tipo_camisa;
+    }
+
+    function setTipo_pantalon($tipo_pantalon) {
+        $this->tipo_pantalon = $tipo_pantalon;
+    }
+
+    function setTipo_zapato($tipo_zapato) {
+        $this->tipo_zapato = $tipo_zapato;
+    }
+
 
     function constructorUsuarioHijos($id_usuario, $tipo_documento, $fecha_expedicion, $lugar_expedicion, $nombre, $apellido, $telefono_fijo, $telefono_movil, $tipo_casa, $estrato, $genero, $fecha_nacimiento, $edad, $direccion, $lugar_residencia, $nivel_academico, $area_academica, $estado_civil, $eps, $nro_cuenta, $tipo_sangre, $antecedentes, $practica_deporte, $consumo_cigarros, $consumo_licor, $consumo_spa, $correo, $password, $perfil, $nombre_persona_emergencia, $telefono_emergencia, $celular_emergencia, $parentesco_emergencia, $sucursal, $tipo_contrato, $fecha_ingreso, $fecha_retiro, $motivo_retiro, $salario, $valor_dia, $valor_hora, $fecha_actual, $antiguedad, $cesantia, $area, $seccion, $cargo, $clase_riesgo, $pension, $tipo_dotacion, $estado, $camisa, $pantalon, $zapato, $vestimenta, $hijos) {
         $this->id_usuario = $id_usuario;
