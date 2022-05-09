@@ -112,11 +112,18 @@
                         </div>
                         <div id='rta-filtros-empleado'></div>
 
+
+
                         <div id="cont-seleccionados" >
                                 <div class='row my-2'>
                                     <div class='col texto-claro'>
                                         <h6 class='titulo-campos '>Selecciones:</h6>
                                         <div id='filtros-seleccionados'></div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col d-flex justify-content-center">
+                                        <button class="btn btn-verde" class="listado-reporte-dotacion" id="btn-generar-listado-reporte">Generar lista</button>
                                     </div>
                                 </div>
                                 <div class='row mt-4'>
@@ -125,11 +132,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col d-flex justify-content-center">
-                                <button class="btn btn-verde" class="listado-reporte-dotacion" id="btn-generar-listado-reporte">Generar lista</button>
-                            </div>
-                        </div>
+                        
                         
                     </div>
                 </div>

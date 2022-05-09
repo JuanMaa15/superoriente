@@ -31,7 +31,10 @@ if (isset($_POST)) {
     $tipo_camisa = "";
     $tipo_pantalon = "";
     $tipo_zapato = "";
-    
+    $camisa = "";
+    $pantalon = "";
+    $zapato = "";
+    $tipo = "";
   
     for ($i=0; $i < count($lista); $i++) { 
 
@@ -43,7 +46,7 @@ if (isset($_POST)) {
             $campos[$i] = $lista[$i];
         }
         
-        echo $lista[$i] . " Dato: ". $dato[$i];
+        
         switch ($lista[$i]) {
             
           
@@ -57,32 +60,47 @@ if (isset($_POST)) {
                 $tipo_dotacion = "AND tu.id_tipo_dotacion = " . $dato[$i];
             break;
             case 'talla_camisa':
-                $talla_camisa = "AND tcma.talla = " . $dato[$i];
+                $talla_camisa = " AND tu.talla_camisa = '" . $dato[$i] . "'";
             break;
             case 'talla_pantalon':
-                $talla_pantalon= "AND tpn.talla = " . $dato[$i];
+                $talla_pantalon= "AND tu.talla_pantalon = '" . $dato[$i] . "'";
             break;
             case 'talla_zapato':
-                $talla_zapato = "AND tzo.talla = " . $dato[$i];
+                $talla_zapato = "AND tu.talla_zapato = '" . $dato[$i] . "'";
             break;
-            case 'tipo_camisa':
-                $tipo_camisa = "AND tca.id_tipo_camisa = " . $dato[$i];
+            /* case 'talla_camisa':
+                $talla_camisa = "AND tcma.talla = '" . $dato[$i] . "'";
             break;
-            case 'tipo_pantalon':
-                $tipo_pantalon = "AND tpn.id_tipo_pantalon = " . $dato[$i];
+            case 'talla_pantalon':
+                $talla_pantalon= "AND tpn.talla = '" . $dato[$i] . "'";
             break;
-            case 'tipo_zapato':
-                $tipo_zapato = "AND tzo.id_tipo_zapato = " . $dato[$i];
+            case 'talla_zapato':
+                $talla_zapato = "AND tzo.talla = '" . $dato[$i] . "'";
+            break; */
+            case 'tbl_tipo_camisa':
+                $tipo = $dato[$i];
+       
+            break;
+            case 'tbl_tipo_pantalon':
+                $tipo = $dato[$i];
+            break;
+            case 'tbl_tipo_zapato':
+                $tipo = $dato[$i];
             break;
             
         }
     }
 
-    $listaUsuarios = $usuariodao->listaDotacionFiltros($genero, $sucursal, $tipo_dotacion, $talla_camisa, $talla_pantalon, $talla_zapato, $tipo_camisa, $tipo_pantalon, $tipo_zapato); 
+
+    $camisa = $talla_camisa;
+    $pantalon = " " . $talla_pantalon;
+    $zapato = " " . $talla_zapato;
+
+    $listaUsuarios = $usuariodao->listaDotacionFiltros($genero, $sucursal, $tipo_dotacion, $camisa, $pantalon, $zapato); 
 
     
 
-    
+    echo "Cantidad: " . count($listaUsuarios);
 
     $lista =  "<table class='table table-striped'>"
     ."<thead>"
@@ -113,21 +131,18 @@ if (isset($_POST)) {
             ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
             ."<td>" . $listaUsuarios[$i]->getGenero() . "</td>";
 
-            if ($tipo_camisa != "") {
-                $lista .= "<td>" . $listaUsuarios[$i]->getTipo_camisa() . "</td>";
-            }else if($tipo_pantalon != ""){
-                $lista .= "<td>" . $listaUsuarios[$i]->getTipo_pantalon() . "</td>";
-            }else if($tipo_zapato) {
-                $lista .= "<td>" . $listaUsuarios[$i]->getTipo_zapato() . "</td>"; 
+            if ($camisa != "") {
+                $lista .= "<td>Camisa " . $tipo . "</td>";
+            }else if($pantalon != ""){
+                $lista .= "<td>Pantalon " . $tipo . "</td>";
+            }else if($zapato) {
+                $lista .= "<td>Zapato " . $tipo . "</td>"; 
             }
 
-            if ($talla_camisa != "") {
+            
                 $lista .= "<td>" . $listaUsuarios[$i]->getTalla_camisa() . "</td>";
-            }else if($talla_pantalon != ""){
-                $lista .= "<td>" . $listaUsuarios[$i]->getTalla_pantalon() . "</td>";
-            }else if($talla_zapato != "") {
-                $lista .= "<td>" . $listaUsuarios[$i]->getTalla_zapato() . "</td>"; 
-            }
+            
+                
 
              $lista .="</tr>";
     
