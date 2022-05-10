@@ -7,6 +7,8 @@ $id_tipo_dotacion = $_POST['tipo_dotacion'];
 $talla = $_POST['talla'];
 $cantidad = $_POST['cantidad'];
 $estado = $_POST['estado'];
+$genero = $_POST['genero'];
+
 $validar = false;
 
 for ($i=28; $i < 46; $i++) { 
@@ -33,6 +35,7 @@ if (!empty($nombre) && !empty($id_tipo_dotacion) && !empty($talla) && $estado !=
                 $id_tipo_dotacion = intval($id_tipo_dotacion);
                 $cantidad = intval($cantidad);
                 $estado = intval($estado);
+                $genero = intval($genero);
                 
                 $pantalondto = new PantalonDTO();
     
@@ -40,6 +43,7 @@ if (!empty($nombre) && !empty($id_tipo_dotacion) && !empty($talla) && $estado !=
                 $pantalondto->setTipo_dotacion($id_tipo_dotacion);
                 $pantalondto->setTalla($talla);
                 $pantalondto->setCantidad($cantidad);
+                $pantalondto->setGenero($genero);
                 $pantalondto->setEstado($estado);
     
                 $pantalondao = new PantalonDAO();

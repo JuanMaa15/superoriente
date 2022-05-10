@@ -8,6 +8,7 @@ $id_tipo_dotacion = $_POST['tipo_dotacion'];
 $talla = $_POST['talla'];
 $cantidad = $_POST['cantidad'];
 $estado = $_POST['estado'];
+$genero = $_POST['genero'];
 
 if (!empty($id_camisa) && !empty($nombre) && !empty($id_tipo_dotacion) && !empty($talla) && $estado != "") {
 
@@ -21,6 +22,7 @@ if (!empty($id_camisa) && !empty($nombre) && !empty($id_tipo_dotacion) && !empty
                 $id_tipo_dotacion = intval($id_tipo_dotacion);
                 $cantidad = intval($cantidad);
                 $estado = intval($estado);
+                $genero = intval($genero);
     
                 $camisadto = new CamisaDTO();
     
@@ -30,6 +32,7 @@ if (!empty($id_camisa) && !empty($nombre) && !empty($id_tipo_dotacion) && !empty
                 $camisadto->setTalla($talla);
                 $camisadto->setCantidad($cantidad);
                 $camisadto->setEstado($estado);
+                $camisadto->setGenero($genero);
     
                 $camisadao = new CamisaDAO();
     

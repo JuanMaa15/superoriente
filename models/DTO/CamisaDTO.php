@@ -8,18 +8,20 @@ class CamisaDTO {
     private $talla;
     private $cantidad;
     private $estado;
+    private $genero;
     
     function __construct() {
         
     }
 
-    function constructor($id_camisa, $nombre, $tipo_dotacion, $talla, $cantidad, $estado) {
+    function constructor($id_camisa, $nombre, $tipo_dotacion, $talla, $cantidad, $estado, $genero) {
         $this->id_camisa = $id_camisa;
         $this->nombre = $nombre;
         $this->tipo_dotacion = $tipo_dotacion;
         $this->talla = $talla;
         $this->cantidad = $cantidad;
         $this->estado = $estado;
+        $this->genero = $genero;
     }
     
     function getId_camisa() {
@@ -46,6 +48,10 @@ class CamisaDTO {
         return $this->estado;
     }
 
+    function getGenero() {
+        return $this->genero;
+    }
+
     function setId_camisa($id_camisa) {
         $this->id_camisa = $id_camisa;
     }
@@ -68,6 +74,10 @@ class CamisaDTO {
 
     function setEstado($estado) {
         $this->estado = $estado;
+    }
+
+    function setGenero($genero) {
+        $this->genero = $genero;
     }
 
 

@@ -231,6 +231,103 @@ class UsuarioDAO {
 
     }
 
+    // Lista de todos los usuario con Id
+
+    public function listaUsuariosConId() {
+
+        $cnx = Conexion::conectar();
+        $lista = array();
+        $i = 0;
+
+        try {
+            
+            $sql = "SELECT * FROM tbl_usuario";
+            $rs = $cnx->query($sql);
+
+            while ($row = $rs->fetch()) {
+
+                $lista[$i] = new UsuarioDTO();
+                $lista[$i]->constructor(
+                    $row['id_usuario'],
+                    $row['id_tipo_documento'],
+                    $row['fecha_expedicion'],
+                    $row['lugar_expedicion'],
+                    $row['nombre'],
+                    $row['apellido'],
+                    $row['telefono_fijo'],
+                    $row['telefono_movil'],
+                    $row['id_casa'],
+                    $row['estrato'],
+                    $row['id_genero'],
+                    $row['fecha_nacimiento'],
+                    $row['edad'],
+                    $row['direccion'],
+                    $row['id_lugar_residencia'],
+                    $row['id_nivel_academico'],
+                    $row['area_academica'],
+                    $row['id_estado_civil'],
+                    $row['id_eps'],
+                    $row['nro_cuenta'],
+                    $row['id_tipo_sangre_rh'],
+                    $row['antecedentes'],
+                    $row['practica_deporte'],
+                    $row['consumo_cigarros'],
+                    $row['consumo_licor'],
+                    $row['consumo_spa'],
+                    $row['correo'],
+                    $row['pass'],
+                    $row['id_perfil'],
+                    $row['nombre_persona_emergencia'],
+                    $row['telefono_emergencia'],
+                    $row['celular_emergencia'],
+                    $row['parentesco_emergencia'],
+                    
+                    $row['id_sucursal'],
+                    $row['id_tipo_contrato'],
+                    $row['fecha_ingreso'],
+                    $row['fecha_retiro'],
+                    $row['motivo_retiro'],
+                    $row['fecha_actual'],
+                    $row['antiguedad'],
+                    $row['id_cesantia'],
+                    $row['salario'],
+                    $row['valor_dia'],
+                    $row['valor_hora'],
+                    $row['id_area'],
+                    $row['id_seccion'],
+                    $row['id_cargo'],
+                    $row['id_clase_riesgo'],
+                    $row['id_pension'],
+                    $row['id_tipo_dotacion'],
+                    $row['id_estado'],
+                    $row['id_camisa'],
+                    $row['id_pantalon'],
+                    $row['id_zapato'],
+                    $row['id_vestimenta']
+                );
+
+                $lista[$i]->setTalla_camisa($row['talla_camisa']);
+                 $lista[$i]->setTalla_pantalon($row['talla_pantalon']);
+                $lista[$i]->setTalla_zapato($row['talla_zapato']);
+
+                $i++;
+            }
+
+            return $lista;
+
+        
+
+          
+
+        } catch (Exception $e) {
+            print "Error, al traer los datos del usuario " . $e->getMessage();
+        }
+
+        return null;
+
+    }
+
+
     // ------------------------ Lista de datos del usuario -------------------
 
     public function listaUsuario($id_usuario) {
@@ -1461,7 +1558,7 @@ class UsuarioDAO {
 
         try {
             
-            $sql = 'SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE tu.fecha_ingreso BETWEEN DateADD("d", -30, GETDATE()) AND tu.fecha_ingreso';
+            $sql = 'SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE tu.fecha_ingreso BETWEEN DateADD("d", -30, GETDATE()) AND tu.fecha_ingreso AND tu.id_estado = 1';
             $rs = $cnx->query($sql);
 
             while($row = $rs->fetch()) {
@@ -1740,6 +1837,10 @@ class UsuarioDAO {
                     $row['id_vestimenta']
                 );
 
+                $lista[$i]->setTalla_camisa($row['talla_camisa']);
+                $lista[$i]->setTalla_pantalon($row['talla_pantalon']);
+                $lista[$i]->setTalla_zapato($row['talla_zapato']);
+
             
                 $i++;
             }
@@ -1764,7 +1865,6 @@ class UsuarioDAO {
         $talla = "";
         $tipo_ropa = "";    
 
-        echo $camisa;
 
         if ($camisa != "") {
             $inner_camisa = " INNER JOIN tbl_camisa AS tcma ON tu.id_camisa = tcma.id_camisa INNER JOIN tbl_tipo_camisa AS ttca ON tcma.id_tipo_camisa = ttca.id_tipo_camisa";
@@ -1780,9 +1880,9 @@ class UsuarioDAO {
             $talla = "talla_zapato";
         }
 
-        echo $inner_camisa;
+      /*   echo $inner_camisa;
         echo $tipo_ropa;
-        echo $talla;
+        echo $talla; */
         
         try {
             $sql = "SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil
@@ -1791,7 +1891,7 @@ class UsuarioDAO {
              INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico 
              INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_cesantia AS tces ON tu.id_cesantia = tces.id_cesantia INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion 
              INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_clase_riesgo AS tcr ON tu.id_clase_riesgo = tcr.id_clase_riesgo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension 
-             INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion " . " WHERE id_usuario !='' " . $camisa . " " . $pantalon . " " . $zapato;
+             INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion " . " WHERE id_usuario !='' " . $camisa . " " . $pantalon . " " . $zapato . " " . $genero . " " . $sucursal . " " . $tipo_dotacion;
              /* INNER JOIN tbl_camisa AS tca ON tu.id_camisa = tca.id_camisa INNER JOIN tbl_pantalon AS tpan ON tu.id_pantalon = tpan.id_pantalon INNER JOIN tbl_zapato AS tza ON tu.id_zapato = tza.id_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta */
             $rs = $cnx->query($sql);
 
@@ -1916,13 +2016,13 @@ class UsuarioDAO {
 
     // Traer datos de la tabla ingresada
 
-    public function datosTabla($tabla) {
+    public function datosTabla($tabla, $campo) {
 
         $cnx = Conexion::conectar();
         $lista = array();
 
         try {
-            $sql = "SELECT * FROM " . $tabla;
+            $sql = "SELECT * FROM " . $tabla . " ORDER BY " . $campo;
             $rs = $cnx->query($sql);
             $i = 0;
             while ($row = $rs->fetch()) {
@@ -1942,6 +2042,30 @@ class UsuarioDAO {
         }
 
         return null;
+
+    }
+
+    // Actualizar actomaticamanete la edad, antiguedad y fecha actual
+
+    public function actualizarDatosAuto($id_usuario, $fecha_actual, $antiguedad, $edad) {
+
+        $cnx = Conexion::conectar();
+
+        echo $edad;
+        
+        try {
+            $sql = "UPDATE tbl_usuario SET fecha_actual = '" . $fecha_actual . "', antiguedad = '" . $antiguedad . "', edad = '" . $edad . "' WHERE id_usuario = '" . $id_usuario . "'";  
+            $ps = $cnx->prepare($sql);
+
+            $ps->execute();
+
+            return true;
+            
+        }catch (Exception $ex) {
+            echo "Error al actualizar los datos automaticamente " . $ex->getMessage();
+        }
+
+        return false;
 
     }
 

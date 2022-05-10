@@ -2,10 +2,18 @@
 
 require_once('../../models/DAO/CamisaDAO.php');
 require_once('../../models/DAO/UsuarioDAO.php');
+require_once('../../models/DAO/CargoDAO.php');
+require_once('../../models/DAO/GeneroDAO.php');
 
 $usuariodao = new UsuarioDAO();
 $listaUsuarios = $usuariodao->listaUsuarios();
+$listaUsuariosId = $usuariodao->listaUsuariosConId();
 
+$cargodao = new CargoDAO();
+$listaCargos = $cargodao->listaCargos();
+
+$generodao = new GeneroDAO();
+$listaGeneros = $generodao->listaGeneros();
 
 if (isset($_POST['id'])) {
 
@@ -20,6 +28,15 @@ if (isset($_POST['id'])) {
         
         $camisadto = $camisadao->listaCamisa($id_camisa);
 
+        $genero = "";
+        $cargo = "";
+
+        for ($i=0; $i < count($listaGeneros); $i++) { 
+            if ($listaGeneros[$i]->getId_genero() == $camisadto->getGenero()) {
+                $genero = $listaGeneros[$i]->getNombre();
+            }
+        }
+
         $cont = "<div class='row my-2'>"
                     ."<div class='col-3'>"
                         ."<h5>Camisa: " . $camisadto->getNombre() .  " </h5>"
@@ -29,6 +46,9 @@ if (isset($_POST['id'])) {
                     ."</div>"
                     ."<div class='col-2'>"
                         ."<h5>Disponibles: " . $camisadto->getCantidad()  .  " </h5>"
+                    ."</div>"
+                    ."<div class='col-3'>"
+                        ."<h5>Genero: " . $genero  .  " </h5>"
                     ."</div>"
                 ."</div>"
                 ."<div class='row my-2'>"
@@ -43,25 +63,33 @@ if (isset($_POST['id'])) {
                 
             $validar_asignaciones = false;
             
-            for ($i=0; $i < count($listaUsuarios); $i++){
+            for ($i=0; $i < count($listaUsuariosId); $i++){
 
-                if ($listaUsuarios[$i]->getCamisa() == null) {
-
+                if ($listaUsuariosId[$i]->getCamisa() == NULL && $listaUsuariosId[$i]->getTipo_dotacion() == $camisadto->getTipo_dotacion() && $listaUsuariosId[$i]->getGenero() == $camisadto->getGenero()) {
+   
                     $validar_asignaciones = true;
+
+                    for ($j=0; $j < count($listaCargos); $j++) { 
+                        if ($listaCargos[$j]->getId_cargo() == $listaUsuariosId[$i]->getCargo()) {
+                            $cargo =  $listaCargos[$j]->getNombre();
+                        }
+                    }
+
                     if ($camisadto->getCantidad() > 1) {
-                        $cont .= "<div class='col-4 cont-emple " . $listaUsuarios[$i]->getId_usuario(). " " . $listaUsuarios[$i]->getNombre() . " " . $listaUsuarios[$i]->getCargo() ."'>"
+                        $cont .= "<div class='col-4 cont-emple " . $listaUsuariosId[$i]->getId_usuario(). " " . $listaUsuariosId[$i]->getNombre() . " " . $cargo ."'>"
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
-                                ."<input class='form-check-input checkbox-empleados' type='checkbox' value='" . $listaUsuarios[$i]->getId_usuario() . "' id='flexCheckChecked'>"
+                                ."<input class='form-check-input checkbox-empleados' type='checkbox' value='" . $listaUsuariosId[$i]->getId_usuario() . "' id='flexCheckChecked'>"
                                     
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"
                                 ."<img src='...' class='card-img-top card-img-profile' alt='...'>"
                                 ."<div class='card-body'>"
-                                    ."<h5 class='card-title titulo-campos'>" . $listaUsuarios[$i]->getNombre() . ' ' . $listaUsuarios[$i]->getApellido() . "</h5>"
-                                    ."<p class='card-text'>Número de documento: ". $listaUsuarios[$i]->getId_usuario() ." </p>"
-                                    ."<p class='card-text'>Ocupación: " . $listaUsuarios[$i]->getCargo() . "</p>"
+                                    ."<h5 class='card-title titulo-campos'>" . $listaUsuariosId[$i]->getNombre() . ' ' . $listaUsuariosId[$i]->getApellido() . "</h5>"
+                                    ."<p class='card-text'>Número de documento: ". $listaUsuariosId[$i]->getId_usuario() ." </p>"
+                                    ."<p class='card-text'>Ocupación: " . $cargo . "</p>"
+                                    //."<p class='card-text'>Genero: " . $genero . "</p>"
                                 . "</div>"
                             . "</div>"
                         . "</div>";
@@ -85,15 +113,15 @@ if (isset($_POST['id'])) {
                             $cont .= "<div class='col-4'>"
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
-                                ."<input class='form-check-input checkbox-empleados' type='radio' value='" . $listaUsuarios[$i]->getId_usuario() . "'>"    
+                                ."<input class='form-check-input checkbox-empleados' type='radio' value='" . $listaUsuariosId[$i]->getId_usuario() . "'>"    
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"
                                 ."<img src='...' class='card-img-top card-img-profile' alt='...'>"
                                 ."<div class='card-body'>"
-                                    ."<h5 class='card-title titulo-campos'>" . $listaUsuarios[$i]->getNombre() . ' ' . $listaUsuarios[$i]->getApellido() . "</h5>"
-                                    ."<p class='card-text'>Número de documento: ". $listaUsuarios[$i]->getId_usuario() ." </p>"
-                                    ."<p class='card-text'>Ocupación: " . $listaUsuarios[$i]->getCargo() . "</p>"
+                                    ."<h5 class='card-title titulo-campos'>" . $listaUsuariosId[$i]->getNombre() . ' ' . $listaUsuariosId[$i]->getApellido() . "</h5>"
+                                    ."<p class='card-text'>Número de documento: ". $listaUsuariosId[$i]->getId_usuario() ." </p>"
+                                    ."<p class='card-text'>Ocupación: " . $cargo . "</p>"
                                 . "</div>"
                             . "</div>"
                         . "</div>";

@@ -18,7 +18,7 @@ class PantalonDAO {
         $i = 0;
 
         try {
-            $sql = "SELECT * FROM tbl_pantalon AS tp INNER JOIN tbl_tipo_dotacion AS ttd ON tp.id_tipo_dotacion = ttd.id_tipo_dotacion INNER JOIN tbl_tipo_pantalon AS ttp ON tp.id_tipo_pantalon = ttp.id_tipo_pantalon";
+            $sql = "SELECT * FROM tbl_pantalon AS tp INNER JOIN tbl_tipo_dotacion AS ttd ON tp.id_tipo_dotacion = ttd.id_tipo_dotacion INNER JOIN tbl_tipo_pantalon AS ttp ON tp.id_tipo_pantalon = ttp.id_tipo_pantalon INNER JOIN tbl_genero AS tg ON tp.id_genero = tg.id_genero";
             $rs = $cnx->query($sql);
 
             while ($row = $rs->fetch()) {
@@ -30,7 +30,8 @@ class PantalonDAO {
                     $row['tipo_dotacion'],
                     $row['talla'],
                     $row['cantidad'],
-                    $row['estado']
+                    $row['estado'],
+                    $row['genero']
                 );
                 $i++; 
             }
@@ -66,7 +67,8 @@ class PantalonDAO {
                     $row['id_tipo_dotacion'],
                     $row['talla'],
                     $row['cantidad'],
-                    $row['estado']
+                    $row['estado'],
+                    $row['id_genero']
                 );
                 $i++; 
             }
@@ -91,7 +93,7 @@ class PantalonDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "INSERT INTO tbl_pantalon(id_tipo_pantalon, id_tipo_dotacion, talla, cantidad, estado) VALUES (?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_pantalon(id_tipo_pantalon, id_tipo_dotacion, talla, cantidad, estado, id_genero) VALUES (?,?,?,?,?,?)";
             $ps = $cnx->prepare($sql);
 
             $pantalon = $pantalondto->getNombre();
@@ -99,12 +101,14 @@ class PantalonDAO {
             $talla = $pantalondto->getTalla();
             $cantidad = $pantalondto->getCantidad();
             $estado = $pantalondto->getEstado();
+            $genero = $pantalondto->getGenero();
 
             $ps->bindParam(1, $pantalon);
             $ps->bindParam(2, $tipo_dotacion);
             $ps->bindParam(3, $talla);
             $ps->bindParam(4, $cantidad);
             $ps->bindParam(5, $estado);
+            $ps->bindParam(6, $genero);
 
             $ps->execute();
 
@@ -141,7 +145,8 @@ class PantalonDAO {
                 $row['id_tipo_dotacion'],
                 $row['talla'],
                 $row['cantidad'],
-                $row['estado']
+                $row['estado'],
+                $row['id_genero']
             );
 
              
@@ -162,7 +167,7 @@ class PantalonDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_pantalon SET id_tipo_pantalon = ?, id_tipo_dotacion = ?, talla = ?, cantidad = ?, estado = ? WHERE id_pantalon = " . $pantalondto->getId_pantalon();
+            $sql = "UPDATE tbl_pantalon SET id_tipo_pantalon = ?, id_tipo_dotacion = ?, talla = ?, cantidad = ?, estado = ?, id_genero = ? WHERE id_pantalon = " . $pantalondto->getId_pantalon();
             $ps = $cnx->prepare($sql);
 
             $pantalon = $pantalondto->getNombre();
@@ -170,12 +175,14 @@ class PantalonDAO {
             $talla = $pantalondto->getTalla();
             $cantidad = $pantalondto->getCantidad();
             $estado = $pantalondto->getEstado();
+            $genero = $pantalondto->getGenero();
 
             $ps->bindParam(1, $pantalon);
             $ps->bindParam(2, $tipo_dotacion);
             $ps->bindParam(3, $talla);
             $ps->bindParam(4, $cantidad);
             $ps->bindParam(5, $estado);
+            $ps->bindParam(6, $genero);
 
             $ps->execute();
 

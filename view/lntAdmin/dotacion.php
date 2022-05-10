@@ -18,6 +18,7 @@
     require_once('../../models/DAO/TipoCamisaDAO.php');
     require_once('../../models/DAO/TipoPantalonDAO.php');
     require_once('../../models/DAO/TipoZapatoDAO.php');
+    require_once('../../models/DAO/GeneroDAO.php');
 
 
     if (isset($_SESSION['id_admin'])) {
@@ -34,6 +35,7 @@
         $tipoCamisadao = new TipoCamisaDAO();
         $tipoPantalondao = new TipoPantalonDAO();
         $tipoZapatodao = new TipoZapatoDAO();
+        $generodao = new GeneroDAO();
 
        /*  $estadodao = new EstadoDAO();
         $tipoContratodao = new TipoContratoDAO();
@@ -60,6 +62,7 @@
         $listaTiposCamisas = $tipoCamisadao->listaTiposCamisas();
         $listaTiposPantalones = $tipoPantalondao->listaTiposPantalones();
         $listaTiposZapatos = $tipoZapatodao->listaTiposZapatos();
+        $listaGeneros = $generodao->listaGeneros();
 ?>
 
 
@@ -508,6 +511,21 @@
                                             <small class="text-danger"></small>
                                         </div>
                                         <div class="my-3">
+
+                                            <select class="form-select" id="genero-camisa">
+                                                
+                                                <option value="" selected>Género</option>
+                                                <?php
+                                                    for ($i=0; $i < count($listaGeneros); $i++) { 
+                                                        ?>
+                                                    <option value="<?php echo $listaGeneros[$i]->getId_genero(); ?>"><?php echo $listaGeneros[$i]->getNombre(); ?></option>
+                                                        <?php
+                                                    }
+                                                ?>
+                                            </select>
+                                            <small class="text-danger"></small>
+                                        </div>
+                                        <div class="my-3">
                                             <select class="form-select" id="estado-camisa">
                                                 <option value="">Seleccionar estado</option>
                                                 <option value="1">Disponible</option>
@@ -656,6 +674,21 @@
                                         </div>
                                         <div class="my-3">
                                             <input class="form-control" type="number" id="cantidad-pantalon" placeholder="Cantidad">
+                                            <small class="text-danger"></small>
+                                        </div>
+                                        <div class="my-3">
+
+                                            <select class="form-select" id="genero-pantalon">
+                                                
+                                                <option value="" selected>Género</option>
+                                                <?php
+                                                    for ($i=0; $i < count($listaGeneros); $i++) { 
+                                                        ?>
+                                                    <option value="<?php echo $listaGeneros[$i]->getId_genero(); ?>"><?php echo $listaGeneros[$i]->getNombre(); ?></option>
+                                                        <?php
+                                                    }
+                                                ?>
+                                            </select>
                                             <small class="text-danger"></small>
                                         </div>
                                         <div class="my-3">

@@ -67,6 +67,7 @@ if (isset($_POST['tipo_dotacion'])) {
             . "<th scope='col'>Tipo de dotacion</th>"
             . "<th scope='col'>Talla</th>"
             . "<th scope='col'>Cantidad</th>"
+            . "<th scope='col'>Genero</th>"
             . "<th scope='col'>Estado</th>"
             ."<th scope='col' colspan='2' class='text-center'>Opciones</th>"
         . "</tr>"
@@ -96,7 +97,7 @@ if (isset($_POST['tipo_dotacion'])) {
                     . "<td>" . $listaCamisas[$i]->getTipo_dotacion() .  "</td>"
                     . "<td>" . $listaCamisas[$i]->getTalla() .  "</td>"
                     . "<td>" . $listaCamisas[$i]->getCantidad() .  "</td>"
-
+                    . "<td>" . $listaCamisas[$i]->getGenero() .  "</td>"
                     . "<td>" . $estado .  "</td>"
                     . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#editar-camisas'>Editar</button></td>"
                     . "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#asignar-camisas'>Asignar</button></td>"
@@ -122,7 +123,7 @@ if (isset($_POST['tipo_dotacion'])) {
                         . "<td>" . $listaCamisas[$i]->getTipo_dotacion() .  "</td>"
                         . "<td>" . $listaCamisas[$i]->getTalla() .  "</td>"
                         . "<td>" . $listaCamisas[$i]->getCantidad() .  "</td>"
-
+                        . "<td>" . $listaCamisas[$i]->getGenero() .  "</td>"
                         . "<td>" . $estado .  "</td>"
                         . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#editar-camisas'>Editar</button></td>"
                         . "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#asignar-camisas'>Asignar</button></td>"
@@ -166,7 +167,7 @@ if (isset($_POST['tipo_dotacion'])) {
                                 . "<td>" . $listaCamisas[$i]->getTipo_dotacion() .  "</td>"
                                 . "<td>" . $listaCamisas[$i]->getTalla() .  "</td>"
                                 . "<td>" . $listaCamisas[$i]->getCantidad() .  "</td>"
-                
+                                . "<td>" . $listaCamisas[$i]->getGenero() .  "</td>"
                                 . "<td>" . $estado .  "</td>"
                                 . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#editar-camisas'>Editar</button></td>"
                                 . "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#asignar-camisas'>Asignar</button></td>"
@@ -196,7 +197,7 @@ if (isset($_POST['tipo_dotacion'])) {
                                     . "<td>" . $listaCamisas[$i]->getTipo_dotacion() .  "</td>"
                                     . "<td>" . $listaCamisas[$i]->getTalla() .  "</td>"
                                     . "<td>" . $listaCamisas[$i]->getCantidad() .  "</td>"
-                            
+                                    . "<td>" . $listaCamisas[$i]->getGenero() .  "</td>"
                                     . "<td>" . $estado .  "</td>"
                                     . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#editar-camisas'>Editar</button></td>"
                                     . "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#asignar-camisas'>Asignar</button></td>"
@@ -237,7 +238,7 @@ if (isset($_POST['tipo_dotacion'])) {
                     . "<td>" . $listaCamisas[$i]->getTipo_dotacion() .  "</td>"
                     . "<td>" . $listaCamisas[$i]->getTalla() .  "</td>"
                     . "<td>" . $listaCamisas[$i]->getCantidad() .  "</td>"
-
+                    . "<td>" . $listaCamisas[$i]->getGenero() .  "</td>"
                     . "<td>" . $estado .  "</td>"
                     . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#editar-camisas'>Editar</button></td>"
                     . "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-camisa' type='button' value='" . $listaCamisas[$i]->getId_camisa() . "' data-bs-toggle='modal' data-bs-target='#asignar-camisas'>Asignar</button></td>"

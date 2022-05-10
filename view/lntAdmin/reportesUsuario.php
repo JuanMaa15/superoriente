@@ -285,7 +285,7 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-4">
-                                <button class="btn btn-verde w-100" id="btn-buscar-opcion-trabajo">Buscar</button>
+                                <button class="btn btn-verde w-100 listado-reporte-empleado" id="btn-buscar-opcion-trabajo">Buscar</button>
                             </div>
                         </div>
 
@@ -316,7 +316,7 @@
                                 
                         </div>
                         <div class="my-3 d-flex justify-content-center d-none">
-                            <button class="text-center btn btn-verde" class="listado-reporte-empleado" id="btn-mostrar-reporte">Enviar</button>
+                            <button class="text-center btn btn-verde" id="btn-mostrar-reporte">Enviar</button>
                         </div>
                         
                         <div class="row">

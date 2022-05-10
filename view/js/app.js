@@ -606,7 +606,7 @@ var acciones = {
 
                 //console.log(dato);
 
-                if ($(this).attr("class") === "listado-reporte-empleado") {
+                if ($(this).hasClass("listado-reporte-empleado")) {
                     $.post('../../controller/usuario/ListaEmpleadoFiltros.php',{
                         dato:dato,
                         lista: valor_listas,
@@ -620,7 +620,7 @@ var acciones = {
                 }else{
                     $.post('../../controller/usuario/ListaDotacionFiltros.php',{
                         dato:dato,
-                        lista: valor_listas,
+                        lista: valor_listas
                         
                     },function(responseText){
                         $("#listado-empleado-filtros").html(responseText);
@@ -703,27 +703,29 @@ var acciones = {
                     cont_filtros += `<div class='col-3 my-3'>
                                         <select class='listado-campos-usuario form-select' id='listado-campos` + i + `'>
                                             <option value='' selected>Campos del empleado</option>
-                                            <option value='tbl_casa' id='tbl_casa'>Tipo de vivienda</option>
-                                            <option value='estrato' id='estrato'>Estrato</option>
-                                            <option value='tbl_genero' id='tbl_genero'>Género</option>
-                                            <option value='tbl_lugar_residencia' id='tbl_lugar_residencia'>Lugar de residencia</option>
-                                            <option value='tbl_nivel_academico' id='tbl_nivel_academico'>Nivel academico</option>
-                                            <option value='tbl_estado_civil' id='tbl_estado_civil'>Estado civil</option>
-                                            <option value='tbl_eps' id='tbl_eps'>EPS</option>
-                                            <option value='tbl_tipo_sangre_rh' id='tbl_tipo_sangre_rh'>Tipo de sangre y RH</option>
-                                            <option value='tbl_sucursal' id='tbl_sucursal'>Sucursal</option>
-                                            <option value='tbl_tipo_contrato' id='tbl_tipo_contrato'>Tipo de contrato</option>
-                                            <option value='tbl_cesantia' id='tbl_cesantia'>Cesantía</option>
-                                            <option value='tbl_clase_riesgo' id='tbl_clase_riesgo'>Clase de riesgo</option>
-                                            <option value='tbl_seccion' id='tbl_seccion'>Sección</option>
+                                            
                                             <option value='tbl_area' id='tbl_area'>Area</option>
                                             <option value='tbl_cargo' id='tbl_cargo'>Cargo</option>
-                                            <option value='tbl_pension' id='tbl_pension'>Pensión</option>
-                                            <option value='tbl_tipo_dotacion' id='tbl_tipo_dotacion'>Tipo de dotación</option>
-                                            <option value='tbl_hijo' id='tbl_hijo'>Hijos</option>
+                                            <option value='tbl_cesantia' id='tbl_cesantia'>Cesantía</option>
+                                            <option value='tbl_clase_riesgo' id='tbl_clase_riesgo'>Clase de riesgo</option>
+                                            <option value='tbl_eps' id='tbl_eps'>EPS</option>
                                             <option value='tbl_estado' id='tbl_estado'>Estado</option>
-                                            <option value='salario' id='salario'>Salario</option>
+                                            <option value='tbl_estado_civil' id='tbl_estado_civil'>Estado civil</option>
+                                            <option value='estrato' id='estrato'>Estrato</option>
                                             <option value='fecha' id='fecha'>Fecha de ingreso</option>
+                                            <option value='tbl_genero' id='tbl_genero'>Género</option>
+                                            <option value='tbl_hijo' id='tbl_hijo'>Hijos</option>
+                                            <option value='tbl_lugar_residencia' id='tbl_lugar_residencia'>Lugar de residencia</option>
+                                            <option value='tbl_nivel_academico' id='tbl_nivel_academico'>Nivel academico</option>
+                                            <option value='tbl_pension' id='tbl_pension'>Pensión</option>
+                                            <option value='salario' id='salario'>Salario</option>
+                                            <option value='tbl_seccion' id='tbl_seccion'>Sección</option>
+                                            <option value='tbl_sucursal' id='tbl_sucursal'>Sucursal</option>
+                                            <option value='tbl_tipo_contrato' id='tbl_tipo_contrato'>Tipo de contrato</option>                      
+                                            <option value='tbl_tipo_dotacion' id='tbl_tipo_dotacion'>Tipo de dotación</option>
+                                            <option value='tbl_tipo_sangre_rh' id='tbl_tipo_sangre_rh'>Tipo de sangre y RH</option>
+                                            <option value='tbl_casa' id='tbl_casa'>Tipo de vivienda</option>
+                                            
                                         </select>
                                         <div id='listado-datos`+ i + `' class='mt-3 ms-1'></div>
                                         
@@ -737,7 +739,7 @@ var acciones = {
                 cont_filtros +=` <div id='rta-filtros-empleado'></div>
                                 <div class='row mt-2'>
                                     <div class='col d-flex justify-content-center'>
-                                        <button class='btn btn-verde' id='btn-generar-listado-reporte'>Generar lista</button>
+                                        <button class='btn btn-verde listado-reporte-empleado' id='btn-generar-listado-reporte'>Generar lista</button>
                                     </div>
                                 </div>
                                 <div class='row my-2'>
@@ -2623,7 +2625,8 @@ var acciones = {
                 var talla = tallas[i].value;
                 var cantidad = $("#cantidad-pantalon").val();
                 var estado = $("#estado-pantalon").val();
-                
+                var genero = $("#genero-pantalon").val();
+
                 var validar = 0;
 
                 if (nombre.length !== 0) {
@@ -2661,16 +2664,25 @@ var acciones = {
                 }
 
                 if (estado.length !== 0) {
-                    $("#estado-camisa-pantalon").next().html("");
+                    $("#estado-pantalon").next().html("");
                     validar++;
 
                 }else{
-                    $("#estado-camisa-pantalon").next().html("Campo vacío, por favor ingrese el estado de la camisa");
+                    $("#estado-pantalon").next().html("Campo vacío, por favor ingrese el estado de la camisa");
+
+                }
+
+                if (genero.length !== 0) {
+                    $("#genero-pantalon").next().html("");
+                    validar++;
+
+                }else{
+                    $("#genero-pantalon").next().html("Campo vacío, por favor ingrese el género");
 
                 }
 
 
-                if (validar === 5) {
+                if (validar === 6) {
 
                  
                     $.post('../../controller/pantalon/RegistrarPantalon.php',{
@@ -2678,7 +2690,9 @@ var acciones = {
                         tipo_dotacion: tipo_dotacion,
                         talla: talla,
                         cantidad: cantidad,
-                        estado: estado
+                        estado: estado,
+                        genero: genero
+
                     },function(responseText){
                         $("#rta-pantalon").html(responseText);
                     });
@@ -2710,7 +2724,7 @@ var acciones = {
                 var talla = tallas[i].value;
                 var cantidad = $("#cantidad-camisa").val();
                 var estado = $("#estado-camisa").val();
-                
+                var genero = $("#genero-camisa").val();
                 var validar = 0;
 
                 if (nombre.length !== 0) {
@@ -2756,8 +2770,17 @@ var acciones = {
 
                 }
 
+                if (genero.length !== 0) {
+                    $("#genero-camisa").next().html("");
+                    validar++;
 
-                if (validar === 5) {
+                }else{
+                    $("#genero-camisa").next().html("Campo vacío, por favor ingrese el género");
+
+                }
+
+
+                if (validar === 6) {
 
                  
                     $.post('../../controller/camisa/RegistrarCamisa.php',{
@@ -2765,7 +2788,8 @@ var acciones = {
                         tipo_dotacion: tipo_dotacion,
                         talla: talla,
                         cantidad: cantidad,
-                        estado: estado
+                        estado: estado,
+                        genero: genero
                     },function(responseText){
                         $("#rta-camisa").html(responseText);
                     });
@@ -4714,7 +4738,7 @@ var acciones = {
                 var talla = $("#talla-pantalon-act").val();
                 var cantidad = $("#cantidad-pantalon-act").val();
                 var estado = $("#estado-pantalon-act").val();
-
+                var genero = $("#genero-pantalon-act").val();
                 
                 var validar = 0;
 
@@ -4768,7 +4792,16 @@ var acciones = {
 
                 }
 
-                if (validar === 6) {
+                if (genero.length !== 0) {
+                    $("#genero-pantalon-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#genero-pantalon-act").next().html("Campo vacío, por favor ingrese el género");
+
+                }
+
+                if (validar === 7) {
 
                     $.post('../../controller/pantalon/ActualizarPantalon.php',{
                         id_pantalon: id_pantalon,
@@ -4776,7 +4809,8 @@ var acciones = {
                         tipo_dotacion: tipo_dotacion,
                         talla: talla,
                         cantidad: cantidad,
-                        estado: estado
+                        estado: estado,
+                        genero: genero
                     },function(responseText){
                         $("#rta-pantalon-act").html(responseText);
                     });
@@ -4796,7 +4830,7 @@ var acciones = {
                 var talla = $("#talla-camisa-act").val();
                 var cantidad = $("#cantidad-camisa-act").val();
                 var estado = $("#estado-camisa-act").val();
-
+                var genero = $("#genero-camisa-act").val();
                 
                 var validar = 0;
 
@@ -4850,7 +4884,16 @@ var acciones = {
 
                 }
 
-                if (validar === 6) {
+                if (genero.length !== 0) {
+                    $("#genero-camisa-act").next().html("");
+                    validar++;
+
+                }else{
+                    $("#genero-camisa-act").next().html("Campo vacío, por favor ingrese el género");
+
+                }
+
+                if (validar === 7) {
 
                  
                     $.post('../../controller/camisa/ActualizarCamisa.php',{
@@ -4859,7 +4902,8 @@ var acciones = {
                         tipo_dotacion: tipo_dotacion,
                         talla: talla,
                         cantidad: cantidad,
-                        estado: estado
+                        estado: estado,
+                        genero: genero
                     },function(responseText){
                         $("#rta-camisa-act").html(responseText);
                     });

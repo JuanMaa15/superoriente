@@ -18,7 +18,7 @@ class CargoDAO {
         $i = 0;
 
         try {
-            $sql = "SELECT * FROM tbl_cargo AS tc INNER JOIN tbl_seccion AS ts ON tc.id_seccion = ts.id_seccion INNER JOIN tbl_area AS ta ON tc.id_area = ta.id_area";
+            $sql = "SELECT * FROM tbl_cargo AS tc INNER JOIN tbl_seccion AS ts ON tc.id_seccion = ts.id_seccion INNER JOIN tbl_area AS ta ON tc.id_area = ta.id_area  ORDER BY tc.cargo";
             $rs = $cnx->query($sql);
 
             while ($row = $rs->fetch()) {

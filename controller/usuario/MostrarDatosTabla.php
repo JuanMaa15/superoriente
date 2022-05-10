@@ -8,13 +8,19 @@ if (isset($_POST['tabla'])) {
 
     $usuariodao = new UsuarioDAO();
 
-    
+    if (str_contains($tabla, "tbl_")) {
+      $campo = strlen($tabla);
+      $campo = substr($tabla, 4, $campo);
+    }else{
+        $campos[$i] = $lista[$i];
+    }    
 
     $datos = "<form>";
 
+
     if ($tabla != "estrato" && $tabla != "salario" && $tabla != "fecha" && $tabla != "tbl_hijo" && $tabla != "talla_camisa" && $tabla != "talla_pantalon" && $tabla != "talla_zapato") {
 
-        $listadoTabla = $usuariodao->datosTabla($tabla);
+        $listadoTabla = $usuariodao->datosTabla($tabla, $campo);
 
         for ($i=0; $i < count($listadoTabla); $i++) { 
             $datos .= "<div class='form-check'>"

@@ -3,6 +3,7 @@
 require_once ("../../models/DAO/PantalonDAO.php");
 require_once ("../../models/DAO/TipoDotacionDAO.php");
 require_once ("../../models/DAO/TipoPantalonDAO.php");
+require_once ("../../models/DAO/GeneroDAO.php");
 
 
 $id_pantalon = intval($_POST['id']);
@@ -16,6 +17,10 @@ $listaTiposDotaciones = $tipoDotaciondao->listaTiposDotaciones();
 
 $tipoPantalondao = new TipoPantalonDAO();
 $listaPantalones = $tipoPantalondao->listaTiposPantalones();
+
+$generodao = new GeneroDAO();
+$listaGeneros = $generodao->listaGeneros();
+
 
 $cbxTiposPantalones = "<select class='form-select' id='tipo-pantalon-act'>";
         
@@ -55,6 +60,19 @@ $cbxEstado = "<select class='form-select' id='estado-pantalon-act'>";
         }
 
 $cbxEstado .= "</select>";
+
+$cbxGenero = "<select class='form-select' id='genero-pantalon-act'>";
+        
+        for ($i=0; $i < count($listaGeneros); $i++) { 
+                if ($listaGeneros[$i]->getId_genero() == $pantalondto->getGenero()) {
+                        $cbxGenero .= "<option selected value='" . $listaGeneros[$i]->getId_genero() . "'>" . $listaGeneros[$i]->getNombre() . "</option>";
+                }else{
+                        $cbxGenero .= "<option value='" . $listaGeneros[$i]->getId_genero() . "'>" . $listaGeneros[$i]->getNombre() . "</option>";
+   
+                }
+        }
+
+$cbxGenero .= "</select>";
 
 
 $tallas = ['28','30','32','34','36','38','40','42','44'];
@@ -98,6 +116,11 @@ $form = "<form>"
         ."<div class='my-2'>"
         ."<label class='form-label'>Cantidad</label>"
         ."<input class='form-control' type='number' id='cantidad-pantalon-act' value='" . $pantalondto->getCantidad() . "'>"
+        ."<small class='text-danger'></small>"
+        ."</div>"
+        ."<div class='my-2'>"
+        ."<label class='form-label'>Género</label>"
+        .$cbxGenero
         ."<small class='text-danger'></small>"
         ."</div>"
         ."<div class='my-2'>"

@@ -21,7 +21,8 @@ class CamisaDAO {
         $i = 0;
 
         try {
-            $sql = "SELECT * FROM tbl_camisa AS tc INNER JOIN tbl_tipo_camisa AS tpc ON tc.id_tipo_camisa = tpc.id_tipo_camisa INNER JOIN tbl_tipo_dotacion AS ttd ON tc.id_tipo_dotacion = ttd.id_tipo_dotacion";
+            $sql = "SELECT * FROM tbl_camisa AS tc INNER JOIN tbl_tipo_camisa AS tpc ON tc.id_tipo_camisa = tpc.id_tipo_camisa INNER JOIN tbl_tipo_dotacion AS ttd ON tc.id_tipo_dotacion = ttd.id_tipo_dotacion INNER JOIN tbl_genero AS tg ON tc.id_genero = tg.id_genero";
+
             $rs = $cnx->query($sql);
 
             while ($row = $rs->fetch()) {
@@ -33,7 +34,8 @@ class CamisaDAO {
                     $row['tipo_dotacion'],
                     $row['talla'],
                     $row['cantidad'],
-                    $row['estado']
+                    $row['estado'],
+                    $row['genero']
                 );
                 $i++; 
             }
@@ -69,7 +71,8 @@ class CamisaDAO {
                     $row['id_tipo_dotacion'],
                     $row['talla'],
                     $row['cantidad'],
-                    $row['estado']
+                    $row['estado'],
+                    $row['id_genero']
                 );
                 $i++; 
             }
@@ -93,7 +96,7 @@ class CamisaDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "INSERT INTO tbl_camisa(id_tipo_camisa, id_tipo_dotacion, talla, cantidad, estado) VALUES (?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_camisa(id_tipo_camisa, id_tipo_dotacion, talla, cantidad, estado, id_genero) VALUES (?,?,?,?,?,?)";
             $ps = $cnx->prepare($sql);
 
             $tipo_camisa = $camisadto->getNombre();
@@ -101,12 +104,14 @@ class CamisaDAO {
             $talla = $camisadto->getTalla();
             $cantidad = $camisadto->getCantidad();
             $estado = $camisadto->getEstado();
+            $genero = $camisadto->getGenero();
 
             $ps->bindParam(1, $tipo_camisa);
             $ps->bindParam(2, $tipo_dotacion);
             $ps->bindParam(3, $talla);
             $ps->bindParam(4, $cantidad);
             $ps->bindParam(5, $estado);
+            $ps->bindParam(6, $genero);
 
             $ps->execute();
 
@@ -144,7 +149,8 @@ class CamisaDAO {
                 $row['id_tipo_dotacion'],
                 $row['talla'],
                 $row['cantidad'],
-                $row['estado']
+                $row['estado'],
+                $row['id_genero']
             );
 
              
@@ -165,7 +171,7 @@ class CamisaDAO {
         $cnx = Conexion::conectar();
 
         try {
-            $sql = "UPDATE tbl_camisa SET id_tipo_camisa = ?, id_tipo_dotacion = ?, talla = ?, cantidad = ?, estado = ? WHERE id_camisa = " . $camisadto->getId_camisa();
+            $sql = "UPDATE tbl_camisa SET id_tipo_camisa = ?, id_tipo_dotacion = ?, talla = ?, cantidad = ?, estado = ?, id_genero = ? WHERE id_camisa = " . $camisadto->getId_camisa();
             
             $ps = $cnx->prepare($sql);
 
@@ -174,12 +180,14 @@ class CamisaDAO {
             $talla = $camisadto->getTalla();
             $cantidad = $camisadto->getCantidad();
             $estado = $camisadto->getEstado();
+            $genero = $camisadto->getGenero();
 
             $ps->bindParam(1, $tipo_camisa);
             $ps->bindParam(2, $tipo_dotacion);
             $ps->bindParam(3, $talla);
             $ps->bindParam(4, $cantidad);
             $ps->bindParam(5, $estado);
+            $ps->bindParam(6, $genero);
 
             $ps->execute();
 

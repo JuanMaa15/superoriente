@@ -18,7 +18,7 @@ class SeccionDAO {
         $i = 0;
 
         try {
-            $sql = "SELECT * FROM tbl_seccion";
+            $sql = "SELECT * FROM tbl_seccion ORDER BY seccion";
             $rs = $cnx->query($sql);
 
             while ($row = $rs->fetch()) {

@@ -8,19 +8,21 @@ class PantalonDTO {
     private $talla;
     private $cantidad;
     private $estado;
+    private $genero;
     
     function __construct() {
         
     }
 
     
-    function constructor($id_pantalon, $nombre, $tipo_dotacion, $talla, $cantidad, $estado) {
+    function constructor($id_pantalon, $nombre, $tipo_dotacion, $talla, $cantidad, $estado, $genero) {
         $this->id_pantalon = $id_pantalon;
         $this->nombre = $nombre;
         $this->tipo_dotacion = $tipo_dotacion;
         $this->talla = $talla;
         $this->cantidad = $cantidad;
         $this->estado = $estado;
+        $this->genero = $genero;
     }
 
     function getId_pantalon() {
@@ -47,6 +49,10 @@ class PantalonDTO {
         return $this->estado;
     }
 
+    function getGenero() {
+        return $this->genero;
+    }
+
     function setId_pantalon($id_pantalon) {
         $this->id_pantalon = $id_pantalon;
     }
@@ -70,6 +76,11 @@ class PantalonDTO {
     function setEstado($estado) {
         $this->estado = $estado;
     }
+
+    function setGenero($genero) {
+        $this->genero = $genero;
+    }
+
 
 
 }

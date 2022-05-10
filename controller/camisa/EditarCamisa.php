@@ -3,6 +3,7 @@
 require_once ("../../models/DAO/CamisaDAO.php");
 require_once ("../../models/DAO/TipoDotacionDAO.php");
 require_once ("../../models/DAO/TipoCamisaDAO.php");
+require_once ("../../models/DAO/GeneroDAO.php");
 
 
 $id_camisa = intval($_POST['id']);
@@ -15,6 +16,9 @@ $listaTiposDotaciones = $tipoDotaciondao->listaTiposDotaciones();
 
 $tipoCamisadao = new TipoCamisaDAO();
 $listaTiposCamisas = $tipoCamisadao->listaTiposCamisas();
+
+$generodao = new GeneroDAO();
+$listaGeneros = $generodao->listaGeneros();
 
 $cbxTiposCamisas = "<select class='form-select' id='tipo-camisa-act'>";
         
@@ -55,6 +59,19 @@ $cbxEstado = "<select class='form-select' id='estado-camisa-act'>";
 
 $cbxEstado .= "</select>";
 
+$cbxGenero = "<select class='form-select' id='genero-camisa-act'>";
+        
+        for ($i=0; $i < count($listaGeneros); $i++) { 
+                if ($listaGeneros[$i]->getId_genero() == $camisadto->getGenero()) {
+                        $cbxGenero .= "<option selected value='" . $listaGeneros[$i]->getId_genero() . "'>" . $listaGeneros[$i]->getNombre() . "</option>";
+                }else{
+                        $cbxGenero .= "<option value='" . $listaGeneros[$i]->getId_genero() . "'>" . $listaGeneros[$i]->getNombre() . "</option>";
+   
+                }
+        }
+
+$cbxGenero .= "</select>";
+
 
 $tallas = ['XS','S','M','L','XL','XXL'];
 
@@ -93,12 +110,18 @@ $form = "<form>"
         .$cbxTalla
         ."<small class='text-danger'></small>"
         ."</div>"
-        ."<div class='my-2'>"
+        
         ."<div class='my-2'>"
         ."<label class='form-label'>Cantidad</label>"
         ."<input class='form-control' type='number' id='cantidad-camisa-act' value='" . $camisadto->getCantidad() . "'>"
         ."<small class='text-danger'></small>"
         ."</div>"
+        ."<div class='my-2'>"
+        ."<label class='form-label'>Genero</label>"
+        .$cbxGenero
+        ."<small class='text-danger'></small>"
+        ."</div>"
+        ."<div class='my-2'>"
         ."<label class='form-label'>Estado</label>"
         .$cbxEstado
         ."<small class='text-danger'></small>"

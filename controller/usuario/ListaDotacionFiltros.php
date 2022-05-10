@@ -1,15 +1,23 @@
 <?php
 
 require_once '../../models/DAO/UsuarioDAO.php';
+require_once '../../models/DAO/TipoCamisaDAO.php';
+require_once '../../models/DAO/TipoPantalonDAO.php';
+require_once '../../models/DAO/TipoZapatoDAO.php';
+
 
 if (isset($_POST)) {
 
     $dato = isset($_POST['dato']) ? $_POST['dato'] : null;
     $lista = $_POST['lista'];
     
-
-
-    
+    $tipoCamisadao = new TipoCamisaDAO();
+    $listaTiposCamisas = $tipoCamisadao->listaTiposCamisas();
+    $tipoPantalondao = new TipoPantalonDAO();
+    $listaTiposPantalones = $tipoPantalondao->listaTiposPantalones();
+    $tipoZapatodao = new TipoZapatoDAO();
+    $listaTiposZapatos = $tipoZapatodao->listaTiposZapatos();
+     
 
     $validar_existencias = false;
     $campos = array();
@@ -35,6 +43,7 @@ if (isset($_POST)) {
     $pantalon = "";
     $zapato = "";
     $tipo = "";
+    $ropa = "";
   
     for ($i=0; $i < count($lista); $i++) { 
 
@@ -78,23 +87,40 @@ if (isset($_POST)) {
                 $talla_zapato = "AND tzo.talla = '" . $dato[$i] . "'";
             break; */
             case 'tbl_tipo_camisa':
-                $tipo = $dato[$i];
-       
+
+                for ($j=0; $j < count($listaTiposCamisas); $j++) { 
+                    if ($listaTiposCamisas[$j]->getId_tipo_camisa() == intval($dato[$i])) {
+                        $tipo = $listaTiposCamisas[$j]->getNombre();
+                    }   
+                }
+                $ropa = "camisa";
             break;
             case 'tbl_tipo_pantalon':
-                $tipo = $dato[$i];
+                for ($j=0; $j < count($listaTiposPantalones); $j++) { 
+                    if ($listaTiposPantalones[$j]->getId_tipo_pantalon() == intval($dato[$i])) {
+                        $tipo = $listaTiposPantalones[$j]->getNombre();
+                    }   
+                }
+                
+                $ropa = "pantalon";
             break;
             case 'tbl_tipo_zapato':
-                $tipo = $dato[$i];
+                for ($j=0; $j < count($listaTiposZapatos); $j++) { 
+                    if ($listaTiposZapatos[$j]->getId_tipo_zapato() == intval($dato[$i])) {
+                        $tipo = $listaTiposZapatos[$j]->getNombre();
+                    }   
+                }
+                $ropa = "zapato";
             break;
             
         }
     }
 
 
+
     $camisa = $talla_camisa;
-    $pantalon = " " . $talla_pantalon;
-    $zapato = " " . $talla_zapato;
+    $pantalon = $talla_pantalon;
+    $zapato = $talla_zapato;
 
     $listaUsuarios = $usuariodao->listaDotacionFiltros($genero, $sucursal, $tipo_dotacion, $camisa, $pantalon, $zapato); 
 
@@ -111,7 +137,7 @@ if (isset($_POST)) {
         ."<th scope='col'>Sucursal</th>"
         ."<th scope='col'>Tipo de dotación</th>"
         ."<th scope='col'>Género</th>"
-        ."<th scope='col'>Tipo</th>"
+        ."<th scope='col'>Tipo " . $ropa . "</th>"
         ."<th scope='col'>Talla</th>"
         
     ."</tr>"
@@ -128,15 +154,17 @@ if (isset($_POST)) {
             ."<td>" . $listaUsuarios[$i]->getNombre() . "</td>"
             ."<td>" . $listaUsuarios[$i]->getApellido() . "</td>"
             ."<td>" . $listaUsuarios[$i]->getSucursal() . "</td>"
-            ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() . "</td>"
+            ."<td>" . $listaUsuarios[$i]->getTipo_dotacion() ."</td>"
             ."<td>" . $listaUsuarios[$i]->getGenero() . "</td>";
 
-            if ($camisa != "") {
+            if ($ropa == "camisa") {
                 $lista .= "<td>Camisa " . $tipo . "</td>";
-            }else if($pantalon != ""){
+            }else if($ropa == "pantalon"){
                 $lista .= "<td>Pantalon " . $tipo . "</td>";
-            }else if($zapato) {
+            }else if($ropa == "zapato") {
                 $lista .= "<td>Zapato " . $tipo . "</td>"; 
+            }else{
+                $lista .= "<td>Sin seleccionar</td>"; 
             }
 
             
