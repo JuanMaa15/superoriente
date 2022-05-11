@@ -54,9 +54,17 @@ if (isset($_POST['id'])) {
                 ."<div class='row my-2'>"
                 . "<div class='col-4'>"
                 ."<label class='texto-claro'>Camisas disponibles por asignar:</label>"
-                ."<input type='text' class='form-control' value='" . $camisadto->getCantidad() . "' id='campo-cant' readonly>"
-                ."<input type='text' class='d-none form-control' value='" . $camisadto->getCantidad() . "' id='campo-cant-fija' readonly>"
+                ."<input type='text' class='form-control campo-cant' value='" . $camisadto->getCantidad() . "' id='campo-cant-camisa' readonly>"
+                ."<input type='text' class='d-none form-control' value='" . $camisadto->getCantidad() . "' id='campo-cant-fija-camisa' readonly>"
                 ."</div>"
+                . "<div class='col-5'>"
+                ."<label class='texto-claro'>Cantidad de camisas para asignar:</label>"
+                ."<input type='number' class='form-control campo-cant-asignar' id='campo-cant-asignar-camisa'>"
+                ."</div>"
+                . "<div class='col-3'>"
+                . "<button class='btn btn-verde' id='btn-seleccionar-todos'>Selecc todos</button>"
+                ."</div>"
+
                 ."</div>"
             ."<div class='row my-4'>";
 
@@ -79,7 +87,7 @@ if (isset($_POST['id'])) {
                         $cont .= "<div class='col-4 cont-emple " . $listaUsuariosId[$i]->getId_usuario(). " " . $listaUsuariosId[$i]->getNombre() . " " . $cargo ."'>"
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
-                                ."<input class='form-check-input checkbox-empleados' type='checkbox' value='" . $listaUsuariosId[$i]->getId_usuario() . "' id='flexCheckChecked'>"
+                                ."<input class='form-check-input checkbox-empleados checkbox-cont-camisa' type='checkbox' value='" . $listaUsuariosId[$i]->getId_usuario() . "' id='flexCheckChecked'>"
                                     
                                 ."</div>"
                             ."</div>"
@@ -113,7 +121,7 @@ if (isset($_POST['id'])) {
                             $cont .= "<div class='col-4'>"
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
-                                ."<input class='form-check-input checkbox-empleados' type='radio' value='" . $listaUsuariosId[$i]->getId_usuario() . "'>"    
+                                ."<input class='form-check-input checkbox-empleados checkbox-cont-camisa' type='radio' value='" . $listaUsuariosId[$i]->getId_usuario() . "'>"    
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"

@@ -5,6 +5,7 @@ require_once('../../models/DAO/CamisaDAO.php');
 require_once('../../models/DAO/PantalonDAO.php');
 require_once('../../models/DAO/ZapatoDAO.php');
 require_once('../../models/DAO/OtraVestimentaDAO.php');
+require_once('../../models/DAO/GeneroDAO.php');
 
 if (isset($_POST['id']) && isset($_POST['id_dotacion'])) {
 
@@ -15,6 +16,12 @@ if (isset($_POST['id']) && isset($_POST['id_dotacion'])) {
     $usuariodto = $usuariodao->listaUsuarioConId($id_usuario);
     $cont = "<div class='row'>";
 
+    $generodao = new GeneroDAO();
+    $listaGeneros = $generodao->listaGeneros();
+
+    $genero = "";
+    
+
     switch ($_POST['opc']) {
         case 'camisa':
             
@@ -22,8 +29,18 @@ if (isset($_POST['id']) && isset($_POST['id_dotacion'])) {
             $listaCamisas = $camisadao->listaCamisas();
             $listaCamisasId = $camisadao->listaCamisasId();
             for ($i=0; $i < count($listaCamisas); $i++) { 
-                if ($listaCamisasId[$i]->getTipo_dotacion() == $usuariodto->getTipo_dotacion()) {
+
+                for ($j=0; $j < count($listaGeneros); $j++) { 
+                    if ($listaGeneros[$j]->getNombre() == $listaCamisas[$i]->getGenero()) {
+                        $genero = $listaGeneros[$j]->getId_genero();
+                    }
+                }
+
+                
+                if ($listaCamisasId[$i]->getTipo_dotacion() == $usuariodto->getTipo_dotacion() && $genero == $usuariodto->getGenero()) {
                     if ($listaCamisas[$i]->getId_camisa() == $usuariodto->getCamisa()) {
+
+                        
 
                         $cont .= "<div class='col-6'>"
                             ."<div class='my-2'>"
@@ -44,24 +61,45 @@ if (isset($_POST['id']) && isset($_POST['id_dotacion'])) {
                         . "</div>";
     
                     }else{
-    
-                        $cont .= "<div class='col-6'>"
+                        if ($listaCamisasId[$i]->getCantidad() > 0){
+                            $cont .= "<div class='col-6'>"
+                                ."<div class='my-2'>"
+                                    . "<div class='form-check'>"
+                                        . "<input class='form-check-input input-agregar-dotacion' type='radio' value='" . $listaCamisas[$i]->getId_camisa() . "' name='flexRadioDefault'>"
+                                        . "<input class='form-control d-none' type='text' value='" . $listaCamisas[$i]->getCantidad() . "'>"  
+                                    ."</div>"
+                                ."</div>"
+                                ."<div class='bloque-dotacion dotacion-agregada bg-light py-4 px-5'>"
+                                    ."<div class='col d-flex justify-content-center align-items-center'>"
+                                        ."<i class='fa-solid fa-shirt'></i>"
+                                    ."</div>"
+                                    ."<div class='text-center'>"
+                                        ."<p>Camisa: " . $listaCamisas[$i]->getNombre() . "</p>"
+                                        ."<p>Talla: " . $listaCamisas[$i]->getTalla() . "</p>"
+                                    ."</div>"
+                                . "</div>"
+                            . "</div>";
+                        }else{
+                            $cont .= "<div class='col-6'>"
                             ."<div class='my-2'>"
                                 . "<div class='form-check'>"
-                                    . "<input class='form-check-input input-agregar-dotacion' type='radio' value='" . $listaCamisas[$i]->getId_camisa() . "' name='flexRadioDefault'>"
+                                    . "<input class='form-check-input input-agregar-dotacion' type='radio' value='" . $listaCamisas[$i]->getId_camisa() . "' name='flexRadioDefault' disabled>"
                                     . "<input class='form-control d-none' type='text' value='" . $listaCamisas[$i]->getCantidad() . "'>"  
                                 ."</div>"
                             ."</div>"
-                            ."<div class='bloque-dotacion dotacion-agregada bg-light py-4 px-5'>"
+                            ."<div class='bloque-dotacion dotacion-agregada dotacion-agotada bg-light py-4 px-5'>"
                                 ."<div class='col d-flex justify-content-center align-items-center'>"
                                     ."<i class='fa-solid fa-shirt'></i>"
                                 ."</div>"
                                 ."<div class='text-center'>"
                                     ."<p>Camisa: " . $listaCamisas[$i]->getNombre() . "</p>"
                                     ."<p>Talla: " . $listaCamisas[$i]->getTalla() . "</p>"
+                                    ."<p class='texto-encima text-danger'>Agotada</p>"
                                 ."</div>"
                             . "</div>"
                         . "</div>";
+                        }
+
     
                     }
                 }
@@ -78,9 +116,16 @@ if (isset($_POST['id']) && isset($_POST['id_dotacion'])) {
             $listaPantalonesId = $pantalondao->listaPantalonesId();
 
             for ($i=0; $i < count($listaPantalones); $i++) { 
-                if ($listaPantalonesId[$i]->getTipo_dotacion() == $usuariodto->getTipo_dotacion()) {
-                    if ($listaPantalones[$i]->getId_pantalon() == $usuariodto->getPantalon()) {
 
+                for ($j=0; $j < count($listaGeneros); $j++) { 
+                    if ($listaGeneros[$j]->getNombre() == $listaPantalones[$i]->getGenero()) {
+                        $genero = $listaGeneros[$j]->getId_genero();
+                    }
+                }
+
+                if ($listaPantalonesId[$i]->getTipo_dotacion() == $usuariodto->getTipo_dotacion() && $genero == $usuariodto->getGenero()) {
+                    if ($listaPantalones[$i]->getId_pantalon() == $usuariodto->getPantalon()) {
+                        
                         $cont .= "<div class='col-6'>"
                             ."<div class='my-2'>"
                                 . "<div class='form-check'>"
@@ -100,8 +145,8 @@ if (isset($_POST['id']) && isset($_POST['id_dotacion'])) {
                         . "</div>";
     
                     }else{
-    
-                        $cont .= "<div class='col-6'>"
+                        if ($listaPantalones[$i]->getCantidad() > 0) {
+                            $cont .= "<div class='col-6'>"
                             ."<div class='my-2'>"
                                 . "<div class='form-check'>"
                                     . "<input class='form-check-input input-agregar-dotacion' type='radio' value='" . $listaPantalones[$i]->getId_pantalon() . "' name='flexRadioDefault'>"
@@ -118,6 +163,27 @@ if (isset($_POST['id']) && isset($_POST['id_dotacion'])) {
                                 ."</div>"
                             . "</div>"
                         . "</div>";
+                        }else{
+                            $cont .= "<div class='col-6'>"
+                            ."<div class='my-2'>"
+                                . "<div class='form-check'>"
+                                    . "<input class='form-check-input input-agregar-dotacion ' type='radio' value='" . $listaPantalones[$i]->getId_pantalon() . "' name='flexRadioDefault' disabled>"
+                                    . "<input class='form-control d-none' type='text' value='" . $listaPantalones[$i]->getCantidad() . "'>"  
+                                ."</div>"
+                            ."</div>"
+                            ."<div class='bloque-dotacion dotacion-agregada dotacion-agotada bg-light py-4 px-5'>"
+                                ."<div class='col d-flex justify-content-center align-items-center'>"
+                                    ."<i class='fa-solid fa-table-columns'></i>"
+                                ."</div>"
+                                ."<div class='text-center'>"
+                                    ."<p>Pantalón: " . $listaPantalones[$i]->getNombre() . "</p>"
+                                    ."<p>Talla: " . $listaPantalones[$i]->getTalla() . "</p>"
+                                    ."<p class='texto-encima text-danger'>Agotada</p>"
+                                ."</div>"
+                            . "</div>"
+                        . "</div>";
+                        }
+                        
     
                     }
                 }

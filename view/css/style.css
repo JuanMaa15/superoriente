@@ -412,6 +412,20 @@ small {
     margin: 0.9rem 0;
 }
 
+.dotacion-agotada {
+    position: relative !important;
+}
+
+.dotacion-agotada::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(240, 240, 240, 0.7);
+}
+
 .cont-img img{
     transition: all 0.5s ease;
     background-color: rgba(13, 19, 23,0.1);
@@ -497,6 +511,16 @@ small {
 .card-img-profile {
     height: 10rem !important;
     border-bottom: 2px solid #f1f1f1 !important;
+}
+
+.texto-encima {
+    position: absolute;
+    top: 77%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
 .texto-negro-opaco {
@@ -627,12 +651,17 @@ small {
     transition: all 0.5s ease;
 }
 
-#campo-cant,
+.campo-cant,
+.campo-cant-asignar,
 #cant-filtros-reporte {
     width: 2.2rem;
     margin-left: 0.3rem;
     text-align: center;
     display: inline-block;
+}
+
+.campo-cant-asignar {
+    width: 3.5rem;
 }
 
 #cant-filtros-reporte {

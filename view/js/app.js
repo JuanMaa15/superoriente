@@ -947,10 +947,13 @@ var acciones = {
 
     listaCamisaEmpleado : function() {
 
+        
         var tipo_dotacion = $("#campo-tipo-dotacion-empleado").val();
-
+        var id_usuario = $("#doc").val();
+       
         $.post('../../controller/camisa/ListaCamisas.php',{
             tipo_dotacion: tipo_dotacion,
+            id_usuario: id_usuario
             //opc: "camisa"
         },function(responseText){
             $("#listado-camisas-tipo-dotacion").html(responseText);
@@ -964,9 +967,11 @@ var acciones = {
     listaPantalonEmpleado : function(){
 
         var tipo_dotacion = $("#campo-tipo-dotacion-empleado").val();
+        var id_usuario = $("#doc").val();
 
         $.post('../../controller/pantalon/ListaPantalones.php',{
             tipo_dotacion: tipo_dotacion,
+            id_usuario: id_usuario
         },function(responseText){
             $("#listado-pantalones-tipo-dotacion").html(responseText);
             
@@ -1003,7 +1008,7 @@ var acciones = {
 
     asignarCamisa : function() {
 
-        var empleados_asignados = $(".checkbox-empleados:checked").length;
+        var empleados_asignados = $(".checkbox-cont-camisa:checked").length;
 
         if (empleados_asignados > 0) {
 
@@ -1013,7 +1018,7 @@ var acciones = {
 
                 var id_usuario = $(this).val();
                 var id_camisa = $("#btn-asignar-camisa-empleado").val();
-                var cant_camisas = $("#campo-cant").val();
+                var cant_camisas = $("#campo-cant-camisa").val();
 
                 console.log("Id usuario: " +  id_usuario + " Id camisa: " + id_camisa + " cantidad de camisas " + cant_camisas);
 
@@ -1038,7 +1043,7 @@ var acciones = {
     },
 
     asignarPantalon : function () {
-        var empleados_asignados = $(".checkbox-empleados:checked").length;
+        var empleados_asignados = $(".checkbox-cont-pantalon:checked").length;
 
         if (empleados_asignados > 0) {
 
@@ -1048,7 +1053,7 @@ var acciones = {
 
                 var id_usuario = $(this).val();
                 var id_pantalon = $("#btn-asignar-pantalon-empleado").val();
-                var cant_pantalones = $("#campo-cant").val();
+                var cant_pantalones = $("#campo-cant-pantalon").val();
 
 
                 $.post('../../controller/usuario/AsignarDotacionUsuario.php',{
@@ -1069,7 +1074,7 @@ var acciones = {
     },
 
     asignarZapato : function() {
-        var empleados_asignados = $(".checkbox-empleados:checked").length;
+        var empleados_asignados = $(".checkbox-cont-zapato:checked").length;
 
         if (empleados_asignados > 0) {
 
@@ -1079,7 +1084,7 @@ var acciones = {
 
                 var id_usuario = $(this).val();
                 var id_zapato = $("#btn-asignar-zapato-empleado").val();
-                var cant_zapatos = $("#campo-cant").val();
+                var cant_zapatos = $("#campo-cant-zapato").val();
 
 
                 $.post('../../controller/usuario/AsignarDotacionUsuario.php',{
@@ -1100,7 +1105,7 @@ var acciones = {
     },
 
     asignarVestimenta : function() {
-        var empleados_asignados = $(".checkbox-empleados:checked").length;
+        var empleados_asignados = $(".checkbox-cont-vestimenta:checked").length;
 
         if (empleados_asignados > 0) {
 
@@ -1110,7 +1115,7 @@ var acciones = {
 
                 var id_usuario = $(this).val();
                 var id_vestimenta = $("#btn-asignar-vestimenta-empleado").val();
-                var cant_vestimentas = $("#campo-cant").val();
+                var cant_vestimentas = $("#campo-cant-vestimenta").val();
 
 
                 $.post('../../controller/usuario/AsignarDotacionUsuario.php',{
@@ -1183,16 +1188,100 @@ var acciones = {
 
     descontarCantidadDotaciones : function() {
 
-        var cant = parseInt($("#campo-cant-fija").val());
-        var seleccionadas = $(".checkbox-empleados:checked").length;
-        var restantes = cant - seleccionadas; 
+        var cant = "";
+        var restantes = "";
+        var seleccionados = "";
+        var empleados_seleccionados = $(".checkbox-empleados");
+        var cant_prendas = "";
 
-        $("#campo-cant").val(restantes);
+        if (empleados_seleccionados.hasClass("checkbox-cont-camisa")) {
+            seleccionados = $(".checkbox-cont-camisa:checked").length;
+            cant_prendas = $("#campo-cant-asignar-camisa").val();
+            if (cant_prendas.length === 0 || parseInt(cant_prendas) < 1) {
+                seleccionados = $(".checkbox-cont-camisa:checked").length;    
+            }else{
+                seleccionados = $(".checkbox-cont-camisa:checked").length * parseInt(cant_prendas); 
+            }
+            
+            cant = parseInt($("#campo-cant-fija-camisa").val());
 
-        if (cant === seleccionadas) {
-            $(".checkbox-empleados").prop('disabled', 'disabled');
-            $(".checkbox-empleados:checked").removeAttr('disabled');
+            restantes = cant - seleccionados; 
+                
+            $("#campo-cant-camisa").val(restantes);
+
+            if (cant <= seleccionados) {
+                $(".checkbox-cont-camisa").prop('disabled', 'disabled');
+                $(".checkbox-cont-camisa:checked").removeAttr('disabled');
+            }
+
         }
+
+        if(empleados_seleccionados.hasClass("checkbox-cont-pantalon")){
+            seleccionados = $(".checkbox-cont-pantalon:checked").length;
+            cant_prendas = $("#campo-cant-asignar-pantalon").val();
+            if (cant_prendas.length === 0 || parseInt(cant_prendas) < 1) {
+                seleccionados = $(".checkbox-cont-pantalon:checked").length;    
+            }else{
+                seleccionados = $(".checkbox-cont-pantalon:checked").length * parseInt(cant_prendas); 
+            }
+
+            cant = parseInt($("#campo-cant-fija-pantalon").val());
+
+            restantes = cant - seleccionados; 
+
+            $("#campo-cant-pantalon").val(restantes);
+
+            if (cant <= seleccionados) {
+                $(".checkbox-cont-pantalon").prop('disabled', 'disabled');
+                $(".checkbox-cont-pantalon:checked").removeAttr('disabled');
+            }
+
+        }
+
+        if(empleados_seleccionados.hasClass("checkbox-cont-zapato")){
+            seleccionados = $(".checkbox-cont-zapato:checked").length;
+            cant_prendas = $("#campo-cant-asignar-zapato").val();
+            if (cant_prendas.length === 0 || parseInt(cant_prendas) < 1) {
+                seleccionados = $(".checkbox-cont-zapato:checked").length;    
+            }else{
+                seleccionados = $(".checkbox-cont-zapato:checked").length * parseInt(cant_prendas); 
+            }
+
+            cant = parseInt($("#campo-cant-fija-zapato").val());
+
+            restantes = cant - seleccionados; 
+
+            $("#campo-cant-zapato").val(restantes);
+
+            if (cant <= seleccionados) {
+                $(".checkbox-cont-zapato").prop('disabled', 'disabled');
+                $(".checkbox-cont-zapato:checked").removeAttr('disabled');
+            }
+
+        }
+        
+        if(empleados_seleccionados.hasClass("checkbox-cont-vestimenta")){
+            seleccionados = $(".checkbox-cont-vestimenta:checked").length;
+
+            cant_prendas = $("#campo-cant-asignar-vestimenta").val();
+            if (cant_prendas.length === 0 || parseInt(cant_prendas) < 1) {
+                seleccionados = $(".checkbox-cont-vestimenta:checked").length;    
+            }else{
+                seleccionados = $(".checkbox-cont-vestimenta:checked").length * parseInt(cant_prendas); 
+            }
+            
+            cant = parseInt($("#campo-cant-fija-vestimenta").val());
+
+            restantes = cant - seleccionados; 
+
+            $("#campo-cant-vestimenta").val(restantes);
+
+            if (cant <= seleccionados) {
+                $(".checkbox-cont-vestimenta").prop('disabled', 'disabled');
+                $(".checkbox-cont-vestimenta:checked").removeAttr('disabled');
+            }
+        }
+
    
     },
 

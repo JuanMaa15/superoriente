@@ -1,6 +1,7 @@
 <?php
 
 require_once ("../../models/DAO/PantalonDAO.php");
+require_once ("../../models/DAO/UsuarioDAO.php");
 
 $pantalondao = new PantalonDAO();
 
@@ -14,10 +15,14 @@ if (isset($_POST['tipo_dotacion'])) {
     $cont = "<div class='row'>";
 
     $tipo_dotacion = $_POST['tipo_dotacion'];
+    $id_usuario = $_POST['id_usuario'];
+
+    $usuariodao = new UsuarioDAO();
+    $usuariodto = $usuariodao->listaUsuarioConId($id_usuario);
 
     for ($i=0; $i < count($listaPantalones); $i++) { 
         
-        if ($listaPantalones[$i]->getTipo_dotacion() == $tipo_dotacion ) {
+        if ($listaPantalones[$i]->getTipo_dotacion() == $tipo_dotacion && $listaPantalonesId[$i]->getGenero() == $usuariodto->getGenero()) {
             if ($listaPantalones[$i]->getCantidad() > 0) {
                 $cont .= "<div class='col-6'>"
                         ."<div class='my-2'>"
@@ -38,6 +43,26 @@ if (isset($_POST['tipo_dotacion'])) {
                     . "</div>";
 
                 $validar_existencias = true;
+            }else{
+                $cont .= "<div class='col-6'>"
+                        ."<div class='my-2'>"
+                            . "<div class='form-check'>"
+                                . "<input class='form-check-input input-agregar-dotacion' type='radio' value='" . $listaPantalones[$i]->getId_pantalon() . "' name='flexRadioDefault' disabled>"
+                                . "<input class='form-control d-none' type='text' value='" . $listaPantalones[$i]->getCantidad() . "'>"  
+                            ."</div>"
+                        ."</div>"
+                        ."<div class='bloque-dotacion dotacion-agregada dotacion-agotada bg-light py-4 px-5'>"
+                            ."<div class='col d-flex justify-content-center align-items-center'>"
+                                ."<i class='fa-solid fa-table-columns'></i>"
+                            ."</div>"
+                            ."<div class='text-center'>"
+                                ."<p>Pantalón: " . $listaPantalones[$i]->getNombre() . "</p>"
+                                ."<p>Talla: " . $listaPantalones[$i]->getTalla() . "</p>"
+                                ."<p class='text-danger texto-encima'>Agotado</p>"
+                            ."</div>"
+                        . "</div>"
+                    . "</div>";
+
             }
             
 

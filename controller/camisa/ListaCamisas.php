@@ -1,6 +1,8 @@
 <?php
 
 require_once ("../../models/DAO/CamisaDAO.php");
+require_once ("../../models/DAO/UsuarioDAO.php");
+
 
 $camisadao = new CamisaDAO();
 
@@ -15,10 +17,14 @@ if (isset($_POST['tipo_dotacion'])) {
     $validar_existencias = false;
 
     $tipo_dotacion = $_POST['tipo_dotacion'];
+    $id_usuario = $_POST['id_usuario'];
+
+    $usuariodao = new UsuarioDAO();
+    $usuariodto = $usuariodao->listaUsuarioConId($id_usuario);
 
     for ($i=0; $i < count($listaCamisas); $i++) { 
         
-        if ($listaCamisas[$i]->getTipo_dotacion() == $tipo_dotacion ) {
+        if ($listaCamisas[$i]->getTipo_dotacion() == $tipo_dotacion && $listaCamisasId[$i]->getGenero() == $usuariodto->getGenero()) {
             if ($listaCamisas[$i]->getCantidad() > 0) {
                 $cont .= "<div class='col-6'>"
                         ."<div class='my-2'>"
@@ -39,7 +45,26 @@ if (isset($_POST['tipo_dotacion'])) {
                     . "</div>";
 
                     $validar_existencias = true;
-            }  
+            } else{
+                $cont .= "<div class='col-6'>"
+                ."<div class='my-2'>"
+                    . "<div class='form-check'>"
+                        . "<input class='form-check-input input-agregar-dotacion' type='radio' value='" . $listaCamisas[$i]->getId_camisa() . "' name='flexRadioDefault' disabled>"
+                        . "<input class='form-control d-none' type='text' value='" . $listaCamisas[$i]->getCantidad() . "'>"  
+                    ."</div>"
+                ."</div>"
+                ."<div class='bloque-dotacion dotacion-agregada dotacion-agotada bg-light py-4 px-5'>"
+                    ."<div class='col d-flex justify-content-center align-items-center'>"
+                        ."<i class='fa-solid fa-shirt'></i>"
+                    ."</div>"
+                    ."<div class='text-center'>"
+                        ."<p>Camisa: " . $listaCamisas[$i]->getNombre() . "</p>"
+                        ."<p>Talla: " . $listaCamisas[$i]->getTalla() . "</p>"
+                        ."<p class='text-danger texto-encima'>Agotada</p>"
+                    ."</div>"
+                . "</div>"
+            . "</div>";
+            }
 
         }
     }
