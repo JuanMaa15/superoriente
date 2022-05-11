@@ -362,6 +362,10 @@ var acciones = {
         }
 
         $("#filtro" + cant_filtros).remove();
+
+        if (cant_filtros < 1) {
+            $("#btn-generar-listado-reporte").removeClass("d-block").addClass("d-none");
+        }
     },
 
     agregarFiltroDotacion : function () {
@@ -387,13 +391,17 @@ var acciones = {
                         filtros_seleccionados[cant_filtros] = "";
 
 
-            $("#cont-reporte-filtro").prepend(cont_filtros);
+            $("#cont-reporte-filtro").append(cont_filtros);
 
             $("#btn-remover-filtro").removeClass("d-none").addClass("d-block");
 
             $(".listado-campos-usuario").click(acciones.mostrarDatosTabla);
 
             cant_filtros++;
+
+            if (cant_filtros > 0) {
+                $("#btn-generar-listado-reporte").removeClass("d-none").addClass("d-block");
+            }
 
         
     },

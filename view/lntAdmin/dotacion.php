@@ -93,7 +93,7 @@
                     <div class="col">
                         <h2>Gestionar dotación</h2>
                     </div>
-                    <div class="col-2 d-flex justify-content-end ">
+                    <div class="col-2 d-flex justify-content-end d-none">
                         <button class="btn btn-verde">Reporte dotación</button>
                     </div>
                     <div class="col-3">

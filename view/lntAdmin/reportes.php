@@ -94,7 +94,7 @@
                                 </a>
                                 
                             </div>
-                            <div class="col-3">
+                            <!-- <div class="col-3">
                                 <a href="#">
                                     <div class="cont-icono p-3">
                                         <div class="icono">
@@ -106,7 +106,7 @@
                                     </div>
                                 </a>
                                 
-                            </div>
+                            </div> -->
 
                 </div>
             </div>

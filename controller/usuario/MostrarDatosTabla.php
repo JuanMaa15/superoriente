@@ -11,8 +11,6 @@ if (isset($_POST['tabla'])) {
     if (str_contains($tabla, "tbl_")) {
       $campo = strlen($tabla);
       $campo = substr($tabla, 4, $campo);
-    }else{
-        $campos[$i] = $lista[$i];
     }    
 
     $datos = "<form>";

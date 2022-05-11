@@ -70,19 +70,19 @@
                         <h2>Reportes de dotación por filtros</h2>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-3">
+                <!-- <div class="row justify-content-center mt-3">
                     <div class="col-10">
                         <div class="row justify-content-end">
                             <div class="col-4">
                                 <select class="form-select" id="filtro-camisa">
                                     <option value="">Todas</option>
                                     <?php
-                                        for ($i=0; $i < count($listaTiposDotaciones); $i++):
+                                       /* for ($i=0; $i < count($listaTiposDotaciones); $i++):
                                             ?>
                                                 <option value="dotacion <?php echo $listaTiposDotaciones[$i]->getId_tipo_dotacion(); ?>">Dotacion <?php echo $listaTiposDotaciones[$i]->getNombre(); ?></option>
                                             <?php
                                         endfor;
-                                    ?>
+                                    */ ?>
                                     <option value="estado 1">Estado Disponible</option>
                                     <option value="estado 0">Estado Agotado</option>
                                 </select>
@@ -97,7 +97,7 @@
                                         
                         </div>
                     </div>
-                </div>
+                </div> -->
 
 
                 <div class="row my-3">
@@ -105,6 +105,9 @@
 
                         <div class="row" id="cont-reporte-filtro">
                             
+                            
+                        </div>
+                        <div class="row">
                             <div class="col-3 mb-5 mt-3 h-0 agregar-remover-filtro">
                                 <button class="btn btn-verde" id="btn-agregar-filtro">Agregar filtro  +</button>
                                 <button class="btn btn-verde mt-2 d-none " id="btn-remover-filtro">Remover filtro  -</button>
@@ -123,7 +126,7 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col d-flex justify-content-center">
-                                        <button class="btn btn-verde" class="listado-reporte-dotacion" id="btn-generar-listado-reporte">Generar lista</button>
+                                        <button class="btn btn-verde d-none" class="listado-reporte-dotacion" id="btn-generar-listado-reporte">Generar lista</button>
                                     </div>
                                 </div>
                                 <div class='row mt-4'>
