@@ -13,6 +13,7 @@ if (isset($_POST['tipo_dotacion'])) {
     $cont = "<div class='row'>";
 
     $tipo_dotacion = $_POST['tipo_dotacion'];
+    
 
     for ($i=0; $i < count($listaVestimentas); $i++) { 
         
