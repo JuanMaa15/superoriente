@@ -761,11 +761,6 @@ var acciones = {
                 $(".listado-campos-usuario").click(acciones.mostrarDatosTabla);
 
 
-
-                opc_anterior[cant_filtros] = ""; 
-                filtros_seleccionados[cant_filtros] = "";
-
-
             $("#cont-filtros-reporte").append(cont_filtros);
 
             $("#btn-remover-filtro").removeClass("d-none").addClass("d-block");
