@@ -41,7 +41,7 @@ if (isset($_POST['busqueda_dotacion'])) {
         ."<th scope='col'>Pantalon</th>"
         ."<th scope='col'>Zapato</th>"
         ."<th scope='col'>Vestimenta</th>"
-        
+        ."<th scope='col' class='text-center' colspan='2'>Opciones</th>"
     ."</tr>"
     ."</thead>"
     ."<tbody>"; 
@@ -95,7 +95,9 @@ if (isset($_POST['busqueda_dotacion'])) {
                 ."<td>" . $pantalon . "</td>"
                 ."<td>" . $zapatos . "</td>"
                 ."<td>" . $vestimenta ."</td>"
-                ."</tr>";
+                . "<td><a href='informacionEmpleado.php?doc=" . $listaUsuarios[$i]->getId_usuario() . "' class='btn btn-verde'>Gestionar</a></td>"
+                . "<td><button value='" . $listaUsuarios[$i]->getId_usuario() . "' class='btn btn-danger btn-ventana-eliminar-dotacion' data-bs-toggle='modal' data-bs-target='#eliminar-toda-dotacion'>Eliminar</button></td>"
+                . "</tr>";
 
                 $validar_existencias = true;
 

@@ -2172,6 +2172,28 @@ class UsuarioDAO {
     }
 
 
+    // Eliminar toda la dotación de un empleado
+
+    public function eliminarTodaDotacion($id_usuario) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET id_camisa = NULL, id_pantalon = NULL, id_zapato = NULL, id_vestimenta = NULL WHERE id_usuario = '" . $id_usuario . "'";
+            $ps = $cnx->prepare($sql);
+
+            $ps->execute();
+
+            return true;
+        } catch (Exception $ex) {
+            echo "Error al eliminar toda a dotacion del empleado" . $ex->getMessage();
+        }
+
+        return false;
+
+    }
+
+
     // Eliminar camisa del empleado
 
     public function eliminarCamisaEmpleado($id_usuario) {

@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col d-flex justify-content-center">
-                                        <button class="btn btn-verde d-none" class="listado-reporte-dotacion" id="btn-generar-listado-reporte">Generar lista</button>
+                                        <button class="btn btn-verde d-none listado-reporte-dotacion" id="btn-generar-listado-reporte">Generar lista</button>
                                     </div>
                                 </div>
                                 <div class='row mt-4'>
