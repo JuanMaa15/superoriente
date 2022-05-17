@@ -631,13 +631,22 @@
             </div>
 
             <div id="cont-dotacion" class="my-3 d-none cont-gestion-empleado ">
-                <div class="row mb-2">
+                <div class="row mb-2 align-items-center">
                     <div class="col">
                         <h2 class="titulo-perfil">Gestionar dotación del empleado</h2>
                         <h5 class="texto-claro">Dotación <?php echo $listaUsuario->getTipo_dotacion(); ?></h5>
                         <input type="text" id="campo-tipo-dotacion-empleado" class="d-none" value="<?php echo $listaUsuario->getTipo_dotacion(); ?>">
                         <!-- <input type="text" class="d-none" value="echo $listaPantalones[$i]->getId_pantalon(); "> -->
                
+                    </div>
+                    <div class="col d-flex justify-content-end">
+                        <?php
+                            if ($listaUsuario->getCamisa() != null || $listaUsuario->getPantalon() != null || $listaUsuario->getZapato() != null || $listaUsuario->getVestimenta() != null) :
+                            ?>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar-toda-dotacion">Eliminar todos</button>
+                          <?php
+                            endif;
+                        ?>
                     </div>
                 </div>
                 
@@ -829,6 +838,27 @@
        
           
     </main>
+
+    <!-- Confirmacion para todas las dotaciones -->
+        
+    <div class="modal modal-delete fade" id="eliminar-toda-dotacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar dotacion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>¿Esta seguro de eliminar toda la dotación al empleado?</div>
+                    <div class="mt-3" id="btns-modal-eliminar">
+                        <button type="button" class="btn btn-verde" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn-eliminar-dotaciones-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>">Si</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Confirmacion para eliminar un hijo -->
         

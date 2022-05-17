@@ -2172,6 +2172,28 @@ class UsuarioDAO {
     }
 
 
+    // Eliminar toda la dotación de un empleado
+
+    public function eliminarTodaDotacion($id_usuario) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET id_camisa = NULL, id_pantalon = NULL, id_zapato = NULL, id_vestimenta = NULL WHERE id_usuario = '" . $id_usuario . "'";
+            $ps = $cnx->prepare($sql);
+
+            $ps->execute();
+
+            return true;
+        } catch (Exception $ex) {
+            echo "Error al eliminar toda a dotacion del empleado" . $ex->getMessage();
+        }
+
+        return false;
+
+    }
+
+
     // Eliminar camisa del empleado
 
     public function eliminarCamisaEmpleado($id_usuario) {
@@ -2255,4 +2277,111 @@ class UsuarioDAO {
         return false;
 
     }
+
+    // Asignar cantidad de camisas
+
+    public function asignarCantidadCamisas($usuariodto) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET cant_camisa = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "'";
+            $ps = $cnx->prepare($sql);
+
+            $cant_camisa = $usuariodto->getCant_camisa();
+
+
+            $ps->bindParam(1, $cant_camisa);
+
+            $ps->execute();
+
+            return true;
+
+        } catch (Exception $ex) {
+            print "Error al asignar la cantidad de camisas a un empleado " . $ex->getMessage();
+        }
+        
+        return false;
+
+    }
+
+    // Asignar cantidad de pantalones
+
+    public function asignarCantidadPantalones($usuariodto) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET cant_pantalon = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "'";
+            $ps = $cnx->prepare($sql);
+
+            $cant_pantalon = $usuariodto->getCant_pantalon();
+
+            $ps->bindParam(1, $cant_pantalon);
+
+            $ps->execute();
+
+            return true;
+
+        } catch (Exception $ex) {
+            print "Error al asignar la cantidad de pantalones a un empleado " . $ex->getMessage();
+        }
+        
+        return false;
+
+    }
+
+
+    // Asignar cantidad de zapatos
+
+    public function asignarCantidadZapatos($usuariodto) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET cant_zapato = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "'";
+            $ps = $cnx->prepare($sql);
+
+            $cant_zapato = $usuariodto->getCant_zapato();
+
+            $ps->bindParam(1, $cant_zapato);
+
+            $ps->execute();
+
+            return true;
+
+        } catch (Exception $ex) {
+            print "Error al asignar la cantidad de zapatos a un empleado " . $ex->getMessage();
+        }
+        
+        return false;
+
+    }
+
+    // Asignar cantidad de otros
+
+    public function asignarCantidadVestimenta($usuariodto) {
+
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET cant_vestimenta = ? WHERE id_usuario = '" . $usuariodto->getId_usuario() . "'";
+            $ps = $cnx->prepare($sql);
+
+            $cant_vestimenta = $usuariodto->getVestimenta();
+
+            $ps->bindParam(1, $cant_vestimenta);
+
+            $ps->execute();
+
+            return true;
+
+        } catch (Exception $ex) {
+            print "Error al asignar la cantidad de vestimentas a un empleado " . $ex->getMessage();
+        }
+        
+        return false;
+
+    }
+
 }

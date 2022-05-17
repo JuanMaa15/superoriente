@@ -59,7 +59,7 @@ if (isset($_POST['id'])) {
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
                                 ."<input class='form-check-input checkbox-empleados checkbox-cont-zapato' type='checkbox' value='" . $listaUsuarios[$i]->getId_usuario() . "' id='flexCheckChecked'>"
-                                    
+                                ."<input type='text' disabled>" 
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"
@@ -79,6 +79,7 @@ if (isset($_POST['id'])) {
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
                                 ."<input class='form-check-input checkbox-empleados checkbox-cont-zapato' type='radio' value='" . $listaUsuarios[$i]->getId_usuario() . "'>"    
+                                ."<input type='text' disabled>"
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"

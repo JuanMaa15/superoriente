@@ -19,7 +19,7 @@ if (isset($_POST['opc'])) {
                 $id_usuario = $_POST['id_usuario'];
                 $id_camisa = $_POST['id_camisa'];
                 $cant_camisas = intval($_POST['cant_camisas']);
-
+                $cant_asignar_camisas = intval($_POST['cant_asignar_camisas']);
                 
 
                 if (preg_match('/[0-9]+/', $id_usuario)) {
@@ -35,13 +35,17 @@ if (isset($_POST['opc'])) {
                         $camisadto->setId_camisa($id_camisa);
                         $camisadto->setCantidad($cant_camisas);
                         
+                        $usuariodto->setCant_camisa($cant_asignar_camisas);
+                        
                         $usuariodao = new UsuarioDAO();
                         $camisadao = new CamisaDAO();
+
                         
+                        $resultado_asignar_camisas = $usuariodao->asignarCantidadCamisas($usuariodto);
                         $resultado_usuario = $usuariodao->asignarCamisa($usuariodto);
                         $resultado_camisa = $camisadao->actualizarCantidadCamisa($camisadto); 
 
-                        if ($resultado_usuario && $resultado_camisa) {
+                        if ($resultado_usuario && $resultado_camisa && $resultado_asignar_camisas) {
                             echo "<div class='alert alert-success' role='alert'>¡La camisa fue asignada correctamente!</div>";
                         
                         }else{
@@ -63,7 +67,7 @@ if (isset($_POST['opc'])) {
                 $id_usuario = $_POST['id_usuario'];
                 $id_pantalon = $_POST['id_pantalon'];
                 $cant_pantalones = intval($_POST['cant_pantalones']);
-
+                $cant_asignar_pantalones = intval($_POST['cant_asignar_pantalones']);
                 
 
                 if (preg_match('/[0-9]+/', $id_usuario)) {
@@ -78,14 +82,17 @@ if (isset($_POST['opc'])) {
                         
                         $pantalondto->setId_pantalon($id_pantalon);
                         $pantalondto->setCantidad($cant_pantalones);
+
+                        $usuariodto->setCant_pantalon($cant_asignar_pantalones);
                         
                         $usuariodao = new UsuarioDAO();
                         $camisadao = new PantalonDAO();
                         
+                        $resultado_asignar_pantalones = $usuariodao->asignarCantidadPantalones($usuariodto);
                         $resultado_usuario = $usuariodao->asignarPantalon($usuariodto);
                         $resultado_pantalon = $camisadao->actualizarCantidadPantalon($pantalondto); 
 
-                        if ($resultado_usuario && $resultado_pantalon) {
+                        if ($resultado_usuario && $resultado_pantalon && $resultado_asignar_pantalones) {
                             echo "<div class='alert alert-success' role='alert'>¡El pantalón fue asignado correctamente!</div>";
                         
                         }else{
@@ -109,7 +116,7 @@ if (isset($_POST['opc'])) {
                 $id_usuario = $_POST['id_usuario'];
                 $id_zapato = $_POST['id_zapato'];
                 $cant_zapatos = intval($_POST['cant_zapatos']);
-
+                $cant_asignar_zapatos = intval($_POST['cant_asignar_zapatos']);
                 
 
                 if (preg_match('/[0-9]+/', $id_usuario)) {
@@ -125,13 +132,16 @@ if (isset($_POST['opc'])) {
                         $zapatodto->setId_zapato($id_zapato);
                         $zapatodto->setCantidad($cant_zapatos);
                         
+                        $usuariodto->setCant_zapato($cant_asignar_zapatos);
+                        
                         $usuariodao = new UsuarioDAO();
                         $zapatodao = new ZapatoDAO();
                         
+                        $resultado_asignar_zapatos = $usuariodao->asignarCantidadZapatos($usuariodto);
                         $resultado_usuario = $usuariodao->asignarZapato($usuariodto);
                         $resultado_zapato = $zapatodao->actualizarCantidadZapato($zapatodto); 
 
-                        if ($resultado_usuario && $resultado_zapato) {
+                        if ($resultado_usuario && $resultado_zapato && $resultado_asignar_zapatos) {
                             echo "<div class='alert alert-success' role='alert'>¡El zapato fue asignado correctamente!</div>";
                         
                         }else{
@@ -153,7 +163,7 @@ if (isset($_POST['opc'])) {
                 $id_usuario = $_POST['id_usuario'];
                 $id_vestimenta = $_POST['id_vestimenta'];
                 $cant_vestimentas = intval($_POST['cant_vestimentas']);
-
+                $cant_asignar_vestimentas = intval($_POST['cant_asignar_vestimentas']);
                 
 
                 if (preg_match('/[0-9]+/', $id_usuario)) {
@@ -169,13 +179,16 @@ if (isset($_POST['opc'])) {
                         $vestimentadto->setId_vestimenta($id_vestimenta);
                         $vestimentadto->setCantidad($cant_vestimentas);
                         
+                        $usuariodto->setCant_vestimenta($cant_asignar_vestimentas);
+
                         $usuariodao = new UsuarioDAO();
                         $vestimentadao = new OtraVestimentaDAO();
                         
+                        $resultado_asignar_vestimentas = $usuariodao->asignarCantidadVestimenta($usuariodto);
                         $resultado_usuario = $usuariodao->asignarVestimenta($usuariodto);
                         $resultado_vestimenta = $vestimentadao->actualizarCantidadVestimenta($vestimentadto); 
 
-                        if ($resultado_usuario && $resultado_vestimenta) {
+                        if ($resultado_usuario && $resultado_vestimenta && $resultado_asignar_vestimentas) {
                             echo "<div class='alert alert-success' role='alert'>¡La vestimenta fue asignado correctamente!</div>";
                         
                         }else{

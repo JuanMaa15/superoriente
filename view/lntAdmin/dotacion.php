@@ -112,7 +112,7 @@
                     
                 </div>
                 <div class="row mt-5 justify-content-center" id="cuerpo-acordion-listado">
-                    <div class="col-9">
+                    <div class="col-11">
                         <div class="accordion-item">
                             <div id="listado-asignaciones" class="accordion-collapse collapse" aria-labelledby="#listado-asignaciones" data-bs-parent="#cont-acordion-listado">
                                 <div class="accordion-body">
@@ -136,7 +136,7 @@
                                                         <th scope="col">Pantalón</th>
                                                         <th scope="col">Zapatos</th>
                                                         <th scope="col">Vestimenta</th>
-                                                        <th scope="col">Opciones</th>
+                                                        <th scope="col" class="text-center" colspan="2">Opciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -189,6 +189,7 @@
                                                                         <td><?php echo $zapatos; ?></td>
                                                                         <td><?php echo $vestimenta; ?></td>
                                                                         <td><a href="informacionEmpleado.php?doc=<?php echo $listaUsuarios[$i]->getId_usuario(); ?>" class="btn btn-verde">Gestionar</a></td>
+                                                                        <td><button value="<?php echo $listaUsuarios[$i]->getId_usuario(); ?>" class="btn btn-danger btn-ventana-eliminar-dotacion" data-bs-toggle="modal" data-bs-target="#eliminar-toda-dotacion">Eliminar</button></td>
                                                                     </tr>
                                                                 <?php       
                                                                 
@@ -1223,6 +1224,25 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id="btn-asignar-camisa-empleado">Asignar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-delete fade" id="eliminar-toda-dotacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar dotacion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>¿Esta seguro de eliminar toda la dotación al empleado?</div>
+                    <div class="mt-3" id="btns-modal-eliminar">
+                        <button type="button" class="btn btn-verde" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn-eliminar-dotaciones-empleado">Si</button>
+                    </div>
+                    
                 </div>
             </div>
         </div>

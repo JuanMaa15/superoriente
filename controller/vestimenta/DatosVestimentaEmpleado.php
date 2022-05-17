@@ -16,8 +16,8 @@ if (isset($_POST['id'])) {
         $id_vestimenta = intval($id_vestimenta);
 
         $vestimentadao = new OtraVestimentaDAO();
-        
-        
+        $listaUsuariosId = $usuariodao->listaUsuariosConId();        
+       
         $vestimentadto = $vestimentadao->listaVestimenta($id_vestimenta);
 
         $cont = "<div class='row my-2'>"
@@ -48,7 +48,7 @@ if (isset($_POST['id'])) {
             
             for ($i=0; $i < count($listaUsuarios); $i++){
 
-                if ($listaUsuarios[$i]->getVestimenta() == null) {
+                if ($listaUsuarios[$i]->getVestimenta() == null && $listaUsuariosId[$i]->getTipo_dotacion() == $vestimentadto->getTipo_dotacion()) {
 
                     $validar_asignaciones = true;
                     if ($vestimentadto->getCantidad() > 1) {
@@ -56,7 +56,7 @@ if (isset($_POST['id'])) {
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
                                 ."<input class='form-check-input checkbox-empleados checkbox-cont-vestimenta' type='checkbox' value='" . $listaUsuarios[$i]->getId_usuario() . "' id='flexCheckChecked'>"
-                                    
+                                ."<input type='text' disabled>"  
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"
@@ -76,6 +76,7 @@ if (isset($_POST['id'])) {
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
                                 ."<input class='form-check-input checkbox-empleados checkbox-cont-vestimenta' type='radio' value='" . $listaUsuarios[$i]->getId_usuario() . "'>"    
+                                ."<input type='text' disabled>"
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"

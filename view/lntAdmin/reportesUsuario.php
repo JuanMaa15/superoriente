@@ -304,17 +304,36 @@
                                 <h2>Reportes del empleado con filtros</h2>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col d-flex align-items-center">
-                                Cantidad de filtros a usar: 
-                                <input type="text" id="cant-filtros-reporte" class="form-control" maxlength="2" >
-                                <button class="btn btn-verde p-1 ms-2" id="btn-mostrar-filtros" >Enviar</button>
-                                <small class="text-danger ms-3 d-block"></small>
-                            </div>
-                        </div>
+                        
                         <div class="row" id="cont-filtros-reporte">
                                 
                         </div>
+                        <div id='rta-filtros-empleado'></div>
+                        
+                        
+                        <div class="row">
+                            <div class="col-3 mb-5 mt-3 h-0 agregar-remover-filtro">
+                                <button class="btn btn-verde" id="btn-agregar-filtro-empleado">Agregar filtro  +</button>
+                                <button class="btn btn-verde mt-2 d-none " id="btn-remover-filtro">Remover filtro  -</button>
+                            </div>
+                        </div>
+                        <div class='row my-2'>
+                            <div class='col texto-claro'>
+                                <h6 class='titulo-campos '>Selecciones:</h6>
+                                <div id='filtros-seleccionados'></div>
+                            </div>
+                        </div>
+                        <div class='row mt-2'>
+                            <div class='col d-flex justify-content-center'>
+                                <button class='btn btn-verde listado-reporte-empleado' id='btn-generar-listado-reporte'>Generar lista</button>
+                            </div>
+                        </div>
+                        <div class='row mt-4'>
+                            <div class='col'>
+                                <div id='listado-empleado-filtros'></div>
+                            </div>
+                        </div>
+
                         <div class="my-3 d-flex justify-content-center d-none">
                             <button class="text-center btn btn-verde" id="btn-mostrar-reporte">Enviar</button>
                         </div>

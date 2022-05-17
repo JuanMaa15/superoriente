@@ -77,6 +77,11 @@ class UsuarioDTO {
     private $zapato;
     private $vestimenta;    
 
+    private $cant_camisa;
+    private $cant_pantalon;
+    private $cant_zapato;
+    private $cant_vestimenta;
+
     function __construct() {
         
     }
@@ -559,6 +564,25 @@ class UsuarioDTO {
         return $this->vestimenta;
     }
 
+
+    function getCant_camisa() {
+        return $this->cant_camisa;
+    }
+
+    function getCant_pantalon() {
+        return $this->cant_pantalon;
+    }
+
+    function getCant_zapato() {
+        return $this->cant_zapato;
+    }
+
+    function getCant_vestimenta() {
+        return $this->cant_vestimenta;
+    }
+
+    // -------------
+
     function setId_usuario($id_usuario) {
         $this->id_usuario = $id_usuario;
     }
@@ -801,6 +825,22 @@ class UsuarioDTO {
 
     function setVestimenta($vestimenta) {
         $this->vestimenta = $vestimenta;
+    }
+
+    function setCant_camisa($cant_camisa) {
+        $this->cant_camisa = $cant_camisa;
+    }
+
+    function setCant_pantalon($cant_pantalon) {
+        $this->cant_pantalon = $cant_pantalon;
+    }
+
+    function setCant_zapato($cant_zapato) {
+        $this->cant_zapato = $cant_zapato;
+    }
+
+    function setCant_vestimenta($cant_vestimenta) {
+        $this->cant_vestimenta = $cant_vestimenta;
     }
     
 }
