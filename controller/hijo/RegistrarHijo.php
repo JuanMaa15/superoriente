@@ -12,7 +12,7 @@ if (isset($_POST)) {
 
         if (!empty($nombre) && !empty($apellido) && !empty($edad) && !empty($id_usuario)) {
 
-                if (preg_match('/^[a-zA-Z\d]*$/', $nombre)) {
+                if (true) {
 
                     if (preg_match('/^[a-zA-Z\d]*$/', $apellido)) {
 

@@ -75,7 +75,7 @@ $cbxGenero = "<select class='form-select' id='genero-pantalon-act'>";
 $cbxGenero .= "</select>";
 
 
-$tallas = ['28','30','32','34','36','38','40','42','44'];
+$tallas = ['4','6','8','10','12','14','16','18','28','30','32','34','36','38','40','42','44'];
 
 
 $cbxTalla = "<select class='form-select' id='talla-pantalon-act'>";

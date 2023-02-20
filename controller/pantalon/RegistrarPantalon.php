@@ -11,7 +11,7 @@ $genero = $_POST['genero'];
 
 $validar = false;
 
-for ($i=28; $i < 46; $i++) { 
+for ($i=4; $i < 46; $i++) { 
 
     if ($i % 2 == 0) {
 

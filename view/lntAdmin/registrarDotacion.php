@@ -93,135 +93,21 @@
                     <div class="col">
                         <h2>Gestionar dotación</h2>
                     </div>
-                    <div class="col-2 d-flex justify-content-end d-none">
-                        <button class="btn btn-verde">Reporte dotación</button>
-                    </div>
-                    <div class="col-3">
-                        <div class="accordion accordion-flush" id="cont-acordion-listado">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#listado-asignaciones" aria-expanded="false" aria-controls="flush-collapseOne">
-                                    Lista de asignaciones
-                                </button>
-                                </h2>
-                                
-                            </div>
-                        </div>
-                        
-                    </div>
+                    
                     
                 </div>
-                <div class="row mt-5 justify-content-center" id="cuerpo-acordion-listado">
-                    <div class="col-11">
-                        <div class="accordion-item">
-                            <div id="listado-asignaciones" class="accordion-collapse collapse" aria-labelledby="#listado-asignaciones" data-bs-parent="#cont-acordion-listado">
-                                <div class="accordion-body">
-                                    <div class="row justify-content-end">
-                                        <div class="col-4">
-                                            <form>
-                                                <input type="text" class="form-control" placeholder="Buscar empleado" id="buscador-empleado-dotacion">
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-center">
-                                        <div class="col" id="cont-listado-asignaciones">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th scope="col">Doc</th>
-                                                        <th scope="col">Nombre</th>
-                                                        <th scope="col">Apellido</th>
-                                                        <th scope="col">Tipo de dotación</th>
-                                                        <th scope="col">Camisa</th>
-                                                        <th scope="col">Pantalón</th>
-                                                        <th scope="col">Zapatos</th>
-                                                        <th scope="col">Vestimenta</th>
-                                                        <th scope="col" class="text-center" colspan="2">Opciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                        
-                                                        $validar_existencias = false;
-                                                        for ($i=0; $i < count($listaUsuarios); $i++):
-                                                            if ($listaUsuarios[$i]->getCamisa() != null || $listaUsuarios[$i]->getPantalon() != null
-                                                            || $listaUsuarios[$i]->getZapato() != null || $listaUsuarios[$i]->getVestimenta() != null) :
-                                                                
-                                                            $camisa = "";
-                                                            $pantalon = "";
-                                                            $zapatos = "";
-                                                            $vestimenta = "";
-
-                                                                for ($j=0; $j < count($listaCamisas); $j++) { 
-                                                                    if ($listaUsuarios[$i]->getCamisa() == $listaCamisas[$j]->getId_camisa()) {
-                                                                        $camisa = $listaCamisas[$j]->getNombre();
-                                                                    }
-                                                                }
-
-                                                                for ($j=0; $j < count($listaPantalones); $j++) { 
-                                                                    if ($listaUsuarios[$i]->getPantalon() == $listaPantalones[$j]->getId_pantalon()) {
-                                                                        $pantalon = $listaPantalones[$j]->getNombre();
-                                                                    }
-                                                                }
-
-                                                                for ($j=0; $j < count($listaZapatos); $j++) { 
-                                                                    if ($listaUsuarios[$i]->getZapato() == $listaZapatos[$j]->getId_zapato()) {
-                                                                        $zapatos = $listaZapatos[$j]->getNombre();
-                                                                    }
-                                                                }
-
-                                                                for ($j=0; $j < count($listaVestimentas); $j++) { 
-                                                                    if ($listaUsuarios[$i]->getVestimenta() == $listaVestimentas[$j]->getId_vestimenta()) {
-                                                                        $vestimenta = $listaVestimentas[$j]->getNombre();
-                                                                    }
-                                                                }
-                                                                
-                                                                
-
-                                                                ?> 
-                                                                    <tr class="text-center">
-                                                                        <td><?php echo $listaUsuarios[$i]->getId_usuario(); ?></td>
-                                                                        <td><?php echo $listaUsuarios[$i]->getNombre(); ?></td>
-                                                                        <td><?php echo $listaUsuarios[$i]->getApellido(); ?></td>
-                                                                        <td><?php echo $listaUsuarios[$i]->getTipo_dotacion(); ?></td>
-                                                                        <td><?php echo $camisa ?></td>
-                                                                        <td><?php echo $pantalon; ?></td>
-                                                                        <td><?php echo $zapatos; ?></td>
-                                                                        <td><?php echo $vestimenta; ?></td>
-                                                                        <td><a href="informacionEmpleado.php?doc=<?php echo $listaUsuarios[$i]->getId_usuario(); ?>" class="btn btn-verde">Gestionar</a></td>
-                                                                        <td><button value="<?php echo $listaUsuarios[$i]->getId_usuario(); ?>" class="btn btn-danger btn-ventana-eliminar-dotacion" data-bs-toggle="modal" data-bs-target="#eliminar-toda-dotacion">Eliminar</button></td>
-                                                                    </tr>
-                                                                <?php       
-                                                                
-                                                                $validar_existencias = true;
-                                                            endif;
-                                                        endfor;
-
-                                                        if(!$validar_existencias) {
-                                                            ?>
-                                                            <tr>
-                                                                <td colspan='9' class='text-center py-4'>Aún no hay empleados con ropa de trabajo</td>
-                                                            </tr>
-
-                                                        <?php
-                                                        }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                       
-                    </div>
-                </div>
+              
                 <div class="row  bg-light mt-5 mb-3">
                     <div class="col-3">
                         <div class="cont-info-rapida p-5" id="acordion-cant-camisas">
                             <div class="row">
                                 <div class="col">
-                                    <h3><?php echo count($listaCamisas); ?></h3>
+                                    <h3><?php
+                                        $cant_total_camisas = 0;
+                                        for ($i=0; $i < count($listaCamisas); $i++) :
+                                            $cant_total_camisas += $listaCamisas[$i]->getCantidad(); 
+                                        endfor;
+                                    echo $cant_total_camisas; ?></h3>
                                     <span class="fs-6">Camisas</span>
                                 </div>
                                 <div class="col d-flex justify-content-center align-items-center">
@@ -234,7 +120,12 @@
                         <div class="cont-info-rapida p-5 " id="acordion-cant-pantalones">
                                 <div class="row">
                                     <div class="col">
-                                        <h3><?php echo count($listaPantalones); ?></h3>
+                                    <h3><?php
+                                        $cant_total_pantalones = 0;
+                                        for ($i=0; $i < count($listaPantalones); $i++) :
+                                            $cant_total_pantalones += $listaPantalones[$i]->getCantidad(); 
+                                        endfor;
+                                    echo $cant_total_pantalones; ?></h3>
                                         <span class="fs-6">Pantalones</span>
                                     </div>
                                     <div class="col d-flex justify-content-center align-items-center">
@@ -247,7 +138,12 @@
                         <div class="cont-info-rapida p-5" id="acordion-cant-zapatos">
                             <div class="row">
                                 <div class="col">
-                                    <h3><?php echo count($listaZapatos); ?></h3>
+                                <h3><?php
+                                        $cant_total_zapatos = 0;
+                                        for ($i=0; $i < count($listaZapatos); $i++) :
+                                            $cant_total_zapatos += $listaZapatos[$i]->getCantidad(); 
+                                        endfor;
+                                    echo $cant_total_zapatos; ?></h3>
                                     <span class="fs-6">Zapatos</span>
                                 </div>
                                 <div class="col d-flex justify-content-center align-items-center">
@@ -260,7 +156,12 @@
                         <div class="cont-info-rapida p-5" id="acordion-cant-vestimentas">
                             <div class="row">
                                 <div class="col">
-                                    <h3><?php echo count($listaVestimentas); ?></h3>
+                                    <h3><?php
+                                        $cant_total_otros = 0;
+                                        for ($i=0; $i < count($listaVestimentas); $i++) :
+                                            $cant_total_otros += $listaVestimentas[$i]->getCantidad(); 
+                                        endfor;
+                                    echo $cant_total_otros; ?></h3>
                                     <span class="fs-6">Otros</span>
                                 </div>
                                 <div class="col d-flex justify-content-center align-items-center">
@@ -281,7 +182,7 @@
                                         $cant_camisas = 0;
                                         for ($j=0; $j < count($listaCamisas); $j++):
                                             if ($listaTiposDotaciones[$i]->getNombre() == $listaCamisas[$j]->getTipo_dotacion()):
-                                                    $cant_camisas++;
+                                                    $cant_camisas += $listaCamisas[$j]->getCantidad();
                                             endif;
 
                                             
@@ -295,7 +196,7 @@
                                                         $cant_tipo_camisas = 0;
                                                         for ($k=0; $k < count($listaCamisas); $k++) : 
                                                             if ($listaCamisas[$k]->getNombre() == $listaTiposCamisas[$j]->getNombre() && $listaCamisas[$k]->getTipo_dotacion() == $listaTiposDotaciones[$i]->getNombre()):
-                                                                $cant_tipo_camisas++;
+                                                                $cant_tipo_camisas += $listaCamisas[$k]->getCantidad();
                                                             endif;
                                                         endfor;
 
@@ -328,7 +229,7 @@
                                         $cant_pantalones = 0;
                                         for ($j=0; $j < count($listaPantalones); $j++):
                                             if ($listaTiposDotaciones[$i]->getNombre() == $listaPantalones[$j]->getTipo_dotacion()):
-                                                    $cant_pantalones++;
+                                                    $cant_pantalones += $listaPantalones[$j]->getCantidad();
                                             endif;
                                         endfor;
                                         ?>
@@ -340,7 +241,7 @@
                                                         $cant_tipo_pantalones = 0;
                                                         for ($k=0; $k < count($listaPantalones); $k++) : 
                                                             if ($listaPantalones[$k]->getNombre() == $listaTiposPantalones[$j]->getNombre() && $listaPantalones[$k]->getTipo_dotacion() == $listaTiposDotaciones[$i]->getNombre()):
-                                                                $cant_tipo_pantalones++;
+                                                                $cant_tipo_pantalones += $listaPantalones[$k]->getCantidad();
                                                             endif;
                                                         endfor;
 
@@ -372,7 +273,7 @@
                                         $cant_zapatos = 0;
                                         for ($j=0; $j < count($listaZapatos); $j++):
                                             if ($listaTiposDotaciones[$i]->getNombre() == $listaZapatos[$j]->getTipo_dotacion()):
-                                                    $cant_zapatos++;
+                                                    $cant_zapatos += $listaZapatos[$j]->getCantidad();
                                             endif;
                                         endfor;
                                         ?>
@@ -384,7 +285,7 @@
                                                         $cant_tipo_zapatos = 0;
                                                         for ($k=0; $k < count($listaZapatos); $k++) : 
                                                             if ($listaZapatos[$k]->getNombre() == $listaTiposZapatos[$j]->getNombre() && $listaZapatos[$k]->getTipo_dotacion() == $listaTiposDotaciones[$i]->getNombre()):
-                                                                $cant_tipo_zapatos++;
+                                                                $cant_tipo_zapatos += $listaZapatos[$k]->getCantidad();
                                                             endif;
                                                         endfor;
                                                         if ($cant_tipo_zapatos > 0) :
@@ -415,7 +316,7 @@
                                         $cant_vestimentas = 0;
                                         for ($j=0; $j < count($listaVestimentas); $j++):
                                             if ($listaTiposDotaciones[$i]->getNombre() == $listaVestimentas[$j]->getTipo_dotacion()):
-                                                    $cant_vestimentas++;
+                                                    $cant_vestimentas += $listaVestimentas[$j]->getCantidad();
                                             endif;
                                         endfor;
                                         ?>
@@ -487,23 +388,25 @@
                                                         <input type="checkbox" class="form-check-input checkbox-camisa" value="M">
                                                         <label class="form-check-label" for="">M</label>
                                                     </div>
-                                                    
-                                                </div>
-                                                <div class="col-3">
                                                     <div class="form-check text-start">
                                                             <input type="checkbox" class="form-check-input checkbox-camisa" id="flexCheckDefault" value="L">
                                                             <label class="form-check-label" for="flexCheckDefault">L</label>
                                                         </div>
-                                                        <div class="form-check text-start">
-                                                            <input type="checkbox" class="form-check-input checkbox-camisa" value="XL">
-                                                            <label class="form-check-label" for="">XL</label>
-                                                        </div>
-                                                        <div class="form-check text-start">
-                                                            <input type="checkbox" class="form-check-input checkbox-camisa" value="XXL">
-                                                            <label class="form-check-label" for="">XXL</label>
-                                                        </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-check text-start">
+                                                        <input type="checkbox" class="form-check-input checkbox-camisa" value="XL">
+                                                        <label class="form-check-label" for="">XL</label>
                                                     </div>
-                                                
+                                                    <div class="form-check text-start">
+                                                        <input type="checkbox" class="form-check-input checkbox-camisa" value="XXL">
+                                                        <label class="form-check-label" for="">XXL</label>
+                                                    </div>   
+                                                    <div class="form-check text-start">
+                                                        <input type="checkbox" class="form-check-input checkbox-camisa" id="flexCheckDefault" value="3XL">
+                                                        <label class="form-check-label" for="flexCheckDefault">3XL</label>
+                                                    </div>
+                                                </div>
                                             </div>   
                                             <small class="text-danger"></small>
                                         </div>
@@ -616,68 +519,6 @@
                                             <small class="text-danger"></small>
                                         </div>
                                         <div class="my-3">
-                                        <div class="my-3">
-                                            <h6 class="text-center">Tallas</h6>
-                                            <div class="row justify-content-center" id="cont-check-tallas-pantalon">
-                                                <div class="col-4">
-                                                    <?php 
-                                                        for ($i=28; $i < 34; $i++) { 
-                                                            if ($i % 2 == 0) {
-                                                             ?>
-                                                              
-                                                                <div class="form-check text-start">
-                                                                    <input type="checkbox" class="form-check-input checkbox-pantalon" id="flexCheckDefault" value="<?php echo $i ?>">
-                                                                    <label class="form-check-label" for="flexCheckDefault"><?php echo $i ?></label>
-                                                                </div>
-                                                                
-                                                            <?php 
-                                                            }
-                                                        }
-                                                    ?>               
-                                                </div>
-                                                <div class="col-4">
-                                                <?php 
-                                                    for ($i=34; $i < 40; $i++) { 
-                                                            if ($i % 2 == 0) {
-                                                             ?>
-                                                            
-                                                                <div class="form-check text-start">
-                                                                    <input type="checkbox" class="form-check-input checkbox-pantalon" id="flexCheckDefault" value="<?php echo $i ?>">
-                                                                    <label class="form-check-label" for="flexCheckDefault"><?php echo $i ?></label>
-                                                                </div>
-                                                             
-                                                            <?php 
-                                                            }
-                                                        }
-                                                    ?>
-                                                </div>  
-                                                <div class="col-4">
-                                                <?php 
-                                                    for ($i=40; $i < 46; $i++) { 
-                                                            if ($i % 2 == 0) {
-                                                             ?>
-                                                                
-                                                                    <div class="form-check text-start">
-                                                                        <input type="checkbox" class="form-check-input checkbox-pantalon" id="flexCheckDefault" value="<?php echo $i ?>">
-                                                                        <label class="form-check-label" for="flexCheckDefault"><?php echo $i ?></label>
-                                                                    </div>
-                                                                
-                                                            <?php 
-                                                            }
-                                                        }
-                                                    ?>
-                                                </div>
-                                                    
-                                                
-                                            </div>   
-                                            <small class="text-danger"></small>
-                                        </div>
-                                        </div>
-                                        <div class="my-3">
-                                            <input class="form-control" type="number" id="cantidad-pantalon" placeholder="Cantidad">
-                                            <small class="text-danger"></small>
-                                        </div>
-                                        <div class="my-3">
 
                                             <select class="form-select" id="genero-pantalon">
                                                 
@@ -692,6 +533,120 @@
                                             </select>
                                             <small class="text-danger"></small>
                                         </div>
+                                        <div class="my-3">
+                                            <div class="my-3">
+                                                <h6 class="text-center">Tallas</h6>
+                                                <div id="cont-check-tallas-pantalon">
+                                                    <div class="row justify-content-center d-none" id="cont-tallas-hombre">
+                                                        <div class="col-4">
+                                                            <?php 
+                                                                for ($i=28; $i < 34; $i++) { 
+                                                                    if ($i % 2 == 0) {
+                                                                    ?>
+                                                                    
+                                                                        <div class="form-check text-start">
+                                                                            <input type="checkbox" class="form-check-input checkbox-pantalon" id="flexCheckDefault" value="<?php echo $i ?>">
+                                                                            <label class="form-check-label" for="flexCheckDefault"><?php echo $i ?></label>
+                                                                        </div>
+                                                                        
+                                                                    <?php 
+                                                                    }
+                                                                }
+                                                            ?>               
+                                                        </div>
+                                                        <div class="col-4">
+                                                        <?php 
+                                                            for ($i=34; $i < 40; $i++) { 
+                                                                    if ($i % 2 == 0) {
+                                                                    ?>
+                                                                    
+                                                                        <div class="form-check text-start">
+                                                                            <input type="checkbox" class="form-check-input checkbox-pantalon" id="flexCheckDefault" value="<?php echo $i ?>">
+                                                                            <label class="form-check-label" for="flexCheckDefault"><?php echo $i ?></label>
+                                                                        </div>
+                                                                    
+                                                                    <?php 
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </div>  
+                                                        <div class="col-4">
+                                                        <?php 
+                                                            for ($i=40; $i < 46; $i++) { 
+                                                                    if ($i % 2 == 0) {
+                                                                    ?>
+                                                                        
+                                                                            <div class="form-check text-start">
+                                                                                <input type="checkbox" class="form-check-input checkbox-pantalon" id="flexCheckDefault" value="<?php echo $i ?>">
+                                                                                <label class="form-check-label" for="flexCheckDefault"><?php echo $i ?></label>
+                                                                            </div>
+                                                                        
+                                                                    <?php 
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row justify-content-center d-none" id="cont-tallas-mujer">
+                                                        <div class="col-4">
+                                                            <?php 
+                                                                for ($i=4; $i < 10; $i++) { 
+                                                                    if ($i % 2 == 0) {
+                                                                    ?>
+                                                                    
+                                                                        <div class="form-check text-start">
+                                                                            <input type="checkbox" class="form-check-input checkbox-pantalon" id="flexCheckDefault" value="<?php echo $i ?>">
+                                                                            <label class="form-check-label" for="flexCheckDefault"><?php echo $i ?></label>
+                                                                        </div>
+                                                                        
+                                                                    <?php 
+                                                                    }
+                                                                }
+                                                            ?>               
+                                                        </div>
+                                                        <div class="col-4">
+                                                        <?php 
+                                                            for ($i=10; $i < 16; $i++) { 
+                                                                    if ($i % 2 == 0) {
+                                                                    ?>
+                                                                    
+                                                                        <div class="form-check text-start">
+                                                                            <input type="checkbox" class="form-check-input checkbox-pantalon" id="flexCheckDefault" value="<?php echo $i ?>">
+                                                                            <label class="form-check-label" for="flexCheckDefault"><?php echo $i ?></label>
+                                                                        </div>
+                                                                    
+                                                                    <?php 
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </div>  
+                                                        <div class="col-4">
+                                                        <?php 
+                                                            for ($i=16; $i < 18; $i++) { 
+                                                                    if ($i % 2 == 0) {
+                                                                    ?>
+                                                                        
+                                                                            <div class="form-check text-start">
+                                                                                <input type="checkbox" class="form-check-input checkbox-pantalon" id="flexCheckDefault" value="<?php echo $i ?>">
+                                                                                <label class="form-check-label" for="flexCheckDefault"><?php echo $i ?></label>
+                                                                            </div>
+                                                                        
+                                                                    <?php 
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                        
+                                                </div>   
+                                                <small class="text-danger"></small>
+                                            </div>
+                                        </div>
+                                        <div class="my-3">
+                                            <input class="form-control" type="number" id="cantidad-pantalon" placeholder="Cantidad">
+                                            <small class="text-danger"></small>
+                                        </div>
+                                        
                                         <div class="my-3">
                                             <select class="form-select" id="estado-pantalon">
                                                 <option value="">Seleccionar estado</option>
@@ -982,7 +937,7 @@
                                     <form action="">
                                         <div class="my-2">
                                             <input type="text" class="form-control" id="nombre-tipo-camisa" placeholder="Tipo de camisa">
-                                            <small class="text-center"></small>
+                                            <small class="text-center text-danger"></small>
                                         </div>
                                         <div class="my-5">
                                             <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-tipo-camisa">Registrar</button>
@@ -1039,7 +994,8 @@
                                 <div class="form-registro my-3">
                                     <form action="">
                                         <div class="my-2">
-                                        <input type="text" class="form-control" id="nombre-tipo-zapato" placeholder="Tipo de zapato">
+                                            <input type="text" class="form-control" id="nombre-tipo-zapato" placeholder="Tipo de zapato">
+                                            <small class="text-center text-danger"></small>
                                         </div>
                                         <div class="my-5">
                                             <button type="button" class="btn btn-mediano btn-verde" id="btn-registrar-tipo-zapato">Registrar</button>

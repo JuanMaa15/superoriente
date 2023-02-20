@@ -27,7 +27,7 @@
     <script src="../../public/js/jquery.js"></script>
 
 </head>
-<body>
+<body style="overflow: hidden; padding-right: 17px;" class="modal-open">
     <!--------------- Body form -------- -->
     <div class="container-fluid ps-0">
         <div class="py-3">
@@ -108,6 +108,9 @@
                                             </thead>
                                             <tbody>
                                                 <?php
+                                                    $alerta1 = "";
+                                                    $alerta2 = "";
+                                                    $alerta3 = "";
                                                     for ($i=0; $i < count($listaNuevosEmpleados); $i++):
                                                         $fecha_actual = date_create(date('dmy'));
                                                         $fecha_ingreso = date_create($listaNuevosEmpleados[$i]->getFecha_ingreso());
@@ -124,6 +127,16 @@
 
                                                             </tr>
                                                         <?php
+
+                                                        if ($contador->format('%a') == '30') {
+                                                            $alerta1 .= " - " . $listaNuevosEmpleados[$i]->getNombre() . " " . $listaNuevosEmpleados[$i]->getApellido();
+                                                        }else if ($contador->format('%a') == '45') {
+                                                            $alerta2 .= " - " . $listaNuevosEmpleados[$i]->getNombre() . " " . $listaNuevosEmpleados[$i]->getApellido();
+
+                                                        }else if($contador->format('%a') == '60'){
+                                                            $alerta3 .= " - " . $listaNuevosEmpleados[$i]->getNombre() . " " . $listaNuevosEmpleados[$i]->getApellido();
+
+                                                        }
                                                     endfor;
                                                 ?>
                                               
@@ -209,13 +222,93 @@
 
         </div>
     </div>
+    
+    <?php
+        if ($alerta1 != "") {
+            ?>
+
+            <div class="trama">
+
+            </div>
+            <div class="alerta-modal">
+                <div class="modal-encabezado border-bottom">
+                    <div class="icono-salir" id="icono-salir-modal">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="titulo-periodo-evaluacion">
+                        <h5>30 días</h5>
+                    </div>
+                </div>
+                <div class="modal-cuerpo border-bottom">
+                    Estas personas llevan 30 días de periodo de prueba: <?php echo $alerta1; ?>
+                </div>
+                <div class="modal-pie d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary btn-salir-modal" id="salir-alerta">Close</button>
+                </div>
+            </div>
+
+            
+            <?php
+        }
+
+        if ($alerta2 != "") {
+            ?>
+            <div class="trama">
+
+            </div>
+            <div class="alerta-modal">
+                <div class="modal-encabezado border-bottom">
+                    <div class="icono-salir" id="icono-salir-modal">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="titulo-periodo-evaluacion">
+                        <h5>45 días</h5>
+                    </div>
+                </div>
+                <div class="modal-cuerpo border-bottom">
+                    Estas personas llevan 45 días de periodo de prueba: <?php echo $alerta2; ?>
+                </div>
+                <div class="modal-pie d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary btn-salir-modal" id="salir-alerta">Close</button>
+                </div>
+            </div>
+            <?php
+        } 
+
+        if ($alerta3 != "") {
+            ?>
+            <div class="trama">
+
+            </div>
+            <div class="alerta-modal">
+                <div class="modal-encabezado border-bottom">
+                    <div class="icono-salir" id="icono-salir-modal">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="titulo-periodo-evaluacion">
+                        <h5>60 días</h5>
+                    </div>
+                </div>
+                <div class="modal-cuerpo border-bottom">
+                    Estas personas llevan 60 días de periodo de prueba: <?php echo $alerta3; ?>
+                </div>
+                <div class="modal-pie d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary btn-salir-modal" id="salir-alerta">Close</button>
+                </div>
+            </div>
+            <?php
+        }
+    ?>
    
+    
+
 
     
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
     <script src="../js/app.js"></script>
+    
 </body>
 </html>
 

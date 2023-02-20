@@ -3,6 +3,8 @@
 require ("../../config/correo/CorreoRecuperarClave.php");
 
 require_once ("../../models/DAO/UsuarioDAO.php");
+require_once ("../../models/DAO/HistorialContratoDAO.php");
+require_once ("../../models/DAO/HistorialCargoDAO.php");
 require_once ("../../models/DAO/FamiliarDAO.php");
 require_once ("../../models/DAO/HijoDAO.php");
 
@@ -110,6 +112,8 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
              // Datos del usuario
 
             $usuariodto = new UsuarioDTO();
+            $historialContratodto = new HistorialContratoDTO();
+            $historialCargodto = new HistorialCargoDTO();
 
             $usuariodto->setId_usuario($id_usuario);
             $usuariodto->setTipo_documento($tipo_documento);
@@ -164,6 +168,23 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
             $usuariodto->setTalla_pantalon($talla_pantalon);
             $usuariodto->setTalla_zapato($talla_zapato);
 
+
+            // ---------------------
+
+            $historialContratodto->setUsuario($id_usuario);
+            $historialContratodto->setTipo_contrato($tipo_contrato);
+            $historialContratodto->setFecha_inicio($fecha_ingreso);
+            $historialContratodto->setFecha_fin($fecha_retiro);
+
+            $historialContratodao = new HistorialContratoDAO();
+
+            // ------------ Registrar historial cargo ------
+
+            $historialCargodto->setUsuario($id_usuario);
+            $historialCargodto->setCargo($cargo);
+            
+            $historialCargodao = new HistorialCargoDAO();
+
             /* if ($tipo_imagen == "image/jpg" || $tipo_imagen == "image/jpeg" || $tipo_imagen == "image/png" || $tipo_imagen == "image/gif") {
 
                 if (!is_dir("view/img")) {
@@ -186,7 +207,8 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
             
 
             $resultado = $usuariodao->registrarUsuario($usuariodto);
-
+            $resultado3 = $historialContratodao->registrarHistorialContrato($historialContratodto);
+            $resultado4 = $historialCargodao->registrarHistorialCargo($historialCargodto);
             // Datos de los familiares
             
             $familiardto = new FamiliarDTO();
@@ -245,7 +267,7 @@ if (!empty($id_usuario) && !empty($tipo_documento) && !empty($fecha_expedicion) 
             
 
 
-            if ($resultado2 && $resultado) {
+            if ($resultado2 && $resultado && $resultado3 && $resultado4) {
                 echo "<div class='alert alert-success' role='alert'>Perfecto!!  Se ha registrado el usuario</div>";
 
             }else{

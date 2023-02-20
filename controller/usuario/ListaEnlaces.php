@@ -224,9 +224,19 @@ if (isset($_POST['busqueda_dotacion'])) {
 
             $contExistencias = 0;
 
+            $tipo_documento_minus = "";
+            $id_usuario_minus = "";
+            $nombre_minus = "";
+            $apellido_minus = "";
+
             for ($i=0 ; $i < count($listaUsuarios); $i++) {
 
-                if (str_contains($listaUsuarios[$i]->getTipo_documento(), $busqueda) || str_contains($listaUsuarios[$i]->getId_usuario(), $busqueda) || str_contains($listaUsuarios[$i]->getNombre(), $busqueda) || str_contains($listaUsuarios[$i]->getApellido(), $busqueda)) {
+                $tipo_documento_minus = strtolower($listaUsuarios[$i]->getTipo_documento());
+                $id_usuario_minus = strtolower($listaUsuarios[$i]->getId_usuario());
+                $nombre_minus = strtolower($listaUsuarios[$i]->getNombre());
+                $apellido_minus = strtolower($listaUsuarios[$i]->getApellido());
+                
+                if (str_contains($listaUsuarios[$i]->getTipo_documento(), $busqueda) || str_contains($tipo_documento_minus, $busqueda) || str_contains($listaUsuarios[$i]->getId_usuario(), $busqueda) || str_contains($id_usuario_minus, $busqueda) || str_contains($listaUsuarios[$i]->getNombre(), $busqueda) || str_contains($nombre_minus, $busqueda) || str_contains($listaUsuarios[$i]->getApellido(), $busqueda) || str_contains($apellido_minus, $busqueda)) {
                     $lista .= "<tr>"
                             ."<td>" . $listaUsuarios[$i]->getTipo_documento() . "</td>"
                             ."<td>" . $listaUsuarios[$i]->getId_usuario() . "</td>"

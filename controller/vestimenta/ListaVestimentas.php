@@ -62,7 +62,7 @@ if (isset($_POST['tipo_dotacion'])) {
             . "<thead>"
                 . "<tr>"
                     . "<th scope='col'>Código vestimenta</th>"
-                    . "<th scope='col'>Vestimenta</th>"
+                    . "<th scope='col'>Referencia</th>"
                     . "<th scope='col'>Tipo de dotacion</th>"
                     . "<th scope='col'>Cantidad</th>"
                     . "<th scope='col'>Estado</th>"
@@ -73,6 +73,25 @@ if (isset($_POST['tipo_dotacion'])) {
 
 
     if (isset($_POST['busqueda'])) {
+
+        $modo = $_POST['modo'];
+
+        $lista = "<table class='table table-striped'>"
+                . "<thead>"
+                    . "<tr>"
+                        . "<th scope='col'>Código otra vestimenta</th>"
+                        . "<th scope='col'>Referencia</th>"
+                        . "<th scope='col'>Tipo de dotacion</th>"
+                        . "<th scope='col'>Cantidad</th>"
+                        . "<th scope='col'>Estado</th>";
+
+            if ($modo != "registrar") {
+                $lista .= "<th scope='col' colspan='5' class='text-center'>Opciones</th>";
+            }
+                    
+            $lista .= "</tr>"
+                . "</thead>"
+                . "<tbody>";
 
         $busqueda = $_POST['busqueda'];
         $validar_existencias = false;
@@ -95,11 +114,24 @@ if (isset($_POST['tipo_dotacion'])) {
                         . "<td>" . $listaVestimentas[$i]->getTipo_dotacion() .  "</td>"
                         . "<td>" . $listaVestimentas[$i]->getCantidad() .  "</td>"
             
-                        . "<td>" . $estado .  "</td>"
-                        . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#editar-vestimentas'>Editar</button></td>"
-                        . "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#asignar-vestimentas'>Asignar</button></td>"
-
-                        ."</tr>"; 
+                        . "<td>" . $estado .  "</td>";
+                        switch ($modo) {
+                            case 'registrar':
+                                
+                            break;
+                            case 'editar':
+                                $lista .= "<td class='text-center'><button class='btn btn-verde' id='btn-editar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#editar-vestimentas'>Editar</button></td>";
+            
+                            break;
+                            case 'asignar':
+                                $lista .= "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#asignar-vestimentas'>Asignar</button></td>";
+            
+                            break;
+                    
+                        }
+            
+                
+                    $lista .= "</tr>";
             }
 
         }else{
@@ -123,11 +155,24 @@ if (isset($_POST['tipo_dotacion'])) {
                             . "<td>" . $listaVestimentas[$i]->getTipo_dotacion() .  "</td>"
                             . "<td>" . $listaVestimentas[$i]->getCantidad() .  "</td>"
                 
-                            . "<td>" . $estado .  "</td>"
-                            . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#editar-vestimentas'>Editar</button></td>"
-                            . "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#asignar-vestimentas'>Asignar</button></td>"
-
-                            ."</tr>"; 
+                            . "<td>" . $estado .  "</td>";
+                        switch ($modo) {
+                            case 'registrar':
+                                
+                            break;
+                            case 'editar':
+                                $lista .= "<td class='text-center'><button class='btn btn-verde' id='btn-editar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#editar-vestimentas'>Editar</button></td>";
+            
+                            break;
+                            case 'asignar':
+                                $lista .= "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#asignar-vestimentas'>Asignar</button></td>";
+            
+                            break;
+                    
+                        }
+            
+                
+                    $lista .= "</tr>"; 
 
                     $validar_existencias = true;
 
@@ -225,6 +270,25 @@ if (isset($_POST['tipo_dotacion'])) {
 
     }else{
 
+        $modo = $_POST['modo'];
+
+        $lista = "<table class='table table-striped'>"
+                . "<thead>"
+                    . "<tr>"
+                        . "<th scope='col'>Código otra vestimenta</th>"
+                        . "<th scope='col'>Referencia</th>"
+                        . "<th scope='col'>Tipo de dotacion</th>"
+                        . "<th scope='col'>Cantidad</th>"
+                        . "<th scope='col'>Estado</th>";
+
+            if ($modo != "registrar") {
+                $lista .= "<th scope='col' colspan='5' class='text-center'>Opciones</th>";
+            }
+                    
+            $lista .= "</tr>"
+                . "</thead>"
+                . "<tbody>";
+
         for ($i=0; $i < count($listaVestimentas); $i++) { 
 
             if ($listaVestimentas[$i]->getEstado() == 1) {
@@ -240,11 +304,25 @@ if (isset($_POST['tipo_dotacion'])) {
                     . "<td>" . $listaVestimentas[$i]->getTipo_dotacion() .  "</td>"
                     . "<td>" . $listaVestimentas[$i]->getCantidad() .  "</td>"
         
-                    . "<td>" . $estado .  "</td>"
-                    . "<td class='text-center'><button class='btn btn-verde' id='btn-editar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#editar-vestimentas'>Editar</button></td>"
-                    . "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#asignar-vestimentas'>Asignar</button></td>"
+                    . "<td>" . $estado .  "</td>";
+
+            switch ($modo) {
+                case 'registrar':
+                    
+                break;
+                case 'editar':
+                    $lista .= "<td class='text-center'><button class='btn btn-verde' id='btn-editar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#editar-vestimentas'>Editar</button></td>";
+
+                break;
+                case 'asignar':
+                    $lista .= "<td class='text-center'><button class='btn btn-verde' id='btn-asignar-vestimenta' type='button' value='" . $listaVestimentas[$i]->getId_vestimenta() . "' data-bs-toggle='modal' data-bs-target='#asignar-vestimentas'>Asignar</button></td>";
+
+                break;
+        
+            }
+
     
-                    ."</tr>"; 
+                    $lista .= "</tr>"; 
         }
 
         

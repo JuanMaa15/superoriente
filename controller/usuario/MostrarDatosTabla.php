@@ -11,9 +11,15 @@ if (isset($_POST['tabla'])) {
     if (str_contains($tabla, "tbl_")) {
       $campo = strlen($tabla);
       $campo = substr($tabla, 4, $campo);
+    }else{
+      $campo = $tabla;
     }    
 
-    $datos = "<form>";
+    if ($tabla == "tbl_casa") {
+      $campo = "tipo_casa";
+    }
+    $datos = "<h4>" . ucwords($campo) . "</h4>" 
+          ."<form>";
 
 
     if ($tabla != "estrato" && $tabla != "salario" && $tabla != "fecha" && $tabla != "tbl_hijo" && $tabla != "talla_camisa" && $tabla != "talla_pantalon" && $tabla != "talla_zapato") {

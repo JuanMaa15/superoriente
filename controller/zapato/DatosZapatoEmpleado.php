@@ -63,7 +63,7 @@ if (isset($_POST['id'])) {
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"
-                                ."<img src='...' class='card-img-top card-img-profile' alt='...'>"
+                                ."<img src='". $listaUsuarios[$i]->getFoto() ."' class='card-img-top card-img-profile' alt='...'>"
                                 ."<div class='card-body'>"
                                     ."<h5 class='card-title titulo-campos'>" . $listaUsuarios[$i]->getNombre() . ' ' . $listaUsuarios[$i]->getApellido() . "</h5>"
                                     ."<p class='card-text'>Número de documento: ". $listaUsuarios[$i]->getId_usuario() ." </p>"
@@ -75,7 +75,7 @@ if (isset($_POST['id'])) {
                         
 
                         }else if($zapatodto->getCantidad() == 1){
-                            $cont .= "<div class='col-4'>"
+                            $cont .= "<div class='col-4 cont-emple " . $listaUsuarios[$i]->getId_usuario(). " " . $listaUsuarios[$i]->getNombre() . " " . $listaUsuarios[$i]->getCargo() ."'>"
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
                                 ."<input class='form-check-input checkbox-empleados checkbox-cont-zapato' type='radio' value='" . $listaUsuarios[$i]->getId_usuario() . "'>"    
@@ -83,7 +83,7 @@ if (isset($_POST['id'])) {
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"
-                                ."<img src='...' class='card-img-top card-img-profile' alt='...'>"
+                                ."<img src='". $listaUsuarios[$i]->getFoto() ."' class='card-img-top card-img-profile' alt='...'>"
                                 ."<div class='card-body'>"
                                     ."<h5 class='card-title titulo-campos'>" . $listaUsuarios[$i]->getNombre() . ' ' . $listaUsuarios[$i]->getApellido() . "</h5>"
                                     ."<p class='card-text'>Número de documento: ". $listaUsuarios[$i]->getId_usuario() ." </p>"

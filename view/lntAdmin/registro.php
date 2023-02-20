@@ -581,7 +581,7 @@
                                                         <select class="form-select" id="talla_pantalon">
                                                             <option value="">Pantalon</option>
                                                             <?php
-                                                            for ($i=28; $i < 45; $i++) : 
+                                                            for ($i=4; $i < 45; $i++) : 
                                                                 if ($i % 2 == 0) :
                                                                     ?>
                                                                     <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
@@ -598,11 +598,11 @@
                                                             <option value="">Zapato</option>
                                                             <?php
                                                             for ($i=34; $i < 43; $i++) : 
-                                                                if ($i % 2 == 0) :
+                                                            
                                                                     ?>
                                                                     <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                                                                     <?php
-                                                                endif;
+                                    
                                                             endfor;
                                                             ?>
                                                         </select>

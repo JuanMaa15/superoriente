@@ -493,13 +493,14 @@ switch ($_POST['opc']) {
                                 
                 $cbxSeccion .= "</select>";
 
-                $cbxArea = "<select class='form-select' id='area'>";
+                $cbxArea = "<select class='form-select' id='area'>"
+                                . "<option value=''>Area</option>";
 
                                 for ($i=0; $i < count($listaAreas); $i++) { 
                                         if ($listaAreas[$i]->getId_area() == $usuariodto->getArea()) {
-                                                $cbxArea .= "<option selected class='d-none opc-area' value='" . $listaAreas[$i]->getId_area() . "'>" . $listaAreas[$i]->getNombre() . "</option>";
+                                                $cbxArea .= "<option selected class='opc-area' value='" . $listaAreas[$i]->getId_area() . "'>" . $listaAreas[$i]->getNombre() . "</option>";
                                         }else{
-                                                $cbxArea .= "<option class='d-none opc-area'  value='" . $listaAreas[$i]->getId_area() . "'>" . $listaAreas[$i]->getNombre() . "</option>";
+                                                $cbxArea .= "<option class='opc-area'  value='" . $listaAreas[$i]->getId_area() . "'>" . $listaAreas[$i]->getNombre() . "</option>";
                                         }
                                 }
                                 

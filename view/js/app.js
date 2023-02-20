@@ -2,7 +2,7 @@
 var sumaAnchoContRegistro = 0;
 var contF = 0;
 var contH = 0;
-var contenido_area = $("#area").html();
+var contenido_area = "";
 var opc_trabajo_reporte = "";
 var cant_filtros = 0;
 var filtros_seleccionados = []; 
@@ -12,7 +12,7 @@ var opc_anterior = [];
 var acciones = {
     listo : function() {
 
-        
+        contenido_area = $("#area").html();
 
         // ------ Se ejecutan las funciones por medio del evento click ----------------
 
@@ -50,7 +50,7 @@ var acciones = {
         $("#bloque-agregar-otros-empleado").click(acciones.listaOtrasRopasEmpleado);
 
         // Registro -  Asignar dotacion
-
+        
         $("#btn-asignar-camisa-empleado").click(acciones.asignarCamisa);
         $("#btn-asignar-pantalon-empleado").click(acciones.asignarPantalon);
         $("#btn-asignar-zapato-empleado").click(acciones.asignarZapato);
@@ -80,10 +80,11 @@ var acciones = {
         $("#area").click(acciones.mostrarOpcionesCargo);
         $("#btn-mostrar-ocultar").click(acciones.mostrarMenu);
         $("#enlace-administracion").click(acciones.desplegarSubmenu);
+        $("#enlace-dotacion").click(acciones.desplegarSubmenuDotacion);
         $(".enlace-info-empleado").click(acciones.mostrarContEmpleado);
         $(".cont-info-rapida").click(acciones.desplegarAcordionDotacion);
         $(".accordion-button").click(acciones.mostrarCuerpoAcordion);
-        $("#btn-agregar-filtro-empleado").click(acciones.mostrarFiltrosReporte);
+        //$("#btn-agregar-filtro-empleado").click(acciones.mostrarFiltrosReporte);
         $(".listado-campos-usuario").click(acciones.mostrarDatosTabla);
         $("#btn-generar-listado-reporte").click(acciones.mostrarListaEmpleadosFiltro);
         $(".radio_listas").click(acciones.MostrarFiltrosSeleccionados);
@@ -95,9 +96,14 @@ var acciones = {
         $("#estado_act").click(acciones.habilitarRetiro);
         $("#btn-ventana-eliminar-familiar").click(acciones.agregarValorBotonFamiliar);
         $("#btn-ventana-eliminar-hijo").click(acciones.agregarValorBotonHijo);
+        $("#btn-ventana-eliminar-historial-contratos").click(acciones.agregarValorBotonHistorialContrato);
+        $("#btn-ventana-eliminar-historial-cargos").click(acciones.agregarValorBotonHistorialCargo);
         $(".btn-ventana-eliminar-dotacion").click(acciones.agregarValorBotonUsuario);
         $("#btn-agregar-filtro").click(acciones.agregarFiltroDotacion);
         $("#btn-remover-filtro").click(acciones.removerFiltroDotacion);
+        $("#genero-pantalon").click(acciones.mostrarGeneroTallas);
+
+        $("#btn-mantener-historial").click(acciones.mantenerHistorial);
         //$(".cbx-dotacion").click(acciones.mostrarTallasDotacion);
 
         $("#clase-riesgo").click(acciones.llenarPorcentajeClaseRiesgo);
@@ -134,6 +140,12 @@ var acciones = {
         // Asignar: Descontar la cantidad de camisas disponibles por asignar cuando un checkbox este seleccionado
 
         $(".checkbox-empleados").click(acciones.descontarCantidadDotaciones);
+
+
+        // Modal y trama
+
+        $("#salir-alerta").click(acciones.salirModal);
+        $("#icono-salir-modal").click(acciones.salirModal);
         
 
         // ---------------- Verificación de campos (inputs) por teclado ------------
@@ -264,7 +276,7 @@ var acciones = {
         //Tipo de dotación
 
         $.post('../../controller/tipo_dotacion/ListaTiposDotaciones.php',{
-
+            
         },function(responseText) {
             $("#listado-tipos-dotaciones").html(responseText);
         });
@@ -272,33 +284,82 @@ var acciones = {
         // Camisa
 
         $.post('../../controller/camisa/ListaCamisas.php',{
-
+            modo: "registrar"
         },function(responseText) {
             $("#listado-camisas").html(responseText);
+        });
+
+        $.post('../../controller/camisa/ListaCamisas.php',{
+            modo: "editar"
+        },function(responseText) {
+            $("#listado-camisas-editar").html(responseText);
+        });
+
+        $.post('../../controller/camisa/ListaCamisas.php',{
+            modo: "asignar"
+        },function(responseText) {
+            $("#listado-camisas-asignar").html(responseText);
         });
 
         // Pantalón
 
         $.post('../../controller/pantalon/ListaPantalones.php',{
-
+            modo: "registrar"
         },function(responseText) {
             $("#listado-pantalones").html(responseText);
+        });
+
+        $.post('../../controller/pantalon/ListaPantalones.php',{
+            modo: "editar"
+        },function(responseText) {
+            $("#listado-pantalones-editar").html(responseText);
+        });
+
+        $.post('../../controller/pantalon/ListaPantalones.php',{
+            modo: "asignar"
+        },function(responseText) {
+            $("#listado-pantalones-asignar").html(responseText);
         });
 
         // Zapato
 
         $.post('../../controller/zapato/ListaZapatos.php',{
-
+            modo: "registrar"
         },function(responseText) {
             $("#listado-zapatos").html(responseText);
         });
 
+        $.post('../../controller/zapato/ListaZapatos.php',{
+            modo: "editar"
+        },function(responseText) {
+            $("#listado-zapatos-editar").html(responseText);
+        });
+
+        $.post('../../controller/zapato/ListaZapatos.php',{
+            modo: "asignar"
+        },function(responseText) {
+            $("#listado-zapatos-asignar").html(responseText);
+        });
+
+
         // Otra vestimenta
 
         $.post('../../controller/vestimenta/ListaVestimentas.php',{
-
+            modo: "registrar"
         },function(responseText) {
             $("#listado-vestimentas").html(responseText);
+        });
+
+        $.post('../../controller/vestimenta/ListaVestimentas.php',{
+            modo: "editar"
+        },function(responseText) {
+            $("#listado-vestimentas-editar").html(responseText);
+        });
+
+        $.post('../../controller/vestimenta/ListaVestimentas.php',{
+            modo: "asignar"
+        },function(responseText) {
+            $("#listado-vestimentas-asignar").html(responseText);
         });
 
         // Cesantías
@@ -354,6 +415,111 @@ var acciones = {
 
     },
 
+    salirModal : function() {
+
+        var trama = $(".trama");
+        var modal = $(".alerta-modal");
+
+        trama.fadeOut("fast");
+        modal.fadeOut("fast");
+        
+    },
+
+    mantenerHistorial : function() {
+        var cant_camisa = $("#cant-camisa").val();
+        var nombre_camisa = $("#nombre-camisa").val();
+        var talla_camisa = $("#talla-camisa").val();
+        var id_usuario = $("#doc").val();
+        var tipo_dotacion = "1";
+
+        if (cant_camisa.length === 0) {
+            cant_camisa = "";
+            nombre_camisa = "";
+            talla_camisa = "";
+        }
+
+        var cant_pantalon = $("#cant-pantalon").val();
+        var nombre_pantalon = $("#nombre-pantalon").val();
+        var talla_pantalon = $("#talla-pantalon").val();
+
+        if (cant_pantalon.length === 0) {
+            cant_pantalon = "";
+            nombre_pantalon = "";
+            talla_pantalon = "";
+        }
+
+        var cant_zapato = $("#cant-zapato").val();
+        var nombre_zapato = $("#nombre-zapato").val();
+        var talla_zapato = $("#talla-zapato").val();
+
+
+        if (cant_zapato.length === 0) {
+            cant_zapato = "";
+            nombre_zapato = "";
+            talla_zapato = "";
+        }
+
+        var camisa = nombre_camisa + " talla:" + talla_camisa + " Cantidad: " + cant_camisa;
+        var pantalon = nombre_pantalon + " talla:" + talla_pantalon + " Cantidad: " + cant_pantalon;
+        var zapato = nombre_zapato + " talla:" + talla_zapato + " Cantidad: " + cant_zapato;  
+        var vestimenta = "";
+
+
+        $.post('../../controller/historial_dotacion/RegistrarHistorialDotacion.php',{
+            id_usuario: id_usuario,
+            tipo_dotacion: tipo_dotacion,
+            camisa: camisa,
+            pantalon: pantalon,
+            zapato: zapato,
+            vestimenta: vestimenta
+
+        },function(responseText) {
+            $(".titulo-perfil").html(responseText);
+        });
+
+
+    },
+
+    // Mostrar las tallas según el genero del pantalon
+
+    mostrarGeneroTallas : function() {
+
+        var genero = $(this).val();
+        var tallas_hombre = $("#cont-tallas-hombre");
+        var tallas_mujer = $("#cont-tallas-mujer");
+        if (genero.length !== 0) {
+            
+            if (genero === "1") {
+
+                tallas_hombre.removeClass("d-none");
+
+                if (!tallas_mujer.hasClass("d-none")) {
+                    tallas_mujer.addClass("d-none");
+                }
+
+            }else if(genero === "2"){
+                tallas_mujer.removeClass("d-none");
+
+                if (!tallas_hombre.hasClass("d-none")) {
+                    tallas_hombre.addClass("d-none");
+                }
+            }else{
+                tallas_hombre.addClass("d-none");
+                tallas_mujer.addClass("d-none");
+            }
+
+        }else{
+            if (!tallas_hombre.hasClass("d-none")) {
+                tallas_hombre.addClass("d-none");
+            }
+
+            if (!tallas_mujer.hasClass("d-none")) {
+                !tallas_mujer.addClass("d-none");
+            }
+        }
+
+    },
+
 
     removerFiltroDotacion : function() {
         cant_filtros--;
@@ -405,6 +571,18 @@ var acciones = {
             }
 
         
+    },
+
+    agregarValorBotonHistorialCargo : function() {
+        var valor_boton = $(this).val();
+
+        $("#btn-eliminar-historial-cargo").val(valor_boton);
+    },
+
+    agregarValorBotonHistorialContrato : function() {
+        var valor_boton = $(this).val();
+
+        $("#btn-eliminar-historial-contrato").val(valor_boton);
     },
 
     agregarValorBotonUsuario : function () {
@@ -541,22 +719,28 @@ var acciones = {
         var validar_campos = true;
         var dato = [];
         var valor_listas = [];
-        var array = $(".listado-campos-usuario").toArray();
+        var array = $(".listado-campos-usuario:checked").toArray();
         
         var dato_salario1 = "";
         var dato_salario2 = "";
         var dato_fecha1 = "";
         var dato_fecha2 = "";
-    
-        for(let i = 0; i < array.length; i++){
+        
+        if ( array.length > 0) {
+            for(let i = 0; i < array.length; i++){
             
-            if (array[i].value.length !== 0) {
-                valor_listas[i] = array[i].value;
-            }else{
-                validar_listas = false;
+                if (array[i].value.length !== 0) {
+                    valor_listas[i] = array[i].value;
+                }else{
+                    validar_listas = false;
+                }
+                
             }
-            
+        }else{
+            validar_listas = false;
         }
+
+        
 
         if (validar_listas) {
             for (let i = 0; i < valor_listas.length; i++) {
@@ -672,37 +856,49 @@ var acciones = {
 
         var id_listado_campos = $(this).attr("id");
         var tabla = $(this).val();
-        
+        cant_filtros = $(".listado-campos-usuario").toArray().length;
 
-        if (tabla.length !== 0) {
+        console.log("Hola" + cant_filtros, tabla);
+
+        
+            if (tabla.length !== 0) {
            
-            for (let i = 0; i < cant_filtros; i++) {
-                
-                if (id_listado_campos === 'listado-campos' + i) {
-                    if (tabla !== opc_anterior[i]) {
-                        $.post('../../controller/usuario/MostrarDatosTabla.php',{
-                            tabla: tabla
-        
-                        },function(responseText){
-                            $("#listado-datos" + i).html(responseText);
-                            //console.log(tabla, opc_anterior[i])
-                            //console.log("No repetido");
-                            //$(document).ready(acciones.listo);
-                            $("#btn-generar-listado-reporte").click(acciones.mostrarListaEmpleadosFiltro);
-                            $(".radio_listas").click(acciones.MostrarFiltrosSeleccionados);
-                            $(".input_salario").keyup(acciones.MostrarSalariosIngresados);
-                            $(".input_hijos").keyup(acciones.MostrarHijosIngresados);
-                            $(".input_fecha").on('change', acciones.MostrarFechasIngresadas);
-                            opc_anterior[i] = tabla;
-                                      
-                        });
-                    }    
+                for (let i = 0; i < cant_filtros; i++) {
+                    
+                        if (id_listado_campos === 'listado-campos' + i) {
                             
-    
-                }      
-            }
+                            if ($(this).is(':checked')) {
+                                
+                                $("#listado-datos" + i).removeClass("d-none");
+                                $.post('../../controller/usuario/MostrarDatosTabla.php',{
+                                    tabla: tabla
+                
+                                },function(responseText){
+                                    $("#listado-datos" + i).html(responseText);
+                                    
+                                    //console.log(tabla, opc_anterior[i])
+                                    //console.log("No repetido");
+                                    //$(document).ready(acciones.listo);
+                                    $("#btn-generar-listado-reporte").click(acciones.mostrarListaEmpleadosFiltro);
+                                    $(".radio_listas").click(acciones.MostrarFiltrosSeleccionados);
+                                    $(".input_salario").keyup(acciones.MostrarSalariosIngresados);
+                                    $(".input_hijos").keyup(acciones.MostrarHijosIngresados);
+                                    $(".input_fecha").on('change', acciones.MostrarFechasIngresadas);
+                                    opc_anterior[i] = tabla;
+                                            
+                                });
 
-        }  
+                            }else{
+                                $("#listado-datos" + i).addClass("d-none");
+                            }
+                                    
+                        }      
+                    
+                }
+    
+            }  
+        
+        
 
         
 
@@ -717,7 +913,7 @@ var acciones = {
                 $("#btn-mostrar-filtros").next().html("");
                 var cont_filtros = '';
                 for (let i = 0; i < cant_filtros; i++) { */
-                   var cont_filtros = `<div class='col-3 my-3' id='filtro` + cant_filtros + `' >
+                   /* var cont_filtros = `<div class='col-3 my-3' id='filtro` + cant_filtros + `' >
                                         <select class='listado-campos-usuario form-select' id='listado-campos` + cant_filtros + `'>
                                             <option value='' selected>Campos del empleado</option>
                                             
@@ -749,7 +945,7 @@ var acciones = {
                                     </div>`;
 
                         opc_anterior[cant_filtros] = ""; 
-                        filtros_seleccionados[cant_filtros] = "";
+                        filtros_seleccionados[cant_filtros] = ""; */
                        
                     
                 /* } */
@@ -758,7 +954,7 @@ var acciones = {
 
     
                 
-                $(".listado-campos-usuario").click(acciones.mostrarDatosTabla);
+               /*  $(".listado-campos-usuario").click(acciones.mostrarDatosTabla);
 
 
             $("#cont-filtros-reporte").append(cont_filtros);
@@ -771,7 +967,7 @@ var acciones = {
             if (cant_filtros > 0) {
                 $("#btn-generar-listado-reporte").removeClass("d-none").addClass("d-block");
             }
-           
+            */
                 
             /* }else{
                 $("#btn-mostrar-filtros").next().html("Ingrese la cantidad de filtros a usar para el reporte");
@@ -1013,6 +1209,10 @@ var acciones = {
     },
 
     // Asignar dotacion - Registro
+
+    asignarEspecialCamisa : function() {
+
+    },
 
     asignarCamisa : function() {
 
@@ -1372,6 +1572,12 @@ var acciones = {
                 $(".cont-gestion-empleado").addClass("d-none");
                 $("#cont-dotacion").removeClass("d-none");
             break;
+            case "enlace-documentos":
+                $(".nav-item.seleccionado").removeClass("seleccionado");
+                $("#" + id_enlace).closest(".nav-item").addClass("seleccionado");
+                $(".cont-gestion-empleado").addClass("d-none");
+                $("#cont-documentos").removeClass("d-none");
+            break;
             
         }
 
@@ -1418,23 +1624,42 @@ var acciones = {
         });
     },
 
-    buscarCamisa : function() {
+    buscarCamisa : function() { 
 
         var busqueda = $(this).val();
         
-
-        $.post('../../controller/camisa/ListaCamisas.php',{
-            busqueda: busqueda
+        if ($(this).attr("class") === "form-control buscador-camisa-editar") {
+            console.log($(this).attr("class"));
+            $.post('../../controller/camisa/ListaCamisas.php',{
+                busqueda: busqueda,
+                modo: "editar"
+            }, function(responseText) {
+                $("#listado-camisas-editar").html(responseText);
+            });
+        }else if($(this).attr("class") === "form-control buscador-camisa-asignar") {
             
-        }, function(responseText) {
-            $("#listado-camisas").html(responseText);
-        });
+            $.post('../../controller/camisa/ListaCamisas.php',{
+                busqueda: busqueda,
+                modo: "asignar"
+            }, function(responseText) {
+                $("#listado-camisas-asignar").html(responseText);
+            });
+        }else{
+            $.post('../../controller/camisa/ListaCamisas.php',{
+                busqueda: busqueda,
+                modo: "registrar"
+            }, function(responseText) {
+                $("#listado-camisas").html(responseText);
+            });
+        }
+        
 
     },
 
     buscarEmpleadoCamisa : function () {
 
         var busqueda = $(this).val();
+        
 
         $(".cont-emple").each(function(index) {
             
@@ -1458,12 +1683,31 @@ var acciones = {
     buscarPantalon : function() {
 
         var busqueda = $(this).val();
+        var tipo_busqueda = $(this).attr("class");
 
-        $.post('../../controller/pantalon/ListaPantalones.php',{
-            busqueda: busqueda
-        }, function(responseText) {
-            $("#listado-pantalones").html(responseText);
-        });
+        if (tipo_busqueda === "form-control buscador-pantalon-editar") {
+            $.post('../../controller/pantalon/ListaPantalones.php',{
+                busqueda: busqueda,
+                modo: "editar"
+            }, function(responseText) {
+                $("#listado-pantalones-editar").html(responseText);
+            });
+        }else if(tipo_busqueda === "form-control buscador-pantalon-asignar"){
+            $.post('../../controller/pantalon/ListaPantalones.php',{
+                busqueda: busqueda,
+                modo: "asignar"
+            }, function(responseText) {
+                $("#listado-pantalones-asignar").html(responseText);
+            });
+        }else{
+            $.post('../../controller/pantalon/ListaPantalones.php',{
+                busqueda: busqueda,
+                modo: "registrar"
+            }, function(responseText) {
+                $("#listado-pantalones").html(responseText);
+            });
+        }
+
 
     },
 
@@ -1492,13 +1736,33 @@ var acciones = {
     buscarZapato : function() {
 
         var busqueda = $(this).val();
+        var tipo_busqueda = $(this).attr("class");
 
-        $.post('../../controller/zapato/ListaZapatos.php',{
-            busqueda: busqueda
-        }, function(responseText) {
-            $("#listado-zapatos").html(responseText);
-        });
-
+        if (tipo_busqueda === "form-control buscador-zapato-editar") {
+            
+            $.post('../../controller/zapato/ListaZapatos.php',{
+                busqueda: busqueda,
+                modo: "editar"
+            }, function(responseText) {
+                $("#listado-zapatos-editar").html(responseText);
+            });
+        }else if (tipo_busqueda === "form-control buscador-zapato-asignar") {
+            $.post('../../controller/zapato/ListaZapatos.php',{
+                busqueda: busqueda,
+                modo: "asignar"
+            }, function(responseText) {
+                $("#listado-zapatos-asignar").html(responseText);
+            });
+        }else{
+            
+            $.post('../../controller/zapato/ListaZapatos.php',{
+                busqueda: busqueda,
+                modo: "registrar"
+            }, function(responseText) {
+                $("#listado-zapatos").html(responseText);
+            });
+        }
+        
     },
 
     buscarEmpleadoZapato : function() {
@@ -1526,12 +1790,30 @@ var acciones = {
     buscarVestimenta : function() {
 
         var busqueda = $(this).val();
+        var tipo_busqueda = $(this).attr("class");
 
-        $.post('../../controller/vestimenta/ListaVestimentas.php',{
-            busqueda: busqueda
-        }, function(responseText) {
-            $("#listado-vestimentas").html(responseText);
-        });
+        if (tipo_busqueda === "form-control buscador-vestimenta-editar") {
+            $.post('../../controller/vestimenta/ListaVestimentas.php',{
+                busqueda: busqueda,
+                modo: "editar"
+            }, function(responseText) {
+                $("#listado-vestimentas-editar").html(responseText);
+            });
+        }else if (tipo_busqueda === "form-control buscador-vestimenta-asignar") {
+            $.post('../../controller/vestimenta/ListaVestimentas.php',{
+                busqueda: busqueda,
+                modo: "asignar"
+            }, function(responseText) {
+                $("#listado-vestimentas-asignar").html(responseText);
+            });
+        }else{
+            $.post('../../controller/vestimenta/ListaVestimentas.php',{
+                busqueda: busqueda,
+                modo: "registrar"
+            }, function(responseText) {
+                $("#listado-vestimentas").html(responseText);
+            });
+        }   
 
     },
 
@@ -1557,6 +1839,30 @@ var acciones = {
 
     },
 
+    desplegarSubmenuDotacion : function (e) {
+
+        e.preventDefault();
+
+        var submenu_dotacion = $("#submenu-dotacion");
+        var submenu_administracion = $("#submenu-administracion");
+        var icono = $("#enlace-dotacion .icono-enlace i");
+        
+
+        if (!submenu_dotacion.hasClass("desplegar-submenu")){
+
+            submenu_dotacion.addClass("desplegar-submenu");
+            submenu_administracion.addClass("ampliar-submenu");
+            icono.addClass("rotar-icono");
+            
+
+        }else{
+            submenu_dotacion.removeClass("desplegar-submenu");
+            submenu_administracion.removeClass("ampliar-submenu");
+            icono.removeClass("rotar-icono");
+        }
+
+    },
+
 
     // Despliega el submenú de administración en el menú lateral
 
@@ -1566,8 +1872,9 @@ var acciones = {
         e.preventDefault();
 
         var submenu_administracion = $("#submenu-administracion");
+        var submenu_dotacion = $("#submenu-dotacion");
         var icono = $("#enlace-administracion .icono-enlace i");
-        
+        var icono_dotacion = $("#enlace-dotacion .icono-enlace i");
 
         if (!submenu_administracion.hasClass("desplegar-submenu")){
 
@@ -1577,7 +1884,10 @@ var acciones = {
 
         }else{
             submenu_administracion.removeClass("desplegar-submenu");
+            submenu_administracion.removeClass("ampliar-submenu");
+            submenu_dotacion.removeClass("desplegar-submenu");
             icono.removeClass("rotar-icono");
+            icono_dotacion.removeClass("rotar-icono");
         }
 
     },
@@ -1646,9 +1956,11 @@ var acciones = {
 
         
         
+        
         var seccion = $(this).val();
         var area = $("#area").val();
         /* var option_first = "<option value=''></option>"; */
+
         
 
         if (seccion.length !== 0) {
@@ -2549,6 +2861,7 @@ var acciones = {
     enviarFormFamiliar : function() {
 
         var id_familiar = $("#id_familiar").val();
+        var tipo_ducumento = $("#tipo_documento_familiar").val();
         var nombre = $("#nombre-familiar").val();
         var apellido = $("#apellido-familiar").val();
         var edad = $("#edad-familiar").val();
@@ -3767,7 +4080,7 @@ var acciones = {
 
                 if (validar === 31) {
 
-                    alert("funciona");
+          
 
                     $.ajax({
                         method : "POST",
@@ -3920,6 +4233,39 @@ var acciones = {
         
         switch (btn) {
 
+            // Eliminar documento
+
+            case "btn-eliminar-documento" :
+                $.post('../../controller/documento/EliminarDocumento.php',{
+                    id: id
+                },function(responseText){
+                
+                    location.reload();
+                });
+            break;
+
+            // Eliminar historial de cargo
+
+            case "btn-eliminar-historial-cargo":
+                $.post('../../controller/historial_cargo/EliminarHistorialCargo.php',{
+                    id: id
+                },function(responseText){
+                
+                    location.reload();
+                });
+            break;
+
+            // Eliminar historial de contrato
+
+            case "btn-eliminar-historial-contrato":
+                $.post('../../controller/historial_contrato/EliminarHistorialContrato.php',{
+                    id: id
+                },function(responseText){
+                
+                    location.reload();
+                });
+            break;
+
             // Eliminar toa la dotación del empleado
 
             case "btn-eliminar-dotaciones-empleado":
@@ -4052,6 +4398,21 @@ var acciones = {
              break;
 
             // Pantalón
+
+
+            case "btn-asignar-especial-pantalon":
+                $("#btn-asignar-pantalon-empleado").val(id);
+               
+                $.post('../../controller/pantalon/DatosPantalonEmpleado.php',{
+                    id: id,
+                    opc: "especial"
+                },function(responseText){
+                    
+                    $("#datos-pantalon-empleado").html(responseText);
+                    $(document).ready(acciones.listo);
+                    
+                });
+            break;
             
             case "btn-asignar-pantalon":
 
@@ -4069,6 +4430,20 @@ var acciones = {
              break;
 
             // Camisa
+
+                case "btn-asignar-especial-camisa":
+                    $("#btn-asignar-camisa-empleado").val(id);
+                
+                    $.post('../../controller/camisa/DatosCamisaEmpleado.php',{
+                        id: id,
+                        opc: "especial"
+                    },function(responseText){
+                        
+                        $("#datos-camisa-empleado").html(responseText);
+                        $(document).ready(acciones.listo);
+                        
+                    });
+                break;
             
               case "btn-asignar-camisa":
 
@@ -6114,12 +6489,38 @@ var acciones = {
 
         console.log(anchoVentana);
         if (anchoVentana < 992) {
+
+        // Seccion login
             $("#seccion-login .col-9").addClass("col-12");
             $("#seccion-login .col-9").removeClass("col-9");
+
+            // Interfaz empleado - carta laboral
+
+            $("#carta-laboral .col-4").addClass("col-12");
+            $("#carta-laboral .col-4").removeClass("col-4");
+
+            $("#carta-laboral .col-8").addClass("col-12");
+            $("#carta-laboral .col-8").removeClass("col-8");
+
         }else{
             $("#seccion-login .col-12").addClass("col-9");
             $("#seccion-login .col-12").removeClass("col-12");
+
+            // Interfaz empleado - carta laboral
+
+            $("#carta-laboral .col-12").addClass("col-4");
+            $("#carta-laboral .col-12").removeClass("col-12");
+
+            $("#carta-laboral .col-12").addClass("col-8");
+            $("#carta-laboral .col-12").removeClass("col-12");
         }
+
+
+        
+
+
+
+        
     }
 }
 

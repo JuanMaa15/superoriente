@@ -2,6 +2,8 @@
 
 
 require_once ("../../models/DAO/UsuarioDAO.php");
+require_once ("../../models/DAO/HistorialContratoDAO.php");
+require_once ("../../models/DAO/HistorialCargoDAO.php");
 require_once ("../../models/DTO/UsuarioDTO.php");
 
 
@@ -47,9 +49,6 @@ switch ($_POST['opc']) {
         && !empty($nombre) && !empty($apellido) && !empty($tipo_casa) && !empty($genero) && !empty($fecha_nacimiento) && !empty($edad)
         && !empty($estado_civil) && !empty($eps) && !empty($nro_cuenta) && !empty($tipo_sangre) && !empty($correo)
         && !empty($password)) {
-        
-            
-            echo $estrato;
 
             // Datos del usuario
 
@@ -87,9 +86,6 @@ switch ($_POST['opc']) {
             $usuariodto->setTelefono_emergencia($telefono_emergencia);
             $usuariodto->setCelular_emergencia($celular_emergencia);
             $usuariodto->setParentesco_emergencia($parentesco_emergencia);
-
-        
-
 
             $usuariodao = new UsuarioDAO();
 
@@ -163,6 +159,87 @@ switch ($_POST['opc']) {
             $usuariodto->setTalla_zapato($talla_zapato);
 
             $usuariodao = new UsuarioDAO();
+
+            $listaUsuario = $usuariodao->listaUsuarioConId($id_usuario);
+
+            if ($listaUsuario->getEstado() == 2 && $estado == 1) {
+
+                // Ingresar datos para el registro del historial de contrato
+                $historialContratodto = new HistorialContratoDTO();
+                $historialContratodto->setUsuario($id_usuario);
+                $historialContratodto->setTipo_contrato($tipo_contrato);
+                $historialContratodto->setFecha_inicio($fecha_ingreso);
+                $historialContratodto->setFecha_fin($fecha_retiro);
+
+                // Registrar historial de contrato
+                $historialContratodao = new HistorialContratoDAO();
+                $historialContratodao->registrarHistorialContrato($historialContratodto);
+
+                // Ingresar datos para el registro del historial de cargo
+                $historialCargodto = new HistorialCargoDTO();
+                $historialCargodto->setUsuario($id_usuario);
+                $historialCargodto->setCargo($cargo);
+
+                // Registrar historial de cargo
+                $historialCargodao = new HistorialCargoDAO();
+                $historialCargodao->registrarHistorialCargo($historialCargodto);
+                
+                
+            }
+
+            if ($estado == 2) {
+                // Actualizar la fecha de fin del cargo
+                $historialCargodao = new HistorialCargoDAO();
+                $listaHistorialCargos = $historialCargodao->listaHistorialCargo($id_usuario);
+                $id_historial_cargo = 0;
+
+                for ($i=0; $i < count($listaHistorialCargos); $i++) { 
+                    if ($listaHistorialCargos[$i]->getFecha_fin() == "1900-01-01") {
+                        $id_historial_cargo = $listaHistorialCargos[$i]->getId_historial_cargo();
+                    }
+                }
+
+                $historialCargodao->actualizarHistorialCargo($id_historial_cargo);
+                
+
+                // Actualizar fecha de fin del contrato
+                $historialContratodao = new HistorialContratoDAO();
+                $listaHistorialContratos = $historialContratodao->listaHistorialContratos($id_usuario);
+                $id_historial_contrato = 0;
+
+                for ($i=0; $i < count($listaHistorialContratos); $i++) { 
+                    if ($listaHistorialContratos[$i]->getFecha_fin() == "1900-01-01") {
+                        $id_historial_contrato = $listaHistorialContratos[$i]->getId_historial_contrato();
+                    }
+                }
+
+                $historialContratodao->actualizarHistorialContrato($id_historial_contrato);
+      
+            }
+
+            if ($listaUsuario->getCargo() != $cargo) {
+                // Actualizar la fecha de fin del cargo
+                $historialCargodao = new HistorialCargoDAO();
+                $listaHistorialCargos = $historialCargodao->listaHistorialCargo($id_usuario);
+                $id_historial_cargo = 0;
+
+                for ($i=0; $i < count($listaHistorialCargos); $i++) { 
+                    if ($listaHistorialCargos[$i]->getFecha_fin() == "1900-01-01") {
+                        $id_historial_cargo = $listaHistorialCargos[$i]->getId_historial_cargo();
+                    }
+                }
+
+                $historialCargodao->actualizarHistorialCargo($id_historial_cargo);
+
+                 // Ingresar datos para el registro del historial de cargo
+                 $historialCargodto = new HistorialCargoDTO();
+                 $historialCargodto->setUsuario($id_usuario);
+                 $historialCargodto->setCargo($cargo);
+ 
+                 // Registrar historial de cargo
+                 $historialCargodao = new HistorialCargoDAO();
+                 $historialCargodao->registrarHistorialCargo($historialCargodto);
+            }
 
             $resultado = $usuariodao->actualizarDatosLaborales($usuariodto);
 

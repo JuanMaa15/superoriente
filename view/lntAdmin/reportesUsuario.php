@@ -308,21 +308,234 @@
                         <div class="row" id="cont-filtros-reporte">
                                 
                         </div>
-                        <div id='rta-filtros-empleado'></div>
+                        
                         
                         
                         <div class="row">
-                            <div class="col-3 mb-5 mt-3 h-0 agregar-remover-filtro">
+                            <!-- <div class="col-3 mb-5 mt-3 h-0 agregar-remover-filtro">
                                 <button class="btn btn-verde" id="btn-agregar-filtro-empleado">Agregar filtro  +</button>
                                 <button class="btn btn-verde mt-2 d-none " id="btn-remover-filtro">Remover filtro  -</button>
+                            </div> -->
+                            <div class="col-3 my-3">
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_area" id="listado-campos0">
+                                    <label class="form-check-label" for="flexCheckDefault">Area</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_cargo" id="listado-campos1">
+                                    <label class="form-check-label" for="flexCheckDefault">Cargo</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_cesantia" id="listado-campos2">
+                                    <label class="form-check-label" for="flexCheckDefault">Cesantía</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_clase_riesgo" id="listado-campos3">
+                                    <label class="form-check-label" for="flexCheckDefault">Clase de riesgo</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_eps" id="listado-campos4">
+                                    <label class="form-check-label" for="flexCheckDefault">EPS</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_estado" id="listado-campos5">
+                                    <label class="form-check-label" for="flexCheckDefault">Estado</label>
+                                </div>
                             </div>
+                            <div class="col-3 mb-5 my-3">
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_estado_civil" id="listado-campos6">
+                                    <label class="form-check-label" for="flexCheckDefault">Estado civil</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="estrato" id="listado-campos7">
+                                    <label class="form-check-label" for="flexCheckDefault">Estrato</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="fecha" id="listado-campos8">
+                                    <label class="form-check-label" for="flexCheckDefault">Fecha</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_genero" id="listado-campos9">
+                                    <label class="form-check-label" for="flexCheckDefault">Género</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_hijo" id="listado-campos10">
+                                    <label class="form-check-label" for="flexCheckDefault">Hijos</label>
+                                </div>
+                                
+                            </div>
+                            <div class="col-3 my-3">
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_lugar_residencia" id="listado-campos11">
+                                    <label class="form-check-label" for="flexCheckDefault">Lugar de residencia</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_nivel_academico" id="listado-campos12">
+                                    <label class="form-check-label" for="flexCheckDefault">Nivel academico</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_pension" id="listado-campos13">
+                                    <label class="form-check-label" for="flexCheckDefault">Pensión</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="salario" id="listado-campos14">
+                                    <label class="form-check-label" for="flexCheckDefault">Salario</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_seccion" id="listado-campos15">
+                                    <label class="form-check-label" for="flexCheckDefault">Sección</label>
+                                </div>
+                                
+                            </div>
+                            <div class="col-3 my-3">
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_sucursal" id="listado-campos16">
+                                    <label class="form-check-label" for="flexCheckDefault">Sucursal</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_tipo_contrato" id="listado-campos17">
+                                    <label class="form-check-label" for="flexCheckDefault">Tipo de contrato</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_tipo_dotacion" id="listado-campos18">
+                                    <label class="form-check-label" for="flexCheckDefault">Tipo de dotación</label>
+                                </div>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_tipo_sangre_rh" id="listado-campos19">
+                                    <label class="form-check-label" for="flexCheckDefault">Tipo de sangre y RH</label>
+                                </div>
+                                <div class="form-check my-1">
+                                    <input class="form-check-input listado-campos-usuario" type="checkbox" value="tbl_casa" id="listado-campos20">
+                                    <label class="form-check-label" for="flexCheckDefault">Tipo de vivienda</label>
+                                </div>
+                                
+                                
+                            </div>
+                        
                         </div>
+
+                        <div class="row my-2">
+                            
+                            <div id="listado-datos0" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                            
+                          
+                            <div id="listado-datos1" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                        
+                            <div id="listado-datos2" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                
+                            <div id="listado-datos3" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                        
+                            <div id="listado-datos4" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                        
+                            <div id="listado-datos5" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                    
+                            <div id="listado-datos6" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                    
+                        
+                            <div id="listado-datos7" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                            <div id="listado-datos8" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                        
+                            <div id="listado-datos9" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                    
+                        
+                            <div id="listado-datos10" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                    
+                    
+                            <div id="listado-datos11" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                    
+                        
+                            <div id="listado-datos12" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                    
+                            <div id="listado-datos13" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                    
+                    
+                            <div id="listado-datos14" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                    
+                        
+                            <div id="listado-datos15" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                        
+                            <div id="listado-datos16" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                        
+                        
+                            <div id="listado-datos17" class="col-3 my-2 ms-1 d-none">
+
+                            </div>
+                        
+                    
+                            <div id="listado-datos18" class="col-3 my-2 d-none">
+
+                            </div>
+                    
+                    
+                            <div id="listado-datos19" class="col-3 my-2 d-none">
+
+                            </div>
+                    
+                        
+                            <div id="listado-datos20" class="col-3 my-2 d-none">
+
+                            </div>
+                        
+                            <div id="listado-datos21" class="col-3 my-2 d-none">
+
+                            </div>
+                        
+                          
+                            
+                        </div>
+
                         <div class='row my-2'>
                             <div class='col texto-claro'>
                                 <h6 class='titulo-campos '>Selecciones:</h6>
                                 <div id='filtros-seleccionados'></div>
                             </div>
                         </div>
+                        <div id='rta-filtros-empleado'></div>
                         <div class='row mt-2'>
                             <div class='col d-flex justify-content-center'>
                                 <button class='btn btn-verde listado-reporte-empleado' id='btn-generar-listado-reporte'>Generar lista</button>

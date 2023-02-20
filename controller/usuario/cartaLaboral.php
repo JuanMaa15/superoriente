@@ -47,10 +47,12 @@ $pdf = new tFPDF();
 $pdf->SetMargins(30, 10 , 30);
 $pdf->AddPage();
 $pdf->SetFont('Arial','',12);
+$pdf->Cell(0, 0);
+$pdf->Image('../../view/img/logo.png', 130, 10, 60);
+$pdf->Ln(20);
 
-
-$pdf->Cell(70,60,'Rionegro, '. strftime("%d de %B del %Y") , 0,1, 'L');
-
+$pdf->Cell(60,0,'Rionegro, '. strftime("%d de %B del %Y") , 0,1, 'L');
+$pdf->Ln(27);
 $pdf->SetFont('Arial','B',12);
 $pdf->Cell(0,0,'EL DEPARTAMENTO DE RECURSOS HUMANOS DE: ', 0,0, 'C');
 $pdf->Ln(10);
@@ -76,7 +78,7 @@ $pdf->Cell(0,0,'Dicho certificado se expide a solicitud verbal de la interesada.
 $pdf->Ln(20);
 $pdf->Cell(0,0,'Atentamente,', 0,0, 'L');
 $pdf->Ln(50);
-$pdf->Image('../../view/img/firma.png', 30, 200,50);
+$pdf->Image('../../view/img/firma.png', 30, 190,50);
 $pdf->SetFont('Arial','B',12);
 $pdf->Cell(0,0,'CRISTINA LLANO HURTADO', 0,0, 'L');
 $pdf->Ln(5);
@@ -84,6 +86,15 @@ $pdf->Cell(0,0, utf8_decode('Jefe de Gestión Humana'), 0,0, 'L');
 $pdf->Ln(5);
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(0,0,'SUPERORIENTE S.A.', 0,0, 'L');
+
+$pdf->Ln(30);
+$pdf->SetFont('Arial','B',12);
+$pdf->Cell(0,0,'SUPERORIENTE S.A', 0,0, 'C');
+$pdf->Ln(5);
+$pdf->Cell(0,0, utf8_decode('Unidad Industrial / Local 23 Calle 44ª N° . 48ª - 091 - Rionegro - Antioquia'), 0,0, 'C');
+$pdf->Ln(5);
+$pdf->SetTextColor(255,0,0);
+$pdf->Cell(0,0,'PBX: 444 34 05', 0,0, 'C');
 
 $pdf->Output();
 ?>

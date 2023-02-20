@@ -128,7 +128,7 @@ class ZapatoDAO {
         $zapatodto = null;
 
         try {
-            $sql = "SELECT * FROM tbl_zapato WHERE id_zapato = " . $id_zapato;
+            $sql = "SELECT * FROM tbl_zapato AS tz INNER JOIN tbl_tipo_zapato AS ttz ON tz.id_tipo_zapato = ttz.id_tipo_zapato WHERE id_zapato = " . $id_zapato;
             $rs = $cnx->query($sql);
 
             $row = $rs->fetch();
@@ -136,7 +136,7 @@ class ZapatoDAO {
             $zapatodto = new ZapatoDTO();
             $zapatodto->constructor(
                 $row['id_zapato'],
-                $row['id_tipo_zapato'],
+                $row['tipo_zapato'],
                 $row['id_tipo_dotacion'],
                 $row['talla'],
                 $row['cantidad'],

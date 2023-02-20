@@ -133,7 +133,7 @@ class PantalonDAO {
         $pantalondto = null;
 
         try {
-            $sql = "SELECT * FROM tbl_pantalon WHERE id_pantalon = " . $id_pantalon;
+            $sql = "SELECT * FROM tbl_pantalon AS tp INNER JOIN tbl_tipo_pantalon AS ttp ON tp.id_tipo_pantalon = ttp.id_tipo_pantalon WHERE id_pantalon = " . $id_pantalon;
             $rs = $cnx->query($sql);
 
             $row = $rs->fetch();
@@ -141,7 +141,7 @@ class PantalonDAO {
             $pantalondto = new PantalonDTO();
             $pantalondto->constructor(
                 $row['id_pantalon'],
-                $row['id_tipo_pantalon'],
+                $row['tipo_pantalon'],
                 $row['id_tipo_dotacion'],
                 $row['talla'],
                 $row['cantidad'],

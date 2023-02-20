@@ -93,14 +93,17 @@ a {
 
 .icono-enlace.chico i{
     font-size: 0.8rem !important;
-    margin-left: 1rem;
+    margin-left: 1rem !important;
 }
 
 
+.bg-verde-oscuro {
+    background-color: var(--verdeOscuro);
+}
 
 
-
-#submenu-administracion {
+#submenu-administracion,
+#submenu-dotacion {
     background-color: var(--verde);
     height: 0;
     overflow: hidden;
@@ -108,8 +111,19 @@ a {
     
 }
 
-#submenu-administracion.desplegar-submenu {
+#submenu-administracion.desplegar-submenu,
+#submenu-dotacion.desplegar-submenu {
     height: 8.5rem;
+}
+
+#submenu-dotacion li{
+    margin-left: 5rem;
+    list-style: circle !important;
+    color: #f1f1f1;
+}
+
+#submenu-administracion.ampliar-submenu {
+    height: 17rem;
 }
 
 
@@ -125,11 +139,13 @@ a {
 
 }
 
-#enlace-administracion .icono-enlace.chico i {
+#enlace-administracion .icono-enlace.chico i,
+#enlace-dotacion .icono-enlace.chico i {
     transition: all 0.3s ease;
 }
 
-#enlace-administracion .icono-enlace.chico i.rotar-icono {
+#enlace-administracion .icono-enlace.chico i.rotar-icono,
+#enlace-dotacion .icono-enlace.chico i.rotar-icono {
     transform: rotateX(180deg);
 }
 
@@ -219,6 +235,10 @@ a {
 .logo-img {
     width: 3rem;
     transition: all 0.5s ease-in-out;
+}
+
+.logo-empleado {
+    width: 5rem !important;
 }
 
 .cont-ingresar .logo-img {
@@ -495,12 +515,14 @@ small {
 }
 
 .cont-foto-empleado {
-    border-radius: 100%;
+    border-radius: 50%;
+    
     overflow: hidden;
 }
 
 .cont-foto-empleado img{
-    width: 15rem;
+    width: 13rem;
+    height: 12rem !important;
 }
 
 .modal-delete {
@@ -558,6 +580,99 @@ small {
 
 .border-bottom-black {
     border-bottom: 2px solid #333;
+}
+
+.trama {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(33, 33, 33, 0.5);
+}
+
+/* .trama.ocultar-trama {
+    display: none;
+} */
+
+.alerta-modal {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    background: #f1f1f1;
+    border-radius: 15px;
+    z-index: 10;
+}
+
+/* .alerta-modal.ocultar-modal {
+    display: none;
+} */
+
+.modal-encabezado,
+.modal-cuerpo,
+.modal-pie {
+    position: relative;
+    padding: 0.5rem 1rem;
+}
+
+.icono-salir {
+    position: absolute;
+    right: 1rem;
+    top: 0.8rem;
+    cursor: pointer;
+}
+
+.modal-cuerpo {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.titulo-periodo-evaluacion h5 {
+    font-size: 1.5rem;
+    margin-top: 0.3rem;
+}
+
+.cont-documentos {
+    border: 1px solid #444;
+    border-radius: 10px;
+}
+
+.cont-nombre-documento {
+    border-bottom: 1px solid #333;
+    padding: 1rem 0;
+}
+
+.gestion-documento {
+
+    padding: 1rem 0;
+}
+
+.cont-icono-archivo {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e1e1e1;
+    border-radius: 100%;
+    margin-bottom: 1rem;
+}
+
+.cont-icono-archivo i {
+    font-size: 2rem;
+  
+}
+
+.btn-gestion-documento {
+    outline: none;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    padding: 0.5rem 0.8rem;
+    border-radius: 50%;
 }
 
 #lista-cuenta {
@@ -666,6 +781,13 @@ small {
 
 #cant-filtros-reporte {
     width: 3rem;
+}
+
+/* -----------------  Empleado --------- */
+
+#carta-laboral {
+    height: 85vh;
+    
 }
 
 /*-------------- Resposive ---------------*/

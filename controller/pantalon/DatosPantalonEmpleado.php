@@ -70,9 +70,62 @@ if (isset($_POST['id'])) {
 
             $validar_asignaciones = false;
             
+        if (isset($_POST['opc']) && $_POST['opc'] == "especial") {
             for ($i=0; $i < count($listaUsuariosId); $i++){
 
-                if ($listaUsuariosId[$i]->getPantalon() == NULL && $listaUsuariosId[$i]->getTipo_dotacion() == $pantalondto->getTipo_dotacion() && $listaUsuariosId[$i]->getGenero() == $pantalondto->getGenero()) {
+                    for ($j=0; $j < count($listaCargos); $j++) { 
+                        if ($listaCargos[$j]->getId_cargo() == $listaUsuariosId[$i]->getCargo()) {
+                            $cargo =  $listaCargos[$j]->getNombre();
+                        }
+                    }
+                    if ($pantalondto->getCantidad() > 1) {
+                        $validar_asignaciones = true;
+                        $cont .= "<div class='col-4 cont-emple " . $listaUsuariosId[$i]->getId_usuario(). " " . $listaUsuariosId[$i]->getNombre() . " " . $cargo ."'>"
+                            . "<div class='my-2'>"
+                                .  "<div class='form-check'>"
+                                ."<input class='form-check-input checkbox-empleados checkbox-cont-pantalon' type='checkbox' value='" . $listaUsuariosId[$i]->getId_usuario() . "' id='flexCheckChecked'>"
+                                ."<input type='text' disabled>"
+                                ."</div>"
+                            ."</div>"
+                            ."<div class='card' style='width: 18rem;'>"
+                                ."<img src='". $listaUsuariosId[$i]->getFoto() ."' class='card-img-top card-img-profile' alt='...'>"
+                                ."<div class='card-body'>"
+                                    ."<h5 class='card-title titulo-campos'>" . $listaUsuariosId[$i]->getNombre() . ' ' . $listaUsuariosId[$i]->getApellido() . "</h5>"
+                                    ."<p class='card-text'>Número de documento: ". $listaUsuariosId[$i]->getId_usuario() ." </p>"
+                                    ."<p class='card-text'>Ocupación: " . $cargo . "</p>"
+                                . "</div>"
+                            . "</div>"
+                        . "</div>";
+
+                        }else if($pantalondto->getCantidad() == 1){
+                            $cont .= "<div class='col-4 cont-emple " . $listaUsuariosId[$i]->getId_usuario(). " " . $listaUsuariosId[$i]->getNombre() . " " . $cargo ."'>"
+                            . "<div class='my-2'>"
+                                .  "<div class='form-check'>"
+                                ."<input class='form-check-input checkbox-empleados checkbox-cont-pantalon' type='radio' value='" . $listaUsuariosId[$i]->getId_usuario() . "'>"    
+                                ."<input type='text' disabled>"
+                                ."</div>"
+                            ."</div>"
+                            ."<div class='card' style='width: 18rem;'>"
+                                ."<img src='". $listaUsuariosId[$i]->getFoto() ."' class='card-img-top card-img-profile' alt='...'>"
+                                ."<div class='card-body'>"
+                                    ."<h5 class='card-title titulo-campos'>" . $listaUsuariosId[$i]->getNombre() . ' ' . $listaUsuariosId[$i]->getApellido() . "</h5>"
+                                    ."<p class='card-text'>Número de documento: ". $listaUsuariosId[$i]->getId_usuario() ." </p>"
+                                    ."<p class='card-text'>Ocupación: " . $cargo . "</p>"
+                                . "</div>"
+                            . "</div>"
+                        . "</div>";
+
+                        }else{
+
+                        }    
+
+                
+                   
+            }
+        }else{
+            for ($i=0; $i < count($listaUsuariosId); $i++){
+
+                if (/* $listaUsuariosId[$i]->getPantalon() == NULL &&  */$listaUsuariosId[$i]->getTipo_dotacion() == $pantalondto->getTipo_dotacion() && $listaUsuariosId[$i]->getGenero() == $pantalondto->getGenero()) {
 
                     for ($j=0; $j < count($listaCargos); $j++) { 
                         if ($listaCargos[$j]->getId_cargo() == $listaUsuariosId[$i]->getCargo()) {
@@ -90,7 +143,7 @@ if (isset($_POST['id'])) {
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"
-                                ."<img src='...' class='card-img-top card-img-profile' alt='...'>"
+                                ."<img src='". $listaUsuariosId[$i]->getFoto() ."' class='card-img-top card-img-profile' alt='...'>"
                                 ."<div class='card-body'>"
                                     ."<h5 class='card-title titulo-campos'>" . $listaUsuariosId[$i]->getNombre() . ' ' . $listaUsuariosId[$i]->getApellido() . "</h5>"
                                     ."<p class='card-text'>Número de documento: ". $listaUsuariosId[$i]->getId_usuario() ." </p>"
@@ -102,7 +155,7 @@ if (isset($_POST['id'])) {
                         
 
                         }else if($pantalondto->getCantidad() == 1){
-                            $cont .= "<div class='col-4'>"
+                            $cont .= "<div class='col-4 cont-emple " . $listaUsuariosId[$i]->getId_usuario(). " " . $listaUsuariosId[$i]->getNombre() . " " . $cargo ."'>"
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
                                 ."<input class='form-check-input checkbox-empleados checkbox-cont-pantalon' type='radio' value='" . $listaUsuariosId[$i]->getId_usuario() . "'>"    
@@ -110,7 +163,7 @@ if (isset($_POST['id'])) {
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"
-                                ."<img src='...' class='card-img-top card-img-profile' alt='...'>"
+                                ."<img src='". $listaUsuariosId[$i]->getFoto() ."' class='card-img-top card-img-profile' alt='...'>"
                                 ."<div class='card-body'>"
                                     ."<h5 class='card-title titulo-campos'>" . $listaUsuariosId[$i]->getNombre() . ' ' . $listaUsuariosId[$i]->getApellido() . "</h5>"
                                     ."<p class='card-text'>Número de documento: ". $listaUsuariosId[$i]->getId_usuario() ." </p>"
@@ -125,11 +178,14 @@ if (isset($_POST['id'])) {
 
                 }
                    
-            }   
+            } 
+        }
+
+              
 
             if (!$validar_asignaciones) {
                 $cont .= "<div class='col'>"
-                        . "<h4 class='text-center'>Todos los empleados tienen asignado un pantalón</h4>"
+                        . "<h4 class='text-center'>No hay empleados por asignar</h4>"
                         . "</div>"; 
             }
         

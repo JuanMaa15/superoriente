@@ -7,6 +7,11 @@
     require_once ('../../models/DAO/ZapatoDAO.php');
     require_once ('../../models/DAO/OtraVestimentaDAO.php');
     require_once ('../../models/DAO/NivelAcademicoDAO.php');
+    require_once ('../../models/DAO/HistorialContratoDAO.php');
+    require_once ('../../models/DAO/TipoDocumentoDAO.php');
+    require_once ('../../models/DAO/HistorialDotacionDAO.php');
+    require_once ('../../models/DAO/HistorialCargoDAO.php');
+    require_once ('../../models/DAO/DocumentoDAO.php');
 
     session_start();
     
@@ -21,6 +26,11 @@
         $zapatodao = new ZapatoDAO();
         $otraVestimentadao = new OtraVestimentaDAO();
         $nivelAcademicodao = new NivelAcademicoDAO();
+        $historialContratodao = new HistorialContratoDAO();
+        $tipoDocumentodao = new TipoDocumentoDAO();
+        $historialDotaciondao = new HistorialDotacionDAO();
+        $historialCargodao = new HistorialCargoDAO();
+        $documentodao = new DocumentoDAO();
 
         $listaUsuario = $usuariodao->listaUsuario($_GET['doc']);
         $listaFamiliar = $familiardao->listaFamiliar($_GET['doc']);
@@ -30,6 +40,11 @@
         $listaZapatos = $zapatodao->listaZapatos();
         $listaVestimenta = $otraVestimentadao->listaVestimentas();
         $listaNivelesAcademicos = $nivelAcademicodao->listaNivelesAcademicos();
+        $listaHistorialContratos = $historialContratodao->listaHistorialContratos($_GET['doc']);
+        $listaTiposDocumento = $tipoDocumentodao->listaTiposDocumentos();
+        $listaHistorialDotaciones = $historialDotaciondao->listaHistorialDotaciones($_GET['doc']);
+        $listaHistorialCargos = $historialCargodao->listaHistorialCargo($_GET['doc']);
+        $listaDocumentos = $documentodao->listaDocumentos($_GET['doc']);
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +75,12 @@
             <div class="row justify-content-center py-3 border position-relative bg-light" id="cont-foto-perfil-nombre">
                 <div class="col-6 d-flex flex-column justify-content-center align-items-center">
                     <div class="cont-foto-empleado my-3">
-                        <img src="../img/logo.png">
+
+                        <?php if (!empty($listaUsuario->getFoto())) : ?>
+                            <img src="<?=$listaUsuario->getFoto(); ?>">
+                        <?php else: ?>
+                            <img src="../img/foto-perfil.png" class="w-100">
+                        <?php endif;?>
                     </div>
                     <p class="fs-3 texto-negro-opaco"><?php echo $listaUsuario->getNombre() . ' ' . $listaUsuario->getApellido() ?></p>
                 </div>
@@ -80,7 +100,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link enlace-info-empleado" id="enlace-dotacion" href="#">Dotación</a>
                                     </li>
-                                    
+                                    <li class="nav-item">
+                                        <a class="nav-link enlace-info-empleado" id="enlace-documentos" href="#">Documentos</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -454,6 +476,108 @@
                         </div>
                     </div>
                 </div>
+                <div class="row my-4 justify-content-center">
+                    <div class="col-12">
+                        <h2 class="titulo-perfil">Foto de perfil</h2>
+                    </div>
+                    <div class="col-4 my-3 ">
+                        <form action="../../controller/usuario/ActualizarFotoPerfil.php" method="POST" enctype="multipart/form-data">
+                            <div class="d-none">
+                                <input type="text" value="<?=$_GET['doc']?>" name="id_usuario">
+                            </div>
+                            <div class="my-2">
+                                <input type="file" class="form-control" name="archivo">
+                            </div>
+                            <div class="my-3 text-center">
+                                <input type="submit" value="Enviar" class="btn btn-verde">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row my-4 justify-content-center">
+                     <div class="col-12">
+                        <h3 class="titulo-perfil">Historial de contratos</h3>
+                     </div>
+                     <div class="col-10">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Tipo de contrato</th>
+                                <th scope="col">fecha de inicio</th>
+                                <th scope="col">fecha de fin</th>
+                                <th scope="col" class="text-center">Opciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                    for ($i=0; $i < count($listaHistorialContratos); $i++) { 
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $listaHistorialContratos[$i]->getTipo_contrato(); ?></td>
+                                            <td><?php echo $listaHistorialContratos[$i]->getFecha_inicio(); ?></td>
+                                            <?php if ($listaHistorialContratos[$i]->getFecha_fin() == "1900-01-01") :
+                                            ?>
+                                                <td> - </td>
+                                            <?php else: ?>
+                                                <td><?php echo $listaHistorialContratos[$i]->getFecha_fin(); ?></td>
+                                            <?php endif; ?>
+                                            <td><button class="btn btn-danger" type="button"  id="btn-ventana-eliminar-historial-contratos" value="<?php echo $listaHistorialContratos[$i]->getId_historial_contrato(); ?>" data-bs-toggle="modal" data-bs-target="#eliminar-historial-contratos">Eliminar </button></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                
+                                ?>
+                            </tbody>
+                            
+                          </table>
+                    </div>
+                          
+                </div>
+                <div class="row my-4 justify-content-center">
+                     <div class="col-12">
+                        <h3 class="titulo-perfil">Historial de cargos</h3>
+                     </div>
+                     <div class="col-10">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sección</th>
+                                    <th scope="col">Area</th>
+                                    <th scope="col">Cargo</th>
+                                    <th scope="col">Fecha de inicio</th>
+                                    <th scope="col">Fecha de fin</th>
+                                    <th scope="col" class="text-center">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                    for ($i=0; $i < count($listaHistorialCargos); $i++) { 
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $listaHistorialCargos[$i]->getSeccion(); ?></td>
+                                            <td><?php echo $listaHistorialCargos[$i]->getArea(); ?></td>
+                                            <td><?php echo $listaHistorialCargos[$i]->getCargo(); ?></td>
+                                            <td><?php echo $listaHistorialCargos[$i]->getFecha_inicio(); ?></td>
+                                            
+                                            <?php if ($listaHistorialCargos[$i]->getFecha_fin() == "1900-01-01") :
+                                            ?>
+                                                <td> - </td>
+                                            <?php else: ?>
+                                                <td><?php echo $listaHistorialCargos[$i]->getFecha_fin(); ?></td>
+                                            <?php endif; ?>
+                                            <td><button class="btn btn-danger" type="button"  id="btn-ventana-eliminar-historial-cargos" value="<?php echo $listaHistorialCargos[$i]->getId_historial_cargo(); ?>" data-bs-toggle="modal" data-bs-target="#eliminar-historial-cargos">Eliminar </button></td>
+                                        </tr>
+                                        <?php
+
+                                    }
+                                
+                                ?>
+                            </tbody>
+                            
+                          </table>
+                    </div>
+                          
+                </div>
             </div>
 
             <div id="cont-familiares" class="my-4 d-none cont-gestion-empleado">
@@ -475,6 +599,18 @@
                                         <input class="form-control" type="text" id="id_familiar" placeholder="Nro de documento">
                                         <small class="text-danger"></small>
                                     </div>
+                                        <select class="form-select" id="tipo_documento_familiar">
+                                            <option value="">Tipo de documento</option>
+                                            <?php
+                                                for ($i=0; $i < count($listaTiposDocumento); $i++) { 
+                                                    ?>
+                                                        <option value="<?php echo $listaTiposDocumento[$i]->getId_tipo_documento(); ?>"><?php echo $listaTiposDocumento[$i]->getTipo_documento(); ?></option>
+                                                    <?php
+                                                }
+                                            ?>
+                                            
+                                        </select>
+                                        <small class="text-danger"></small>
                                     <div class="my-3">
                                         <input class="form-control" type="text" id="nombre-familiar" placeholder="Nombre">
                                         <small class="text-danger"></small>
@@ -551,9 +687,26 @@
                             </div>
                             <div class="card-body">
                                 <form action="">
-                                            
                                     <div class="my-3">
                                         <input class="form-control" type="text" id="nombre_hijo" placeholder="Nombre">
+                                        <small class="text-danger"></small>
+                                    </div>
+                                    <div class="my-3">
+                                        <input class="form-control" type="text" id="nro_documento_hijo" placeholder="Nro de documento">
+                                        <small class="text-danger"></small>
+                                    </div>
+                                    <div class="my-3">
+                                        <select id="tipo_documento_hijo" class="form-select">
+                                            <option value="">Tipo de documento</option>
+                                            <?php
+                                                for ($i=0; $i < count($listaTiposDocumento); $i++) { 
+                                                    ?>
+                                                        <option value="<?php echo $listaTiposDocumento[$i]->getId_tipo_documento(); ?>"><?php echo $listaTiposDocumento[$i]->getTipo_documento(); ?></option>
+                                                    <?php
+                                                }
+                                            ?>
+                                            
+                                        </select>
                                         <small class="text-danger"></small>
                                     </div>
                                     <div class="my-3">
@@ -643,10 +796,13 @@
                         <?php
                             if ($listaUsuario->getCamisa() != null || $listaUsuario->getPantalon() != null || $listaUsuario->getZapato() != null || $listaUsuario->getVestimenta() != null) :
                             ?>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar-toda-dotacion">Eliminar todos</button>
+                                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#eliminar-toda-dotacion">Limpiar</button>
+                                <a  class="btn btn-verde me-2" href="../../controller/usuario/CartaDotacion.php?id=<?=$_GET['doc'];?>" target="_blank">Carta</a>
                           <?php
                             endif;
                         ?>
+                         <button type="button" class="btn btn-verde" id="btn-mantener-historial">Mantener historial</button>
+
                     </div>
                 </div>
                 
@@ -682,8 +838,12 @@
                                     <div class="text-center">
                                         <p>Camisa: <?php echo $listaCamisas[$i]->getNombre(); ?></p>
                                         <p>Talla: <?php echo $listaCamisas[$i]->getTalla(); ?></p>
+                                        <p>Cant: <?php echo $listaUsuario->getCant_camisa(); ?></p>
                                         <input type="text" class="d-none" value="<?php echo $listaCamisas[$i]->getCantidad(); ?>" id="cant-disponibles-camisa">
                                         <input type="text" class="d-none" value="<?php echo $listaCamisas[$i]->getId_camisa(); ?>">
+                                        <input type="text" class="d-none" value="<?php echo $listaUsuario->getCant_camisa(); ?>" id="cant-camisa">
+                                        <input type="text" class="d-none" value="<?php echo $listaCamisas[$i]->getNombre(); ?>" id="nombre-camisa">
+                                        <input type="text" class="d-none" value="<?php echo $listaCamisas[$i]->getTalla(); ?>" id="talla-camisa">
                                         <button class="btn btn-verde" id="btn-editar-camisa-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>" data-bs-toggle="modal" data-bs-target="#modal-editar-camisas">Editar</button>
                                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-eliminar-camisas">Eliminar</button>    
                                     </div>
@@ -725,8 +885,12 @@
                                     <div class="text-center">
                                         <p>Pantalón: <?php echo $listaPantalones[$i]->getNombre(); ?></p>
                                         <p>Talla: <?php echo $listaPantalones[$i]->getTalla(); ?></p>
+                                        <p>Cantidad: <?php echo $listaUsuario->getCant_pantalon(); ?></p>
                                         <input type="text" class="d-none" value="<?php echo $listaPantalones[$i]->getCantidad(); ?>" id="cant-disponibles-pantalon">
                                         <input type="text" class="d-none" value="<?php echo $listaPantalones[$i]->getId_pantalon(); ?>">
+                                        <input type="text" class="d-none" value="<?php echo $listaUsuario->getCant_pantalon(); ?>" id="cant-pantalon">
+                                        <input type="text" class="d-none" value="<?php echo $listaPantalones[$i]->getNombre(); ?>" id="nombre-pantalon">
+                                        <input type="text" class="d-none" value="<?php echo $listaPantalones[$i]->getTalla(); ?>" id="talla-pantalon">
                                         <button class="btn btn-verde" id="btn-editar-pantalon-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>" data-bs-toggle="modal" data-bs-target="#modal-editar-pantalones">Editar</button>
                                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-eliminar-pantalones">Eliminar</button>    
                                     </div>
@@ -770,6 +934,9 @@
                                             <p>Talla: <?php echo $listaZapatos[$i]->getTalla(); ?></p>
                                             <input type="text" class="d-none" value="<?php echo $listaZapatos[$i]->getCantidad(); ?>" id="cant-disponibles-zapatos">
                                             <input type="text" class="d-none" value="<?php echo $listaZapatos[$i]->getId_zapato(); ?>">
+                                            <input type="text" class="d-none" value="<?php echo $listaUsuario->getCant_zapato(); ?>" id="cant-zapato">
+                                            <input type="text" class="d-none" value="<?php echo $listaZapatos[$i]->getNombre(); ?>" id="nombre-zapato">
+                                            <input type="text" class="d-none" value="<?php echo $listaZapatos[$i]->getTalla(); ?>" id="talla-zapato">
                                             <button class="btn btn-verde" id="btn-editar-zapato-empleado" value="<?php echo $listaUsuario->getId_usuario(); ?>" data-bs-toggle="modal" data-bs-target="#modal-editar-zapatos">Editar</button>
                                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-eliminar-zapatos">Eliminar</button>    
                                         </div>
@@ -830,6 +997,98 @@
                     ?>
                     
                 </div>        
+                <div class="row my-5 justify-content-center">
+                    <div class="col-12">
+                        <h3 class="titulo-perfil">Historial dotacion</h3>
+                    </div>
+                    <div class="col-10 mt-3">
+                        
+                        
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Dotacion</th>
+                                    <th scope="col">Camisa</th>
+                                    <th scope="col">Pantalon</th>
+                                    <th scope="col">Zapatos</th>
+                                    <th scope="col">Otro</th>
+                                    <th scope="col">fecha</th>
+                                    <th scope="col" colspan="2" class="text-center">Opciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                        for ($i=0; $i < count($listaHistorialDotaciones); $i++) { 
+                                            ?>
+                                            <tr>
+
+                                                <td><?php echo $listaHistorialDotaciones[$i]->getTipo_dotacion(); ?></td>
+                                                <td><?php echo $listaHistorialDotaciones[$i]->getCamisa(); ?></td>
+                                                <td><?php echo $listaHistorialDotaciones[$i]->getPantalon(); ?></td>
+                                                <td><?php echo $listaHistorialDotaciones[$i]->getZapato(); ?></td>
+                                                <td><?php echo $listaHistorialDotaciones[$i]->getVestimenta(); ?></td>
+                                                <td><?php echo $listaHistorialDotaciones[$i]->getFecha(); ?></td>
+                                                <td><button class="btn btn-danger" type="button"  id="btn-ventana-eliminar-familiar">Eliminar  </button></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    
+                                    ?>
+                                </tbody>
+                                
+                            </table>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div id="cont-documentos" class="my-3 d-none cont-gestion-empleado">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="titulo-perfil">Documentos</h2>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-verde px-3" id="btn-adjuntar-documentos" value="" data-bs-toggle="modal" data-bs-target="#adjuntar-documento">Adjuntar documento +</button>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <?php if (count($listaDocumentos) >= 1) :
+                            for ($i=0; $i < count($listaDocumentos); $i++) :
+                            ?>
+                                <div class="col-3 p-3 border">
+                                    <div class="cont-documentos">
+                                        <div class="cont-nombre-documento d-flex flex-column justidy-content-center align-items-center">
+                                            <div class="cont-icono-archivo">
+                                                <i class="fa-solid fa-file"></i>
+                                            </div>
+                                            <h4><?=$listaDocumentos[$i]->getNombre();?></h4>
+                                        </div>
+                                        <div class="gestion-documento d-flex justify-content-around">
+                                            <a class="btn-gestion-documento" href="<?=$listaDocumentos[$i]->getRuta();?>" download>
+                                                <i class="fa-solid fa-download"></i>
+                                            </a>
+                                           
+                                            <a class="btn-gestion-documento" href="<?=$listaDocumentos[$i]->getRuta();?>" target="_blank">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                           
+                                            <button type="button" class="btn-gestion-documento" id="btn-eliminar-documento" value="<?=$listaDocumentos[$i]->getId_documento(); ?>">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                         
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php    
+                            endfor;
+                    else: ?>
+                        <div class="col text-center mt-4">
+                            <h4>No hay archivos adjuntos</h4>
+                        </div>
+                    <?php endif; ?>
+                    
+                    
+                </div>
             </div>
         </div>
         
@@ -838,6 +1097,83 @@
        
           
     </main>
+
+
+    <!-- Formulario para adjuntar un documento -->
+            
+    <div class="modal modal-delete fade" id="adjuntar-documento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Adjuntar documento</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="../../controller/usuario/subirDocumento.php" method="POST" enctype="multipart/form-data">
+                            <div class="d-none">
+                                <input type="text" name="id_usuario" value="<?= $_GET['doc']; ?>">
+                            </div>
+                            <div class="mt-2 mb-3">
+                                <input type="text" name="titulo" class="form-control" placeholder="titulo">
+                            </div>
+                            <div class="my-2">
+                                <input type="file" name="archivo" class="form-control" placeholder="titulo">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </form>
+                    
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        
+                    </div>
+                    
+                        
+                
+                </div>
+            </div>
+        </div>
+
+     <!-- Confirmacion para eliminar el historial del cargo -->
+        
+     <div class="modal modal-delete fade" id="eliminar-historial-cargos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar historial</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>¿Esta seguro de eliminar el historial al empleado?</div>
+                    <div class="mt-3" id="btns-modal-eliminar">
+                        <button type="button" class="btn btn-verde" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn-eliminar-historial-cargo">Si</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmacion para todas las dotaciones -->
+        
+    <div class="modal modal-delete fade" id="eliminar-historial-contratos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar historial</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>¿Esta seguro de eliminar el historial al empleado?</div>
+                    <div class="mt-3" id="btns-modal-eliminar">
+                        <button type="button" class="btn btn-verde" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" id="btn-eliminar-historial-contrato">Si</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Confirmacion para todas las dotaciones -->
         

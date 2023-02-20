@@ -53,16 +53,35 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="enlaces" href="dotacion.php">
+                                    <a class="enlaces" href="#" id="enlace-dotacion" >
                                         <div class="icono-enlace">
                                             <i class="fa-solid fa-user-tie"></i>
                                         </div>
                                         
                                         Dotaciones
-                                    </a>
-                                </li>
+                                        <div class="icono-enlace chico">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
 
-                                
+                                    </a>
+                                    <ul class="" id="submenu-dotacion">
+                                        <li>
+                                            <a class="enlaces" href="registrarDotacion.php">
+                                                Registrar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="enlaces" href="editarDotacion.php">
+                                                Editar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="enlaces" href="asignarDotacion.php">
+                                                Asignar
+                                            </a>
+                                        </li> 
+                                    </ul>
+                                </li>              
                             </ul>
                         </li>
                         <li>
@@ -73,6 +92,7 @@
                             
                             Gestión_información
                             </a>
+                            
 
                         </li>
                         <!-- <li>

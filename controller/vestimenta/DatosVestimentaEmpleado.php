@@ -2,10 +2,15 @@
 
 require_once('../../models/DAO/OtraVestimentaDAO.php');
 require_once('../../models/DAO/UsuarioDAO.php');
+require_once('../../models/DAO/CargoDAO.php');
+
 
 $usuariodao = new UsuarioDAO();
 $listaUsuarios = $usuariodao->listaUsuarios();
 
+
+$cargodao = new CargoDAO();
+$listaCargos = $cargodao->listaCargos();
 
 if (isset($_POST['id'])) {
 
@@ -46,25 +51,31 @@ if (isset($_POST['id'])) {
 
             $validar_asignaciones = false;
             
-            for ($i=0; $i < count($listaUsuarios); $i++){
+            for ($i=0; $i < count($listaUsuariosId); $i++){
 
-                if ($listaUsuarios[$i]->getVestimenta() == null && $listaUsuariosId[$i]->getTipo_dotacion() == $vestimentadto->getTipo_dotacion()) {
-
+                if ($listaUsuariosId[$i]->getVestimenta() == null && $listaUsuariosId[$i]->getTipo_dotacion() == $vestimentadto->getTipo_dotacion()) {
                     $validar_asignaciones = true;
+
+                    for ($j=0; $j < count($listaCargos); $j++) { 
+                        if ($listaCargos[$j]->getId_cargo() == $listaUsuariosId[$i]->getCargo()) {
+                            $cargo =  $listaCargos[$j]->getNombre();
+                        }
+                    }
+
                     if ($vestimentadto->getCantidad() > 1) {
-                        $cont .= "<div class='col-4 cont-emple " . $listaUsuarios[$i]->getId_usuario(). " " . $listaUsuarios[$i]->getNombre() . " " . $listaUsuarios[$i]->getCargo() ."'>"
+                        $cont .= "<div class='col-4 cont-emple " . $listaUsuariosId[$i]->getId_usuario(). " " . $listaUsuariosId[$i]->getNombre() . " " . $cargo ."'>"
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
-                                ."<input class='form-check-input checkbox-empleados checkbox-cont-vestimenta' type='checkbox' value='" . $listaUsuarios[$i]->getId_usuario() . "' id='flexCheckChecked'>"
+                                ."<input class='form-check-input checkbox-empleados checkbox-cont-vestimenta' type='checkbox' value='" . $listaUsuariosId[$i]->getId_usuario() . "' id='flexCheckChecked'>"
                                 ."<input type='text' disabled>"  
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"
-                                ."<img src='...' class='card-img-top card-img-profile' alt='...'>"
+                                ."<img src='". $listaUsuariosId[$i]->getFoto() ."' class='card-img-top card-img-profile' alt='...'>"
                                 ."<div class='card-body'>"
-                                    ."<h5 class='card-title titulo-campos'>" . $listaUsuarios[$i]->getNombre() . ' ' . $listaUsuarios[$i]->getApellido() . "</h5>"
-                                    ."<p class='card-text'>Número de documento: ". $listaUsuarios[$i]->getId_usuario() ." </p>"
-                                    ."<p class='card-text'>Ocupación: " . $listaUsuarios[$i]->getCargo() . "</p>"
+                                    ."<h5 class='card-title titulo-campos'>" . $listaUsuariosId[$i]->getNombre() . ' ' . $listaUsuariosId[$i]->getApellido() . "</h5>"
+                                    ."<p class='card-text'>Número de documento: ". $listaUsuariosId[$i]->getId_usuario() ." </p>"
+                                    ."<p class='card-text'>Ocupación: " . $cargo . "</p>"
                                 . "</div>"
                             . "</div>"
                         . "</div>";
@@ -72,7 +83,7 @@ if (isset($_POST['id'])) {
                         
 
                         }else if($vestimentadto->getCantidad() == 1){
-                            $cont .= "<div class='col-4'>"
+                            $cont .= "<div class='col-4 cont-emple " . $listaUsuariosId[$i]->getId_usuario(). " " . $listaUsuariosId[$i]->getNombre() . " " . $cargo ."' >"
                             . "<div class='my-2'>"
                                 .  "<div class='form-check'>"
                                 ."<input class='form-check-input checkbox-empleados checkbox-cont-vestimenta' type='radio' value='" . $listaUsuarios[$i]->getId_usuario() . "'>"    
@@ -80,11 +91,11 @@ if (isset($_POST['id'])) {
                                 ."</div>"
                             ."</div>"
                             ."<div class='card' style='width: 18rem;'>"
-                                ."<img src='...' class='card-img-top card-img-profile' alt='...'>"
+                                ."<img src='". $listaUsuariosId[$i]->getFoto() ."' class='card-img-top card-img-profile' alt='...'>"
                                 ."<div class='card-body'>"
-                                    ."<h5 class='card-title titulo-campos'>" . $listaUsuarios[$i]->getNombre() . ' ' . $listaUsuarios[$i]->getApellido() . "</h5>"
-                                    ."<p class='card-text'>Número de documento: ". $listaUsuarios[$i]->getId_usuario() ." </p>"
-                                    ."<p class='card-text'>Ocupación: " . $listaUsuarios[$i]->getCargo() . "</p>"
+                                    ."<h5 class='card-title titulo-campos'>" . $listaUsuariosId[$i]->getNombre() . ' ' . $listaUsuariosId[$i]->getApellido() . "</h5>"
+                                    ."<p class='card-text'>Número de documento: ". $listaUsuariosId[$i]->getId_usuario() ." </p>"
+                                    ."<p class='card-text'>Ocupación: " . $cargo . "</p>"
                                 . "</div>"
                             . "</div>"
                         . "</div>";

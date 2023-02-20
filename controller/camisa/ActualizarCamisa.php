@@ -14,7 +14,7 @@ if (!empty($id_camisa) && !empty($nombre) && !empty($id_tipo_dotacion) && !empty
 
     if (preg_match('/[0-9]+/',$id_tipo_dotacion)) {
 
-        if ($talla == "XS" || $talla == "S" || $talla == "M" || $talla == "L" || $talla == "XL" || $talla == "XXL") {
+        if ($talla == "XS" || $talla == "S" || $talla == "M" || $talla == "L" || $talla == "XL" || $talla == "XXL" || $talla == "3XL") {
 
             if (preg_match('/[0-9]+/',$estado)) {
 

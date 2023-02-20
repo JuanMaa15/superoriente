@@ -137,7 +137,7 @@ class CamisaDAO {
         $camisadto = null;
 
         try {
-            $sql = "SELECT * FROM tbl_camisa WHERE id_camisa = " . $id_camisa;
+            $sql = "SELECT * FROM tbl_camisa AS tc INNER JOIN tbl_tipo_camisa AS ttc ON tc.id_tipo_camisa = ttc.id_tipo_camisa WHERE id_camisa = " . $id_camisa;
             $rs = $cnx->query($sql);
 
             $row = $rs->fetch();
@@ -145,7 +145,7 @@ class CamisaDAO {
             $camisadto = new CamisaDTO();
             $camisadto->constructor(
                 $row['id_camisa'],
-                $row['id_tipo_camisa'],
+                $row['tipo_camisa'],
                 $row['id_tipo_dotacion'],
                 $row['talla'],
                 $row['cantidad'],

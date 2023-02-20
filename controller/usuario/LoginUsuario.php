@@ -30,7 +30,7 @@ switch($_GET['accion']) {
 
             if ($resultado->getPerfil() == 2) {
                 for ($i=0; $i < count($listaUsuariosId); $i++) { 
-                    $fecha_actual = date_create(date('dmy'));
+                    $fecha_actual = date_create(date('d-m-y'));
                     $fecha_ingreso = date_create($listaUsuariosId[$i]->getFecha_ingreso());
                     $antiguedad = date_diff($fecha_actual, $fecha_ingreso);
     

@@ -9,6 +9,199 @@ class UsuarioDAO {
     var $rs; /* ResultSet */
     var $st; /* Statement */
 
+
+
+    
+
+    // -------------- Traer las camisas si lo tiene -----------------
+    
+    public function traerCamisas ($id_usuario) {
+
+        $cnx = Conexion::conectar();
+        $usuariodto = null;
+
+        try {
+            $sql = "SELECT tu.*, tc.id_camisa, tc.talla AS talla_camisas, tc.id_tipo_camisa, tc.id_genero, ttc.tipo_camisa, tg.* FROM tbl_usuario AS tu INNER JOIN tbl_camisa AS tc ON tu.id_camisa = tc.id_camisa INNER JOIN tbl_tipo_camisa AS ttc ON tc.id_tipo_camisa = ttc.id_tipo_camisa INNER JOIN tbl_genero AS tg ON tc.id_genero = tg.id_genero WHERE id_usuario = '$id_usuario'";
+
+            $rs = $cnx->query($sql);
+            if ($rs->rowCount() == -1) {
+                $row = $rs->fetch();
+
+                $usuariodto = new UsuarioDTO();
+                $usuariodto->setId_usuario($row['id_usuario']);
+                $usuariodto->setNombre($row['nombre']);
+                $usuariodto->setApellido($row['apellido']);
+                $usuariodto->setCamisa("Camisa: " . $row['tipo_camisa']. " " .$row['genero']. " " . $row['talla_camisas']);
+                $usuariodto->setCant_camisa($row['cant_camisa']);
+            }else{
+                $usuariodto = null;
+            }
+
+
+            return $usuariodto;
+
+        } catch (Exception $ex) {
+            echo "Error al traer la camisa ". $ex->getMessage();
+        }
+
+        return null;
+    }
+
+    // ---------------- Traer las pantalones si lo tiene -----
+
+    public function traerPantalones($id_usuario) {
+        $cnx = Conexion::conectar();
+        $usuariodto = null;
+
+        try {
+            $sql = "SELECT tu.*, tg.*, tp.id_pantalon, tp.talla AS talla_pantalones, tp.id_tipo_pantalon, ttp.tipo_pantalon FROM tbl_usuario AS tu INNER JOIN tbl_pantalon AS tp ON tu.id_pantalon = tp.id_pantalon INNER JOIN tbl_tipo_pantalon AS ttp ON tp.id_tipo_pantalon = ttp.id_tipo_pantalon INNER JOIN tbl_genero AS tg ON tp.id_genero = tg.id_genero WHERE id_usuario = '$id_usuario'";
+            $rs = $cnx->query($sql);
+
+            if ($rs->rowCount() == -1) {
+                $row = $rs->fetch();
+
+                $usuariodto = new UsuarioDTO();
+                $usuariodto->setId_usuario($row['id_usuario']);
+                $usuariodto->setNombre($row['nombre']);
+                $usuariodto->setApellido($row['apellido']);
+                $usuariodto->setPantalon("Pantalon: " . $row['tipo_pantalon']. " " . $row['talla_pantalones']);
+                $usuariodto->setCant_pantalon($row['cant_pantalon']);
+            }else{
+                $usuariodto = null;
+            }
+
+            
+
+            return $usuariodto;
+
+        } catch (Exception $ex) {
+            echo "Error al traer los pantalones ". $ex->getMessage();
+        }
+
+        return null;
+    }
+
+    // ---------------- Traer zapatos si lo tiene -----
+
+    public function traerZapatos($id_usuario) {
+        $cnx = Conexion::conectar();
+        $usuariodto = null;
+
+        try {
+            $sql = "SELECT tu.*, tz.id_zapato, tz.talla AS talla_zapatos, tz.id_tipo_zapato, ttz.tipo_zapato FROM tbl_usuario AS tu INNER JOIN tbl_zapato AS tz ON tu.id_zapato = tz.id_zapato INNER JOIN tbl_tipo_zapato AS ttz ON tz.id_tipo_zapato = ttz.id_tipo_zapato WHERE id_usuario = '$id_usuario'";
+            $rs = $cnx->query($sql);
+
+            if ($rs->rowCount() == -1) {
+                $row = $rs->fetch();
+
+                $usuariodto = new UsuarioDTO();
+                $usuariodto->setId_usuario($row['id_usuario']);
+                $usuariodto->setNombre($row['nombre']);
+                $usuariodto->setApellido($row['apellido']);
+                $usuariodto->setZapato("Zapato: " . $row['tipo_zapato']. " " . $row['talla_zapatos']);
+                $usuariodto->setCant_zapato($row['cant_zapato']);
+            }else{
+                $usuariodto = null;
+            }
+
+            
+
+            return $usuariodto;
+
+        } catch (Exception $ex) {
+            echo "Error al traer los zapatos ". $ex->getMessage();
+        }
+
+        return null;
+    }
+
+    // -------------------
+
+    public function traerVestimenta($id_usuario) {
+        $cnx = Conexion::conectar();
+        $usuariodto = null;
+
+        try {
+            $sql = "SELECT tu.*, tov.* FROM tbl_usuario AS tu INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta WHERE id_usuario = '$id_usuario'";
+            $rs = $cnx->query($sql);
+
+            if ($rs->rowCount() == -1) {
+                $row = $rs->fetch();
+
+                $usuariodto = new UsuarioDTO();
+                $usuariodto->setId_usuario($row['id_usuario']);
+                $usuariodto->setNombre($row['nombre']);
+                $usuariodto->setApellido($row['apellido']);
+                $usuariodto->setVestimenta("Otro: " . $row['vestimenta']);
+            }else{
+                $usuariodto = null;
+            }
+
+            
+            return $usuariodto;
+
+        } catch (Exception $ex) {
+            echo "Error al generar la carta ". $ex->getMessage();
+        }
+
+        return null;
+
+    }
+
+
+    // ---------------- Carta de dotacion -----
+
+    public function cartaDotacion($id_usuario) {
+        $cnx = Conexion::conectar();
+        $usuariodto = null;
+
+        try {
+            $sql = "SELECT tu.*, tc.id_camisa, tc.talla AS talla_camisas, tc.id_tipo_camisa, tc.id_genero, ttc.tipo_camisa, tg.*, tp.id_pantalon, tp.talla AS talla_pantalones, tp.id_tipo_pantalon, ttp.tipo_pantalon, tz.id_zapato, tz.talla AS talla_zapatos, tz.id_tipo_zapato, ttz.tipo_zapato, tov.* FROM tbl_usuario AS tu INNER JOIN tbl_camisa AS tc ON tu.id_camisa = tc.id_camisa INNER JOIN tbl_tipo_camisa AS ttc ON tc.id_tipo_camisa = ttc.id_tipo_camisa INNER JOIN tbl_genero AS tg ON tc.id_genero = tg.id_genero INNER JOIN tbl_pantalon AS tp ON tu.id_pantalon = tp.id_pantalon INNER JOIN tbl_tipo_pantalon AS ttp ON tp.id_tipo_pantalon = ttp.id_tipo_pantalon INNER JOIN tbl_zapato AS tz ON tu.id_zapato = tz.id_zapato INNER JOIN tbl_tipo_zapato AS ttz ON tz.id_tipo_zapato = ttz.id_tipo_zapato INNER JOIN tbl_otra_vestimenta AS tov ON tu.id_vestimenta = tov.id_vestimenta WHERE id_usuario = '$id_usuario'";
+            $rs = $cnx->query($sql);
+
+            $row = $rs->fetch();
+
+            $usuariodto = new UsuarioDTO();
+            $usuariodto->setId_usuario($row['id_usuario']);
+            $usuariodto->setNombre($row['nombre']);
+            $usuariodto->setApellido($row['apellido']);
+            $usuariodto->setCamisa("Camisa: " . $row['tipo_camisa']. " " .$row['genero']. " " . $row['talla_camisas']);
+            $usuariodto->setPantalon("Pantalon: " . $row['tipo_pantalon']. " " . $row['talla_pantalones']);
+            $usuariodto->setZapato("Zapato: " . $row['tipo_zapato']. " " . $row['talla_zapatos']);
+            $usuariodto->setVestimenta("Otro: " . $row['vestimenta']);
+
+            $usuariodto->setCant_camisa($row['cant_camisa']);
+            $usuariodto->setCant_pantalon($row['cant_pantalon']);
+            $usuariodto->setCant_zapato($row['cant_zapato']);
+
+            return $usuariodto;
+
+        } catch (Exception $ex) {
+            echo "Error al generar la carta ". $ex->getMessage();
+        }
+    }
+
+    // ------------------ Actualizar foto de perfil ---------------
+
+    public function actualizarFotoPerfil($usuariodto) {
+        $cnx = Conexion::conectar();
+
+        try {
+            $sql = "UPDATE tbl_usuario SET foto_perfil = ? WHERE id_usuario = '". $usuariodto->getId_usuario() . "'";
+            $ps = $cnx->prepare($sql);
+
+            $foto = $usuariodto->getFoto();
+
+            $ps->bindParam(1, $foto);
+
+            $ps->execute();
+
+            return true;
+        } catch (Exception $ex) {
+            echo "Error al actualizar la foto de perfil";
+        }
+    }
+
     // ----------------------- Registrar un usuario ------------------------------------
 
     public function registrarUsuario($usuariodto) {
@@ -217,7 +410,7 @@ class UsuarioDAO {
                     $row['id_vestimenta']
                 );
 
-            
+                $lista[$i]->setFoto($row['foto_perfil']);
                 $i += 1;
             }
 
@@ -309,6 +502,8 @@ class UsuarioDAO {
                 $lista[$i]->setTalla_camisa($row['talla_camisa']);
                  $lista[$i]->setTalla_pantalon($row['talla_pantalon']);
                 $lista[$i]->setTalla_zapato($row['talla_zapato']);
+
+                $lista[$i]->setFoto($row['foto_perfil']);
 
                 $i++;
             }
@@ -404,6 +599,13 @@ class UsuarioDAO {
             $usuariodto->setTalla_camisa($row['talla_camisa']);
             $usuariodto->setTalla_pantalon($row['talla_pantalon']);
             $usuariodto->setTalla_zapato($row['talla_zapato']);
+
+            $usuariodto->setCant_camisa($row['cant_camisa']);
+            $usuariodto->setCant_pantalon($row['cant_pantalon']);
+            $usuariodto->setCant_zapato($row['cant_zapato']);
+
+            $usuariodto->setFoto($row['foto_perfil']);
+            
             return $usuariodto;
 
         } catch (Exception $e) {
@@ -1558,7 +1760,7 @@ class UsuarioDAO {
 
         try {
             
-            $sql = 'SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE tu.fecha_ingreso BETWEEN DateADD("d", -30, GETDATE()) AND tu.fecha_ingreso AND tu.id_estado = 1';
+            $sql = 'SELECT * FROM tbl_usuario AS tu INNER JOIN tbl_tipo_documento AS ttd ON tu.id_tipo_documento = ttd.id_tipo_documento INNER JOIN tbl_tipo_contrato AS ttc ON tu.id_tipo_contrato = ttc.id_tipo_contrato INNER JOIN tbl_perfil AS tp ON tu.id_perfil = tp.id_perfil INNER JOIN tbl_estado AS te ON tu.id_estado = te.id_estado INNER JOIN tbl_casa AS tc ON tu.id_casa = tc.id_casa INNER JOIN tbl_genero AS tg ON tu.id_genero = tg.id_genero INNER JOIN tbl_estado_civil AS tec ON tu.id_estado_civil = tec.id_estado_civil INNER JOIN tbl_tipo_sangre_rh AS ttsr ON tu.id_tipo_sangre_rh = ttsr.id_tipo_sangre_rh INNER JOIN tbl_nivel_academico AS tna ON tu.id_nivel_academico = tna.id_nivel_academico INNER JOIN tbl_eps AS teps ON tu.id_eps = teps.id_eps INNER JOIN tbl_sucursal AS tsu ON tu.id_sucursal = tsu.id_sucursal INNER JOIN tbl_seccion AS tsec ON tu.id_seccion = tsec.id_seccion INNER JOIN tbl_area AS tar ON tu.id_area = tar.id_area INNER JOIN tbl_cargo AS tcar ON tu.id_cargo = tcar.id_cargo INNER JOIN tbl_pension AS tpen ON tu.id_pension = tpen.id_pension INNER JOIN tbl_tipo_dotacion AS tpdo ON tu.id_tipo_dotacion = tpdo.id_tipo_dotacion WHERE tu.fecha_ingreso BETWEEN DateADD("d", -61, GETDATE()) AND tu.fecha_ingreso AND tu.id_estado = 1';
             $rs = $cnx->query($sql);
 
             while($row = $rs->fetch()) {
