@@ -78,7 +78,7 @@ $pdf->Cell(0,0,'Dicho certificado se expide a solicitud verbal de la interesada.
 $pdf->Ln(20);
 $pdf->Cell(0,0,'Atentamente,', 0,0, 'L');
 $pdf->Ln(50);
-$pdf->Image('../../view/img/firma.png', 30, 190,50);
+/* $pdf->Image('../../view/img/firma.png', 30, 190,50); */
 $pdf->SetFont('Arial','B',12);
 $pdf->Cell(0,0,'CRISTINA LLANO HURTADO', 0,0, 'L');
 $pdf->Ln(5);
